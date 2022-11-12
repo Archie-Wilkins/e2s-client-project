@@ -2,14 +2,14 @@
   "name": "e2s_team4",
   "version": "1.0.0",
   "dependencies": {
-    "next": "^13.0.2",
+    "next": "^13.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "scripts": {
-    "dev": "node server.js",
+    "dev": "next dev",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "next start",
     "lint": "next lint"
   }
 }
