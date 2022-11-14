@@ -1,0 +1,23 @@
+.navbarIcon {
+    height: 16px;
+    width: 16px;
+}
+
+.navbar {
+    background-color: aqua;
+    padding-left: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    height: 100vh;
+    width: 25ch;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.navbarLineBreak {
+    width: 70%;
+    size: 3;
+    color: black;
+}

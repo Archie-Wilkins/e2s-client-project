@@ -1,5 +1,7 @@
 import Link from "next/link"
-import React, { Component } from "react"
+
+
+
 
 /*export default class extends Component {
     render () {
@@ -14,6 +16,7 @@ function HomePage() {
         <Link href="/contact"><p>Contact Us Page</p>
         </Link>
         <Link href="/about"><p>About Us Page</p></Link>
+        <h1 className="blueBackground">Hello</h1>
     </div>
 }
 
