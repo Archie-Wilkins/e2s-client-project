@@ -3,21 +3,45 @@
     width: 16px;
 }
 
-.navbar {
+.navbarContainer {
     background-color: aqua;
-    padding-left: 12px;
+    padding-left: 10px;
+        padding-right: 10px;
     padding-top: 12px;
     padding-bottom: 12px;
     height: 100vh;
-    width: 25ch;
+    width: 20ch;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .navbarContent {
+        height: 90vh;
+        width: 90%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-around;
 }
-
 .navbarLineBreak {
-    width: 70%;
+    width: 100%;
     size: 3;
-    color: black;
+    color: white;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    
+    .navbarLink {
+        color: #FFFFFF;
+        text-decoration: none;
+    }
+    
+    .navbarLink:hover {
+        color: #EDB116;
+    }
+    
+    .navbarLink p {
+        padding-bottom: 0;
+        margin-bottom: 0;
+        padding-left: 8px;
 }

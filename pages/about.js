@@ -1,5 +1,5 @@
 import Link from "next/link"
-import NavBar from "./components/navBar.js"
+import NavBar from "../public/components/navBar.js"
 
 function AboutUsPage() {
     return <div>

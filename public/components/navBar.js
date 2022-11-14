@@ -1,65 +1,90 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Link from "next/link"
 import Image from 'next/image'
-import Dashboard from '../images/navbarIcons/dashboard.png'
-import styles from '../styles/navbar.module.css';
-import colors from '../styles/colours.module.css';
+import Dashboard from '../images/navbar/dashboard.png'
+
+// React Icons
+import { FaCloud } from "react-icons/fa";
+import { FaTachometerAlt } from "react-icons/fa";
+import { FaChartLine } from "react-icons/fa";
+import { FaListAlt } from "react-icons/fa";
+import { FaBook } from "react-icons/fa";
+import { FaBalanceScale } from "react-icons/fa";
+import { FaDollarSign } from "react-icons/fa";
+import { FaRegQuestionCircle } from "react-icons/fa";
+import { FaUserCog } from "react-icons/fa";
 
 
 
 function NavBar() {
     return <div>
-        <div className={styles.navbar + ' ' + colors.blueBackground}>
-            <h1>E2S</h1>
-            <hr className={styles.navbarLineBreak}></hr>
+        <div className="navbarContainer blueBackground">
+            <div className="navbarContent">
 
-            <div className="pageLink d-flex">
-                <Image
-                    className={styles.navbarIcon}
-                    src={Dashboard}
-                    alt="Picture of the author"
-                />
+                <Link className="w-100 navbarLink d-flex justify-content-center" href="/">
+                    <h1 className='whiteText'>E<span className='accentText'>2</span>S</h1>
+                </Link>
+
+                <hr className="navbarLineBreak"></hr>
+
+                <Link className="navbarLink d-flex justify-content-center align-items-center " href="/">
+                    <FaTachometerAlt />
                 <p>Dashboard</p>
-            </div>
-            <div className="pageLink">
-                <img src="" alt="" />
+                </Link>
+                <Link className=" navbarLink d-flex" href="/siteForecasting">
+                    <FaCloud />
+
                 <p>Forecastings</p>
-            </div>
-            <div className="pageLink">
-                <img src="" alt="" />
+                </Link>
+                <Link className=" navbarLink d-flex" href="/sitePerformance">
+
+                    <FaChartLine />
                 <p>Analysis</p>
-            </div>
-            <div className="pageLink">
-                <img src="" alt="" />
+                </Link>
+
+                <Link className=" navbarLink d-flex" href="/siteAssets">
+
+                    <FaListAlt />
                 <p>Assets</p>
-            </div>
-            <div className="pageLink">
-                <img src="" alt="" />
+                </Link>
+
+                <Link className=" navbarLink d-flex" href="/viewReports">
+
+                    <FaBook />
                 <p>Reports</p>
-            </div>
-            <div className="pageLink">
-                <img src="" alt="" />
+                </Link>
+
+                <Link className=" navbarLink d-flex" href="/siteCompare">
+
+                    <FaBalanceScale />
                 <p>Compare</p>
-            </div>
-            <div className="pageLink">
-                <img src="" alt="" />
+                </Link>
+
+                <Link className=" navbarLink d-flex" href="/billValidation">
+
+
+                    <FaDollarSign />
                 <p>Validate Bills</p>
-            </div>
+                </Link>
 
-            <hr className={styles.navbarLineBreak}></hr>
+                <hr className="navbarLineBreak"></hr>
 
 
-            <div className="pageLink">
-                <img src="" alt="" />
+
+                <Link className=" navbarLink d-flex" href="/help">
+
+                    <FaRegQuestionCircle />
                 <p>Help</p>
-            </div>
-            <div className="pageLink">
-                <img src="" alt="" />
+                </Link>
+                <Link className=" navbarLink d-flex" href="/account">
+
+                    <FaUserCog />
                 <p>Account</p>
+                </Link>
+
+                <hr className="navbarLineBreak"></hr>
+
             </div>
-
-            <hr className={styles.navbarLineBreak}></hr>
-
-
         </div>
     </div >
 
