@@ -1,0 +1,39 @@
+Naming Conventions:
+
+Table names can be any length, however:
+
+If the table name contains two words or more, spaces between words will be represented with a "_" character
+If the table name contains two words or more, any words with more than 8 letters will be abbreviated to the first 3 letters
+If the table is a cross-reference table (ie supporting a many to many relationship) the table will be named [table1]-[table2]-crossref
+
+Column names can have a max length of 30 characters and follow the following conventions:
+
+If the column contains two words or more, spaces between words will be represented with a "_" character
+If the table name contains two words or more, any words with more than 8 letters will be abbreviated to the first 3 letters
+
+
+General Observations:
+
+Ive changed the database collation from latin1_swedish_c1 to utf8mb4_general_ci due to a past experience with taking customer data. Swedish Ci occasionally doesnt play nice with
+accented names, therefore, if a name that had accents in the user data was inserted into the table an error could occur. To fix this, i've changed the collation to utf8 
+minimalizing this issue for the price of a slight drop in performance when sorting and searching.
+
+Aside from cross reference tables, each table will have an auto incrementing id in the first column.
+Foreign key columns will be identical in restriction and name to their original table counterparts. 
+Im currently avoiding changing size restrictions on integer and varchar values unless there is obviously a problem (i.e for addresses). The defaults are 50 characters and
+11 integers. If there is a problem further down the line or room for refinerement, it is fair to revise these restrictions. 
+
+As of now, im not following a normalization strategy (However, the database would be somewhere between 2nf and 3nf as certain areas such as counties and addresses are repeatable,
+yet this would be rare and therefore does not consitute a table of references).
+
+All cross reference table entries are set to cascade should their parent be deleted.
+Some foreign keys with one to one and one to many relationships also have cascade enabled, however, I did this on a case by case basis. 
+
+
+Points of contention:
+
+- Should buisness goals have a many to many relationship with organizations (i.e pre-set goals) or a one to many (they set their own goals). Right now its set up as many to many.
+- Account information on organisations table - what sort of information
+- I've put payment details in their own table to open the way for specific table encryption - good practice or unnecesary
+- If we want to limit the amount of directors / ESMs able to be related to a organzation entry then - https://dba.stackexchange.com/questions/118314/is-there-a-way-to-limit-the-number-of-foreign-key-references-for-a-single-table
+(for now theres a many to many relationship between users and organzations)
