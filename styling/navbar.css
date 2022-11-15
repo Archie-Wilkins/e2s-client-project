@@ -30,7 +30,14 @@
         margin-top: 0;
         margin-bottom: 0;
     }
-    
+
+        .toggleSiteBreak {
+            width: 100%;
+            size: 2;
+            color: black;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
     .navbarLink {
         color: #FFFFFF;
         text-decoration: none;

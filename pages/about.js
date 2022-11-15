@@ -4,9 +4,9 @@ import NavBar from "../public/components/navBar.js"
 function AboutUsPage() {
     return <div>
         <NavBar />
-        <Link href="/"><p>Home</p>
+        {/* <Link href="/"><p>Home</p>
         </Link>
-        <Link href="/contact"><p>Contact-Us Page</p></Link>
+        <Link href="/contact"><p>Contact-Us Page</p></Link> */}
     </div>
 }
 

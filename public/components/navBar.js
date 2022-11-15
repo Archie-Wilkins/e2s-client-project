@@ -26,15 +26,26 @@ class NavBar extends React.Component {
             //Need to change this to get this 
             //infomation from API
             displayAdminButton: false,
+            currentActiveSiteId: 3,
+            usersSites: {
+                1: "Newport Hospital",
+                3: "Heath Hospital",
+                5: "St Davids Hospital"
+            }
         };
     }
 
 
-    changeSite = () => {
-        console.log("change");
-        console.log(this.state.displaySiteToggle);
+    changeSiteMenuToggle = () => {
         this.setState({
             displaySiteToggle: !this.state.displaySiteToggle
+        })
+    }
+
+    updateCurrentActiveSiteId = (newSiteId) => {
+        console.log("Switching");
+        this.setState({
+            currentActiveSiteId: newSiteId
         })
     }
 
@@ -50,9 +61,15 @@ class NavBar extends React.Component {
         }
     }
 
+    closeSiteToggle = () => {
+        this.setState({
+            displaySiteToggle: false
+        })
+    }
+
     render() {
     return <div>
-        <div className="navbarContainer blueBackground">
+        <div className="navbarContainer blueBackground fixed-top">
             <div className="navbarContent">
 
                 <Link className="w-100 navbarLink d-flex justify-content-center" href="/">
@@ -115,9 +132,15 @@ class NavBar extends React.Component {
 
                 <div>
                     <p className='whiteText m-0'>Viewing Site:</p>
-                    <p className='whiteText m-0 changeSite position-relative' onClick={this.changeSite}>Newport Hospital</p>
-                    <div className="position-absolute" >
-                        <ToggleSite displayMenu={this.state.displaySiteToggle} />
+                    <p className='whiteText m-0 changeSite position-relative' onClick={this.changeSiteMenuToggle}>{this.state.usersSites[this.state.currentActiveSiteId]}</p>
+                    <div className="position-absolute top-50" >
+                        <ToggleSite
+                            displayMenu={this.state.displaySiteToggle}
+                            currentActiveSiteId={this.state.currentActiveSiteId}
+                            usersSites={this.state.usersSites}
+                            changeActiveSite={this.updateCurrentActiveSiteId}
+                            closeMenu={this.closeSiteToggle}
+                        />
                     </div>
                 </div>
 

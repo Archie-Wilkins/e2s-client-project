@@ -1,0 +1,17 @@
+.whiteText {
+    color: #FFFFFF;
+}
+
+.accentText {
+    color: #EDB116;
+}
+
+.darkLink {
+    color: black;
+    text-decoration: underline;
+}
+
+.darkLink:hover {
+    color: #EDB116;
+    cursor: pointer;
+}
