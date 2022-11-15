@@ -45,3 +45,11 @@
         margin-bottom: 0;
         padding-left: 8px;
 }
+.changeSite {
+    text-decoration: underline;
+}
+
+.changeSite:hover {
+    cursor: pointer;
+    color: #EDB116;
+}
