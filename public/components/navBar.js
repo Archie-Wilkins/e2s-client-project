@@ -73,7 +73,7 @@ class NavBar extends React.Component {
             <div className="navbarContent">
 
                 <Link className="w-100 navbarLink d-flex justify-content-center" href="/">
-                    <h1 className='whiteText'>E<span className='accentText'>2</span>S</h1>
+                    <h1 data-testid="logo" className='whiteText'>E<span className='accentText'>2</span>S</h1>
                 </Link>
 
                 <hr className="navbarLineBreak"></hr>
@@ -134,7 +134,7 @@ class NavBar extends React.Component {
                     <p className='whiteText m-0'>Viewing Site:</p>
                     <p className='whiteText m-0 changeSite position-relative' onClick={this.changeSiteMenuToggle}>{this.state.usersSites[this.state.currentActiveSiteId]}</p>
                     <div className="position-absolute top-50" >
-                        <ToggleSite
+                        <ToggleSite data-testid="toggleSiteMenu"
                             displayMenu={this.state.displaySiteToggle}
                             currentActiveSiteId={this.state.currentActiveSiteId}
                             usersSites={this.state.usersSites}
@@ -146,7 +146,7 @@ class NavBar extends React.Component {
 
                 <div>
                     <p className='whiteText m-0'>Signed in as:</p>
-                    <p className='whiteText m-0'>Dan Schneider</p>
+                    <p className='whiteText m-0'>Dan Schnee</p>
                 </div>
 
             </div>
