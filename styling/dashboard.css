@@ -1,0 +1,104 @@
+/*css*/
+
+body {
+    background-color: #f2f2f2;
+}
+
+div.scrollMenu {
+    overflow: auto;
+    white-space: nowrap;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.TargetCard {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    height: 100px;
+    width: 300px;
+    text-decoration: none;
+    background-color: white;
+    border-radius: 5px;
+    margin-right: 40px;
+    margin-bottom: 5px;
+    position: static;
+}
+
+.CardInformationConatiner {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    width: inherit;
+    height: inherit;
+}
+
+.TargetProgressBarContainer {
+    width: 250px;
+    height: 14px;
+    border-radius: 7px;
+    background-color: grey;
+    position: static;
+    margin-bottom: 10px;
+}
+
+.TargetProgressBarFill {
+    height: 14px;
+    border-radius: 7px;
+    width: 75%;
+    background-color: blue;
+}
+
+.TargetText {
+    height: auto;
+    width: inherit;
+    white-space: initial;
+    text-align: center;
+    align-content: center;
+    font-weight: bold;
+}
+
+
+.TimeFrameSelectBtn {
+    color: white;
+    border-radius: 5px;
+    background-color: #111D4A;
+    cursor: pointer;
+}
+
+.TimeFrameSelectBtn:hover {
+    background-color: #2a3872;
+    color: white;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    column-gap: 20px;
+    row-gap: 20px;
+    padding: 10px;
+    margin-left: 10px;
+}
+
+.grid-panel {
+    background-color: white;
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.graph-1 {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    height: 320px;
+}
+
+.observation-panel {
+    grid-column: 4;
+    grid-row: 1 / span 2;
+}
+
+.float-left {
+    float: left;
+}
