@@ -102,3 +102,61 @@ div.scrollMenu {
 .float-left {
     float: left;
 }
+
+.add-target-button-container {
+    display: inline-block;
+    height: 100px;
+    width: 300px;
+}
+
+.add-target-button {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auto-width {
+    width: inherit;
+}
+
+.center-flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info-small-text {
+    font-size: 15px;
+    margin: -5px;
+}
+
+.margin-top-negative-10 {
+    margin-top: -10px;
+}
+
+.margin-bottom-negative-10 {
+    margin-bottom: -10px;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.info-change-text {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: -5px;
+}
+
+.observation-card {;
+    text-align: center;
+    height: 100px;
+    width: 300px;
+    border-top-width: 2px;
+    border-color: black;
+    border-top-style: solid;
+    font-size: 20px;
+}
+
+

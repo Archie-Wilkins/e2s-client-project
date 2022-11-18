@@ -30,10 +30,25 @@ function Dashboard() {
                             <button type="button" className="btn TimeFrameSelectBtn">Year</button>
                         </div>
                     </div>
-                    <div className="grid-panel observation-panel">observations</div>
-                    <div className="grid-panel">energy</div>
-                    <div className="grid-panel">expend</div>
-                    <div className="grid-panel">carbon</div>
+                    <div className="grid-panel observation-panel center-flex-column">
+                        <h3>Observations</h3>
+                        <div className="observation-card">Your energy usage is likely to spike during the winter</div>
+                    </div>
+                    <div className="grid-panel center-flex-column">
+                        <p className="info-small-text margin-top-negative-10">This week you have used</p>
+                        <p className="info-change-text">12% less</p>
+                        <p className="info-small-text margin-bottom-negative-10">Kw than the previous week</p>
+                    </div>
+                    <div className="grid-panel center-flex-column">
+                        <p className="info-small-text margin-top-negative-10">This week you have spent</p>
+                        <p className="info-change-text">12% less</p>
+                        <p className="info-small-text margin-bottom-negative-10">£ than the previous week</p>
+                    </div>
+                    <div className="grid-panel center-flex-column">
+                        <p className="info-small-text margin-top-negative-10">This week you have emitted</p>
+                        <p className="info-change-text">12% less</p>
+                        <p className="info-small-text margin-bottom-negative-10">Kw than the previous week</p>
+                    </div>
 
 
                 </div>
