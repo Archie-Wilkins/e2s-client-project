@@ -24,20 +24,13 @@ cache:
     - node_modules
 
 stages:
-    - build
     - run_tests
-
-test_build:
-    stage: build
-    script:
-        - npm install 
-        - npm build 
 
 tests_pass:
     stage: run_tests
     script:
     - npm install
-    - npm test
+    - npm run test
 
 # test_db:
 #   script:
