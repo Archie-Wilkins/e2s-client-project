@@ -1,6 +1,24 @@
 {
   "/_app": "pages/_app.js",
+  "/account": "pages/account.js",
+  "/adminDashboard": "pages/adminDashboard.js",
+  "/adminViewUsers": "pages/adminViewUsers.js",
+  "/billValidation": "pages/billValidation.js",
+  "/about": "pages/about.js",
+  "/dashboard": "pages/dashboard.js",
+  "/directorDashboard": "pages/directorDashboard.js",
+  "/gdpr": "pages/gdpr.js",
+  "/contact": "pages/contact.js",
+  "/": "pages/index.js",
+  "/login": "pages/login.js",
+  "/onboarding": "pages/onboarding.js",
+  "/requestData": "pages/requestData.js",
+  "/siteAssets": "pages/siteAssets.js",
+  "/siteCompare": "pages/siteCompare.js",
+  "/siteForecasting": "pages/siteForecasting.js",
   "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js",
-  "/about": "pages/about.js"
+  "/viewReports": "pages/viewReports.js",
+  "/sitePerformance": "pages/sitePerformance.js",
+  "/help": "pages/help.js",
+  "/_document": "pages/_document.js"
 }

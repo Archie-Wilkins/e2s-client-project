@@ -134,7 +134,7 @@ class NavBar extends React.Component {
                     <p className='whiteText m-0'>Viewing Site:</p>
                     <p className='whiteText m-0 changeSite position-relative' onClick={this.changeSiteMenuToggle}>{this.state.usersSites[this.state.currentActiveSiteId]}</p>
                     <div className="position-absolute top-50" >
-                        <ToggleSite data-testid="toggleSiteMenu"
+                        <ToggleSite
                             displayMenu={this.state.displaySiteToggle}
                             currentActiveSiteId={this.state.currentActiveSiteId}
                             usersSites={this.state.usersSites}
