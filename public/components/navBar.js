@@ -30,7 +30,8 @@ class NavBar extends React.Component {
             usersSites: {
                 1: "Newport Hospital",
                 3: "Heath Hospital",
-                5: "St Davids Hospital"
+                5: "St Davids Hospital",
+                6: "Singleton Hopsital"
             }
         };
     }
