@@ -30,7 +30,7 @@ tests_pass:
     stage: run_tests
     script:
     - npm install
-    - npm run test
+    - npm test
 
 # test_db:
 #   script:
