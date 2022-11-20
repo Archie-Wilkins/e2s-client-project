@@ -1,5 +1,31 @@
-.box{
-    width: 100px;
-    height: 100px;
-    border: 1px solid black;
+
+
+.landing-carousel-1{
+    width: inherit;
+    height: 574px;
+    border: 1px solid #000000;
+    background-image: url("../public/resources/c1.png");
+    padding: 5px;
+}
+.landing-carousel-2{
+    width: inherit;
+    height: 574px;
+    border: 1px solid #000000;
+    background-image: url("../public/resources/c2.png");
+    padding: 5px;
+}
+.landing-carousel-3{
+    width: inherit;
+    height: 574px;
+    border: 1px solid #000000;
+    background-image: url("../public/resources/c3.png");
+    padding: 5px;
+}
+
+.landingBody{
+    width: inherit;
+    height: 1000px;
+    border: 1px solid #000000;
+    fill: #06064b;
+    padding: 5px;
 }
