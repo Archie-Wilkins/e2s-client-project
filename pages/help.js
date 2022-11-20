@@ -1,5 +1,5 @@
 import Link from "next/link"
-import MainLayout from "../public/components/mainLayout.js"
+import MainLayout from "../public/components/mainLayoutShell.js"
 import React from 'react';
 
 
