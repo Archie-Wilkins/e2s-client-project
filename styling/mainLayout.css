@@ -1,0 +1,7 @@
+.content {
+    position: absolute;
+    left: 20ch;
+    width: calc(100vw - 20ch);
+    top: 6ch;
+    height: calc(100vh - 6ch);
+}
