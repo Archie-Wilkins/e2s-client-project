@@ -17,8 +17,24 @@ class HelpPage extends React.Component {
         return <div>
             <MainLayout pageName={this.state.pageName}>
                 <div className="whiteBackground mt-5">
-                    <p>Help</p>
+                    <h1>Help</h1>
                 </div>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+
             </MainLayout >
 
             <Link href="/contact"><p>Contact-Us Page</p></Link>
