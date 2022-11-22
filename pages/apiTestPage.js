@@ -19,7 +19,7 @@ function ApiTestPage() {
     }
 
     return <div>
-        <body>Your shit lives here</body>
+        <body>Data</body>
         <button onClick={apiHandler}>Click Me</button>
     </div>
 }

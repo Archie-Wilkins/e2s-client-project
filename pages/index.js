@@ -1,14 +1,15 @@
 import Link from "next/link"
 import 'bootstrap/dist/css/bootstrap.css'
 import {Router} from "next/router";
-import React from "react";
+import React, {useEffect, useState} from "react";
 
-
-const dataLens = {}
-
+import * as fs from "fs";
+import {parse} from "csv-parse";
+import getDocumentElement from "@popperjs/core/lib/dom-utils/getDocumentElement";
 
 function HomePage() {
     const handleSubmit = async (event) => {
+
         // Stop the form from submitting and refreshing the page.
         event.preventDefault()
 
@@ -48,8 +49,33 @@ function HomePage() {
         window.location.reload()
     }
 
+    var userDetails = "a";
+    const csvHandler = async (event) => {
+        event.preventDefault();
+        const endpoint = '/api/csvUpload'
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }
+        const response = await fetch(endpoint, options)
+        const result = await response.json()
+        console.log(`Your enquiry has been sent: ${result.firstname}`);
+        userDetails = result.firstname;
+    }
+
+
+    const test = [["help","no"],["ok","why"]];
+
+    let fullTests = test.map(function(element){
+        return `${element.at(0)} ${element.at(1)}`;
+    })
+    console.log(fullTests);
 
     return <div>
+
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
                 <a className="navbar-brand" href="/">E2S</a>
@@ -76,6 +102,13 @@ function HomePage() {
         </nav>
 
         <Carousel/>
+        <div>
+            <form onSubmit={csvHandler} method={"post"}>
+                <button type={"submit"}>CLICK</button>
+            </form>
+            <p id={"userHeader"}>{userDetails}</p>
+            <input type="file" id="uploadfile" onChange="readImage(this)"/>
+        </div>
 
         <div className={"landingBody"}>
             <h1>About Us</h1><br/>
@@ -115,7 +148,7 @@ function Carousel(){
                     aria-label="Slide 3"></button>
         </div>
         <div className="carousel-inner">
-            <div className="carousel-item active" data-bs-interval="200">
+            <div className="carousel-item active" data-bs-interval="2000">
                 <div className={"landing-carousel-1"}/>
                 <div className="carousel-caption d-none d-md-block">
                     <h2>First slide label</h2>
@@ -149,5 +182,13 @@ function Carousel(){
         </button>
     </div>
 }
+
+// This gets called on every request
+/*export async function getServerSideProps() {
+
+    return {props: {example: "Test"}};
+}*/
+
+
 
 export default HomePage
