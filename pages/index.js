@@ -2,9 +2,43 @@ import Link from "next/link"
 import 'bootstrap/dist/css/bootstrap.css'
 import {Router} from "next/router";
 import React, {useEffect, useState} from "react";
+import Script from "next/script";
 
 
 function HomePage() {
+    let co2Var = "no";
+    let spendingVar = "no";
+
+    /*const co2Check = document.getElementById('co2');
+    const spendingCheck = document.getElementById('spending');
+
+    co2Check.addEventListener('click', function handleClick() {
+        if(co2==="no"){
+            co2Var = "yes";
+        }else if(co2==="yes"){
+            co2Var = "no";
+        }else{
+            //default it
+            co2Var = "no";
+        }
+    });
+
+    spendingCheck.addEventListener('click', function handleClick() {
+        if(spendingVar==="no"){
+            spendingVar = "yes";
+        }else if(spendingVar==="yes"){
+            spendingVar = "no";
+        }else{
+            //default it
+            spendingVar = "no";
+        }
+    });*/
+    const [count, setCount] = useState(0);
+
+    let userIndustry, userBusiness, userEmail, userComments, userCo2, userSpending, userEnergy,
+        userTechnology = "";
+    let formSubmitted = "false";
+
     const handleSubmit = async (event) => {
 
         // Stop the form from submitting and refreshing the page.
@@ -15,7 +49,11 @@ function HomePage() {
             industry: event.target.industry.value,
             business: event.target.business.value,
             email: event.target.email.value,
-            questions: event.target.questions.value,
+            questions: event.target.enquiryCommentSection.value,
+            co2: JSON.stringify(event.target.co2.checked),
+            spending: JSON.stringify(event.target.spending.checked),
+            energy: JSON.stringify(event.target.energy.checked),
+            technology: JSON.stringify(event.target.technology.checked),
         }
 
         // Send the data to the server in JSON format.
@@ -42,8 +80,17 @@ function HomePage() {
         // Get the response data from server as JSON.
         // If server returns the name submitted, that means the form works.
         const result = await response.json()
-        alert(`Your enquiry has been sent: ${result.data}`)
-        window.location.reload()
+        userIndustry = result.data.industry;
+        userEmail = result.data.email;
+        userBusiness = result.data.business;
+        userComments = result.data.comments;
+        userEnergy = result.data.energy;
+        userCo2 = result.data.co2;
+        userSpending = result.data.spending;
+        userTechnology = result.data.technology;
+        formSubmitted = "true";
+        alert(`Your enquiry has been sent from ` + userEmail)
+        //window.location.reload()
     }
 
     const csvHandler = async (event) => {
@@ -69,7 +116,7 @@ function HomePage() {
     console.log(fullTests);*/
 
 
-    return <div>
+    return <div className={"landing-pge"}>
 
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
@@ -100,26 +147,48 @@ function HomePage() {
 
         <div className={"landingBody"}>
             <h1>About Us</h1><br/>
-            <Accordion/>
+            <Accordion/><br/>
             <h1>Enquire</h1>
-            <form onSubmit={handleSubmit} method="post">
-                <label htmlFor="industry">Which industry are you in? (Required)</label>
+            <p>Tell us about your site and your goals.</p>
+            <form onSubmit={handleSubmit} className={"enquiry-form"} method="post" id={"enquiryForm"}>
+                <div className={"enquiry-form-header"}>REQUEST FORM</div>
+                <div className={"enquiry-form-content"}>
+                    <label htmlFor="industry">Which industry are you in? (Required)</label>
+                    <br/>
+                    <input type="text" id="industry" name="industry" required minLength={"1"} maxLength={"50"}/>
+                    <br/><br/>
+                    <label htmlFor="business">What is your business name? (Required)</label>
+                    <br/>
+                    <input type="text" id="business" name="business" required minLength={"1"} maxLength={"50"}/>
+                    <br/><br/>
+                    <label htmlFor="email">What is your email address? (Required)</label>
+                    <br/>
+                    <input type="text" id="email" name="email" required minLength={"1"} maxLength={"50"}/>
+
+                    <br/><br/>
+                    <div className="form-check">
+                        <input className="form-check-input" type="checkbox" value="" id="co2" onClick={() => setCount(count+1)}/>
+                        <label className="form-check-label" htmlFor="flexCheckDefault">CO2 Emissions</label>
+                    </div>
+                    <div className="form-check">
+                        <input className="form-check-input" type="checkbox" value="" id="spending"/>
+                        <label className="form-check-label" htmlFor="flexCheckDefault">Spending</label>
+                    </div>
+                    <div className="form-check">
+                        <input className="form-check-input" type="checkbox" value="" id="energy"/>
+                        <label className="form-check-label" htmlFor="flexCheckDefault">Energy Use</label>
+                    </div>
+                    <div className="form-check">
+                        <input className="form-check-input" type="checkbox" value="" id="technology"/>
+                        <label className="form-check-label" htmlFor="flexCheckDefault">Technology Insights</label>
+                    </div>
+                    <br/>
+                </div>
+
+                <label htmlFor={"enquiryCommentSection"} className={"enquiry-form-comment-section-label"}>Would you like to asky any questions? (Optional)</label>
+                <input type={"text"} className={"enquiry-form-comment-section"} id={"enquiryCommentSection"}></input>
                 <br/>
-                <input type="text" id="industry" name="industry" required minLength={"1"} maxLength={"50"}/>
-                <br/><br/>
-                <label htmlFor="business">What is your business name? (Required)</label>
-                <br/>
-                <input type="text" id="business" name="business" required minLength={"1"} maxLength={"50"}/>
-                <br/><br/>
-                <label htmlFor="email">What is your email address? (Required)</label>
-                <br/>
-                <input type="text" id="email" name="email" required minLength={"1"} maxLength={"50"}/>
-                <br/><br/>
-                <label htmlFor="questions">Do you have any general questions or comments? (Optional)</label>
-                <br/>
-                <input type="text" id="questions" name="questions" minLength={"1"} maxLength={"50"}/>
-                <br/><br/>
-                <button type="submit">Submit</button>
+                <button type="submit" className={"enquiry-form-submit-button"}>Submit</button>
             </form>
         </div>
     </div>
@@ -140,7 +209,7 @@ function Carousel(){
             <div className="carousel-item active" data-bs-interval="2000">
                 <div className={"landing-carousel-1"}/>
                 <div className="carousel-caption d-none d-md-block">
-                    <h2 className={"carousel-content"}>First slide label</h2>
+                    <h2 className={"carousel-content"}>WELCOME TO NEXT</h2>
                     <p className={"carousel-content"}>Some representative placeholder content for the first slide.</p>
                 </div>
             </div>

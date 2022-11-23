@@ -39,10 +39,10 @@
 
 .landingBody{
     width: inherit;
-    height: 1000px;
     border: 1px solid #000000;
     fill: #06064b;
     padding: 5px;
+    background-color: rgba(0,0,0,0.10)
 }
 
 .accordion-button{
@@ -53,4 +53,53 @@
 .accordion-button:hover{
     background-color: gray !important;
     color: cyan !important;
+}
+
+.enquiry-form{
+    border: black;
+    border-radius: 2px;
+    background-color: rgba(223, 230, 249, 1);
+    width: 60%;
+    margin-right: auto;
+}
+
+.enquiry-form-content{
+    display: block;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    color: black;
+}
+
+.enquiry-form-header {
+    display: block;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(16, 43, 112, 1);
+    color: white;
+}
+
+.enquiry-form-comment-section {
+    display: block;
+    width: 60%;
+    height: 100px;
+    margin-left: 10%;
+    margin-right: auto;
+    color: black;
+}
+
+.enquiry-form-comment-section-label {
+    display: block;
+    width: 60%;
+    margin-left: 10%;
+    margin-right: auto;
+    color: black;
+}
+
+.enquiry-form-submit-button {
+    display: block;
+    margin-left: 10%;
+    margin-right: auto;
+    color: black;
 }
