@@ -3,10 +3,10 @@ function ApiTestPage() {
 
     const apiHandler = async (event) => {
         event.preventDefault();
-        const endpoint = '/api/csvUpload'
+        const endpoint = '/api/csvWrite'
 
         const options = {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },

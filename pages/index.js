@@ -3,9 +3,6 @@ import 'bootstrap/dist/css/bootstrap.css'
 import {Router} from "next/router";
 import React, {useEffect, useState} from "react";
 
-import * as fs from "fs";
-import {parse} from "csv-parse";
-import getDocumentElement from "@popperjs/core/lib/dom-utils/getDocumentElement";
 
 function HomePage() {
     const handleSubmit = async (event) => {
@@ -49,7 +46,6 @@ function HomePage() {
         window.location.reload()
     }
 
-    var userDetails = "a";
     const csvHandler = async (event) => {
         event.preventDefault();
         const endpoint = '/api/csvUpload'
@@ -62,8 +58,7 @@ function HomePage() {
         }
         const response = await fetch(endpoint, options)
         const result = await response.json()
-        console.log(`Your enquiry has been sent: ${result.firstname}`);
-        userDetails = result.firstname;
+        console.log(`Your enquiry has been sent: ${result.data}`);
     }
 
 
@@ -106,8 +101,7 @@ function HomePage() {
             <form onSubmit={csvHandler} method={"post"}>
                 <button type={"submit"}>CLICK</button>
             </form>
-            <p id={"userHeader"}>{userDetails}</p>
-            <input type="file" id="uploadfile" onChange="readImage(this)"/>
+            <input type="file" id="uploadfile" onSubmit={csvHandler}/>
         </div>
 
         <div className={"landingBody"}>
