@@ -51,3 +51,12 @@ describe('admin button not displayed by default', () => {
     })
 })
 
+describe('admin button displayed when isDirector is true', () => {
+    it('displayed', () => {
+        render(<NavBar isDirector={true} />)
+
+        const adminButtons = screen.queryAllByText('Admin')
+        expect(adminButtons).toHaveLength(1)
+    })
+})
+

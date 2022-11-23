@@ -22,8 +22,8 @@ class adminNavBar extends React.Component {
             <div className="navbarContainer blueBackground fixed-top">
                 <div className="navbarContent">
 
-                    <Link className="w-100 navbarLink d-flex justify-content-center" href="/">
-                        <h1 data-testid="logo" className='whiteText'>E<span className='accentText'>2</span>S</h1>
+                    <Link className="w-100 navbarLink d-flex justify-content-center" href="/admin/dashboard">
+                        <h1 data-testid="admin-logo" className='whiteText'>E<span className='accentText'>2</span>S</h1>
                     </Link>
 
                     <hr className="navbarLineBreak"></hr>

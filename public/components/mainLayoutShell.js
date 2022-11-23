@@ -16,7 +16,7 @@ class MainLayout extends React.Component {
 
     render() {
         return <div className='overflow-hidden'>
-            <MasterNavBar isAdmin={this.state.isAdmin} />
+            <MasterNavBar isAdmin={this.props.isAdmin} isDirector={this.props.isDirector} />
             <TopNavBar pageName={this.props.pageName} />
             <div className="content greyBackground">
                 {this.props.children}

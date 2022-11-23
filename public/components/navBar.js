@@ -23,9 +23,8 @@ class NavBar extends React.Component {
         super(props);
         this.state = {
             displaySiteToggle: false,
-            //Need to change this to get this 
+            //Need to change this to get this
             //infomation from API
-            displayAdminButton: false,
             currentActiveSiteId: 3,
             usersSites: {
                 1: "Newport Hospital",
@@ -51,7 +50,7 @@ class NavBar extends React.Component {
     }
 
     displayAdminButton = () => {
-        if (this.state.displayAdminButton) {
+        if (this.props.isDirector) {
             return <Link className=" navbarLink d-flex" href="/account">
                 <FaUsers />
                 <p>Admin</p>

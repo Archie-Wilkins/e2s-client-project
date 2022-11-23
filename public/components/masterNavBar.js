@@ -7,17 +7,15 @@ import React from 'react';
 class MasterNavBar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            isAdmin: false,
-        };
     }
 
     displayNavBar = () => {
-        if (this.state.isAdmin) {
+        if (this.props.isAdmin) {
             return <AdminNavBar />
         }
         else {
-            return <NavBar />;
+
+            return <NavBar isDirector={this.props.isDirector || false} />;
         }
     }
 
