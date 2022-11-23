@@ -66,7 +66,7 @@ class LoginComponent extends React.Component {
             <h2 className="LoginHeader">Sign In</h2>
     </div>
 
-        <form action="/login" method="post" className="LoginForm" onSubmit={this.loginSubmit}>
+        <form action="/pages/login" method="post" className="LoginForm" onSubmit={this.loginSubmit}>
             <div className="TextInputValue">Email</div>
             <input type="email" id="email" className="TextInputBox"></input>
             <div className="TextInputValue">Password</div>

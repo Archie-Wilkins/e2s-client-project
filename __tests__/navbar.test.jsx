@@ -3,7 +3,7 @@
 import {fireEvent, render, screen} from '@testing-library/react'
 import Home from '../pages/index'
 import '@testing-library/jest-dom'
-import NavBar from "../public/components/navBar";
+import NavBar from "../public/components/layouts/navBar";
 
 describe('forecasting', () => {
     it('renders a forecasting tab', () => {

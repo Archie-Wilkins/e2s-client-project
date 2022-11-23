@@ -1,5 +1,5 @@
 import Link from "next/link"
-import MainLayout from "../public/components/mainLayoutShell.js"
+import MainLayout from "../public/components/layouts/mainLayoutShell.js"
 import React from 'react';
 
 
@@ -13,7 +13,7 @@ class HelpPage extends React.Component {
 
             //Would be ideal to store these in some sort of cookie or global variable
             //if these are not present then the nav bar will default to standard ESM nav bar 
-            isAdmin: true,
+            isAdmin: false,
             isDirector: true,
         };
     }

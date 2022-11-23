@@ -1,9 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from "next/link"
-import NavBar from ".//navBar.js"
-import AdminNavBar from ".//adminNavBar.js"
 import React from 'react';
-
+import AdminNavBar from "./adminNavBar";
+import NavBar from "./navBar";
 class MasterNavBar extends React.Component {
     constructor(props) {
         super(props);

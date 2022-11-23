@@ -1,10 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { loadGetInitialProps } from 'next/dist/shared/lib/utils.js';
 import React from 'react';
-import MasterNavBar from './masterNavBar.js';
 import TopNavBar from './topNavBar.js';
+import MasterNavBar from "./masterNavBar";
 
-class MainLayout extends React.Component {
+class MainLayoutShell extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -27,4 +26,4 @@ class MainLayout extends React.Component {
 }
 
 
-export default MainLayout
+export default MainLayoutShell
