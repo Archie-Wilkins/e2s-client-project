@@ -96,12 +96,6 @@ function HomePage() {
         </nav>
 
         <Carousel/>
-        <div>
-            <form onSubmit={csvHandler} method={"post"}>
-                <button type={"submit"}>CLICK</button>
-            </form>
-            <input type="file" id="uploadfile" onSubmit={csvHandler}/>
-        </div>
 
         <div className={"landingBody"}>
             <h1>About Us</h1><br/>
@@ -145,22 +139,22 @@ function Carousel(){
             <div className="carousel-item active" data-bs-interval="2000">
                 <div className={"landing-carousel-1"}/>
                 <div className="carousel-caption d-none d-md-block">
-                    <h2>First slide label</h2>
-                    <p>Some representative placeholder content for the first slide.</p>
+                    <h2 className={"carousel-content"}>First slide label</h2>
+                    <p className={"carousel-content"}>Some representative placeholder content for the first slide.</p>
                 </div>
             </div>
             <div className="carousel-item" data-bs-interval="2000">
                 <div className={"landing-carousel-2"}/>
                 <div className="carousel-caption d-none d-md-block">
-                    <h2>Second slide label</h2>
-                    <p>Some representative placeholder content for the second slide.</p>
+                    <h2 className={"carousel-content"}>Second slide label</h2>
+                    <p className={"carousel-content"}>Some representative placeholder content for the second slide.</p>
                 </div>
             </div>
             <div className="carousel-item">
                 <div className={"landing-carousel-3"}/>
                 <div className="carousel-caption d-none d-md-block">
-                    <h2>Third slide label</h2>
-                    <p>Some representative placeholder content for the third slide.</p>
+                    <h2 className={"carousel-content-dark"}>Third slide label</h2>
+                    <p className={"carousel-content-dark"}>Some representative placeholder content for the third slide.</p>
                 </div>
             </div>
         </div>
