@@ -3,7 +3,7 @@
 import {fireEvent, render, screen, waitFor} from '@testing-library/react'
 import Home from '../pages/index'
 import '@testing-library/jest-dom'
-import MainLayoutShell from "../public/components/mainLayoutShell";
+import MainLayoutShell from "../public/components/layouts/mainLayoutShell";
 
 describe('mainlayoutshell', () => {
     it('renders a top bar with page name', () => {

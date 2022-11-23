@@ -2,7 +2,7 @@
 
 import {fireEvent, render, screen, waitFor} from '@testing-library/react'
 import '@testing-library/jest-dom'
-import MasterNavBar from "../public/components/masterNavBar";
+import MasterNavBar from "../public/components/layouts/masterNavBar";
 
 describe('master nav bar admin side bar', () => {
     it('renders admin bar when isAdmin is true', () => {

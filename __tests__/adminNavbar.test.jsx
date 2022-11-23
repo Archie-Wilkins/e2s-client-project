@@ -3,7 +3,7 @@
 import {fireEvent, render, screen, waitFor} from '@testing-library/react'
 import Home from '../pages/index'
 import '@testing-library/jest-dom'
-import AdminNavBar from "../public/components/adminNavBar";
+import AdminNavBar from "../public/components/layouts/adminNavBar";
 
 describe('dashboard', () => {
     it('renders a dashboard tab', () => {
