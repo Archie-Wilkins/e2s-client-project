@@ -12,7 +12,7 @@
 }
 .landing-carousel-2{
     display: block;
-    height: 700px;
+    height: 670px;
     margin-left: auto;
     margin-right: auto;
     width: 50%;
@@ -43,4 +43,14 @@
     border: 1px solid #000000;
     fill: #06064b;
     padding: 5px;
+}
+
+.accordion-button{
+    background-color: #06064b !important;
+    color: white !important;
+}
+
+.accordion-button:hover{
+    background-color: gray !important;
+    color: cyan !important;
 }
