@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from "next/link"
-import ToggleSite from ".//toggleSite.js"
+import ToggleSite from "./toggleSite.js"
 import React from 'react';
 
 
@@ -43,7 +43,6 @@ class NavBar extends React.Component {
     }
 
     updateCurrentActiveSiteId = (newSiteId) => {
-        console.log("Switching");
         this.setState({
             currentActiveSiteId: newSiteId
         })
