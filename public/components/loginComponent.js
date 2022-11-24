@@ -1,8 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Link from 'next/link';
 import React from 'react';
-import {useState} from 'react';
-//import {loginSubmit} from '../../pages/api/login'
+import LoginPage from '../../pages/login';
+import Cookies from 'universal-cookie';
+import App from '../../pages/_app'
+
 
 class LoginComponent extends React.Component {
     constructor(props) {
@@ -64,6 +65,45 @@ class LoginComponent extends React.Component {
         // Stop the form from submitting and refreshing the page.
         event.preventDefault();
 
+        this.state.email = event.target.email.value;
+        this.state.password = event.target.password.value;
+        console.log(this.state.email);
+        console.log(this.state.password);
+
+        var validEmail = 0;
+        var validPassword = 0;
+
+
+        if (!(this.state.email.includes("@") && this.state.email.includes("."))) // if email not valid
+        {
+            validEmail = 1;// 1 = invalid
+        }
+
+        if (this.state.password.length === 0) { //if no password has been entered
+            validPassword = 1;
+        }
+
+        if (validEmail === 1 && validPassword === 1){
+            document.getElementById("error").innerText = "Invalid credentials";
+            document.getElementById("error").style.display = "block";
+            return;
+        }
+
+        if (validEmail === 1){
+            document.getElementById("error").innerText = "Invalid email";
+            document.getElementById("error").style.display = "block";
+            return;
+        }
+
+        if (validPassword === 1){
+            document.getElementById("error").innerText = "Invalid password";
+            document.getElementById("error").style.display = "block";
+            return;
+        }
+
+        document.getElementById("error").style.display = "none";
+
+
         // Get data from the form.
         const data = {
             email: event.target.email.value,
@@ -95,6 +135,31 @@ class LoginComponent extends React.Component {
         // If server returns the name submitted, that means the form works.
         const result = await response.json();
         alert(`Your enquiry has been sent: ${result.data}`);
+
+        //do if to see if user returned correct
+        //let responseText = ${result.data}
+
+        if(result.data.toString() === "unsuccessfulLogin") {
+            //shows login was unsuccessful
+            document.getElementById("error").innerText = "password or email is incorrect";
+            document.getElementById("error").style.display = "block";
+            return;
+        } else {
+            //LoginPage.setUserID(result.data);
+            //LoginPage.createSession();
+
+            //const cookies = new Cookies(req.headers.cookie);
+            //cookies.get('user').data
+            //console.log(cookies.get('user'));
+
+            //relocates into the server
+            //App.call(setCookie(1))
+            const cookies = new Cookies();
+            cookies.set('user', result.data, { path: '/' });
+            console.log("fetching cookie");
+            console.log("userSession created " + cookies.get('user'));
+            //window.location = "/";
+        }
     }
 
 

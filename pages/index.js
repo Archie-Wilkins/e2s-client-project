@@ -12,6 +12,7 @@ import Link from "next/link"
 }*/
 
 function HomePage() {
+    console.log("userSession ID: " + cookies.get('user'));
     return <div>
         <Link href="/contact"><p>Contact Us Page</p>
         </Link>
