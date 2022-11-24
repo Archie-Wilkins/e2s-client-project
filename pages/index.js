@@ -4,6 +4,8 @@ import {Router} from "next/router";
 import React, {useEffect, useState} from "react";
 import Script from "next/script";
 
+let userIndustry, userBusiness, userEmail, userComments, userCo2, userSpending, userEnergy,
+    userTechnology = "";
 
 function HomePage() {
     let co2Var = "no";
@@ -35,9 +37,12 @@ function HomePage() {
     });*/
     const [count, setCount] = useState(0);
 
-    let userIndustry, userBusiness, userEmail, userComments, userCo2, userSpending, userEnergy,
-        userTechnology = "";
-    let formSubmitted = "false";
+
+    const [formSubmitted, setSubmitted] = useState(false)
+
+    const handleFormSubmitted = (e) => {
+        !formSubmitted ? setSubmitted(true) : setSubmitted(false)
+    }
 
     const handleSubmit = async (event) => {
 
@@ -80,6 +85,7 @@ function HomePage() {
         // Get the response data from server as JSON.
         // If server returns the name submitted, that means the form works.
         const result = await response.json()
+        handleFormSubmitted();
         userIndustry = result.data.industry;
         userEmail = result.data.email;
         userBusiness = result.data.business;
@@ -88,9 +94,12 @@ function HomePage() {
         userCo2 = result.data.co2;
         userSpending = result.data.spending;
         userTechnology = result.data.technology;
-        formSubmitted = "true";
         alert(`Your enquiry has been sent from ` + userEmail)
         //window.location.reload()
+    }
+
+    const handleReset = async (event) => {
+        window.location.reload();
     }
 
     const csvHandler = async (event) => {
@@ -150,46 +159,82 @@ function HomePage() {
             <Accordion/><br/>
             <h1>Enquire</h1>
             <p>Tell us about your site and your goals.</p>
-            <form onSubmit={handleSubmit} className={"enquiry-form"} method="post" id={"enquiryForm"}>
-                <div className={"enquiry-form-header"}>REQUEST FORM</div>
-                <div className={"enquiry-form-content"}>
-                    <label htmlFor="industry">Which industry are you in? (Required)</label>
-                    <br/>
-                    <input type="text" id="industry" name="industry" required minLength={"1"} maxLength={"50"}/>
-                    <br/><br/>
-                    <label htmlFor="business">What is your business name? (Required)</label>
-                    <br/>
-                    <input type="text" id="business" name="business" required minLength={"1"} maxLength={"50"}/>
-                    <br/><br/>
-                    <label htmlFor="email">What is your email address? (Required)</label>
-                    <br/>
-                    <input type="text" id="email" name="email" required minLength={"1"} maxLength={"50"}/>
 
-                    <br/><br/>
-                    <div className="form-check">
-                        <input className="form-check-input" type="checkbox" value="" id="co2" onClick={() => setCount(count+1)}/>
-                        <label className="form-check-label" htmlFor="flexCheckDefault">CO2 Emissions</label>
+            {formSubmitted === true && (
+                <div className={"enquiry-form"}>
+                    <div className={"enquiry-form-header"}>REQUEST FORM</div>
+                    <div className={"enquiry-form-content"}>
+                        <br/>
+                        <label>Industry: {userIndustry}</label>
+                        <br/>
+                        <label>Business: {userBusiness}</label>
+                        <br/>
+                        <label>Email: {userEmail}</label>
+                        <br/>
+                        <label>Comments: {userComments}</label>
+                        <br/>
+                        <h2>Goals</h2>
+                        <br/>
+                        {userCo2 === "true" && (
+                            <label>CO2</label>
+                        )}
+                        {userSpending === "true" && (
+                                <label>Spending</label>
+                        )}
+                        {userEnergy === "true" && (
+                                <label>Energy</label>
+                        )}
+                        {userTechnology === "true" && (
+                                <label>Technology</label>
+                        )}
+
                     </div>
-                    <div className="form-check">
-                        <input className="form-check-input" type="checkbox" value="" id="spending"/>
-                        <label className="form-check-label" htmlFor="flexCheckDefault">Spending</label>
-                    </div>
-                    <div className="form-check">
-                        <input className="form-check-input" type="checkbox" value="" id="energy"/>
-                        <label className="form-check-label" htmlFor="flexCheckDefault">Energy Use</label>
-                    </div>
-                    <div className="form-check">
-                        <input className="form-check-input" type="checkbox" value="" id="technology"/>
-                        <label className="form-check-label" htmlFor="flexCheckDefault">Technology Insights</label>
-                    </div>
-                    <br/>
+                    <button onClick={handleReset}>BACK</button>
                 </div>
+            )}
+            {!formSubmitted && (
+                <form onSubmit={handleSubmit} className={"enquiry-form"} method="post" id={"enquiryForm"}>
+                    <div className={"enquiry-form-header"}>REQUEST FORM</div>
+                    <div className={"enquiry-form-content"}>
+                        <label htmlFor="industry">Which industry are you in? (Required)</label>
+                        <br/>
+                        <input type="text" id="industry" name="industry" required minLength={"1"} maxLength={"50"}/>
+                        <br/><br/>
+                        <label htmlFor="business">What is your business name? (Required)</label>
+                        <br/>
+                        <input type="text" id="business" name="business" required minLength={"1"} maxLength={"50"}/>
+                        <br/><br/>
+                        <label htmlFor="email">What is your email address? (Required)</label>
+                        <br/>
+                        <input type="text" id="email" name="email" required minLength={"1"} maxLength={"50"}/>
 
-                <label htmlFor={"enquiryCommentSection"} className={"enquiry-form-comment-section-label"}>Would you like to asky any questions? (Optional)</label>
-                <input type={"text"} className={"enquiry-form-comment-section"} id={"enquiryCommentSection"}></input>
-                <br/>
-                <button type="submit" className={"enquiry-form-submit-button"}>Submit</button>
-            </form>
+                        <br/><br/>
+                        <div className="form-check">
+                            <input className="form-check-input" type="checkbox" value="" id="co2" onClick={() => setCount(count+1)}/>
+                            <label className="form-check-label" htmlFor="flexCheckDefault">CO2 Emissions</label>
+                        </div>
+                        <div className="form-check">
+                            <input className="form-check-input" type="checkbox" value="" id="spending"/>
+                            <label className="form-check-label" htmlFor="flexCheckDefault">Spending</label>
+                        </div>
+                        <div className="form-check">
+                            <input className="form-check-input" type="checkbox" value="" id="energy"/>
+                            <label className="form-check-label" htmlFor="flexCheckDefault">Energy Use</label>
+                        </div>
+                        <div className="form-check">
+                            <input className="form-check-input" type="checkbox" value="" id="technology"/>
+                            <label className="form-check-label" htmlFor="flexCheckDefault">Technology Insights</label>
+                        </div>
+                        <br/>
+                    </div>
+
+                    <label htmlFor={"enquiryCommentSection"} className={"enquiry-form-comment-section-label"}>Would you like to asky any questions? (Optional)</label>
+                    <input type={"text"} className={"enquiry-form-comment-section"} id={"enquiryCommentSection"}></input>
+                    <br/>
+                    <button type="submit" className={"enquiry-form-submit-button"}>Submit</button>
+                </form>
+            )}
+
         </div>
     </div>
 
@@ -294,6 +339,16 @@ function Accordion(){
             </div>
         </div>
     </div>
+}
+
+function EnquiryForm(){
+    return <div>
+
+    </div>
+}
+
+function EnquirySuccess(){
+    return <div>YES</div>
 }
 
 // This gets called on every request
