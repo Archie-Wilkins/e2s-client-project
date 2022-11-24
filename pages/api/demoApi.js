@@ -1,8 +1,7 @@
 //use in your modules
-import '../../db/DatabaseConfig.js'
-var mysqlDb = require('../../db/DatabaseCore'), //path to above db module
 
-db = mysqlDb.get();
+var mysqlDb = require('../../db/DatabaseCore.js');
+var db = mysqlDb.getPool();
 
 
 function getUsers(req, res) {

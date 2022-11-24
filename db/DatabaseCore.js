@@ -1,23 +1,14 @@
-var mysql = require('mysql'),
-    db;
-
+var mysql = require('mysql');
+var pool;
 module.exports = {
-    init: function(conf){
-        if(!db){
-            db = mysql.createPool({
-                host: conf.host,
-                user: conf.root,
-                password: conf.password,
-                database: conf.database
-            });
-        }
-    },
-    get: function() {
-        if(!db) {
-            throw new Error('The db pool has not been initialized, call init({}) prior to get().');
-        }
-
-        return db;
+    getPool: function () {
+        if (pool) return pool;
+        pool = mysql.createPool({
+            host: 'localhost',
+            user: 'root',
+            password: 'comsc',
+            database: 'e2s_db'
+        });
+        return pool;
     }
 };
-
