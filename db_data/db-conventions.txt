@@ -3,13 +3,13 @@ Naming Conventions:
 Table names can be any length, however:
 
 If the table name contains two words or more, spaces between words will be represented with a "_" character
-If the table name contains two words or more, any words with more than 8 letters will be abbreviated to the first 3 letters, excluding the first word.
+If the table name contains two words or more, any words with more than 8 letters will be abbreviated to the first 3 letters (unless another amount makes more sense), excluding the first word.
 If the table is a cross-reference table (ie supporting a many to many relationship) the table will be named [table1]-[table2]-crossref
 
 Column names can have a max length of 30 characters and follow the following conventions:
 
 If the column contains two words or more, spaces between words will be represented with a "_" character
-If the table name contains two words or more, any words with more than 8 letters will be abbreviated to the first 3 letters
+If the table name contains two words or more, any words with more than 8 letters will be abbreviated to the first 3 letters (unless another amount makes more sense).
 
 
 General Observations:
@@ -32,20 +32,19 @@ Some foreign keys with one to one and one to many relationships also have cascad
 
 Points of contention:
 
-DONE
-- PRE DETERMINED Should buisness goals have a many to many relationship with organizations (i.e pre-set goals) or a one to many (they set their own goals). Right now its set up as many to many.
-- NO HARM - NOT MVPI've put payment details in their own table to open the way for specific table encryption - good practice or unnecesary
-- 1 DIRECTOR, LIMITLESS ESMS AND ADMINS  If we want to limit the amount of directors / ESMs able to be related to a organzation entry then - https://dba.stackexchange.com/questions/118314/is-there-a-way-to-limit-the-number-of-foreign-key-references-for-a-single-table
-(for now theres a many to many relationship between users and organzations)
-- LEAVE FOR NOW In terms of onboarding requests and managing goals, i've set it so this works identically to the site requests. Only issue is that would this data be really necessary?
-While onboarding wouldnt we store the goals locally, then once completed the onboarding request becomes an organisation and only then do the goals set while onboarding get used?
-
+The following is pushed down the line:
 TODO
 - In the table for site energy data, what is the difference between usage and imported and as well as that output and exported.
 - The units of each value in the table need to be looked at and for some tables (e.g energy asset data) the timeframes the units are used for also should be looked at.
 - In many to many tables, look at making columns unique.
 - energy asset data site crossref may not be neccesary as there is already a link there aka assets are linked to a room, rooms are linked to a site. Im making a big circle unnecesarily basically.
 - Director id in organisations is useless for now but when users data is split it may become useful.
+
+From Archie's comments:
+- An agreed upon unit system is required for which each number has a unit
+- Site data requests may not be neccesary down the line
+- Storing reports needs to be considered down the line
+- A reccomendations table will also likely be required down the line with a crossref to the site and/or organisation table
 
 
 Possibility of splitting users table down the line - a separate table may be needed to store users with access to multiple sites. This would clear uo the many to many relationship between users and sites.
