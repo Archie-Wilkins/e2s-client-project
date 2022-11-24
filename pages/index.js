@@ -34,10 +34,9 @@ function HomePage() {
     });*/
     const [count, setCount] = useState(0);
 
-    const hold ="";
-
     const [formSubmitted, setSubmitted] = useState(false)
 
+    const ab = "";
     const handleFormSubmitted = (e) => {
         !formSubmitted ? setSubmitted(true) : setSubmitted(false)
     }
