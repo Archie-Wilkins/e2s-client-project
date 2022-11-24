@@ -22,7 +22,6 @@ function HomePage() {
             co2Var = "no";
         }
     });
-
     spendingCheck.addEventListener('click', function handleClick() {
         if(spendingVar==="no"){
             spendingVar = "yes";
@@ -92,7 +91,7 @@ function HomePage() {
         userCo2 = result.data.co2;
         userSpending = result.data.spending;
         userTechnology = result.data.technology;
-        alert(`Your enquiry has been sent from ` + userEmail)
+        //alert(`Your enquiry has been sent from ` + userEmail)
         //window.location.reload()
     }
 
@@ -161,7 +160,9 @@ function HomePage() {
 
             {formSubmitted === true && (
                 <div className={"enquiry-form"}>
-                    <div className={"enquiry-form-header"}>REQUEST FORM</div>
+                    <div className={"enquiry-form-header"}>
+                        <h1>REQUEST FORM</h1>
+                    </div>
                     <div className={"enquiry-form-content"}>
                         <br/>
                         <label>Industry: {userIndustry}</label>
@@ -193,7 +194,9 @@ function HomePage() {
             )}
             {!formSubmitted && (
                 <form onSubmit={handleSubmit} className={"enquiry-form"} method="post" id={"enquiryForm"}>
-                    <div className={"enquiry-form-header"}>REQUEST FORM</div>
+                    <div className={"enquiry-form-header"}>
+                        <h1>REQUEST FORM</h1>
+                    </div>
                     <div className={"enquiry-form-content"}>
                         <label htmlFor="industry">Which industry are you in? (Required)</label>
                         <br/>
