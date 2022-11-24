@@ -2,14 +2,19 @@
   "name": "e2s_team4",
   "version": "1.0.0",
   "dependencies": {
+    "@popperjs/core": "^2.11.6",
+    "bootstrap": "^5.2.2",
+    "csv-parse": "^5.3.2",
+    "fs": "^0.0.1-security",
     "next": "^13.0.2",
+    "papaparse": "^5.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "scripts": {
-    "dev": "node server.js",
+    "dev": "next dev",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "next start",
     "lint": "next lint"
   }
 }
