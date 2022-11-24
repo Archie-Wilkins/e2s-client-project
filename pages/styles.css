@@ -45,6 +45,14 @@
     background-color: rgba(0,0,0,0.10)
 }
 
+.landingBody h1{
+    margin-left: 1%;
+}
+
+.landingBody p{
+    margin-left: 1%;
+}
+
 .accordion-button{
     background-color: #06064b !important;
     color: white !important;
@@ -56,11 +64,12 @@
 }
 
 .enquiry-form{
-    border: black;
-    border-radius: 2px;
+    border: solid 1px black;
     background-color: rgba(223, 230, 249, 1);
     width: 60%;
+    margin-left: 1%;
     margin-right: auto;
+    margin-bottom: 10%;
 }
 
 .enquiry-form-content{
@@ -102,4 +111,5 @@
     margin-left: 10%;
     margin-right: auto;
     color: black;
+    margin-bottom: 10%;
 }

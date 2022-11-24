@@ -8,8 +8,6 @@ let userIndustry, userBusiness, userEmail, userComments, userCo2, userSpending, 
     userTechnology = "";
 
 function HomePage() {
-    let co2Var = "no";
-    let spendingVar = "no";
 
     /*const co2Check = document.getElementById('co2');
     const spendingCheck = document.getElementById('spending');
@@ -99,6 +97,7 @@ function HomePage() {
     }
 
     const handleReset = async (event) => {
+        window.scrollTo(0,0);
         window.location.reload();
     }
 
@@ -189,7 +188,7 @@ function HomePage() {
                         )}
 
                     </div>
-                    <button onClick={handleReset}>BACK</button>
+                    <button onClick={handleReset} className={"enquiry-form-submit-button"}>BACK</button>
                 </div>
             )}
             {!formSubmitted && (
@@ -341,15 +340,6 @@ function Accordion(){
     </div>
 }
 
-function EnquiryForm(){
-    return <div>
-
-    </div>
-}
-
-function EnquirySuccess(){
-    return <div>YES</div>
-}
 
 // This gets called on every request
 /*export async function getServerSideProps() {
