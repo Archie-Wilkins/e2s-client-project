@@ -1,30 +1,26 @@
 
 
 .landing-carousel-1{
-    display: block;
-    height: 700px;
-    margin-left: auto;
+    height: 670px;
+    width: inherit;
     margin-right: auto;
-    width: 50%;
     background-image: url("../public/resources/c1.png");
     background-repeat: no-repeat;
-    padding: 5px;
 }
+
 .landing-carousel-2{
-    display: block;
     height: 670px;
-    margin-left: auto;
     margin-right: auto;
-    width: 50%;
+    width: inherit;
     background-image: url("../public/resources/c2.png");
     background-repeat: no-repeat;
-    padding: 5px;
 }
+
 .landing-carousel-3{
     width: inherit;
-    height: 574px;
+    height: 575px;
     background-image: url("../public/resources/c3.png");
-    padding: 5px;
+    background-repeat: no-repeat;
 }
 
 .carousel-content{
@@ -32,17 +28,30 @@
     background-color: black;
 }
 
+.carousel-content-2{
+    color: black;
+}
+
 .carousel-content-dark{
     color: white;
 }
 
+.carousel-item h1{
+    float: right;
+    margin-right: 25%;
+}
 
 .landingBody{
     width: inherit;
-    border: 1px solid #000000;
     fill: #06064b;
     padding: 5px;
     background-color: rgba(0,0,0,0.10)
+}
+
+.accordion{
+    margin-left: 1%;
+    width: 60%;
+    margin-right: auto;
 }
 
 .landingBody h1{
@@ -66,6 +75,7 @@
 .enquiry-form{
     border: solid 1px black;
     background-color: rgba(223, 230, 249, 1);
+    border-radius: 10px;
     width: 60%;
     margin-left: 1%;
     margin-right: auto;
@@ -83,6 +93,7 @@
 .enquiry-form-header {
     display: block;
     width: 100%;
+    border-radius: 10px;
     margin-left: auto;
     margin-right: auto;
     background-color: rgba(16, 43, 112, 1);

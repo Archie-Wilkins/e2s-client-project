@@ -254,17 +254,17 @@ function Carousel(){
         </div>
         <div className="carousel-inner">
             <div className="carousel-item active" data-bs-interval="2000">
+                <h1>Are you a site manager?</h1>
                 <div className={"landing-carousel-1"}/>
                 <div className="carousel-caption d-none d-md-block">
-                    <h2 className={"carousel-content"}>WELCOME TO NEXT</h2>
-                    <p className={"carousel-content"}>Some representative placeholder content for the first slide.</p>
+                    <button className={"carousel-content-2"}>ENQUIRE</button>
                 </div>
             </div>
             <div className="carousel-item" data-bs-interval="2000">
+                <h1>Are you a site manager?</h1>
                 <div className={"landing-carousel-2"}/>
                 <div className="carousel-caption d-none d-md-block">
-                    <h2 className={"carousel-content"}>Second slide label</h2>
-                    <p className={"carousel-content"}>Some representative placeholder content for the second slide.</p>
+                    <button className={"carousel-content-2"}>ENQUIRE</button>
                 </div>
             </div>
             <div className="carousel-item">
