@@ -28,6 +28,15 @@
     background-color: black;
 }
 
+.carousel-button{
+    color: black;
+    float: right;
+    margin-right: 42%;
+    margin-top: 35%;
+    background: none;
+    font-size: 50px;
+}
+
 .carousel-content-2{
     color: black;
 }

@@ -257,16 +257,14 @@ function Carousel(){
         <div className="carousel-inner">
             <div className="carousel-item active" data-bs-interval="2000">
                 <h1>Are you a site manager?</h1>
+                <button className={"carousel-button"}>ENQUIRE</button>
                 <div className={"landing-carousel-1"}/>
-                <div className="carousel-caption d-none d-md-block">
-                    <button className={"carousel-content-2"}>ENQUIRE</button>
-                </div>
             </div>
             <div className="carousel-item" data-bs-interval="2000">
                 <h1>Are you a site manager?</h1>
                 <div className={"landing-carousel-2"}/>
                 <div className="carousel-caption d-none d-md-block">
-                    <button className={"carousel-content-2"}>ENQUIRE</button>
+                    <button className={"carousel-button"}>ENQUIRE</button>
                 </div>
             </div>
             <div className="carousel-item">
