@@ -45,7 +45,14 @@
     width: inherit;
     fill: #06064b;
     padding: 5px;
-    background-color: rgba(0,0,0,0.10)
+    background-color: rgba(0,0,0,0.10);
+    color: #06064b;
+}
+
+.underline-style{
+    border-top: 1px solid #06064b;
+    background-color: #06064b;
+    border-bottom: 1px solid #06064b;
 }
 
 .accordion{

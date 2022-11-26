@@ -154,8 +154,10 @@ function HomePage() {
 
         <div className={"landingBody"}>
             <h1>About Us</h1><br/>
+            <hr className={"underline-style"}/>
             <Accordion/><br/>
             <h1>Enquire</h1>
+            <hr className={"underline-style"}/>
             <p>Tell us about your site and your goals.</p>
 
             {formSubmitted === true && (
