@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import Cookies from 'universal-cookie';
 import emailjs from 'emailjs-com';
+import {isString} from "next/dist/build/webpack/plugins/jsconfig-paths-plugin";
 
 
 class ForgotPassword extends React.Component {
@@ -53,13 +54,42 @@ class ForgotPassword extends React.Component {
 
         // Get the response data from server as JSON.
         const result = await response.json();
+        //saves userID to const
+        const userId = result.data.user.toString();
 
 
         if(result.data.message.toString() === "email found") {
+
             //user was found in database from the email
-            alert("email exists");
+            //console.log(result.data.message.toString());
 
             //send API request to generate a code for UserID
+
+            // creates data structure which contains userID
+            const data = {
+                userID: userId
+            }
+            // Send the data to the server in JSON format.
+            const JSONdata = JSON.stringify(data);
+            const endpoint = '/api/generateResetCode';
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSONdata,
+            }
+            const response = await fetch(endpoint, options)
+            const result = await response.json();
+            console.log(result.code.toString());
+
+            //has generated code
+
+            //check code creation was successful
+
+            //if not, throw error and ask to resubmit
+
+
 
 
             //will need to create a new record in the Database
@@ -76,20 +106,21 @@ class ForgotPassword extends React.Component {
 
 
 
+            //sends email
+            //afterwards redirect to code enter
+
             //formats data to be sent off
             const emailContent = {
                 email: event.target.email.value,
-                code: result.data.code.toString(),
+                code: "sample",
             }
 
-            alert(result.data.code.toString());
-
-             emailjs.send('service_vhvmdc2', 'template_st6zi62', emailContent, 'V_nH2nvFeD1k31Dpg')
-                 .then((result) => {
-                     console.log("sent email");
-                 }, (error) => {
-                     console.log(error.text);
-                 });
+             // emailjs.send('service_vhvmdc2', 'template_st6zi62', emailContent, 'V_nH2nvFeD1k31Dpg')
+             //     .then((result) => {
+             //         console.log("sent email");
+             //     }, (error) => {
+             //         console.log(error.text);
+             //     });
 
 
         } else {

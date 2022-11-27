@@ -27,7 +27,7 @@ export default async function handler(req, res) {
 
         //if ID has been found
         //stores UserID in variable
-        let userID = await findID[0].User_Id;
+        let userID = await findID[0].user_id;
 
         //gets password from UserID
         let getPassword = await DB.user.getPasswordFromID(userID);
