@@ -17,9 +17,10 @@
 }
 
 .landing-carousel-3{
-    width: inherit;
-    height: 575px;
-    background-image: url("../public/resources/c3.png");
+    width: 31%;
+    height: 670px;
+    margin-right: auto;
+    background-image: url("../public/resources/light2.webp");
     background-repeat: no-repeat;
 }
 
@@ -28,13 +29,30 @@
     background-color: black;
 }
 
-.carousel-button{
+.carousel-content-box .carousel-button{
     color: black;
-    float: right;
-    margin-right: 42%;
-    margin-top: 35%;
+    margin-right: 25%;
+    margin-top: 10%;
+    margin-left: 5%;
     background: none;
     font-size: 50px;
+    border-radius: 10px;
+}
+
+.carousel-button:hover{
+    font-size: 52px;
+    background-color: lightgray;
+}
+
+.carousel-content-box{
+    float: right;
+    display: block;
+}
+
+.carousel-content-box h1{
+    margin-top: 10%;
+    margin-right: 30%;
+    margin-left: 5%;
 }
 
 .carousel-content-2{
@@ -45,10 +63,6 @@
     color: white;
 }
 
-.carousel-item h1{
-    float: right;
-    margin-right: 25%;
-}
 
 .landingBody{
     width: inherit;

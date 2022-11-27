@@ -32,7 +32,6 @@ function HomePage() {
             spendingVar = "no";
         }
     });*/
-    const [count, setCount] = useState(0);
 
     const [formSubmitted, setSubmitted] = useState(false)
 
@@ -158,7 +157,8 @@ function HomePage() {
             <Accordion/><br/>
             <h1>Enquire</h1>
             <hr className={"underline-style"}/>
-            <p>Tell us about your site and your goals.</p>
+            <p>If you would like to request more information on how to get started, please fill
+                out the form below.</p>
 
             {formSubmitted === true && (
                 <div className={"enquiry-form"}>
@@ -210,11 +210,11 @@ function HomePage() {
                         <br/><br/>
                         <label htmlFor="email">What is your email address? (Required)</label>
                         <br/>
-                        <input type="text" id="email" name="email" required minLength={"1"} maxLength={"50"}/>
+                        <input type="email" id="email" name="email" required minLength={"1"} maxLength={"50"}/>
 
                         <br/><br/>
                         <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="co2" onClick={() => setCount(count+1)}/>
+                            <input className="form-check-input" type="checkbox" value="" id="co2"/>
                             <label className="form-check-label" htmlFor="flexCheckDefault">CO2 Emissions</label>
                         </div>
                         <div className="form-check">
@@ -244,6 +244,10 @@ function HomePage() {
 
 }
 
+const handleScroll = async (event) => {
+    window.scrollTo(0, 1140);
+}
+
 function Carousel(){
     return <div id="carouselExampleDark" className="carousel carousel-dark slide" data-bs-ride="carousel">
         <div className="carousel-indicators">
@@ -256,23 +260,28 @@ function Carousel(){
         </div>
         <div className="carousel-inner">
             <div className="carousel-item active" data-bs-interval="2000">
-                <h1>Are you a site manager?</h1>
-                <button className={"carousel-button"}>ENQUIRE</button>
+                <div className={"carousel-content-box"}>
+                    <h1>Are you a site manager?</h1>
+                    <h1>Need help reducing your energy usage?</h1>
+                    <button className={"carousel-button"} onClick={handleScroll}>ENQUIRE</button>
+                </div>
                 <div className={"landing-carousel-1"}/>
             </div>
             <div className="carousel-item" data-bs-interval="2000">
-                <h1>Are you a site manager?</h1>
-                <div className={"landing-carousel-2"}/>
-                <div className="carousel-caption d-none d-md-block">
-                    <button className={"carousel-button"}>ENQUIRE</button>
+                <div className={"carousel-content-box"}>
+                    <h1>Want to save money?</h1>
+                    <h1>Need help reducing your CO2 emissions?</h1>
+                    <button className={"carousel-button"} onClick={handleScroll}>ENQUIRE</button>
                 </div>
+                <div className={"landing-carousel-2"}/>
             </div>
             <div className="carousel-item">
-                <div className={"landing-carousel-3"}/>
-                <div className="carousel-caption d-none d-md-block">
-                    <h2 className={"carousel-content-dark"}>Third slide label</h2>
-                    <p className={"carousel-content-dark"}>Some representative placeholder content for the third slide.</p>
+                <div className={"carousel-content-box"}>
+                    <h1>Time to switch off the lights?</h1>
+                    <h1>Want your energy usage insights? </h1>
+                    <button className={"carousel-button"} onClick={handleScroll}>ENQUIRE</button>
                 </div>
+                <div className={"landing-carousel-3"}/>
             </div>
         </div>
         <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
