@@ -25,7 +25,8 @@ export default async function handler(req, res) {
             return res.status(200).json({data:"email not found"});
         } else {
             //returns 'email found'
-            return res.status(200).json({data:"email found"});
+            console.log("email found");
+            return res.status(200).json({data:{message:"email found", code:"FROM SERVER"}});
         }
 
     } catch(e){

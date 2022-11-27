@@ -8,7 +8,6 @@ class ForgotPassword extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email:""
         };
     }
 
@@ -16,10 +15,8 @@ class ForgotPassword extends React.Component {
         // Stop the form from submitting and refreshing the page.
         event.preventDefault();
 
-        this.state.email = event.target.email.value;
-
         // if email not valid
-        if (!(this.state.email.includes("@") && this.state.email.includes(".")))
+        if (!(event.target.email.value.includes("@") && event.target.email.value.includes(".")))
         {
             document.getElementById("error").innerText = "Invalid email";
             document.getElementById("error").style.display = "block"; //displays error msg
@@ -57,15 +54,44 @@ class ForgotPassword extends React.Component {
         // Get the response data from server as JSON.
         const result = await response.json();
 
-        if(result.data.toString() === "email found") {
-            alert("email exists");
-            //user was found in database from the email
-            emailjs.sendForm('service_vhvmdc2', 'YOUR_TEMPLATE_ID', e.target, 'YOUR_USER_ID')
-                .then((result) => {
 
-                }, (error) => {
-                    console.log(error.text);
-                });
+        if(result.data.message.toString() === "email found") {
+            //user was found in database from the email
+            alert("email exists");
+
+            //send API request to generate a code for UserID
+
+
+            //will need to create a new record in the Database
+            //upon request sent will delete any record in that table with same UserID
+            //create a command to wipe/remove records which are past their expiry date/time
+
+            //upon generating code send email
+
+
+            //if email is successfully sent, send user to next stage (enter code)
+            //have button to say "didn't recieve email?" which will resend user back to start (enter email)
+
+
+
+
+
+            //formats data to be sent off
+            const emailContent = {
+                email: event.target.email.value,
+                code: result.data.code.toString(),
+            }
+
+            alert(result.data.code.toString());
+
+             emailjs.send('service_vhvmdc2', 'template_st6zi62', emailContent, 'V_nH2nvFeD1k31Dpg')
+                 .then((result) => {
+                     console.log("sent email");
+                 }, (error) => {
+                     console.log(error.text);
+                 });
+
+
         } else {
             //shows user was not found in database from email entered
             document.getElementById("error").innerText = "this email is not registered here";
