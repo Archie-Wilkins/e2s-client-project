@@ -1,7 +1,21 @@
 import Link from "next/link"
 import NavBar from "../public/components/navBar.js"
+import Router from "next/router";
+import {useRouter} from "next/navigation";
+import React, {useState} from "react";
 
 function AdminHub(){
+
+    const [businessRequested, setRequested] = useState(false)
+
+    function handleBusinessRender(businessName){
+        !businessRequested ? setRequested(true) : setRequested(false)
+    }
+
+    function handleReturn() {
+        !businessRequested ? setRequested(true) : setRequested(false)
+    }
+
     return <div>
         <div className={"admin-header-container"}>
             <NavBar/>
@@ -14,47 +28,55 @@ function AdminHub(){
                         <div className="col-sm">
                             <div className={"business-section"}>
                                 <h3>View All Businesses</h3>
-                                <table className="table table-hover table-responsive">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Business Name</th>
-                                        <th scope="col">Industry</th>
-                                        <th scope="col">Director</th>
-                                        <th scope={"col"}>View</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark's Tools</td>
-                                        <td>Agriculture</td>
-                                        <td>Komodo Dragon</td>
-                                        <td><Link href={"/about"}><p>Here</p></Link></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jakob's Ladders</td>
-                                        <td>Furniture</td>
-                                        <td>Jason Todd</td>
-                                        <td><Link href={"/about"}><p>Here</p></Link></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colSpan={"1"}>Larry's Birds</td>
-                                        <td>Pets</td>
-                                        <td>Michael Jordan</td>
-                                        <td><Link href={"/about"}><p>Here</p></Link></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">4</th>
-                                        <td>Ace Chemicals</td>
-                                        <td>Chemicals</td>
-                                        <td>Jack Napier</td>
-                                        <td><Link href={"/about"}><p>Here</p></Link></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                {businessRequested === false && (
+                                    <table className="table table-hover table-responsive">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Business Name</th>
+                                            <th scope="col">Industry</th>
+                                            <th scope="col">Director</th>
+                                            <th scope={"col"}>View</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td id={"row1Business"}>Mark's Tools</td>
+                                            <td>Agriculture</td>
+                                            <td>Komodo Dragon</td>
+                                            <td><button onClick={() => handleBusinessRender("Mark's Tools")}>Here</button></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td>Jakob's Ladders</td>
+                                            <td>Furniture</td>
+                                            <td>Jason Todd</td>
+                                            <td><button onClick={() => handleBusinessRender("Jakob's Ladders")}>Here</button></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td colSpan={"1"}>Larry's Birds</td>
+                                            <td>Pets</td>
+                                            <td>Michael Jordan</td>
+                                            <td><button onClick={() => handleBusinessRender("Larry's Birds")}>Here</button></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">4</th>
+                                            <td>Ace Chemicals</td>
+                                            <td>Chemicals</td>
+                                            <td>Jack Napier</td>
+                                            <td><button onClick={() => handleBusinessRender("Ace Chemicals")}>Here</button></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                )}
+                                {businessRequested === true && (
+                                    <div>
+                                        <h1>Yay</h1>
+                                        <button onClick={handleReturn}>Back</button>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div><br/>
