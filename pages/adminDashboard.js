@@ -1,8 +1,12 @@
 
 function AdminHub(){
     return <div>
-        <h1>Help</h1>
+        <div className={"dashboard-header"}>
+            <h1>ADMIN DASHBOARD</h1>
+            <hr className={"h1-underline"}/>
+            <p className={"dashboard-sub-header"}>Welcome to E2S, Admin.</p>
+        </div>
     </div>
 }
 
-return AdminHub
+export default AdminHub
