@@ -139,3 +139,24 @@
     align-items: center;
     justify-content: center;
 }
+
+.displayNone {
+    display: none;
+}
+
+.forgotPasswordFormContainer{
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.forgotPasswordForm {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+    text-align: center;
+    align-content: center;
+    flex-direction: column;
+    height: 150px;
+}

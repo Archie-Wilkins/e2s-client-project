@@ -9,6 +9,7 @@ class ForgotPassword extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            userID:""
         };
     }
 
@@ -54,20 +55,16 @@ class ForgotPassword extends React.Component {
 
         // Get the response data from server as JSON.
         const result = await response.json();
-        //saves userID to const
-        const userId = result.data.user.toString();
+        //saves userID to state
+        this.state.userID = result.data.user.toString();
 
 
         if(result.data.message.toString() === "email found") {
-
             //user was found in database from the email
-            //console.log(result.data.message.toString());
-
-            //send API request to generate a code for UserID
 
             // creates data structure which contains userID
             const data = {
-                userID: userId
+                userID: this.state.userID
             }
             // Send the data to the server in JSON format.
             const JSONdata = JSON.stringify(data);
@@ -79,49 +76,38 @@ class ForgotPassword extends React.Component {
                 },
                 body: JSONdata,
             }
+            //sends API request to generate a code for UserID
             const response = await fetch(endpoint, options)
             const result = await response.json();
-            console.log(result.code.toString());
 
             //has generated code
 
-            //check code creation was successful
-
-            //if not, throw error and ask to resubmit
-
-
-
-
-            //will need to create a new record in the Database
-            //upon request sent will delete any record in that table with same UserID
+            //if server failed to generated code
+            if(result.data.message.toString() === "fail"){
+                //code generation failed
+                //display appropriate error message
+                document.getElementById("error").innerText = "Internal server error while generating code";
+                document.getElementById("error").style.display = "block"; //displays error msg
+                return;
+            }
             //create a command to wipe/remove records which are past their expiry date/time
 
-            //upon generating code send email
-
-
-            //if email is successfully sent, send user to next stage (enter code)
             //have button to say "didn't recieve email?" which will resend user back to start (enter email)
-
-
-
-
-
-            //sends email
-            //afterwards redirect to code enter
 
             //formats data to be sent off
             const emailContent = {
                 email: event.target.email.value,
-                code: "sample",
+                code: result.data.code.toString(),
             }
-
              // emailjs.send('service_vhvmdc2', 'template_st6zi62', emailContent, 'V_nH2nvFeD1k31Dpg')
              //     .then((result) => {
-             //         console.log("sent email");
+             //         change page to next one
              //     }, (error) => {
              //         console.log(error.text);
              //     });
-
+            //change page to next one
+            document.getElementById("page1").style.display = "none";
+            document.getElementById("page2").style.display = "flex";
 
         } else {
             //shows user was not found in database from email entered
@@ -131,23 +117,104 @@ class ForgotPassword extends React.Component {
         }
     }
 
+    submitCode = async (event) => {
+        // Stop the form from submitting and refreshing the page.
+        event.preventDefault();
 
+        //if no code has been entered, display message
+        if(event.target.code.value === ""){
+            document.getElementById("error2").innerText = "no code has been entered";
+            document.getElementById("error2").style.display = "block";
+            return;
+        }
+
+        //API call to compare code entered with records code via UserID
+
+        const data = {
+            userID: this.state.userID,
+            code: event.target.code.value
+        }
+        // Send the data to the server in JSON format.
+        const JSONdata = JSON.stringify(data);
+        const endpoint = '/api/checkResetCode';
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSONdata,
+        }
+        //sends API request to generate a code for UserID
+        const response = await fetch(endpoint, options)
+        const result = await response.json();
+
+        //if match
+        if(result.data.message.toString() === "match"){
+            alert("match");
+            document.getElementById("page2").style.display = "none";
+            document.getElementById("page3").style.display = "flex";
+        } else {
+            //code entered did not match
+            document.getElementById("error2").innerText = "incorrect code";
+            document.getElementById("error2").style.display = "block";
+            return;
+        }
+
+
+    }
+
+    submitNewPassword = async (event) => {
+        // Stop the form from submitting and refreshing the page.
+        event.preventDefault();
+
+    }
 
     render() {
         return<div>
-            <div className="LoginPanelContainer">
+            {/*send code to email*/}
+            <div className="LoginPanelContainer" id="page1">
                 <div className="LoginPanelBanner">
-                    <h2 className="LoginHeader">Sign In</h2>
+                    <h2 className="LoginHeader">Reset Password</h2>
                 </div>
+                <div className="forgotPasswordFormContainer">
+                    <form className="forgotPasswordForm" onSubmit={this.submitEmail}>
+                        <div className="TextInputValue">Email</div>
+                        <input type="email" id="email" name="email" className="TextInputBox"></input>
+                        <div className="ErrorTextHolder"><div className="ErrorText" id="error">sample error text</div></div>
+                        <div><button className="LoginButton" name="submit" type="submit">send code</button></div>
+                    </form>
 
-                <form className="LoginForm" onSubmit={this.submitEmail}>
-                    <div className="TextInputValue">Email</div>
-                    <input type="email" id="email" name="email" className="TextInputBox"></input>
-                    <div className="ErrorTextHolder"><div className="ErrorText" id="error">sample error text</div></div>
+                </div>
+            </div>
+            {/*enter code*/}
+            <div className="LoginPanelContainer displayNone" id="page2">
+                <div className="LoginPanelBanner">
+                    <h2 className="LoginHeader">Reset Password</h2>
+                </div>
+                <div className="TextInputValue">Your email should have recieved a code</div>
+                <div className="forgotPasswordFormContainer">
+                    <form className="forgotPasswordForm" onSubmit={this.submitCode}>
+                        <div className="TextInputValue">Code</div>
+                        <input  id="code" name="code" className="TextInputBox"></input>
+                        <div className="ErrorTextHolder"><div className="ErrorText" id="error2">sample error text</div></div>
+                        <div><button className="LoginButton" name="submit" type="submit">submit code</button></div>
+                    </form>
+                </div>
+            </div>
+            {/*enter new password*/}
+            <div className="LoginPanelContainer displayNone" id="page3">
+                <div className="LoginPanelBanner">
+                    <h2 className="LoginHeader">Reset Password</h2>
+                </div>
+                <form className="forgotPasswordForm" onSubmit={this.submitNewPassword}>
+                    <div className="TextInputValue">Password</div>
+                    <input type="email" id="password" name="email" className="TextInputBox"></input>
+                    <div className="TextInputValue">Confirm Password</div>
+                    <input type="email" id="password2" name="email" className="TextInputBox"></input>
+                    <div className="ErrorTextHolder"><div className="ErrorText" id="error3">sample error text</div></div>
                     <div><button className="LoginButton" name="submit" type="submit">send code</button></div>
                 </form>
             </div>
-
         </div>
     }
 }

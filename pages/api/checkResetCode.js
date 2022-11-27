@@ -8,20 +8,25 @@ export default async function handler(req, res) {
     const body = req.body
 
     //checks email exists in API request
-    if (!body.userID) {
+    if (!body.userID && !body.code) {
         // Sends a HTTP bad request error code
         return res.status(400).json({data: 'Missing data!'})
     }
 
     try {
-        //generate code
-        let code = (Math.random() + 1).toString(36).substring(2, 8);
+        //get decoded code from userID in table
+        let JSONcode = await DB.user.getUserResetCode(body.userID);
 
-        //create new record with userID, code, expiry time
-        await DB.user.createResetRecord(body.userID, code);
+        let code = await JSONcode[0].decrypted_code;
 
-        //returns successful + code
-        return res.status(200).json({data:{code:code , message:"success"}});
+
+        //if decrypted code === user inputted code
+        if(code === body.code){
+            //return success/match
+            return res.status(200).json({data:{message:"match"}});
+        }
+        //did not match
+        return res.status(200).json({data:{message:"fail"}});
     } catch(e){
         //catches error
         console.log(e);
