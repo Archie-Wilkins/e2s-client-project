@@ -1,41 +1,17 @@
-import Link from "next/link"
-import 'bootstrap/dist/css/bootstrap.css'
+import Link from "next/link";
+import 'bootstrap/dist/css/bootstrap.css';
 import {Router} from "next/router";
 import React, {useEffect, useState} from "react";
 import Script from "next/script";
+
 
 let userIndustry, userBusiness, userEmail, userComments, userCo2, userSpending, userEnergy,
     userTechnology = "";
 
 function HomePage() {
 
-    /*const co2Check = document.getElementById('co2');
-    const spendingCheck = document.getElementById('spending');
-
-    co2Check.addEventListener('click', function handleClick() {
-        if(co2==="no"){
-            co2Var = "yes";
-        }else if(co2==="yes"){
-            co2Var = "no";
-        }else{
-            //default it
-            co2Var = "no";
-        }
-    });
-    spendingCheck.addEventListener('click', function handleClick() {
-        if(spendingVar==="no"){
-            spendingVar = "yes";
-        }else if(spendingVar==="yes"){
-            spendingVar = "no";
-        }else{
-            //default it
-            spendingVar = "no";
-        }
-    });*/
-
     const [formSubmitted, setSubmitted] = useState(false)
 
-    const ab = "";
     const handleFormSubmitted = (e) => {
         !formSubmitted ? setSubmitted(true) : setSubmitted(false)
     }
