@@ -3,25 +3,23 @@ import { Connection } from "./index";
 export const all = async () => {
     return new Promise((resolve, reject) =>  {
 
-        Connection.query('SELECT * from users', (err, results) => {
+        Connection.query('SELECT * from user_data', (err, results) => {
             if(err) {
                 return reject(err);
             }
-            console.log(results);
             resolve(results);
         });
 
     });
 }
 
-export const getUserIDFromEmail = async (userEmail, userPassword) => {
+export const getUserIDFromEmail = async (userEmail) => {
     return new Promise((resolve, reject) =>  {
 
-        Connection.query("SELECT User_Id FROM users WHERE User_Email = " + "'" + userEmail + "'", (err, results) => {
+        Connection.query("SELECT user_id FROM user_data WHERE email = " + "'" + userEmail + "'", (err, results) => {
             if(err) {
                 return reject(err);
             }
-            console.log(results);
             resolve(results);
         });
 
@@ -32,11 +30,10 @@ export const getUserIDFromEmail = async (userEmail, userPassword) => {
 export const getPasswordFromID = async (userID) => {
     return new Promise((resolve, reject) =>  {
 
-        Connection.query("SELECT CAST(aes_decrypt(User_Password, 'ethan') AS CHAR) AS decrypted_password FROM users WHERE User_Id = " +"'" + userID + "'", (err, results) => {
+        Connection.query("SELECT CAST(aes_decrypt(password, 'ethan') AS CHAR) AS decrypted_password FROM user_data WHERE user_id = " +"'" + userID + "'", (err, results) => {
             if(err) {
                 return reject(err);
             }
-            console.log(results);
             resolve(results);
         });
 
