@@ -1,3 +1,7 @@
 node_modules/
-.next
-.idea
+.next/
+.idea/
+*.pack
+*.pack
+.next/cache/webpack/client-development/0.pack
+*.pack
