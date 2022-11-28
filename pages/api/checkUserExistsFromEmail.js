@@ -29,7 +29,6 @@ export default async function handler(req, res) {
             let userID = await findID[0].user_id;
             //returns 'email found'
             return res.status(200).json({data:{user:userID.toString() , message:"email found"}});
-
         }
 
     } catch(e){

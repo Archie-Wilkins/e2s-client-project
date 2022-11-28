@@ -77,11 +77,23 @@ export const getUserResetCode = async (userID) => {
     });
 }
 
+export const updateUserPassword = async (userID, password) => {
+    return new Promise((resolve, reject) =>  {
+        Connection.query("UPDATE user_data SET password = aes_encrypt(" + "'" + password + "', 'ethan') WHERE user_id = " + userID, (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+    });
+}
+
 
 export default {
     all,
     getUserIDFromEmail,
     getPasswordFromID,
     createResetRecord,
-    getUserResetCode
+    getUserResetCode,
+    updateUserPassword
 }
