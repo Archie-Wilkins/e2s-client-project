@@ -3,7 +3,6 @@
 var mysqlDb = require('../../db/DatabaseCore.js');
 var db = mysqlDb.getPool();
 
-
 // AI Wanted to do promises here, may be an alternative to callbacks
 
 // Function is default for demoApi.js, this is the only function that is called. The other functions are called
@@ -36,15 +35,17 @@ export default async function requestHandler(req, res) {
 }
 
 
-function getAllUsers(req, res) {
+async function getAllUsers(req, res) {
     const user_query = "SELECT * FROM user_data";
-    db.query(user_query, function (error, result, fields){
+    db.query(user_query, function (error, result, fields)
+    {
+        console.log(result);
         if (error) throw error;
         res.status(200).json({user_data: result})
     })
 }
 
-function setUsers(req, res){
+async function setUsers(req, res){
     const user_query = "INSERT INTO user_data (email, password, first_name, last_name, phone_number, role_id) VALUES (?, ?, ?, ?, ?, ?)";
     db.query(user_query, [req.body.email, req.body.pass, req.body.fname, req.body.lname, req.body.phone,
         req.body.roleId], function (error, result, fields){
