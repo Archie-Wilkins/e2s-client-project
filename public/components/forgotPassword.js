@@ -167,6 +167,12 @@ class ForgotPassword extends React.Component {
         // Stop the form from submitting and refreshing the page.
         event.preventDefault();
 
+        //check both fields contain text
+
+
+        //check both fields match
+
+        //if both fields match, make userID new password the current text
     }
 
     render() {
