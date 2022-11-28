@@ -100,25 +100,20 @@ class ForgotPassword extends React.Component {
                 return;
             }
 
-            //have button to say "didn't recieve email?" which will resend user back to start (enter email)
-
             //formats data to be sent off
             const emailContent = {
                 email: event.target.email.value,
                 code: result.data.code.toString(),
             }
-            // emailjs.send('service_vhvmdc2', 'template_st6zi62', emailContent, 'V_nH2nvFeD1k31Dpg')
-            //     .then((result) => {
-            //         document.getElementById("page1").style.display = "none";
-            //         document.getElementById("page2").style.display = "flex";
-            //     }, (error) => {
-            //         document.getElementById("error").innerText = "error sending off email";
-            //         document.getElementById("error").style.display = "block";
-            //       });
-
-            //NEED TO REMOVE
-            document.getElementById("page1").style.display = "none";
-            document.getElementById("page2").style.display = "flex";
+            //sends email
+            emailjs.send('service_vhvmdc2', 'template_st6zi62', emailContent, 'V_nH2nvFeD1k31Dpg')
+                 .then((result) => {
+                     document.getElementById("page1").style.display = "none";
+                     document.getElementById("page2").style.display = "flex";
+                 }, (error) => {
+                     document.getElementById("error").innerText = "error sending off email";
+                     document.getElementById("error").style.display = "block";
+                   });
 
         } else {
             //shows user was not found in database from email entered
@@ -159,9 +154,9 @@ class ForgotPassword extends React.Component {
         const response = await fetch(endpoint, options)
         const result = await response.json();
 
-        //if match
+        //if code matches code from database
         if(result.data.message.toString() === "match"){
-            alert("match");
+            //go to next step/page
             document.getElementById("page2").style.display = "none";
             document.getElementById("page3").style.display = "flex";
         } else {
@@ -175,10 +170,10 @@ class ForgotPassword extends React.Component {
     }
 
     submitNewPassword = async (event) => {
-        // Stop the form from submitting and refreshing the page.
+        //stop the form from submitting and refreshing the page.
         event.preventDefault();
 
-        //assing textbox values to const's
+        //passing textbox values to const's
         const password1 = event.target.password1.value;
         const password2 = event.target.password2.value;
 
@@ -197,6 +192,8 @@ class ForgotPassword extends React.Component {
         }
 
         //if both fields match, call API to change password of userID
+
+        //creates data const to hold userID and password
         const data = {
             userID: this.state.userID,
             password: password1
@@ -211,7 +208,7 @@ class ForgotPassword extends React.Component {
             },
             body: JSONdata,
         }
-        //sends API request to generate a code for UserID
+        //sends API request to update user password
         const response = await fetch(endpoint, options)
         const result = await response.json();
 
@@ -222,9 +219,11 @@ class ForgotPassword extends React.Component {
             return;
         }
 
+        //relocates to login page
         window.location = "/login";
     }
 
+    //this event is for a user incase they didn't recieve an email
     resendCode = async (event) => {
         const data = {
             userID: this.state.userID
@@ -252,18 +251,23 @@ class ForgotPassword extends React.Component {
             return;
         }
 
-        //have button to say "didn't recieve email?" which will resend user back to start (enter email)
-
-        //formats data to be sent off
+        //formats data to be sent via email
         const emailContent = {
             email: this.state.email,
             code: result.data.code.toString(),
         }
+        //emailjs to send email
         emailjs.send('service_vhvmdc2', 'template_st6zi62', emailContent, 'V_nH2nvFeD1k31Dpg')
             .then((result) => {
-                alert("send new code");
+                //if successful display "new code sent"
+                document.getElementById("infoText").innerText = "New code sent";
+                document.getElementById("infoText").style.display = "block";
+                document.getElementById("error3").style.display = "none";
             }, (error) => {
-                alert("error sending email");
+                //if fails display "Error occured while sending email"
+                document.getElementById("error3").innerText = "Error occured while sending email";
+                document.getElementById("error3").style.display = "block";
+                document.getElementById("infoText").style.display = "none";
             });
     }
 
@@ -297,26 +301,32 @@ class ForgotPassword extends React.Component {
                         <div className="ErrorTextHolder"><div className="ErrorText" id="error2">sample error text</div></div>
                         <div><button className="LoginButton" name="submit" type="submit">submit code</button></div>
                     </form>
+                    <div className="ErrorTextHolder"><div className="infoText" id="infoText">sample text</div></div>
+                    <div className="HelpTextContainer margin-top-20px">
+                        <div className="TextInputValue">have not recieved a code?
+                            <div className="TextInputValue resendEmailText" onClick={this.resendCode}>send another</div>
+                        </div>
+                    </div>
                 </div>
-                <div className="HelpTextContainer">
-                    <p className="TextInputValue" onClick={this.resendCode}>have not recieved a code?
-                        <p className="TextInputValue resendEmailText">send another</p>
-                    </p>
-                </div>
+
+
             </div>
             {/*enter new password*/}
             <div className="LoginPanelContainer displayNone" id="page3">
                 <div className="LoginPanelBanner">
                     <h2 className="LoginHeader">Reset Password</h2>
                 </div>
-                <form className="forgotPasswordForm" onSubmit={this.submitNewPassword}>
-                    <div className="TextInputValue">Password</div>
-                    <input type="password" id="password1" name="password1" className="TextInputBox"></input>
-                    <div className="TextInputValue">Confirm Password</div>
-                    <input type="password" id="password2" name="password2" className="TextInputBox"></input>
-                    <div className="ErrorTextHolder"><div className="ErrorText" id="error3">sample error text</div></div>
-                    <div><button className="LoginButton" name="submit" type="submit">send code</button></div>
-                </form>
+                <div className="forgotPasswordFormContainer">
+                    <form className="forgotPasswordForm" onSubmit={this.submitNewPassword}>
+                        <div className="TextInputValue">Password</div>
+                        <input type="password" id="password1" name="password1" className="TextInputBox"></input>
+                        <div className="ErrorTextHolder"/>
+                        <div className="TextInputValue">Confirm Password</div>
+                        <input type="password" id="password2" name="password2" className="TextInputBox"></input>
+                        <div className="ErrorTextHolder"><div className="ErrorText" id="error3">sample error text</div></div>
+                        <div><button className="LoginButton" name="submit" type="submit">send code</button></div>
+                    </form>
+                </div>
             </div>
         </div>
     }
