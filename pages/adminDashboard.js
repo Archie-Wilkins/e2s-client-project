@@ -3,13 +3,21 @@ import NavBar from "../public/components/navBar.js"
 import Router from "next/router";
 import {useRouter} from "next/navigation";
 import React, {useState} from "react";
+import Script from "next/script";
+
+const chosenBusinessRowArray = [];
 
 function AdminHub(){
+    //const chosenBusinessRowArray = [];
 
     const [businessRequested, setRequested] = useState(false)
 
     function handleBusinessRender(businessName){
         !businessRequested ? setRequested(true) : setRequested(false)
+
+        for(let i = 0; i < businessName.length;i++){
+            chosenBusinessRowArray.push(businessName[i].innerText);
+        }
     }
 
     function handleReturn() {
@@ -41,39 +49,46 @@ function AdminHub(){
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <th scope="row">1</th>
-                                            <td id={"row1Business"}>Mark's Tools</td>
-                                            <td>Agriculture</td>
-                                            <td>Komodo Dragon</td>
-                                            <td><button onClick={() => handleBusinessRender("Mark's Tools")}>Here</button></td>
+                                            <th name="r1" scope="row">1</th>
+                                            <td name="r1" id={"row1Business"}>Mark's Tools</td>
+                                            <td name={"r1"}>Agriculture</td>
+                                            <td name={"r1"}>Komodo Dragon</td>
+                                            <td name={"r1"}><button onClick={() => handleBusinessRender(document.getElementsByName("r1"))}>Here</button></td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">2</th>
-                                            <td>Jakob's Ladders</td>
-                                            <td>Furniture</td>
-                                            <td>Jason Todd</td>
-                                            <td><button onClick={() => handleBusinessRender("Jakob's Ladders")}>Here</button></td>
+                                            <th name={"r2"} scope="row">2</th>
+                                            <td name={"r2"}>Jakob's Ladders</td>
+                                            <td name={"r2"}>Furniture</td>
+                                            <td name={"r2"}>Jason Todd</td>
+                                            <td><button onClick={() => handleBusinessRender(document.getElementsByName("r2"))}>Here</button></td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">3</th>
-                                            <td colSpan={"1"}>Larry's Birds</td>
-                                            <td>Pets</td>
-                                            <td>Michael Jordan</td>
-                                            <td><button onClick={() => handleBusinessRender("Larry's Birds")}>Here</button></td>
+                                            <th name="r3" scope="row">3</th>
+                                            <td name={"r3"} colSpan={"1"}>Larry's Birds</td>
+                                            <td name={"r3"}>Pets</td>
+                                            <td name={"r3"}>Michael Jordan</td>
+                                            <td><button onClick={() => handleBusinessRender(document.getElementsByName("r3"))}>Here</button></td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">4</th>
-                                            <td>Ace Chemicals</td>
-                                            <td>Chemicals</td>
-                                            <td>Jack Napier</td>
-                                            <td><button onClick={() => handleBusinessRender("Ace Chemicals")}>Here</button></td>
+                                            <th name={"r4"} scope="row">4</th>
+                                            <td name={"r4"}>Ace Chemicals</td>
+                                            <td name={"r4"}>Chemicals</td>
+                                            <td name={"r4"}>Jack Napier</td>
+                                            <td><button onClick={() => handleBusinessRender(document.getElementsByName("r4"))}>Here</button></td>
+                                        </tr>
+                                        <tr>
+                                            <th name="r5" scope="row">5</th>
+                                            <td name={"r5"}>Ace Chemicals</td>
+                                            <td name={"r5"}>Chemicals</td>
+                                            <td name={"r5"}>Jack Napier</td>
+                                            <td><button onClick={() => handleBusinessRender(document.getElementsByName("r5"))}>Here</button></td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 )}
                                 {businessRequested === true && (
                                     <div>
-                                        <h1>Yay</h1>
+                                        <h1>{JSON.stringify(chosenBusinessRowArray)}</h1>
                                         <button onClick={handleReturn}>Back</button>
                                     </div>
                                 )}
