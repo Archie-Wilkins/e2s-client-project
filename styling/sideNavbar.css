@@ -30,12 +30,7 @@
     margin-top: 0;
     margin-bottom: 0;
     }
-<<<<<<< HEAD:styling/navbar.css
-    
-.navbarLink {
-    color: #FFFFFF;
-    text-decoration: none;
-=======
+
 
         .toggleSiteBreak {
             width: 100%;
@@ -47,7 +42,7 @@
     .navbarLink {
         color: #FFFFFF;
         text-decoration: none;
->>>>>>> main:styling/sideNavbar.css
+
     }
     
 .navbarLink:hover {

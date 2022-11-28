@@ -1,5 +1,5 @@
 import Link from "next/link"
-import NavBar from "../public/components/navBar.js"
+// import NavBar from "../public/components/layouts/navBar.js"
 import Router from "next/router";
 import {useRouter} from "next/navigation";
 import React, {useState} from "react";
@@ -26,7 +26,6 @@ function AdminHub(){
 
     return <div>
         <div className={"admin-header-container"}>
-            <NavBar/>
             <div className={"dashboard-header"}>
                 <h1>ADMIN DASHBOARD</h1>
                 <hr className={"h1-underline"}/>

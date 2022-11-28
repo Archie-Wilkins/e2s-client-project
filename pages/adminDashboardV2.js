@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from "next/link"
 import ToggleSite from ".//toggleSite.js"
 import React from 'react';
+import MainLayout from "../public/components/layouts/MainLayoutShell.js"
 
 
 
@@ -61,34 +62,38 @@ class AdminHubV2 extends React.Component {
         };
     }
 
-
-    changeSite = () => {
-        console.log("change");
-        console.log(this.state.displaySiteToggle);
-        this.setState({
-            displaySiteToggle: !this.state.displaySiteToggle
-        })
-    }
-
-    displayAdminButton = () => {
-        if (this.state.displayAdminButton) {
-            return <Link className=" navbarLink d-flex" href="/account">
-                <FaUsers />
-                <p>Admin</p>
-            </Link>
-        }
-        else {
-            return null;
-        }
-    }
+    //
+    // changeSite = () => {
+    //     console.log("change");
+    //     console.log(this.state.displaySiteToggle);
+    //     this.setState({
+    //         displaySiteToggle: !this.state.displaySiteToggle
+    //     })
+    // }
+    //
+    // displayAdminButton = () => {
+    //     if (this.state.displayAdminButton) {
+    //         return <Link className=" navbarLink d-flex" href="/account">
+    //             <FaUsers />
+    //             <p>Admin</p>
+    //         </Link>
+    //     }
+    //     else {
+    //         return null;
+    //     }
+    // }
 
     render() {
         return <div>
-
+            <MainLayout isAdmin={true} pageName={"Admin Hub"}>
+                <div className="whiteBackground mt-5">
+                    <h1>ADMIN DASHBOARD</h1>
+                </div>
+            </MainLayout >
         </div >
     }
 
 }
 
 
-export default NavBar
+export default AdminHubV2
