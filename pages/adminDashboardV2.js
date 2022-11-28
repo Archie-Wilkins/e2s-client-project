@@ -23,7 +23,7 @@ class AdminHubV2 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            let businessMockDb = {
+            businessMockDb {
                 "BusinessDictionary": {
                     1: {
                         "businessId": 1,
