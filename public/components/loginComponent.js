@@ -1,12 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-<<<<<<< HEAD
 import Cookies from 'universal-cookie';
 
-=======
-import { useState } from 'react';
-//import {loginSubmit} from '../../pages/api/login'
->>>>>>> main
 
 class LoginComponent extends React.Component {
     constructor(props) {
@@ -41,34 +36,22 @@ class LoginComponent extends React.Component {
             validPassword = 1; //password variable is invalid
         }
 
-<<<<<<< HEAD
         //if both email and password is invalid
         if (validEmail === 1 && validPassword === 1){
-=======
-        if (validEmail === 1 && validPassword === 1) {
->>>>>>> main
             document.getElementById("error").innerText = "Invalid credentials";
             document.getElementById("error").style.display = "block"; //displays error msg
             return;
         }
 
-<<<<<<< HEAD
         //if only email is invalid
         if (validEmail === 1){
-=======
-        if (validEmail === 1) {
->>>>>>> main
             document.getElementById("error").innerText = "Invalid email";
             document.getElementById("error").style.display = "block";
             return;
         }
 
-<<<<<<< HEAD
         //if only password invalid (not entered anything)
         if (validPassword === 1){
-=======
-        if (validPassword === 1) {
->>>>>>> main
             document.getElementById("error").innerText = "Invalid password";
             document.getElementById("error").style.display = "block";
             return;
@@ -77,8 +60,6 @@ class LoginComponent extends React.Component {
         //hides error msg if validation is passed
         document.getElementById("error").style.display = "none";
 
-<<<<<<< HEAD
-=======
 
         //    have {this.loginSubmit} in onSubmit= in form
 
@@ -88,8 +69,6 @@ class LoginComponent extends React.Component {
 
         // Stop the form from submitting and refreshing the page.
         event.preventDefault();
-
->>>>>>> main
         // Get data from the form.
         const data = {
             email: event.target.email.value,
@@ -136,40 +115,31 @@ class LoginComponent extends React.Component {
         }
     }
 
+    forgotPassword = async (event) => {
+        window.location = "/forgotPassword";
+    }
+
 
 
     render() {
-<<<<<<< HEAD
-        return<div>
-=======
         return <div>
->>>>>>> main
             <div className="LoginPanelContainer">
                 <div className="LoginPanelBanner">
                     <h2 className="LoginHeader">Sign In</h2>
                 </div>
-
                 <form className="LoginForm" onSubmit={this.loginSubmitApi}>
                     <div className="TextInputValue">Email</div>
-<<<<<<< HEAD
                     <input type="email" id="email" name="email" className="TextInputBox"></input>
                     <div className="TextInputValue">Password</div>
                     <input type="password" id="password" name="password" className="TextInputBox"></input>
                     <div className="ErrorTextHolder"><div className="ErrorText" id="error">Invalid credentials</div></div>
                     <div><button className="LoginButton" name="submit" type="submit">Login</button></div>
-=======
-                    <input type="email" id="email" className="TextInputBox"></input>
-                    <div className="TextInputValue">Password</div>
-                    <input type="password" id="password" className="TextInputBox"></input>
-                    <div className="ErrorTextHolder"><div className="ErrorText" id="error">Invalid credentials</div></div>
-                    <div><button className="LoginButton" type="submit">Login</button></div>
->>>>>>> main
                 </form>
                 <div className="HelpArea">
                     <div className="HelpText">Dont have an account?</div>
                     <div className="HelpTextContainer"><div className="ClickHereText">click here</div><div className="SmallText">to contact our team about joining</div></div>
                     <div className="HelpText">Forgot password?</div>
-                    <div className="HelpTextContainer"><div className="ClickHereText">click here</div><div className="SmallText">to reset your accounts password</div></div>
+                    <div className="HelpTextContainer"><div className="ClickHereText" onClick={this.forgotPassword}>click here</div><div className="SmallText">to reset your accounts password</div></div>
                 </div>
             </div>
 

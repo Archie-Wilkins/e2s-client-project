@@ -2,5 +2,9 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/forgotPassword": "pages/forgotPassword.js"
+  "/api/login": "pages/api/login.js",
+  "/forgotPassword": "pages/forgotPassword.js",
+  "/": "pages/index.js",
+  "/api/updateUserPassword": "pages/api/updateUserPassword.js",
+  "/login": "pages/login.js"
 }
