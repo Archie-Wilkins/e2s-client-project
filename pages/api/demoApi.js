@@ -1,7 +1,7 @@
 //use in your modules
 
-var mysqlDb = require('../../db/DatabaseCore.js');
-var db = mysqlDb.getPool();
+var db = require('../../db/DatabaseCore.js');
+
 
 // AI Wanted to do promises here, may be an alternative to callbacks
 
