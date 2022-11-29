@@ -30,6 +30,14 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
+<<<<<<< HEAD
+=======
+    "/forgotPassword": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/forgotPassword.js"
+    ],
+>>>>>>> proposed-login-changes-db-edit
     "/login": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

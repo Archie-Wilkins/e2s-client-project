@@ -11,4 +11,8 @@ Connection.connect(err => {
 
 export default {
     user
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> proposed-login-changes-db-edit

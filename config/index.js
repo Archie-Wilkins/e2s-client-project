@@ -6,4 +6,8 @@ export default {
         database: 'e2s_db',
         password: 'comsc'
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> proposed-login-changes-db-edit

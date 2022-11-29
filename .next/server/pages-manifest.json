@@ -3,6 +3,12 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/api/login": "pages/api/login.js",
+<<<<<<< HEAD
   "/": "pages/index.js",
+=======
+  "/forgotPassword": "pages/forgotPassword.js",
+  "/": "pages/index.js",
+  "/api/updateUserPassword": "pages/api/updateUserPassword.js",
+>>>>>>> proposed-login-changes-db-edit
   "/login": "pages/login.js"
 }
