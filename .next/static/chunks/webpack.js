@@ -131,11 +131,7 @@
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	!function() {
-<<<<<<< HEAD
-/******/ 		__webpack_require__.h = function() { return "3a04043fc6d60f31"; }
-=======
-/******/ 		__webpack_require__.h = function() { return "5d2e6bdafe83add1"; }
->>>>>>> proposed-login-changes-db-edit
+/******/ 		__webpack_require__.h = function() { return "ebca9b6b78e52e0e"; }
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

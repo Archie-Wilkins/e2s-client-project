@@ -1,5 +1,4 @@
-import * as mysql from "mysql";
-import DB from '../../db';
+var db = require('../../db/DatabaseCore.js');
 import user from "../../db/user";
 import {withCookies, useCookies} from "react-cookie";
 import Cookies from 'universal-cookie';
@@ -18,7 +17,8 @@ export default async function handler(req, res) {
 
     try {
         //gets user ID that matches email entered
-        let findID = await DB.user.getUserIDFromEmail(body.email);
+        let findID = await user.getUserIDFromEmail(body.email);
+
         //if no user is found with that email
         if(findID.toString() === ""){
             //returns unsuccessfulLogin
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
         let userID = await findID[0].user_id;
 
         //gets password from UserID
-        let getPassword = await DB.user.getPasswordFromID(userID);
+        let getPassword = await user.getPasswordFromID(userID);
 
         //then checks if the decrypted password matches users sent password
         if (await getPassword[0].decrypted_password === body.password)

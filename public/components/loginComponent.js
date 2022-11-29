@@ -1,11 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import Cookies from 'universal-cookie';
-<<<<<<< HEAD
 import { useState } from 'react';
 //import {loginSubmit} from '../../pages/api/login'
-=======
->>>>>>> proposed-login-changes-db-edit
 
 
 class LoginComponent extends React.Component {
@@ -71,15 +68,12 @@ class LoginComponent extends React.Component {
         //hides error msg if validation is passed
         document.getElementById("error").style.display = "none";
 
-<<<<<<< HEAD
         try{
             // Get data from the form.
             const data = {
                 email: event.target.email.value,
                 password: event.target.password.value,
             }
-=======
->>>>>>> proposed-login-changes-db-edit
 
             // Send the data to the server in JSON format.
             const JSONdata = JSON.stringify(data);
@@ -99,22 +93,12 @@ class LoginComponent extends React.Component {
                 body: JSONdata,
             }
 
-<<<<<<< HEAD
             // Send the form data to our forms API on Vercel and get a response.
             const response = await fetch(endpoint, options)
 
             // Get the response data from server as JSON.
             // If server returns the name submitted, that means the form works.
             const result = await response.json();
-=======
-        // Stop the form from submitting and refreshing the page.
-        event.preventDefault();
-        // Get data from the form.
-        const data = {
-            email: event.target.email.value,
-            password: event.target.password.value,
-        }
->>>>>>> proposed-login-changes-db-edit
 
             if(result.data.message.toString() === "unsuccessfulLogin") {
                 //shows login was unsuccessful
@@ -138,10 +122,6 @@ class LoginComponent extends React.Component {
 
     }
 
-    forgotPassword = async (event) => {
-        window.location = "/forgotPassword";
-    }
-
 
 
 
@@ -151,12 +131,8 @@ class LoginComponent extends React.Component {
                 <div className="LoginPanelBanner">
                     <h2 className="LoginHeader">Sign In</h2>
                 </div>
-<<<<<<< HEAD
 
                 <form className="LoginForm" onSubmit={this.loginSubmitApi} data-testid="form">
-=======
-                <form className="LoginForm" onSubmit={this.loginSubmitApi}>
->>>>>>> proposed-login-changes-db-edit
                     <div className="TextInputValue">Email</div>
                     <input type="email" id="email" name="email" className="TextInputBox"></input>
                     <div className="TextInputValue">Password</div>
@@ -168,7 +144,7 @@ class LoginComponent extends React.Component {
                     <div className="HelpText">Dont have an account?</div>
                     <div className="HelpTextContainer"><div className="ClickHereText">click here</div><div className="SmallText">to contact our team about joining</div></div>
                     <div className="HelpText">Forgot password?</div>
-                    <div className="HelpTextContainer"><div className="ClickHereText" onClick={this.forgotPassword}>click here</div><div className="SmallText">to reset your accounts password</div></div>
+                    <div className="HelpTextContainer"><div className="ClickHereText">click here</div><div className="SmallText">to reset your accounts password</div></div>
                 </div>
             </div>
 
