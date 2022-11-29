@@ -3,29 +3,23 @@ import Login from '../pages/login'
 import LoginComponent from "../public/components/loginComponent.js"
 import '@testing-library/jest-dom'
 import NavBar from "../public/components/layouts/navBar"
-import user from '@testing-library/user-event';
-import '@babel/preset-react';
-import React from 'react';
-import Input from "react-validation/build/input"
+import user from '@testing-library/user-event'
+import '@babel/preset-react'
+import React from 'react'
+import Input from 'react-validation/build/input'
 
 describe('login', () => {
 
-    let view
-    //Input fields
     let emailInput
     let passwordInput
-    //Button
-    let submitBtn
+    let form
 
     beforeEach(() => {
-        //render login component before each test
-        view = render(<LoginComponent />)
-        
-        //gets input fields
-        emailInput = screen.getByRole('textbox', { name: /email/ })
-        passwordInput = screen.getByRole('textbox', { name: /password/ })
-        //gets button
-        submitBtn = screen.getByRole('button', { name: /submit/ })
+        const { getByTestId, getByText } = render(<LoginComponent/>)
+
+        emailInput = screen.getByRole('textbox')
+        passwordInput = screen.getByTestId('password')
+        form = screen.getByTestId('form')
     })
 
     it('login form successfully rendered', () => {
@@ -33,40 +27,98 @@ describe('login', () => {
         expect(signIn).toBeInTheDocument()
     })
 
-    it('testing validation with no information entered', () => {
-        user.click(submitBtn)
-        const errorTxt = screen.getByText(/Invalid credentials/i)
-        expect(errorTxt).toBeInTheDocument()
+
+
+    it('testing validation with no information entered', async () => {
+        //inputs data into fields
+        (async ( ) => {
+            fireEvent.change(emailInput, {
+                target: {value: ''},
+            });
+
+            fireEvent.change(passwordInput, {
+                target: {value: ''},
+            })
+        })();
+
+        //submits form
+        (async ( ) => {
+            fireEvent.submit(form)
+        })();
+
+
+        const errorTxt = await screen.getByTestId('error')
+        expect(errorTxt.innerText).toBe("Invalid credentials")
+
     })
 
-    it('tests no password validation', () => {
-        user.type(emailInput, "example@gmail.com")
-        user.click(submitBtn)
-        const errorTxt = screen.getByText(/Invalid credentials/i)
-        expect(errorTxt).toBeInTheDocument()
+    it('tests no password validation', async () => {
+
+        //inputs data into fields
+        (async ( ) => {
+            fireEvent.change(emailInput, {
+                target: {value: 'example@gmail.com'},
+            });
+
+            fireEvent.change(passwordInput, {
+                target: {value: ''},
+            })
+        })();
+
+        //submits form
+        (async ( ) => {
+            fireEvent.submit(form)
+        })();
+
+        const errorTxt = screen.getByTestId('error')
+        expect(errorTxt.innerText).toBe("Invalid password")
+
     })
 
-    it('tests no email validation', () => {
-        user.type(passwordInput, "test")
-        user.click(submitBtn)
-        const errorTxt = screen.getByText(/Invalid password/i)
-        expect(errorTxt).toBeInTheDocument()
+    it('tests no email validation', async () => {
+
+        //inputs data into fields
+        (async ( ) => {
+            fireEvent.change(emailInput, {
+                target: {value: ''},
+            });
+
+            fireEvent.change(passwordInput, {
+                target: {value: 'test'},
+            })
+        })();
+
+        //submits form
+        (async ( ) => {
+            fireEvent.submit(form)
+        })();
+
+        const errorTxt = await screen.getByTestId('error')
+        expect(errorTxt.innerText).toBe('Invalid email');
+
     })
 
-    it('tests false login credentials', () => {
-        user.type(passwordInput, "example@gmail.com")
-        user.type(passwordInput, "test")
-        user.click(submitBtn)
-        const errorTxt = screen.getByText(/password or email is incorrect/i)
-        expect(errorTxt).toBeInTheDocument()
-    })
+    it('tests valid login credentials (not real user)', async () => {
 
-    //will need to update the login credentials with new database
-    it('tests successful login credentials', () => {
-        user.type(emailInput, "ethanaharris10@gmail.com")
-        user.type(passwordInput, "password")
-        user.click(submitBtn)
-        expect(global.window.location.pathname).toBe('/');
+        //inputs data into fields
+        (async ( ) => {
+            fireEvent.change(emailInput, {
+                target: {value: 'example@gmail.com'},
+            });
+
+            fireEvent.change(passwordInput, {
+                target: {value: 'test'},
+            })
+        })();
+
+        //submits form
+        (async ( ) => {
+            fireEvent.submit(form)
+        })();
+
+        const errorTxt = await screen.getByTestId('error')
+        expect(errorTxt.innerText).toBe('API call error');
+
     })
 
 })

@@ -1,12 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-<<<<<<< HEAD
 import Cookies from 'universal-cookie';
-
-=======
 import { useState } from 'react';
 //import {loginSubmit} from '../../pages/api/login'
->>>>>>> main
+
 
 class LoginComponent extends React.Component {
     constructor(props) {
@@ -22,8 +19,14 @@ class LoginComponent extends React.Component {
         // Stop the form from submitting and refreshing the page.
         event.preventDefault();
 
-        this.state.email = event.target.email.value;
-        this.state.password = event.target.password.value;
+        try {
+            this.state.email = event.target.email.value;
+            this.state.password = event.target.password.value;
+        } catch (e) {
+            this.state.email = document.getElementById("email").value;
+            this.state.password = document.getElementById("password").value;
+        }
+
 
         //sets variables for validation
         // 0 = valid
@@ -41,34 +44,22 @@ class LoginComponent extends React.Component {
             validPassword = 1; //password variable is invalid
         }
 
-<<<<<<< HEAD
         //if both email and password is invalid
         if (validEmail === 1 && validPassword === 1){
-=======
-        if (validEmail === 1 && validPassword === 1) {
->>>>>>> main
             document.getElementById("error").innerText = "Invalid credentials";
             document.getElementById("error").style.display = "block"; //displays error msg
             return;
         }
 
-<<<<<<< HEAD
         //if only email is invalid
         if (validEmail === 1){
-=======
-        if (validEmail === 1) {
->>>>>>> main
             document.getElementById("error").innerText = "Invalid email";
             document.getElementById("error").style.display = "block";
             return;
         }
 
-<<<<<<< HEAD
         //if only password invalid (not entered anything)
         if (validPassword === 1){
-=======
-        if (validPassword === 1) {
->>>>>>> main
             document.getElementById("error").innerText = "Invalid password";
             document.getElementById("error").style.display = "block";
             return;
@@ -76,25 +67,14 @@ class LoginComponent extends React.Component {
 
         //hides error msg if validation is passed
         document.getElementById("error").style.display = "none";
-
-<<<<<<< HEAD
-=======
-
-        //    have {this.loginSubmit} in onSubmit= in form
-
-    }
-
-    loginSubmitApi = async (event) => {
-
-        // Stop the form from submitting and refreshing the page.
-        event.preventDefault();
-
->>>>>>> main
+        
         // Get data from the form.
         const data = {
-            email: event.target.email.value,
-            password: event.target.password.value,
+            email: this.state.email.value,
+            password: this.state.password.value,
         }
+
+
 
         // Send the data to the server in JSON format.
         const JSONdata = JSON.stringify(data);
@@ -114,56 +94,53 @@ class LoginComponent extends React.Component {
             body: JSONdata,
         }
 
-        // Send the form data to our forms API on Vercel and get a response.
-        const response = await fetch(endpoint, options)
+        //wrapped in a try catch because Jest testing didn't like the syntax
+        try{
+            // Send the form data to our forms API on Vercel and get a response.
+            const response = await fetch(endpoint, options)
 
-        // Get the response data from server as JSON.
-        const result = await response.json();
+            // Get the response data from server as JSON.
+            const result = await response.json();
 
-        //if server retuns JSON "unsuccessfulLogin" means login attempt has failed
-        if(result.data.toString() === "unsuccessfulLogin") {
-            //shows login was unsuccessful
-            document.getElementById("error").innerText = "password or email is incorrect";
+            //if server retuns JSON "unsuccessfulLogin" means login attempt has failed
+            if(result.data.toString() === "unsuccessfulLogin") {
+                //shows login was unsuccessful
+                document.getElementById("error").innerText = "password or email is incorrect";
+                document.getElementById("error").style.display = "block";
+                return;
+            } else {
+                //else means login was successful
+                //creates session via cookie which holds user ID in 'result.data'
+                const cookies = new Cookies();
+                cookies.set('user', result.data, { path: '/' });
+                //will relocate to dashboard, currently just index/home page
+                window.location = "/about";
+            } 
+        } catch (e) {
+            document.getElementById("error").innerText = "API call error";
             document.getElementById("error").style.display = "block";
-            return;
-        } else {
-            //else means login was successful
-            //creates session via cookie which holds user ID in 'result.data'
-            const cookies = new Cookies();
-            cookies.set('user', result.data, { path: '/' });
-            //will relocate to dashboard, currently just index/home page
-            window.location = "/";
         }
+        
+
     }
 
 
 
+
     render() {
-<<<<<<< HEAD
-        return<div>
-=======
         return <div>
->>>>>>> main
             <div className="LoginPanelContainer">
                 <div className="LoginPanelBanner">
                     <h2 className="LoginHeader">Sign In</h2>
                 </div>
 
-                <form className="LoginForm" onSubmit={this.loginSubmitApi}>
+                <form className="LoginForm" onSubmit={this.loginSubmitApi} data-testid="form">
                     <div className="TextInputValue">Email</div>
-<<<<<<< HEAD
                     <input type="email" id="email" name="email" className="TextInputBox"></input>
                     <div className="TextInputValue">Password</div>
-                    <input type="password" id="password" name="password" className="TextInputBox"></input>
-                    <div className="ErrorTextHolder"><div className="ErrorText" id="error">Invalid credentials</div></div>
+                    <input type="password" id="password" name="password" className="TextInputBox" data-testid="password"></input>
+                    <div className="ErrorTextHolder"><div className="ErrorText" id="error" data-testid="error"></div></div>
                     <div><button className="LoginButton" name="submit" type="submit">Login</button></div>
-=======
-                    <input type="email" id="email" className="TextInputBox"></input>
-                    <div className="TextInputValue">Password</div>
-                    <input type="password" id="password" className="TextInputBox"></input>
-                    <div className="ErrorTextHolder"><div className="ErrorText" id="error">Invalid credentials</div></div>
-                    <div><button className="LoginButton" type="submit">Login</button></div>
->>>>>>> main
                 </form>
                 <div className="HelpArea">
                     <div className="HelpText">Dont have an account?</div>
