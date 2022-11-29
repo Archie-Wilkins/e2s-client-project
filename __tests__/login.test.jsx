@@ -1,7 +1,12 @@
 import {fireEvent, render, screen} from '@testing-library/react'
-import '@testing-library/jest-dom'
+import Login from '../pages/login'
 import LoginComponent from "../public/components/loginComponent.js"
-import user from '@testing-library/user-event'
+import '@testing-library/jest-dom'
+import NavBar from "../public/components/layouts/navBar"
+import user from '@testing-library/user-event';
+import '@babel/preset-react';
+import React from 'react';
+import Input from "react-validation/build/input"
 
 describe('login', () => {
 
@@ -15,6 +20,7 @@ describe('login', () => {
     beforeEach(() => {
         //render login component before each test
         view = render(<LoginComponent />)
+        
         //gets input fields
         emailInput = screen.getByRole('textbox', { name: /email/ })
         passwordInput = screen.getByRole('textbox', { name: /password/ })
