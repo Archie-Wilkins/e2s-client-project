@@ -67,60 +67,58 @@ class LoginComponent extends React.Component {
 
         //hides error msg if validation is passed
         document.getElementById("error").style.display = "none";
-        
-        // Get data from the form.
-        const data = {
-            email: this.state.email.value,
-            password: this.state.password.value,
-        }
 
-
-
-        // Send the data to the server in JSON format.
-        const JSONdata = JSON.stringify(data);
-
-        // API endpoint where we send form data.
-        const endpoint = '/api/login';
-
-        // Form the request for sending data to the server.
-        const options = {
-            // The method is POST because we are sending data.
-            method: 'POST',
-            // Tell the server we're sending JSON.
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            // Body of the request is the JSON data we created above.
-            body: JSONdata,
-        }
-
-        //wrapped in a try catch because Jest testing didn't like the syntax
         try{
+            // Get data from the form.
+            const data = {
+                email: event.target.email.value,
+                password: event.target.password.value,
+            }
+
+            // Send the data to the server in JSON format.
+            const JSONdata = JSON.stringify(data);
+
+            // API endpoint where we send form data.
+            const endpoint = '/api/login';
+
+            // Form the request for sending data to the server.
+            const options = {
+                // The method is POST because we are sending data.
+                method: 'POST',
+                // Tell the server we're sending JSON.
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                // Body of the request is the JSON data we created above.
+                body: JSONdata,
+            }
+
             // Send the form data to our forms API on Vercel and get a response.
             const response = await fetch(endpoint, options)
 
             // Get the response data from server as JSON.
+            // If server returns the name submitted, that means the form works.
             const result = await response.json();
 
-            //if server retuns JSON "unsuccessfulLogin" means login attempt has failed
-            if(result.data.toString() === "unsuccessfulLogin") {
+            if(result.data.message.toString() === "unsuccessfulLogin") {
                 //shows login was unsuccessful
                 document.getElementById("error").innerText = "password or email is incorrect";
                 document.getElementById("error").style.display = "block";
                 return;
-            } else {
+            } else if(result.data.message.toString() === "success"){
                 //else means login was successful
                 //creates session via cookie which holds user ID in 'result.data'
                 const cookies = new Cookies();
-                cookies.set('user', result.data, { path: '/' });
+                cookies.set('user', result.data.user, { path: '/' });
                 //will relocate to dashboard, currently just index/home page
-                window.location = "/about";
-            } 
+                window.location = "/";
+            }
         } catch (e) {
             document.getElementById("error").innerText = "API call error";
             document.getElementById("error").style.display = "block";
         }
-        
+
+
 
     }
 

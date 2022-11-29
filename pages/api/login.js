@@ -22,7 +22,7 @@ export default async function handler(req, res) {
         //if no user is found with that email
         if(findID.toString() === ""){
             //returns unsuccessfulLogin
-            return res.status(200).json({data:"unsuccessfulLogin"});
+            return res.status(200).json({data: {message:"unsuccessfulLogin"}});
         }
 
         //if ID has been found
@@ -36,11 +36,11 @@ export default async function handler(req, res) {
         if (await getPassword[0].decrypted_password === body.password)
         {
             //returns successful response with the userID to login
-            return res.status(200).json({data:userID});//returns userID instead of 'unsuccessfulLogin' if successful
+            return res.status(200).json({data: {message:"success", user:userID}});//returns userID instead of 'unsuccessfulLogin' if successful
         }
 
         //if password doesn't match return unsuccessfulLogin
-        return res.status(200).json({data:"unsuccessfulLogin"});
+        return res.status(200).json({data: {message:"unsuccessfulLogin"}});
 
     } catch(e){
         //catches error
