@@ -14,7 +14,7 @@
 
 
 -- Dumping database structure for e2s_db
-CREATE DATABASE IF NOT EXISTS `e2s_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE IF NOT EXISTS `e2s_db`;
 USE `e2s_db`;
 
 -- Dumping structure for table e2s_db.buisness_goals
@@ -402,7 +402,11 @@ INSERT INTO `suppliers_historic` (`entry_id`, `supplier_id`, `time_stamp`, `ener
 CREATE TABLE IF NOT EXISTS `user_data` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(50) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+<<<<<<< HEAD
   `password` varchar(50) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+=======
+  `password` varchar(150),
+>>>>>>> main
   `first_name` varchar(50) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `last_name` varchar(50) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `phone_number` varchar(13) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
@@ -410,7 +414,11 @@ CREATE TABLE IF NOT EXISTS `user_data` (
   PRIMARY KEY (`user_id`),
   KEY `FK_user_data_roles` (`role_id`),
   CONSTRAINT `FK_user_data_roles` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE NO ACTION
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=7;
+>>>>>>> main
 
 -- Dumping data for table e2s_db.user_data: ~6 rows (approximately)
 /*!40000 ALTER TABLE `user_data` DISABLE KEYS */;

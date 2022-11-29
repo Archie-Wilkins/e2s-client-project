@@ -1,26 +1,50 @@
-import Link from "next/link"
+import MainLayout from "../public/components/layouts/mainLayoutShell.js"
+import React from 'react';
 
 
-function HelpPage() {
-    return <div>
-<<<<<<< HEAD
-        <Link href="/"><p>Home</p></Link>
-        <Link href="/contact"><p>Contact-Us Page</p></Link>
+class HelpPage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            pageName: 'Help',
+            //Need to change this to get this 
+            //infomation from API
 
-        <form action="/account" method="post">
-            <label htmlFor="first">First name:</label>
-            <input type="text" id="first" name="first"/>
-            <label htmlFor="last">Last name:</label>
-            <input type="text" id="last" name="last"/>
-            <button type="submit">Submit</button>
-        </form>
-    </div>
-=======
-        <p>Help</p>
+            //Would be ideal to store these in some sort of cookie or global variable
+            //if these are not present then the nav bar will default to standard ESM nav bar 
+            isAdmin: false,
+            isDirector: true,
+        };
+    }
 
-        <Link href="/contact"><p>Contact-Us Page</p></Link>
-    </div >
->>>>>>> ad52b33c0831be4f1214b696665fdf9ed8393107
+    render() {
+        return <div>
+            <MainLayout isAdmin={this.state.isAdmin} isDirector={this.state.isDirector} pageName={this.state.pageName}>
+                <div className="whiteBackground mt-5">
+                    <h1>Help</h1>
+                </div>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+                <h1>Help</h1>
+
+            </MainLayout >
+
+            <Link href="/contact"><p>Contact-Us Page</p></Link>
+        </div >
+    }
+
 }
 
 export default HelpPage

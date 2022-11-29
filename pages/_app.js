@@ -1,20 +1,16 @@
-import '../styling/styles.css';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styling/navbar.css';
+import '../styling/sideNavbar.css';
+import '../styling/topNavbar.css';
 import '../styling/colours.css';
-import '../styling/login.css';
-import { useEffect } from "react";
-import React from "react";
+import '../styling/mainLayout.css';
+import '../styling/text.css';
+import '../styling/styles.css';
 
+export default function App({ Component, pageProps }) {
+    return (
+        <Component {...pageProps} />
+    );
 
-
-export default function MyApp({ Component, pageProps }) {
-    useEffect(() => {
-        import("bootstrap/dist/js/bootstrap");
-    }, []);
-    return <Component {...pageProps} />
 }
-
-
-
 
