@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import {Router} from "next/router";

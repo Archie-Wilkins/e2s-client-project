@@ -18,6 +18,7 @@ class LandingComponent extends React.Component {
             userSpending: "",
             userTechnology: "",
             formSubmitted: false,
+            activeSlide: 1,
         };
     }
 
@@ -112,7 +113,7 @@ class LandingComponent extends React.Component {
                 </div>
             </div>
         </nav>
-
+        
         <CarouselComponent/>
 
         <div className={"landingBody"}>
