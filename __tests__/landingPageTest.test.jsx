@@ -26,7 +26,7 @@ describe('dashboard', () => {
 
 
     it('renders an admin dashboard tab', () => {
-        const dashboard = screen.getByText("Welcome to E2S now!")
+        const dashboard = screen.getByText("REQUEST FORM")
         //const nav = screen.getByText("Dan Schnee")
         expect(dashboard).toBeInTheDocument()
         //expect(nav).toBeInTheDocument()
