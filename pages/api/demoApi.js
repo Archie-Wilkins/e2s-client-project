@@ -1,7 +1,6 @@
 //use in your modules
 
-var mysqlDb = require('../../db/DatabaseCore.js');
-var db = mysqlDb.getPool();
+var db = require('../../db/DatabaseCore.js');
 
 
 // AI Wanted to do promises here, may be an alternative to callbacks
@@ -16,39 +15,16 @@ var db = mysqlDb.getPool();
 // Re-evaluate how the body data is accessed.
 // See if functions can be more cleanly injected into the request handler (i.e dont have them found via header data)
 
-export default async function requestHandler(req, res) {
 
-    try{
-    switch (req.headers.task) {
-        case 'getUsers':
-            getAllUsers(req, res);
-            break;
-        case 'setUsers':
-            setUsers(req, res);
-            break;
-        default:
-            reject('Invalid method name');
-    }
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({error: error})
-    }
-}
-
-
-function getAllUsers(req, res) {
+async function getAllUsers(req, res) {
     const user_query = "SELECT * FROM user_data";
-    db.query(user_query, function (error, result, fields){
+    db.query(user_query, function (error, result, fields)
+    {
+        console.log(result);
         if (error) throw error;
         res.status(200).json({user_data: result})
     })
 }
 
-function setUsers(req, res){
-    const user_query = "INSERT INTO user_data (email, password, first_name, last_name, phone_number, role_id) VALUES (?, ?, ?, ?, ?, ?)";
-    db.query(user_query, [req.body.email, req.body.pass, req.body.fname, req.body.lname, req.body.phone,
-        req.body.roleId], function (error, result, fields){
-        if (error) throw error;
-        res.status(200).json({user_data: result})
-    })
-}
+
+export default getAllUsers
