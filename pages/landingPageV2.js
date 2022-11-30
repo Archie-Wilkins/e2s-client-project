@@ -5,6 +5,8 @@ function LaningPage2() {
     return <div className="LandingBackground">
         <LandingComponent />
     </div>
+
+    
 }
 
 export default LaningPage2

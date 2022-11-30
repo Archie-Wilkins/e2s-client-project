@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import {Router} from "next/router";
 import AccordionComponent from "./accordionComponent.js"
 import CarouselComponent from "./carouselComponent.js"
+import MainLayout from "./layouts/mainLayoutShell.js"
 
 class LandingComponent extends React.Component {
     constructor(props) {
@@ -19,6 +20,9 @@ class LandingComponent extends React.Component {
             userTechnology: "",
             formSubmitted: false,
             activeSlide: 1,
+            pageName: 'Landing',
+            isAdmin: true,
+            isDirector: false,
         };
     }
 
@@ -88,31 +92,11 @@ class LandingComponent extends React.Component {
 
     render() {
         return <div className={"landing-page"}>
-
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container-fluid">
-                <a className="navbar-brand" href="/">E2S</a>
-                <button
-                    className="navbar-toggler"
-                    type="button"
-                    data-mdb-toggle="collapse"
-                    data-mdb-target="#navbarNavAltMarkup"
-                    aria-controls="navbarNavAltMarkup"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <i className="fas fa-bars"></i>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div className="navbar-nav">
-                        <a className="nav-link active" aria-current="page" href="/">Home</a>
-                        <a className="nav-link" href="/contact">Contact Us</a>
-                        <a className="nav-link" href="/about">About</a>
-                        <a className={"nav-link"} href={"/account"}>Account</a>
-                    </div>
+            <MainLayout isAdmin={this.state.isAdmin} isDirector={this.state.isDirector} pageName={this.state.pageName}>
+                <div className="whiteBackground mt-5">
+                    <h1>Help</h1>
                 </div>
-            </div>
-        </nav>
+            </MainLayout>
         
         <CarouselComponent/>
 
