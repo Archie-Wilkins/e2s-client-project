@@ -1,6 +1,5 @@
 import {fireEvent, render, screen} from '@testing-library/react'
 import Login from '../pages/login'
-import LoginComponent from "../public/components/loginComponent.js"
 import '@testing-library/jest-dom'
 import NavBar from "../public/components/layouts/navBar"
 import user from '@testing-library/user-event'
@@ -15,7 +14,7 @@ describe('login', () => {
     let form
 
     beforeEach(() => {
-        const { getByTestId, getByText } = render(<LoginComponent/>)
+        const { getByTestId, getByText } = render(<Login/>)
 
         emailInput = screen.getByRole('textbox')
         passwordInput = screen.getByTestId('password')
