@@ -1,12 +1,9 @@
 .admin-header-container{
-    display: flex;
-}
-
-.dashboard-header{
     width: 80%;
     align-items: center;
     display: flex;
     flex-direction: column;
+    height: 800px;
 }
 
 .dashboard-sub-header{
@@ -23,4 +20,8 @@
 .businessSummaryBox{
     background-color: white;
     color: green;
+}
+
+.businessSection{
+    background-color: white;
 }
