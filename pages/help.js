@@ -1,5 +1,6 @@
 import MainLayout from "../public/components/layouts/mainLayoutShell.js"
 import React from 'react';
+import Link from "next/link";
 
 
 class HelpPage extends React.Component {
