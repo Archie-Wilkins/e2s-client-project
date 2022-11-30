@@ -107,7 +107,7 @@ class LandingComponent extends React.Component {
                     <div className="navbar-nav">
                         <a className="nav-link active" aria-current="page" href="/">Home</a>
                         <a className="nav-link" href="/contact">Contact Us</a>
-                        <a className="nav-link" href="/about">About Us</a>
+                        <a className="nav-link" href="/about">About</a>
                         <a className={"nav-link"} href={"/account"}>Account</a>
                     </div>
                 </div>

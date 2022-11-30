@@ -1,9 +1,11 @@
 // __tests__/index.test.jsx
 
 import {fireEvent, render, screen, waitFor} from '@testing-library/react'
-import Home from '../pages/index'
 import '@testing-library/jest-dom'
-import LandingComponent from '../public/components/landingComponent';
+import LandingComponent from '../public/components/landingComponent'
+import '@babel/preset-react'
+import React from 'react'
+
 
 describe('dashboard', () => {
     it('renders an admin dashboard tab', () => {
@@ -13,6 +15,7 @@ describe('dashboard', () => {
 
         expect(dashboard).toBeInTheDocument()
     })
+
 })
 
 
