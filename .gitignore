@@ -1,7 +1,9 @@
-node_modules/
 .next/
+node_modules/
 .idea/
+.npm/
+/.changeLog
+build
+yarn.lock
 *.pack
-*.pack
-.next/cache/webpack/client-development/0.pack
-*.pack
+

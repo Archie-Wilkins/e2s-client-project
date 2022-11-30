@@ -139,3 +139,49 @@
     align-items: center;
     justify-content: center;
 }
+
+.displayNone {
+    display: none;
+}
+
+.forgotPasswordFormContainer{
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.forgotPasswordForm {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+    text-align: center;
+    align-content: center;
+    flex-direction: column;
+    height: 150px;
+}
+
+.resendEmailText {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    float: right;
+    margin-left: 7px;
+}
+
+.margin-top-20px {
+    margin-top: 20px;
+}
+
+.infoText {
+    font-family: "Arial Bold", "Arial", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 10px;
+    color: green;
+    display: none;
+}
+
+
+
