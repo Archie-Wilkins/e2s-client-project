@@ -52,12 +52,6 @@ export const deleteResetRecord = async (userID) => {
 
 export const createResetRecord = async (userID, code) => {
     return new Promise((resolve, reject) =>  {
-
-        //delete any record with matching userID
-
-        //NEED BRODIES HELP WITH THISSS
-        //db.query("DELETE FROM password_reset WHERE user_id = " + "'" + userID + "'" , (err, results) => {});
-
         //creates Date 10 mins into future
         var expiryDate = new Date(new Date().getTime() + (10 * 60 * 1000))
 
