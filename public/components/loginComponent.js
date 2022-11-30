@@ -123,6 +123,9 @@ class LoginComponent extends React.Component {
     }
 
 
+    forgotPassword = (event) => {
+        window.location = "/forgotPassword";
+    }
 
 
     render() {
@@ -144,7 +147,7 @@ class LoginComponent extends React.Component {
                     <div className="HelpText">Dont have an account?</div>
                     <div className="HelpTextContainer"><div className="ClickHereText">click here</div><div className="SmallText">to contact our team about joining</div></div>
                     <div className="HelpText">Forgot password?</div>
-                    <div className="HelpTextContainer"><div className="ClickHereText">click here</div><div className="SmallText">to reset your accounts password</div></div>
+                    <div className="HelpTextContainer"><div className="ClickHereText" onClick={this.forgotPassword}>click here</div><div className="SmallText">to reset your accounts password</div></div>
                 </div>
             </div>
 

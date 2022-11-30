@@ -37,11 +37,26 @@ export const getPasswordFromID = async (userID) => {
     });
 }
 
+export const deleteResetRecord = async (userID) => {
+    return new Promise((resolve, reject) =>  {
+        db.query("DELETE FROM password_reset WHERE user_id = " + "'" + userID + "'", (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+    });
+}
+
+
+
 export const createResetRecord = async (userID, code) => {
     return new Promise((resolve, reject) =>  {
 
         //delete any record with matching userID
-        db.query("DELETE FROM password_reset WHERE user_id = " + "'" + userID + "'" , (err, results) => {});
+
+        //NEED BRODIES HELP WITH THISSS
+        //db.query("DELETE FROM password_reset WHERE user_id = " + "'" + userID + "'" , (err, results) => {});
 
         //creates Date 10 mins into future
         var expiryDate = new Date(new Date().getTime() + (10 * 60 * 1000))
@@ -92,5 +107,6 @@ export default {
     getPasswordFromID,
     createResetRecord,
     getUserResetCode,
-    updateUserPassword
+    updateUserPassword,
+    deleteResetRecord
 }
