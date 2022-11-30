@@ -113,7 +113,10 @@ class AdminHubV2 extends React.Component {
                                 )}
                                 {this.state.businessRequested === true && (
                                     <div>
-                                        <h1>{JSON.stringify(this.state.chosenBusinessRowArray)}</h1>
+                                        <h2>ID: {JSON.stringify(this.state.chosenBusinessRowArray[0])}</h2>
+                                        <h2>Business Name: {JSON.stringify(this.state.chosenBusinessRowArray[1])}</h2>
+                                        <h2>Industry: {JSON.stringify(this.state.chosenBusinessRowArray[2])}</h2>
+                                        <h2>CEO: {JSON.stringify(this.state.chosenBusinessRowArray[3])}</h2>
                                         <button onClick={() => this.handleReturn()}>Back</button>
                                     </div>
                                 )}
