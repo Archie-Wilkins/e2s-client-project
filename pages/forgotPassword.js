@@ -325,7 +325,7 @@ class ForgotPassword extends React.Component {
                         <div className="textInputValue">Confirm Password</div>
                         <input type="password" id="password2" name="password2" className="textInputBox"></input>
                         <div className="errorTextHolder"><div className="errorText" id="error3">sample error text</div></div>
-                        <div><button className="loginButton" name="submit" type="submit">send code</button></div>
+                        <div><button className="loginButton" name="submit" type="submit">submit</button></div>
                     </form>
                 </div>
             </div>
