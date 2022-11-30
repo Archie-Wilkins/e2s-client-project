@@ -46,8 +46,7 @@ class AdminDashboardComponent extends React.Component {
         return <div>
             <MainLayout isAdmin={true} pageName={"Admin Hub"}>
             <div className={"admin-header-container"}>
-            <div className={"dashboard-header"}>
-                <h1>ADMIN DASHBOARD</h1>
+                <h1 className='dashboard-header'>ADMIN DASHBOARD</h1>
                 <hr className={"h1-underline"}/>
                 <p className={"dashboard-sub-header"}>Welcome to E2S, Admin.</p><br/>
                 <div className={"admin-content"}>
@@ -146,7 +145,6 @@ class AdminDashboardComponent extends React.Component {
                     </div>
                     
                 </div>
-            </div>
         </div>
         </MainLayout>
         </div>
