@@ -139,22 +139,22 @@ class LandingComponent extends React.Component {
         </div>
     )}
     {!this.state.formSubmitted && (
-        <form onSubmit={this.enquirySubmitApi} className={"enquiry-form"} method="post" id={"enquiryForm"}>
+        <form onSubmit={this.enquirySubmitApi} className={"enquiry-form"} method="post" id={"enquiryForm"} data-testid="form">
             <div className={"enquiry-form-header"}>
                 <h1>REQUEST FORM</h1>
             </div>
             <div className={"enquiry-form-content"}>
                 <label htmlFor="industry">Which industry are you in? (Required)</label>
                 <br/>
-                <input type="text" id="industry" name="industry" required minLength={"1"} maxLength={"50"}/>
+                <input type="text" id="industry" name="industry" required minLength={"1"} maxLength={"50"} data-testid="industry"/>
                 <br/><br/>
                 <label htmlFor="business">What is your business name? (Required)</label>
                 <br/>
-                <input type="text" id="business" name="business" required minLength={"1"} maxLength={"50"}/>
+                <input type="text" id="business" name="business" required minLength={"1"} maxLength={"50"} data-testid="business"/>
                 <br/><br/>
                 <label htmlFor="email">What is your email address? (Required)</label>
                 <br/>
-                <input type="email" id="email" name="email" required minLength={"1"} maxLength={"50"}/>
+                <input type="email" id="email" name="email" required minLength={"1"} maxLength={"50"} data-testid="email"/>
 
                 <br/><br/>
                 <div className="form-check">
