@@ -90,9 +90,33 @@ class LandingComponent extends React.Component {
         this.setState({formSubmitted: false});
     }
 
+    handleFormScroll = async (event) => {
+        window.scrollTo(0, 1200);
+    }
+
     render() {
         return <div className={"landing-page"}>
-            <MainLayout isAdmin={this.state.isAdmin} isDirector={this.state.isDirector} pageName={this.state.pageName} data-testid="navBar">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/">E2S</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/about">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="#">Energy Data</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="#" onClick={this.handleFormScroll}>Sign Up</a>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+            </nav>
                 <CarouselComponent/>
                 <div className={"landingBody"}>
     <h1>About Us</h1><br/>
@@ -101,7 +125,7 @@ class LandingComponent extends React.Component {
     <h1>Enquire</h1>
     <hr className={"underline-style"}/>
     <p>If you would like to request more information on how to get started, please fill
-        out the form below.</p>
+        out the form below and a member of the team will get back to you.</p>
 
     {this.state.formSubmitted === true && (
         <div className={"enquiry-form"}>
@@ -109,6 +133,8 @@ class LandingComponent extends React.Component {
                 <h1>REQUEST FORM</h1>
             </div>
             <div className={"enquiry-form-content"}>
+                <br/>
+                <p>Your request summary:</p>
                 <br/>
                 <label>Industry: {this.state.userIndustry}</label>
                 <br/>
@@ -182,7 +208,6 @@ class LandingComponent extends React.Component {
     )}
 
                 </div>
-            </MainLayout>
     </div>
     }
     
