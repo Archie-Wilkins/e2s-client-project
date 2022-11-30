@@ -20,8 +20,8 @@ class LandingComponent extends React.Component {
             userTechnology: "",
             formSubmitted: false,
             activeSlide: 1,
-            pageName: 'Landing',
-            isAdmin: true,
+            pageName: 'Homepage',
+            isAdmin: false,
             isDirector: false,
         };
     }
@@ -93,101 +93,98 @@ class LandingComponent extends React.Component {
     render() {
         return <div className={"landing-page"}>
             <MainLayout isAdmin={this.state.isAdmin} isDirector={this.state.isDirector} pageName={this.state.pageName}>
-                <div className="whiteBackground mt-5">
-                    <h1>Help</h1>
+                <h1 className='landingHeader'>Welcome to E2S!</h1>
+                <h3 className='landingSubheader'>Take control over your energy today.</h3>
+                <CarouselComponent/>
+                <div className={"landingBody"}>
+    <h1>About Us</h1><br/>
+    <hr className={"underline-style"}/>
+    <AccordionComponent/><br/>
+    <h1>Enquire</h1>
+    <hr className={"underline-style"}/>
+    <p>If you would like to request more information on how to get started, please fill
+        out the form below.</p>
+
+    {this.state.formSubmitted === true && (
+        <div className={"enquiry-form"}>
+            <div className={"enquiry-form-header"}>
+                <h1>REQUEST FORM</h1>
+            </div>
+            <div className={"enquiry-form-content"}>
+                <br/>
+                <label>Industry: {this.state.userIndustry}</label>
+                <br/>
+                <label>Business: {this.state.userBusiness}</label>
+                <br/>
+                <label>Email: {this.state.userEmail}</label>
+                <br/>
+                <label>Comments: {this.state.userComments}</label>
+                <br/>
+                <h2>Goals</h2>
+                <br/>
+                {this.state.userCo2 === "true" && (
+                    <label>CO2</label>
+                )}
+                {this.state.userSpending === "true" && (
+                        <label>Spending</label>
+                )}
+                {this.state.userEnergy === "true" && (
+                        <label>Energy</label>
+                )}
+                {this.state.userTechnology === "true" && (
+                        <label>Technology</label>
+                )}            
+            </div>
+            <button onClick={this.handleReset} className={"enquiry-form-submit-button"}>BACK</button>
+        </div>
+    )}
+    {!this.state.formSubmitted && (
+        <form onSubmit={this.enquirySubmitApi} className={"enquiry-form"} method="post" id={"enquiryForm"}>
+            <div className={"enquiry-form-header"}>
+                <h1>REQUEST FORM</h1>
+            </div>
+            <div className={"enquiry-form-content"}>
+                <label htmlFor="industry">Which industry are you in? (Required)</label>
+                <br/>
+                <input type="text" id="industry" name="industry" required minLength={"1"} maxLength={"50"}/>
+                <br/><br/>
+                <label htmlFor="business">What is your business name? (Required)</label>
+                <br/>
+                <input type="text" id="business" name="business" required minLength={"1"} maxLength={"50"}/>
+                <br/><br/>
+                <label htmlFor="email">What is your email address? (Required)</label>
+                <br/>
+                <input type="email" id="email" name="email" required minLength={"1"} maxLength={"50"}/>
+
+                <br/><br/>
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" value="" id="co2"/>
+                    <label className="form-check-label" htmlFor="flexCheckDefault">CO2 Emissions</label>
+                </div>
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" value="" id="spending"/>
+                    <label className="form-check-label" htmlFor="flexCheckDefault">Spending</label>
+                </div>
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" value="" id="energy"/>
+                    <label className="form-check-label" htmlFor="flexCheckDefault">Energy Use</label>
+                </div>
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" value="" id="technology"/>
+                    <label className="form-check-label" htmlFor="flexCheckDefault">Technology Insights</label>
+                </div>
+                <br/>
+            </div>
+
+            <label htmlFor={"enquiryCommentSection"} className={"enquiry-form-comment-section-label"}>Would you like to asky any questions? (Optional)</label>
+            <input type={"text"} className={"enquiry-form-comment-section"} id={"enquiryCommentSection"}></input>
+            <br/>
+            <button type="submit" className={"enquiry-form-submit-button"}>Submit</button>
+        </form>
+    )}
+
                 </div>
             </MainLayout>
-        
-        <CarouselComponent/>
-
-        <div className={"landingBody"}>
-            <h1>About Us</h1><br/>
-            <hr className={"underline-style"}/>
-            <AccordionComponent/><br/>
-            <h1>Enquire</h1>
-            <hr className={"underline-style"}/>
-            <p>If you would like to request more information on how to get started, please fill
-                out the form below.</p>
-
-            {this.state.formSubmitted === true && (
-                <div className={"enquiry-form"}>
-                    <div className={"enquiry-form-header"}>
-                        <h1>REQUEST FORM</h1>
-                    </div>
-                    <div className={"enquiry-form-content"}>
-                        <br/>
-                        <label>Industry: {this.state.userIndustry}</label>
-                        <br/>
-                        <label>Business: {this.state.userBusiness}</label>
-                        <br/>
-                        <label>Email: {this.state.userEmail}</label>
-                        <br/>
-                        <label>Comments: {this.state.userComments}</label>
-                        <br/>
-                        <h2>Goals</h2>
-                        <br/>
-                        {this.state.userCo2 === "true" && (
-                            <label>CO2</label>
-                        )}
-                        {this.state.userSpending === "true" && (
-                                <label>Spending</label>
-                        )}
-                        {this.state.userEnergy === "true" && (
-                                <label>Energy</label>
-                        )}
-                        {this.state.userTechnology === "true" && (
-                                <label>Technology</label>
-                        )}            
-                    </div>
-                    <button onClick={this.handleReset} className={"enquiry-form-submit-button"}>BACK</button>
-                </div>
-            )}
-            {!this.state.formSubmitted && (
-                <form onSubmit={this.enquirySubmitApi} className={"enquiry-form"} method="post" id={"enquiryForm"}>
-                    <div className={"enquiry-form-header"}>
-                        <h1>REQUEST FORM</h1>
-                    </div>
-                    <div className={"enquiry-form-content"}>
-                        <label htmlFor="industry">Which industry are you in? (Required)</label>
-                        <br/>
-                        <input type="text" id="industry" name="industry" required minLength={"1"} maxLength={"50"}/>
-                        <br/><br/>
-                        <label htmlFor="business">What is your business name? (Required)</label>
-                        <br/>
-                        <input type="text" id="business" name="business" required minLength={"1"} maxLength={"50"}/>
-                        <br/><br/>
-                        <label htmlFor="email">What is your email address? (Required)</label>
-                        <br/>
-                        <input type="email" id="email" name="email" required minLength={"1"} maxLength={"50"}/>
-
-                        <br/><br/>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="co2"/>
-                            <label className="form-check-label" htmlFor="flexCheckDefault">CO2 Emissions</label>
-                        </div>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="spending"/>
-                            <label className="form-check-label" htmlFor="flexCheckDefault">Spending</label>
-                        </div>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="energy"/>
-                            <label className="form-check-label" htmlFor="flexCheckDefault">Energy Use</label>
-                        </div>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="technology"/>
-                            <label className="form-check-label" htmlFor="flexCheckDefault">Technology Insights</label>
-                        </div>
-                        <br/>
-                    </div>
-
-                    <label htmlFor={"enquiryCommentSection"} className={"enquiry-form-comment-section-label"}>Would you like to asky any questions? (Optional)</label>
-                    <input type={"text"} className={"enquiry-form-comment-section"} id={"enquiryCommentSection"}></input>
-                    <br/>
-                    <button type="submit" className={"enquiry-form-submit-button"}>Submit</button>
-                </form>
-            )}
-
-        </div>
     </div>
     }
     
