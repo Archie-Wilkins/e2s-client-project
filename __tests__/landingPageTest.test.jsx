@@ -8,13 +8,9 @@ import React from 'react'
 
 const apiRequest = jest.fn();
 
-const mRequest = (body, params) => {
-    const req = {
-        body: apiRequest.mockReturnValue(body || req),
-        params: apiRequest.mockReturnValue(params || req),
-        status: apiRequest.mockReturnValue("200"),
-    };
-    return req;
+const mRequest = (body) => {
+    console.log(body);
+    apiRequest.mockReturnValue(body);
 };
 
 const mResponse = () => {
@@ -79,9 +75,7 @@ describe('dashboard', () => {
             body: JSONdata,
         }
 
-        const response = await mRequest(data, options);
-        const result = await response;
-        console.log(result);
+        console.log(mRequest(data));
 
         //submits form
         /*(async ( ) => {
