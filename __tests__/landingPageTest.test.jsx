@@ -8,19 +8,6 @@ import React from 'react'
 
 const apiRequest = jest.fn();
 
-const mRequest = (body) => {
-    console.log(body);
-    apiRequest.mockReturnValue(body);
-};
-
-const mResponse = () => {
-    const res = {
-        status: apiRequest.mockReturnValue(res),
-        json: apiRequest.mockReturnValue(res),
-    }
-    return res;
-};
-
 describe('dashboard', () => {
 
     let emailInput
@@ -40,53 +27,10 @@ describe('dashboard', () => {
 
     it('renders an admin dashboard tab', () => {
         const dashboard = screen.getByText("Welcome to E2S now!")
+        const nav = screen.getByText("Dan Schnee")
         expect(dashboard).toBeInTheDocument()
+        expect(nav).toBeInTheDocument()
     })
-
-    it('testing enquiry validation with no information entered', async () => {
-        //inputs data into fields
-        /*(async ( ) => {
-            fireEvent.change(emailInput, {
-                target: {value: ''},
-            });
-
-            fireEvent.change(businessInput, {
-                target: {value: ''},
-            });
-
-            fireEvent.change(industryInput, {
-                target: {value: ''},
-            });
-        })();*/
-
-        const data = {
-            email: "",
-            business: "",
-            industry: "",
-        }
-
-        const JSONdata = JSON.stringify(data);
-
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSONdata,
-        }
-
-        console.log(mRequest(data));
-
-        //submits form
-        /*(async ( ) => {
-            fireEvent.submit(form)
-        })();*/
-
-        /*const errorTxt = await screen.getByTestId('error')
-        expect(errorTxt.innerText).toBe("Missing data!")*/
-
-    })
-
 
 })
 

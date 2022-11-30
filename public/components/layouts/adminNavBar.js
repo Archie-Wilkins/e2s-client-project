@@ -52,7 +52,7 @@ class adminNavBar extends React.Component {
 
                     <div>
                         <p className='whiteText m-0'>Signed in as:</p>
-                        <p className='whiteText m-0'>Dan Schnee</p>
+                        <p className='whiteText m-0' data-testid="loggedUser">Dan Schnee</p>
                     </div>
 
                 </div>

@@ -58,8 +58,8 @@ class CarouselComponent extends React.Component {
             {this.state.activeSlide === 1 &&(
                 <div className="carousel-item active" data-bs-interval="2000">
                 <div className={"carousel-content-box"}>
-                    <h1>Are you a site manager?</h1>
-                    <h1>Need help reducing your energy usage?</h1>
+                    <h1>Welcome to E2S!</h1>
+                    <h1>Take control over your energy today.</h1>
                     <button className={"carousel-button"} onClick={this.handleScroll}>ENQUIRE</button>
                 </div>
                 <div className={"landing-carousel-1"}/>
