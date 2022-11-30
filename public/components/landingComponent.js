@@ -93,7 +93,7 @@ class LandingComponent extends React.Component {
     render() {
         return <div className={"landing-page"}>
             <MainLayout isAdmin={this.state.isAdmin} isDirector={this.state.isDirector} pageName={this.state.pageName}>
-                <h1 className='landingHeader'>Welcome to E2S!</h1>
+                <h1 className='landingHeader'>Welcome to E2S now!</h1>
                 <h3 className='landingSubheader'>Take control over your energy today.</h3>
                 <CarouselComponent/>
                 <div className={"landingBody"}>
