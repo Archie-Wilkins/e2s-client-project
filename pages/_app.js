@@ -5,7 +5,7 @@ import '../styling/topNavbar.css';
 import '../styling/colours.css';
 import '../styling/mainLayout.css';
 import '../styling/text.css';
-import '../styling/styles.css';
+import '../styling/login.css';
 
 export default function App({ Component, pageProps }) {
     return (
