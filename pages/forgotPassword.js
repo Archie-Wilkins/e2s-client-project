@@ -18,7 +18,13 @@ class ForgotPassword extends React.Component {
         // Stop the form from submitting and refreshing the page.
         event.preventDefault();
 
-        this.state.email = event.target.email.value
+        try {
+            this.state.email = event.target.email.value
+        } catch(e){
+            //jest hates event target values so will throw an error
+            this.state.email = document.getElementById("email").value
+        }
+
 
         // if email not valid
         if (!(this.state.email.includes("@") && this.state.email.includes(".")))
@@ -31,9 +37,11 @@ class ForgotPassword extends React.Component {
         document.getElementById("error").style.display = "none";
 
         // Get data from the form.
+
         const data = {
-            email: event.target.email.value
+            email: this.state.email
         }
+
 
         // Send the data to the server in JSON format.
         const JSONdata = JSON.stringify(data);
@@ -53,31 +61,108 @@ class ForgotPassword extends React.Component {
             body: JSONdata,
         }
 
-        // Send the form data to our forms API on Vercel and get a response.
-        const response = await fetch(endpoint, options)
+        //wrapping API and emial in try catch for Jest
+        try {
+            // Send the form data to our forms API on Vercel and get a response.
+            const response = await fetch(endpoint, options)
 
-        // Get the response data from server as JSON.
-        const result = await response.json();
+            // Get the response data from server as JSON.
+            const result = await response.json();
 
-        if(result.data.message.toString() === "email not found"){
-            document.getElementById("error").innerText = "User not registered";
-            document.getElementById("error").style.display = "block"
+            if(result.data.message.toString() === "email not found"){
+                document.getElementById("error").innerText = "User not registered";
+                document.getElementById("error").style.display = "block"
+                return;
+            }
+            //saves userID to state
+            this.state.userID = result.data.user.toString();
+
+
+            if(result.data.message.toString() === "email found") {
+                //user was found in database from the email
+
+                // creates data structure which contains userID
+                const data = {
+                    userID: this.state.userID
+                }
+                // Send the data to the server in JSON format.
+                const JSONdata = JSON.stringify(data);
+                const endpoint = '/api/generateResetCode';
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSONdata,
+                }
+                //sends API request to generate a code for UserID
+                const response = await fetch(endpoint, options)
+                const result = await response.json();
+
+                //has generated code
+
+                //if server failed to generated code
+                if(result.data.message.toString() === "fail"){
+                    //code generation failed
+                    //display appropriate error message
+                    document.getElementById("error").innerText = "Internal server error while generating code";
+                    document.getElementById("error").style.display = "block"; //displays error msg
+                    return;
+                }
+
+                //formats data to be sent off
+                const emailContent = {
+                    email: event.target.email.value,
+                    code: result.data.code.toString(),
+                }
+                //sends email
+                emailjs.send('service_vhvmdc2', 'template_st6zi62', emailContent, 'V_nH2nvFeD1k31Dpg')
+                    .then((result) => {
+                        document.getElementById("page1").style.display = "none";
+                        document.getElementById("page2").style.display = "flex";
+                    }, (error) => {
+                        document.getElementById("error").innerText = "error sending off email";
+                        document.getElementById("error").style.display = "block";
+                    });
+
+            } else {
+                //shows user was not found in database from email entered
+                document.getElementById("error").innerText = "this email is not registered here";
+                document.getElementById("error").style.display = "block";
+                return;
+            }
+        } catch (e) {
+            //catches any error from API or sending email
+            //made because Jest throws errors with API's
+            document.getElementById("error").innerText = "Internal server error";
+            document.getElementById("error").style.display = "block";
+        }
+
+    }
+
+    submitCode = async (event) => {
+        // Stop the form from submitting and refreshing the page.
+        event.preventDefault();
+
+        const code = document.getElementById("code").value;
+
+        //if no code has been entered, display message
+        if(code === ""){
+            document.getElementById("error2").innerText = "no code has been entered";
+            document.getElementById("error2").style.display = "block";
             return;
         }
-        //saves userID to state
-        this.state.userID = result.data.user.toString();
 
+        //API call to compare code entered with records code via UserID
 
-        if(result.data.message.toString() === "email found") {
-            //user was found in database from the email
-
-            // creates data structure which contains userID
-            const data = {
-                userID: this.state.userID
-            }
+        const data = {
+            userID: this.state.userID,
+            code: code
+        }
+        try {
             // Send the data to the server in JSON format.
             const JSONdata = JSON.stringify(data);
-            const endpoint = '/api/generateResetCode';
+            const endpoint = '/api/checkResetCode';
             const options = {
                 method: 'POST',
                 headers: {
@@ -89,84 +174,22 @@ class ForgotPassword extends React.Component {
             const response = await fetch(endpoint, options)
             const result = await response.json();
 
-            //has generated code
-
-            //if server failed to generated code
-            if(result.data.message.toString() === "fail"){
-                //code generation failed
-                //display appropriate error message
-                document.getElementById("error").innerText = "Internal server error while generating code";
-                document.getElementById("error").style.display = "block"; //displays error msg
+            //if code matches code from database
+            if(result.data.message.toString() === "match"){
+                //go to next step/page
+                document.getElementById("page2").style.display = "none";
+                document.getElementById("page3").style.display = "flex";
+            } else {
+                //code entered did not match
+                document.getElementById("error2").innerText = "incorrect code";
+                document.getElementById("error2").style.display = "block";
                 return;
             }
-
-            //formats data to be sent off
-            const emailContent = {
-                email: event.target.email.value,
-                code: result.data.code.toString(),
-            }
-            //sends email
-            emailjs.send('service_vhvmdc2', 'template_st6zi62', emailContent, 'V_nH2nvFeD1k31Dpg')
-                .then((result) => {
-                    document.getElementById("page1").style.display = "none";
-                    document.getElementById("page2").style.display = "flex";
-                }, (error) => {
-                    document.getElementById("error").innerText = "error sending off email";
-                    document.getElementById("error").style.display = "block";
-                });
-
-        } else {
-            //shows user was not found in database from email entered
-            document.getElementById("error").innerText = "this email is not registered here";
-            document.getElementById("error").style.display = "block";
-            return;
-        }
-    }
-
-    submitCode = async (event) => {
-        // Stop the form from submitting and refreshing the page.
-        event.preventDefault();
-
-        //if no code has been entered, display message
-        if(event.target.code.value === ""){
-            document.getElementById("error2").innerText = "no code has been entered";
+        } catch (e) {
+            //catches server error from API -- mainly for Jest testing
+            document.getElementById("error2").innerText = "Internal server error";
             document.getElementById("error2").style.display = "block";
-            return;
         }
-
-        //API call to compare code entered with records code via UserID
-
-        const data = {
-            userID: this.state.userID,
-            code: event.target.code.value
-        }
-        // Send the data to the server in JSON format.
-        const JSONdata = JSON.stringify(data);
-        const endpoint = '/api/checkResetCode';
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSONdata,
-        }
-        //sends API request to generate a code for UserID
-        const response = await fetch(endpoint, options)
-        const result = await response.json();
-
-        //if code matches code from database
-        if(result.data.message.toString() === "match"){
-            //go to next step/page
-            document.getElementById("page2").style.display = "none";
-            document.getElementById("page3").style.display = "flex";
-        } else {
-            //code entered did not match
-            document.getElementById("error2").innerText = "incorrect code";
-            document.getElementById("error2").style.display = "block";
-            return;
-        }
-
-
     }
 
     submitNewPassword = async (event) => {
@@ -174,8 +197,8 @@ class ForgotPassword extends React.Component {
         event.preventDefault();
 
         //passing textbox values to const's
-        const password1 = event.target.password1.value;
-        const password2 = event.target.password2.value;
+        const password1 = document.getElementById("password1").value;
+        const password2 = document.getElementById("password2").value;
 
         //checks user entered a value into field 1
         if(password1 === ""){
@@ -193,34 +216,43 @@ class ForgotPassword extends React.Component {
 
         //if both fields match, call API to change password of userID
 
-        //creates data const to hold userID and password
-        const data = {
-            userID: this.state.userID,
-            password: password1
-        }
-        // Send the data to the server in JSON format.
-        const JSONdata = JSON.stringify(data);
-        const endpoint = '/api/updateUserPassword';
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSONdata,
-        }
-        //sends API request to update user password
-        const response = await fetch(endpoint, options)
-        const result = await response.json();
+        try {
+            //creates data const to hold userID and password
+            const data = {
+                userID: this.state.userID,
+                password: password1
+            }
+            // Send the data to the server in JSON format.
+            const JSONdata = JSON.stringify(data);
+            const endpoint = '/api/updateUserPassword';
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSONdata,
+            }
+            //sends API request to update user password
+            const response = await fetch(endpoint, options)
+            const result = await response.json();
 
-        //if the API request failed
-        if(result.data.message.toString() === "fail"){
-            document.getElementById("error3").innerText = "server error, please try again";
+            //if the API request failed
+            if(result.data.message.toString() === "fail"){
+                document.getElementById("error3").innerText = "server error, please try again";
+                document.getElementById("error3").style.display = "block";
+                return;
+            }
+
+            //relocates to login page
+            window.location = "/login";
+        } catch (e) {
+            //catches error with API
+            //in jest this means that validation has been passed and the app intended to
+            // send off the data to server
+            document.getElementById("error3").innerText = "API error, please try again";
             document.getElementById("error3").style.display = "block";
-            return;
         }
 
-        //relocates to login page
-        window.location = "/login";
     }
 
     //this event is for a user incase they didn't recieve an email
@@ -274,16 +306,15 @@ class ForgotPassword extends React.Component {
     render() {
         return<div className="loginBackground">
             {/*send code to email*/}
-            <div className="loginPanelContainer" id="page1">
+            <div className="loginPanelContainer" id="page1" data-testid="page1">
                 <div className="forgotPasswordPanelBanner">
                     <h2 className="loginHeader">Reset Password</h2>
                 </div>
-
                 <div className="forgotPasswordFormContainer">
-                    <form className="forgotPasswordForm" onSubmit={this.submitEmail}>
+                    <form className="forgotPasswordForm" onSubmit={this.submitEmail} data-testid="email-form">
                         <div className="textInputValue">Email</div>
-                        <input type="email" id="email" name="email" className="textInputBox"></input>
-                        <div className="errorTextHolder"><div className="errorText" id="error">sample error text</div></div>
+                        <input type="email" id="email" name="email" className="textInputBox" data-testid="email"></input>
+                        <div className="errorTextHolder"><div className="errorText" id="error" data-testid="email-error">sample error text</div></div>
                         <div><button className="loginButton" name="submit" type="submit">send code</button></div>
                     </form>
 
@@ -296,13 +327,13 @@ class ForgotPassword extends React.Component {
                 </div>
                 <div className="textInputValue">Your email should have recieved a code</div>
                 <div className="forgotPasswordFormContainer">
-                    <form className="forgotPasswordForm" onSubmit={this.submitCode}>
+                    <form className="forgotPasswordForm" onSubmit={this.submitCode} data-testid="code-form">
                         <div className="textInputValue">Code</div>
-                        <input  id="code" name="code" className="textInputBox"></input>
-                        <div className="errorTextHolder"><div className="errorText" id="error2">sample error text</div></div>
+                        <input  id="code" name="code" className="textInputBox"  data-testid="code"></input>
+                        <div className="errorTextHolder"><div className="errorText" id="error2" data-testid="code-error"></div></div>
                         <div><button className="loginButton" name="submit" type="submit">submit code</button></div>
                     </form>
-                    <div className="errorTextHolder"><div className="infoText" id="infoText">sample text</div></div>
+                    <div className="errorTextHolder"><div className="infoText" id="infoText">email result</div></div>
                     <div className="helpTextContainer margin-top-20px">
                         <div className="textInputValue">have not recieved a code?
                             <div className="textInputValue resendEmailText" onClick={this.resendCode}>send another</div>
@@ -318,13 +349,13 @@ class ForgotPassword extends React.Component {
                     <h2 className="loginHeader">Reset Password</h2>
                 </div>
                 <div className="forgotPasswordFormContainer">
-                    <form className="forgotPasswordForm" onSubmit={this.submitNewPassword}>
+                    <form className="forgotPasswordForm" onSubmit={this.submitNewPassword} data-testid="password-form">
                         <div className="textInputValue">Password</div>
-                        <input type="password" id="password1" name="password1" className="textInputBox"></input>
+                        <input type="password" id="password1" name="password1" className="textInputBox" data-testid="password1"></input>
                         <div className="errorTextHolder"/>
                         <div className="textInputValue">Confirm Password</div>
-                        <input type="password" id="password2" name="password2" className="textInputBox"></input>
-                        <div className="errorTextHolder"><div className="errorText" id="error3">sample error text</div></div>
+                        <input type="password" id="password2" name="password2" className="textInputBox" data-testid="password2"></input>
+                        <div className="errorTextHolder"><div className="errorText" id="error3" data-testid="password-error"></div></div>
                         <div><button className="loginButton" name="submit" type="submit">submit</button></div>
                     </form>
                 </div>

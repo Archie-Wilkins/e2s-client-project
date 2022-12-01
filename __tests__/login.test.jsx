@@ -46,6 +46,11 @@ describe('login', () => {
         })();
 
 
+
+        (async ( ) => {
+            fireEvent.submit(form)
+        })();
+
         const errorTxt = await screen.getByTestId('error')
         expect(errorTxt.innerText).toBe("Invalid credentials")
 
