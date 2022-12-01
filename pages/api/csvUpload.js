@@ -2,13 +2,17 @@ import * as fs from "fs";
 import {parse} from "csv-parse";
 import { useState } from "react";
 
-export default async function handler(req, res) {
+export default function handler(req, res) {
 
         const dataStuff = [];
         let completionFlag = false;
-
+        console.log("Filename: " + req.body);
+        //console.log("File body: " + req.body.cvsName);
+        
         if(completionFlag === false){
-            fs.createReadStream("public/resources/csvExportExample.csv")
+            //fs.createReadStream("public/resources/csvExportExample.csv")
+
+            fs.createReadStream(req.body)
             .pipe(
                 parse({
                     delimiter: ",",
