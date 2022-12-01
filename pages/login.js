@@ -1,7 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import Cookies from 'universal-cookie';
+//import Cookies from 'universal-cookie';
 import { useState } from 'react';
+import Cookies from 'js-cookie'
+
 
 
 class LoginPage extends React.Component {
@@ -108,8 +110,23 @@ class LoginPage extends React.Component {
                 userIdData = await {userID: result.data.user.toString()}
 
                 //creates session via cookie which holds user ID in 'result.data'
-                const cookies = new Cookies();
-                cookies.set('user', result.data.user.toString(), { path: '/' });
+                //const cookies = new Cookies();
+                //cookies.set('user', result.data.user.toString(), { path: '/' });
+
+
+                const JSONdata = JSON.stringify(userIdData);
+
+                const cookieData = {
+                    user: result.data.user.toString(),
+                    role: result.data.role.toString(),
+                }
+
+                const JSONcookie = JSON.stringify(cookieData);
+
+                if(result.data.role){
+                    Cookies.remove('user');
+                    Cookies.set('user', JSONcookie, { expires: 1 });
+                }
             }
 
             if(result.data.message.toString() === "unsuccessfulLogin") {
@@ -127,16 +144,17 @@ class LoginPage extends React.Component {
                 const result = await response.json();
 
                 if(result.data.message.toString() === "success"){
+
                     //if successfully got user role
                     switch(result.data.role.toString()) {
-                        case "1": //if user is an admin
-                            window.location = "/admin/dashboard";
+                        case "1": //if user is an esm
+                            window.location = "/esm/dashboard";
                             break;
                         case "2": //if user is a Director
                             window.location = "/director/dashboard";
                             break;
-                        case "3": //if user is an ESM
-                            window.location = "/esm/dashboard";
+                        case "3": //if user is an admin
+                            window.location = "/admin/dashboard";
                             break;
                         default:
                             document.getElementById("error").innerText = "failed to read userID";
