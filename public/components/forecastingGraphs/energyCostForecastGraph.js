@@ -32,7 +32,6 @@ class EnergyCostForecastGraph extends React.Component {
           currentGraph: this.displayWeeklyGraph(),
         });
         return this.displayWeeklyGraph();
-        break;
       case 2:
         console.log("Yes" + "displayMonthlyGraph");
         this.setState({
@@ -115,29 +114,55 @@ class EnergyCostForecastGraph extends React.Component {
   render() {
     return (
       <div className="row h-100 w-75">
-        <div className="col p-2 whiteBackground rounded vh-70">
-          <div className="blueBackground rounded">
-            <button
-              onClick={() => {
-                this.displayGraph(1);
-              }}
-            >
-              Weekly
-            </button>
-            <button
-              onClick={() => {
-                this.displayGraph(2);
-              }}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => {
-                this.displayGraph(3);
-              }}
-            >
-              Yearly
-            </button>
+        <div className="col p-2 whiteBackground rounded vh-70 d-flex flex-column align-items-center ">
+          <div>
+            <ul className="d-flex blueBackground p-1 rounded noListStyle">
+              <li className="whiteBackground d-flex justify-content-center">
+                <input
+                  value="Weekly"
+                  type="radio"
+                  name="timeRange"
+                  className="invisibleInput"
+                  id="radio1"
+                  onClick={() => {
+                    this.displayGraph(1);
+                  }}
+                />
+                <label className="selectableLabel px-4" for="radio1">
+                  Weekly
+                </label>
+              </li>
+              <li className="whiteBackground mx-1 d-flex justify-content-center">
+                <input
+                  value="Monthly"
+                  type="radio"
+                  name="timeRange"
+                  className="invisibleInput"
+                  onClick={() => {
+                    this.displayGraph(2);
+                  }}
+                  id="radio2"
+                />
+                <label className="selectableLabel px-4" for="radio2">
+                  Monthly
+                </label>
+              </li>
+              <li className="whiteBackground d-flex justify-content-center">
+                <input
+                  value="Yearly"
+                  type="radio"
+                  name="timeRange"
+                  className="invisibleInput"
+                  onClick={() => {
+                    this.displayGraph(3);
+                  }}
+                  id="radio3"
+                />
+                <label className="selectableLabel px-4" for="radio3">
+                  Yearly
+                </label>
+              </li>
+            </ul>
           </div>
 
           {this.state.currentGraph}

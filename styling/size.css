@@ -1,7 +1,11 @@
-.vh-60{
-    height: 60vh;
+.vh-60 {
+  height: 60vh;
 }
 
-.vh-70{
-    height: 70vh;
+.vh-70 {
+  height: 70vh;
+}
+
+.w-40 {
+  width: 40%;
 }
