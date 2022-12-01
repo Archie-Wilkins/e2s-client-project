@@ -2,6 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/csvUploadPage": "pages/csvUploadPage.js",
-  "/api/csvUpload": "pages/api/csvUpload.js"
+  "/api/csvUpload": "pages/api/csvUpload.js",
+  "/csvUploadPage": "pages/csvUploadPage.js"
 }

@@ -2,10 +2,9 @@ import * as fs from "fs";
 import {parse} from "csv-parse";
 import { useState } from "react";
 
-const dataStuff = [];
-
 export default async function handler(req, res) {
 
+        const dataStuff = [];
         let completionFlag = false;
 
         if(completionFlag === false){
