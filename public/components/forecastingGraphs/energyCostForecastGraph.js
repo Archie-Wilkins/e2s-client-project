@@ -16,12 +16,9 @@ class EnergyCostForecastGraph extends React.Component {
     super(props);
     this.state = {
       currentGraph: this.displayGraph(1),
+      randomKey: Math.floor(Math.random() * 10000000),
     };
   }
-
-  //   componentDidMount() {
-  //     this.setState({ currentGraph: "this.displayWeeklyGraph()" });
-  //   }
 
   displayGraph = (graphNumber) => {
     console.log("Yes" + graphNumber);
@@ -57,12 +54,25 @@ class EnergyCostForecastGraph extends React.Component {
       <div className="w-100 h-100">
         <ResponsiveContainer>
           <LineChart data={this.props.weeklyData}>
-            <Line type="monotone" dataKey="cost" stroke="#8884d8" />
-            <XAxis dataKey="name">
-              <Label value="Date" offset={-5} position="insideBottom" />
+            <Line
+              type="monotone"
+              dataKey={this.props.yAxisDataKey}
+              stroke="#8884d8"
+            />
+            <XAxis dataKey={this.props.xAxisDataKey}>
+              <Label
+                value={this.props.xAxis}
+                offset={-5}
+                position="insideBottom"
+              />
             </XAxis>
-            <YAxis dataKey="cost">
-              <Label value="Cost (£)" angle={270} offset={-5} position="left" />
+            <YAxis dataKey={this.props.yAxisDataKey}>
+              <Label
+                value={this.props.yAxis}
+                angle={270}
+                offset={-5}
+                position="left"
+              />
             </YAxis>
             <Tooltip />
           </LineChart>
@@ -77,12 +87,25 @@ class EnergyCostForecastGraph extends React.Component {
       <div className="w-100 h-100">
         <ResponsiveContainer>
           <LineChart data={this.props.monthlyData}>
-            <Line type="monotone" dataKey="cost" stroke="#8884d8" />
-            <XAxis dataKey="name">
-              <Label value="Date" offset={-5} position="insideBottom" />
+            <Line
+              type="monotone"
+              dataKey={this.props.yAxisDataKey}
+              stroke="#8884d8"
+            />
+            <XAxis dataKey={this.props.xAxisDataKey}>
+              <Label
+                value={this.props.xAxis}
+                offset={-5}
+                position="insideBottom"
+              />
             </XAxis>
-            <YAxis dataKey="cost">
-              <Label value="Cost (£)" angle={270} offset={-5} position="left" />
+            <YAxis dataKey={this.props.yAxisDataKey}>
+              <Label
+                value={this.props.yAxis}
+                angle={270}
+                offset={-5}
+                position="left"
+              />
             </YAxis>
             <Tooltip />
           </LineChart>
@@ -97,12 +120,25 @@ class EnergyCostForecastGraph extends React.Component {
       <div className="w-100 h-100">
         <ResponsiveContainer>
           <LineChart data={this.props.yearlyData}>
-            <Line type="monotone" dataKey="cost" stroke="#8884d8" />
-            <XAxis dataKey="name">
-              <Label value="Date" offset={-5} position="insideBottom" />
+            <Line
+              type="monotone"
+              dataKey={this.props.yAxisDataKey}
+              stroke="#8884d8"
+            />
+            <XAxis dataKey={this.props.xAxisDataKey}>
+              <Label
+                value={this.props.xAxis}
+                offset={-5}
+                position="insideBottom"
+              />
             </XAxis>
-            <YAxis dataKey="cost">
-              <Label value="Cost (£)" angle={270} offset={-5} position="left" />
+            <YAxis dataKey={this.props.yAxisDataKey}>
+              <Label
+                value={this.props.yAxis}
+                angle={270}
+                offset={-5}
+                position="left"
+              />
             </YAxis>
             <Tooltip />
           </LineChart>
@@ -121,14 +157,17 @@ class EnergyCostForecastGraph extends React.Component {
                 <input
                   value="Weekly"
                   type="radio"
-                  name="timeRange"
+                  name={this.state.randomKey + "timeRange"}
                   className="invisibleInput"
-                  id="radio1"
+                  id={this.state.randomKey + "radio1"}
                   onClick={() => {
                     this.displayGraph(1);
                   }}
                 />
-                <label className="selectableLabel px-4" for="radio1">
+                <label
+                  className="selectableLabel px-4"
+                  for={this.state.randomKey + "radio1"}
+                >
                   Weekly
                 </label>
               </li>
@@ -136,14 +175,17 @@ class EnergyCostForecastGraph extends React.Component {
                 <input
                   value="Monthly"
                   type="radio"
-                  name="timeRange"
+                  name={this.state.randomKey + "timeRange"}
                   className="invisibleInput"
                   onClick={() => {
                     this.displayGraph(2);
                   }}
-                  id="radio2"
+                  id={this.state.randomKey + "radio2"}
                 />
-                <label className="selectableLabel px-4" for="radio2">
+                <label
+                  className="selectableLabel px-4"
+                  for={this.state.randomKey + "radio2"}
+                >
                   Monthly
                 </label>
               </li>
@@ -151,14 +193,17 @@ class EnergyCostForecastGraph extends React.Component {
                 <input
                   value="Yearly"
                   type="radio"
-                  name="timeRange"
+                  name={this.state.randomKey + "timeRange"}
                   className="invisibleInput"
                   onClick={() => {
                     this.displayGraph(3);
                   }}
-                  id="radio3"
+                  id={this.state.randomKey + "radio3"}
                 />
-                <label className="selectableLabel px-4" for="radio3">
+                <label
+                  className="selectableLabel px-4"
+                  for={this.state.randomKey + "radio3"}
+                >
                   Yearly
                 </label>
               </li>

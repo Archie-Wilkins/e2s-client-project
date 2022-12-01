@@ -27,63 +27,63 @@ class Forecasting extends React.Component {
       isDirector: false,
 
       weeklyData: [
-        { name: "Mon 5th", cost: 400, c02: 153 },
-        { name: "Tue 6th", cost: 415, c02: 145 },
-        { name: "Wed 7th", cost: 460, c02: 131 },
-        { name: "Thu 8th", cost: 501, c02: 115 },
-        { name: "Fri 9th", cost: 446, c02: 165 },
-        { name: "Sat 10th", cost: 608, c02: 135 },
-        { name: "Sun 11th", cost: 608, c02: 135 },
+        { date: "Mon 5th", c02: 153, cost: 400, energyUsage: 150 },
+        { date: "Tue 6th", c02: 145, cost: 415, energyUsage: 150 },
+        { date: "Wed 7th", c02: 131, cost: 460, energyUsage: 150 },
+        { date: "Thu 8th", c02: 115, cost: 501, energyUsage: 150 },
+        { date: "Fri 9th", c02: 165, cost: 446, energyUsage: 150 },
+        { date: "Sat 10th", c02: 135, cost: 608, energyUsage: 150 },
+        { date: "Sun 11th", c02: 135, cost: 608, energyUsage: 150 },
       ],
 
       monthlyData: [
-        { name: "14/11/2022", cost: 400, c02: 153 },
-        { name: "15/11/2022", cost: 415, c02: 145 },
-        { name: "16/11/2022", cost: 460, c02: 131 },
-        { name: "17/11/2022", cost: 501, c02: 115 },
-        { name: "18/11/2022", cost: 446, c02: 165 },
-        { name: "19/11/2022", cost: 608, c02: 135 },
-        { name: "20/11/2022", cost: 562, c02: 115 },
-        { name: "21/11/2022", cost: 531, c02: 112 },
-        { name: "22/11/2022", cost: 558, c02: 113 },
-        { name: "23/11/2022", cost: 515, c02: 109 },
-        { name: "24/11/2022", cost: 589, c02: 106 },
-        { name: "25/11/2022", cost: 605, c02: 105 },
-        { name: "26/11/2022", cost: 601, c02: 103 },
-        { name: "27/11/2022", cost: 561, c02: 101 },
-        { name: "28/11/2022", cost: 410, c02: 103 },
-        { name: "29/11/2022", cost: 440, c02: 111 },
-        { name: "30/11/2022", cost: 495, c02: 121 },
-        { name: "1/12/2022", cost: 411, c02: 136 },
-        { name: "2/12/2022", cost: 452, c02: 141 },
-        { name: "3/12/2022", cost: 431, c02: 145 },
-        { name: "4/12/2022", cost: 459, c02: 131 },
-        { name: "5/12/2022", cost: 473, c02: 113 },
-        { name: "6/12/2022", cost: 413, c02: 121 },
-        { name: "7/12/2022", cost: 519, c02: 117 },
-        { name: "8/12/2022", cost: 511, c02: 113 },
-        { name: "9/12/2022", cost: 506, c02: 121 },
-        { name: "10/12/2022", cost: 520, c02: 119 },
-        { name: "11/12/2022", cost: 549, c02: 131 },
-        { name: "12/12/2022", cost: 560, c02: 136 },
-        { name: "13/12/2022", cost: 580, c02: 145 },
-        { name: "14/12/2022", cost: 600, c02: 145 },
+        { date: "14/11/2022", cost: 2000, c02: 153, energyUsage: 150 },
+        { date: "15/11/2022", cost: 415, c02: 145, energyUsage: 150 },
+        { date: "16/11/2022", cost: 460, c02: 131, energyUsage: 150 },
+        { date: "17/11/2022", cost: 501, c02: 115, energyUsage: 150 },
+        { date: "18/11/2022", cost: 446, c02: 165, energyUsage: 150 },
+        { date: "19/11/2022", cost: 608, c02: 135, energyUsage: 150 },
+        { date: "20/11/2022", cost: 562, c02: 115, energyUsage: 150 },
+        { date: "21/11/2022", cost: 531, c02: 112, energyUsage: 150 },
+        { date: "22/11/2022", cost: 558, c02: 113, energyUsage: 150 },
+        { date: "23/11/2022", cost: 515, c02: 109, energyUsage: 150 },
+        { date: "24/11/2022", cost: 589, c02: 106, energyUsage: 150 },
+        { date: "25/11/2022", cost: 605, c02: 105, energyUsage: 150 },
+        { date: "26/11/2022", cost: 601, c02: 103, energyUsage: 150 },
+        { date: "27/11/2022", cost: 561, c02: 101, energyUsage: 150 },
+        { date: "28/11/2022", cost: 410, c02: 103, energyUsage: 150 },
+        { date: "29/11/2022", cost: 440, c02: 111, energyUsage: 150 },
+        { date: "30/11/2022", cost: 495, c02: 121, energyUsage: 150 },
+        { date: "1/12/2022", cost: 411, c02: 136, energyUsage: 150 },
+        { date: "2/12/2022", cost: 452, c02: 141, energyUsage: 150 },
+        { date: "3/12/2022", cost: 431, c02: 145, energyUsage: 150 },
+        { date: "4/12/2022", cost: 459, c02: 131, energyUsage: 150 },
+        { date: "5/12/2022", cost: 473, c02: 113, energyUsage: 150 },
+        { date: "6/12/2022", cost: 413, c02: 121, energyUsage: 150 },
+        { date: "7/12/2022", cost: 519, c02: 117, energyUsage: 150 },
+        { date: "8/12/2022", cost: 511, c02: 113, energyUsage: 150 },
+        { date: "9/12/2022", cost: 506, c02: 121, energyUsage: 150 },
+        { date: "10/12/2022", cost: 520, c02: 119, energyUsage: 150 },
+        { date: "11/12/2022", cost: 549, c02: 131, energyUsage: 150 },
+        { date: "12/12/2022", cost: 560, c02: 136, energyUsage: 150 },
+        { date: "13/12/2022", cost: 580, c02: 145, energyUsage: 150 },
+        { date: "14/12/2022", cost: 600, c02: 145, energyUsage: 150 },
       ],
 
       yearlyData: [
-        { name: "Dec", cost: 400, c02: 153 },
-        { name: "Jan", cost: 415, c02: 145 },
-        { name: "Feb", cost: 460, c02: 131 },
-        { name: "Mar", cost: 501, c02: 115 },
-        { name: "Apr", cost: 446, c02: 165 },
-        { name: "May", cost: 608, c02: 135 },
-        { name: "Jun", cost: 608, c02: 138 },
-        { name: "Jul", cost: 620, c02: 165 },
-        { name: "Aug", cost: 630, c02: 175 },
-        { name: "Sep", cost: 640, c02: 185 },
-        { name: "Oct", cost: 645, c02: 175 },
-        { name: "Nov", cost: 633, c02: 165 },
-        { name: "Dec", cost: 640, c02: 165 },
+        { date: "Dec", cost: 400, c02: 153, energyUsage: 150 },
+        { date: "Jan", cost: 415, c02: 145, energyUsage: 150 },
+        { date: "Feb", cost: 460, c02: 131, energyUsage: 150 },
+        { date: "Mar", cost: 501, c02: 115, energyUsage: 150 },
+        { date: "Apr", cost: 446, c02: 165, energyUsage: 150 },
+        { date: "May", cost: 608, c02: 135, energyUsage: 150 },
+        { date: "Jun", cost: 608, c02: 138, energyUsage: 150 },
+        { date: "Jul", cost: 620, c02: 165, energyUsage: 150 },
+        { date: "Aug", cost: 630, c02: 175, energyUsage: 150 },
+        { date: "Sep", cost: 640, c02: 185, energyUsage: 150 },
+        { date: "Oct", cost: 645, c02: 175, energyUsage: 150 },
+        { date: "Nov", cost: 633, c02: 165, energyUsage: 150 },
+        { date: "Dec", cost: 640, c02: 165, energyUsage: 150 },
       ],
     };
   }
@@ -107,6 +107,10 @@ class Forecasting extends React.Component {
               weeklyData={this.state.weeklyData}
               monthlyData={this.state.monthlyData}
               yearlyData={this.state.yearlyData}
+              xAxis={"Date"}
+              yAxis={"Cost (£)"}
+              xAxisDataKey={"date"}
+              yAxisDataKey={"cost"}
             />
 
             <div className="row mt-2 g-2 w-75">
@@ -115,37 +119,25 @@ class Forecasting extends React.Component {
               <div className="col whiteBackground rounded ml-1">Box 1</div>
             </div>
           </div>
+          {/* End of Energy Cost */}
 
           {/* Energy Usage */}
           <div className="container d-flex flex-column align-items-center w-100">
             <div className="row mt-5 w-75">
               <div className="col-lg rounded text-center">
-                <h2>C02 Emissions</h2>
+                <h2>Energy Usage</h2>
               </div>
             </div>
 
-            <div className="row h-100 w-75">
-              <div className="col p-2 whiteBackground rounded vh-70">
-                {/* <h3>Graph goes here</h3> */}
-                <ResponsiveContainer>
-                  <LineChart data={this.state.monthlyData}>
-                    <Line type="monotone" dataKey="c02" stroke="#8884d8" />
-                    <XAxis dataKey="name">
-                      <Label value="Date" offset={-5} position="insideBottom" />
-                    </XAxis>
-                    <YAxis dataKey="c02">
-                      <Label
-                        value="C02 Emissions (Kg)"
-                        angle={270}
-                        offset={-5}
-                        position="left"
-                      />
-                    </YAxis>
-                    <Tooltip />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
+            <EnergyCostForecastGraph
+              weeklyData={this.state.weeklyData}
+              monthlyData={this.state.monthlyData}
+              yearlyData={this.state.yearlyData}
+              xAxis={"Date"}
+              yAxis={"Energy Usage (kW/h)"}
+              xAxisDataKey={"date"}
+              yAxisDataKey={"energyUsage"}
+            />
 
             <div className="row mt-2 g-2 w-75">
               <div className="col whiteBackground rounded mr-1">Box 1</div>
@@ -153,8 +145,33 @@ class Forecasting extends React.Component {
               <div className="col whiteBackground rounded ml-1">Box 1</div>
             </div>
           </div>
+          {/* End of Energy Usage */}
 
-          {/* Energy Usage */}
+          {/* C02 Emissions */}
+          <div className="container d-flex flex-column align-items-center w-100">
+            <div className="row mt-5 w-75">
+              <div className="col-lg rounded text-center">
+                <h2>C02 Emissions</h2>
+              </div>
+            </div>
+
+            <EnergyCostForecastGraph
+              weeklyData={this.state.weeklyData}
+              monthlyData={this.state.monthlyData}
+              yearlyData={this.state.yearlyData}
+              xAxis={"Date"}
+              yAxis={"C02 Emissions (Kg)"}
+              xAxisDataKey={"date"}
+              yAxisDataKey={"c02"}
+            />
+
+            <div className="row mt-2 g-2 w-75">
+              <div className="col whiteBackground rounded mr-1">Box 1</div>
+              <div className="col whiteBackground rounded mx-1">Box 1</div>
+              <div className="col whiteBackground rounded ml-1">Box 1</div>
+            </div>
+          </div>
+          {/* End of C02 Emissions */}
         </MainLayout>
 
         <Link href="/contact">
