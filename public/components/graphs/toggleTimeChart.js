@@ -1,4 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import LineGraph from "./lineGraph.js";
+
 import React from "react";
 import {
   LineChart,
@@ -51,99 +53,39 @@ class EnergyCostForecastGraph extends React.Component {
   displayWeeklyGraph = () => {
     console.log("1");
     return (
-      <div className="w-100 h-100">
-        <ResponsiveContainer>
-          <LineChart data={this.props.weeklyData}>
-            <Line
-              type="monotone"
-              dataKey={this.props.yAxisDataKey}
-              stroke="#8884d8"
-            />
-            <XAxis dataKey={this.props.xAxisDataKey}>
-              <Label
-                value={this.props.xAxis}
-                offset={-5}
-                position="insideBottom"
-              />
-            </XAxis>
-            <YAxis dataKey={this.props.yAxisDataKey}>
-              <Label
-                value={this.props.yAxis}
-                angle={270}
-                offset={-5}
-                position="left"
-              />
-            </YAxis>
-            <Tooltip />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+      <LineGraph
+        dataSet={this.props.weeklyData}
+        xAxis={this.props.xAxis}
+        yAxis={this.props.yAxis}
+        xAxisDataKey={this.props.xAxisDataKey}
+        yAxisDataKey={this.props.yAxisDataKey}
+      />
     );
   };
 
   displayMonthlyGraph = () => {
     console.log("2");
     return (
-      <div className="w-100 h-100">
-        <ResponsiveContainer>
-          <LineChart data={this.props.monthlyData}>
-            <Line
-              type="monotone"
-              dataKey={this.props.yAxisDataKey}
-              stroke="#8884d8"
-            />
-            <XAxis dataKey={this.props.xAxisDataKey}>
-              <Label
-                value={this.props.xAxis}
-                offset={-5}
-                position="insideBottom"
-              />
-            </XAxis>
-            <YAxis dataKey={this.props.yAxisDataKey}>
-              <Label
-                value={this.props.yAxis}
-                angle={270}
-                offset={-5}
-                position="left"
-              />
-            </YAxis>
-            <Tooltip />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+      <LineGraph
+        dataSet={this.props.monthlyData}
+        xAxis={this.props.xAxis}
+        yAxis={this.props.yAxis}
+        xAxisDataKey={this.props.xAxisDataKey}
+        yAxisDataKey={this.props.yAxisDataKey}
+      />
     );
   };
 
   displayYearlyGraph = () => {
     console.log("3");
     return (
-      <div className="w-100 h-100">
-        <ResponsiveContainer>
-          <LineChart data={this.props.yearlyData}>
-            <Line
-              type="monotone"
-              dataKey={this.props.yAxisDataKey}
-              stroke="#8884d8"
-            />
-            <XAxis dataKey={this.props.xAxisDataKey}>
-              <Label
-                value={this.props.xAxis}
-                offset={-5}
-                position="insideBottom"
-              />
-            </XAxis>
-            <YAxis dataKey={this.props.yAxisDataKey}>
-              <Label
-                value={this.props.yAxis}
-                angle={270}
-                offset={-5}
-                position="left"
-              />
-            </YAxis>
-            <Tooltip />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+      <LineGraph
+        dataSet={this.props.yearlyData}
+        xAxis={this.props.xAxis}
+        yAxis={this.props.yAxis}
+        xAxisDataKey={this.props.xAxisDataKey}
+        yAxisDataKey={this.props.yAxisDataKey}
+      />
     );
   };
 

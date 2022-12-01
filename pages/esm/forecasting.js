@@ -1,6 +1,6 @@
 import Link from "next/link";
 import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
-import EnergyCostForecastGraph from "../../public/components/forecastingGraphs/energyCostForecastGraph";
+import EnergyCostForecastGraph from "../../public/components/graphs/toggleTimeChart";
 import React from "react";
 import {
   LineChart,
