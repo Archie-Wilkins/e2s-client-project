@@ -1,8 +1,7 @@
-import * as mysql from "mysql";
-import DB from '../../db';
 import {withCookies, useCookies} from "react-cookie";
 import Cookies from 'universal-cookie';
 import {updateUserPassword} from "../../db/user";
+import user from "../../db/user";
 
 export default async function handler(req, res) {
     // Get data submitted in request's body.
@@ -16,7 +15,7 @@ export default async function handler(req, res) {
 
     try {
         //calls SQL to update user record
-        await DB.user.updateUserPassword(body.userID, body.password);
+        await user.updateUserPassword(body.userID, body.password);
 
         //returns successful + code
         return res.status(200).json({data:{message:"success"}});
