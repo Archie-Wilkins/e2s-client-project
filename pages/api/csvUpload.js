@@ -6,13 +6,13 @@ export default function handler(req, res) {
 
         const dataStuff = [];
         let completionFlag = false;
-        console.log("Filename: " + req.body);
-        //console.log("File body: " + req.body.cvsName);
-        
+
+        console.log("Filename: " + req.body.csvName);
+
         if(completionFlag === false){
             //fs.createReadStream("public/resources/csvExportExample.csv")
 
-            fs.createReadStream(req.body)
+            fs.createReadStream("public/resources/csvExportExample.csv")
             .pipe(
                 parse({
                     delimiter: ",",
