@@ -34,8 +34,13 @@ export default async function handler(req, res) {
         //then checks if the decrypted password matches users sent password
         if (await getPassword[0].decrypted_password === body.password)
         {
+            //will fetch roleID of user
+            let getRoleID = await user.getUserRoleID(userID);
+
+            let RoleID = await getRoleID[0].role_id;
+
             //returns successful response with the userID to login
-            return res.status(200).json({data: {message:"success", user:userID}});//returns userID instead of 'unsuccessfulLogin' if successful
+            return res.status(200).json({data: {message:"success", user:userID, role:RoleID}});//returns userID instead of 'unsuccessfulLogin' if successful
         }
 
         //if password doesn't match return unsuccessfulLogin
