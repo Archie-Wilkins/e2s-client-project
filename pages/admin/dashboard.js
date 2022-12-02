@@ -30,6 +30,7 @@ class SystemAdmin extends React.Component {
 
         //if user role is not 3, 3 = admin
         if (userCookie.role != 3){
+            Cookies.remove('user');
             window.location = "/login";
         }
     }
