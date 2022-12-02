@@ -1,5 +1,8 @@
-node_modules/
 .next/
+node_modules/
 .idea/
-*.pack
+.npm/
+/.changeLog
+build
+yarn.lock
 *.pack

@@ -1,5 +1,5 @@
 /*css*/
-.LoginBackground {
+.loginBackground {
     width: 100%;
     height: 100vh;
     background-color: #f2f2f2;
@@ -8,7 +8,7 @@
     justify-content: center;
 }
 
-.LoginPanelContainer {
+.loginPanelContainer {
     height: 400px;
     width: 350px;
     border-radius: 20px;
@@ -18,14 +18,14 @@
     align-items: center;
 }
 
-.LoginHeader {
+.loginHeader {
     font-family: "Arial Bold", "Arial", sans-serif;
     font-style: normal;
     font-size: 30px;
     color: #FFFFFF;
 }
 
-.LoginPanelBanner {
+.loginPanelBanner {
     width: 350px;
     height: 50px;
     background-color: rgba(17, 29, 74, 1);
@@ -39,13 +39,13 @@
     align-content: space-between;
 }
 
-.HelpTextContainer {
+.helpTextContainer {
     display: flex;
     justify-content: space-between;
     height: 10px;
 }
 
-.LoginForm {
+.loginForm {
     display: flex;
     align-items: stretch;
     justify-content: space-around;
@@ -55,7 +55,7 @@
     height: 250px;
 }
 
-.TextInputBox {
+.textInputBox {
     width: 250px;
     height: 30px;
     background-color: rgba(242, 242, 242, 1);
@@ -66,13 +66,13 @@
     font-size: 15px;
 }
 
-.TextInputValue {
+.textInputValue {
     font-family: "Arial", sans-serif;
     font-size: 15px;
     font-weight: bold;
 }
 
-.ClickHereText {
+.clickHereText {
     margin-right: 4px;
     height: 10px;
     font-family: "Arial", sans-serif;
@@ -82,12 +82,12 @@
     cursor: pointer;
 }
 
-.SmallText {
+.smallText {
     font-family: "Arial", sans-serif;
     font-size: 10px;
 }
 
-.HelpArea {
+.helpArea {
     display: flex;
     height: 70px;
     flex-direction: column;
@@ -96,14 +96,14 @@
     text-align: center;
 }
 
-.HelpText {
+.helpText {
     height: 10px;
     font-family: "Arial", sans-serif;
     font-size: 13px;
     font-weight: bold;
 }
 
-.LoginButton {
+.loginButton {
     border-width: 0px;
     width: 100px;
     height: 30px;
@@ -120,11 +120,11 @@
     cursor: pointer;
 }
 
-.LoginButton:hover {
+.loginButton:hover {
     background-color: darkslateblue;
 }
 
-.ErrorText {
+.errorText {
     font-family: "Arial Bold", "Arial", sans-serif;
     font-weight: 700;
     font-style: normal;
@@ -133,9 +133,69 @@
     display: none;
 }
 
-.ErrorTextHolder {
+.errorTextHolder {
     height: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
+.displayNone {
+    display: none;
+}
+
+.forgotPasswordFormContainer{
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.forgotPasswordForm {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+    text-align: center;
+    align-content: center;
+    flex-direction: column;
+    height: 150px;
+}
+
+.resendEmailText {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    float: right;
+    margin-left: 7px;
+}
+
+.margin-top-20px {
+    margin-top: 20px;
+}
+
+.infoText {
+    font-family: "Arial Bold", "Arial", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 10px;
+    color: green;
+    display: none;
+}
+
+.forgotPasswordPanelBanner {
+    width: 350px;
+    height: 57px;
+    background-color: rgba(17, 29, 74, 1);
+    box-sizing: border-box;
+    border-radius: 20px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: space-between;
+}
+
+
+
