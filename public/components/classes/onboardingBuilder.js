@@ -1,22 +1,31 @@
+
+
 class OnboardingBuilder {
+    constructor() {
+        this.onboardingResult = new OnboardingResult();
+    }
 
-  constructor() {
-    this.onboarding = new Onboarding();
-  }
+    addUserObject(userObject) {
+        this.onboardingResult.userObjects.push(userObject);
+    }
 
-  setOnboardingTitle(number) {
-    this.onboarding.number = number;
-  }
+    setOrganisationObject(orgObject) {
+        this.onboardingResult.organisation = orgObject;
+    }
 
-  setOnboardingDescription(description) {
-    this.onboarding.description = description;
-  }
+    setThirdParty(state=false){
+        this.onboardingResult.thirdParty = state;
+    }
 
-  setOnboardingImage(image) {
-    this.onboarding.image = image;
-  }
+    setCSVDatasource(csvData) {
+        this.onboardingResult.csvData = csvData;
+    }
 
-  getOnboarding() {
-    return this.onboarding;
-  }
+    setFeedback(feedback) {
+        this.onboardingResult.feedback = feedback;
+    }
+
+    build() {
+        return this.onboardingResult;
+    }
 }

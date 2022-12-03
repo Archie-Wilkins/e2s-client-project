@@ -11,4 +11,6 @@ class OrganisationObject extends Object {
     set organisation(organisation) {
         this._organisation = organisation;
     }
+
+    // Remember payment details
 }
