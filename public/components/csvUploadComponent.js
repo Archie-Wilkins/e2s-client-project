@@ -153,6 +153,7 @@ class CsvUploadComponent extends React.Component {
                         <br/><br/><br/>
                         <button onClick={this.handleScreen}>Submit</button>
                         <br/><br/><br/>
+                        <p>Your data must be in the format given in the CSV file below, or else it won't format:</p>
                         <Link href={"../resources/Data_Example.csv"}><p>Download Template</p></Link>
                 </div>  
             )}
