@@ -9,6 +9,11 @@ class Dashboard extends React.Component {
     this.state = {
       chosenBusinessRowArray: [],
       businessRequested: false,
+      employees: [
+        {id: 1, business: 'Larry\'s Birds', industry: 'Pets', director: 'Ray Romano', esms: ['Brad Garett', 'Sideshow Bob', 'Marie Frank'], sites: ['Cardiff City']},
+        {id: 2, business: 'Michael\'s Jordans', industry: 'Sneakers', director: 'Kelsey Grammar', esms: ['Marris', 'Mel', 'Daphne'], sites: ['Liverpool Stadium', 'Birkenhead Produce']},
+        {id: 3, business: 'Lionel Mess', industry: 'Catering', director: 'Stormzy', esms: ['Chance The Rapper', 'Childish Gambino', 'Earl Sweatshirt'], sites: ['Newport Abacws', 'Swansea University']},
+      ]
     };
   }
 
@@ -41,6 +46,34 @@ class Dashboard extends React.Component {
                     {this.state.businessRequested === false && (
                       <div>
                         <h1>View All Businesses</h1>
+
+                        {this.state.employees.map((employee, index) => {
+                          return (
+                            <div key={index}>
+                              <h2>ID: {employee.id}</h2>
+                              <h2>Business: {employee.business}</h2>
+                              <h2>Industry: {employee.industry}</h2>
+                              <h2>Director: {employee.director}</h2>
+                              {employee.esms.map((esm, index) => {
+                                return (
+                                  <div key={index}>
+                                    <h2>ESM: {esm}</h2>
+                                  </div>
+                                );
+                              })}
+                              {employee.sites.map((site, index) => {
+                                return (
+                                  <div key={index}>
+                                    <h2>Site: {site}</h2>
+                                  </div>
+                                );
+                              })}
+
+                              <hr />
+                            </div>
+                          );
+                        })}
+
                         <div className="tableHolder">
                           <table
                             className="table table-hover table-responsive"
