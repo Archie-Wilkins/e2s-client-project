@@ -70,7 +70,7 @@ class CsvUploadComponent extends React.Component {
                   }
                   console.log("Comp: " + topArr[0]);
                   localStorage.setItem('userArr', JSON.stringify(topArr));*/
-                  for(let i = 0; i < 100; i++){
+                  for(let i = 0; i < results.data.length; i++){
                     let lowArr = [];
                         lowArr.push(results.data[i].Date);
                         lowArr.push(results.data[i].CHP1_Electricity_Generation_kW);
