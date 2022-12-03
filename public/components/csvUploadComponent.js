@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import * as fs from "fs";
 import {parse} from "csv-parse";
 import Papa from "papaparse";
-
 class CsvUploadComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -84,10 +83,10 @@ class CsvUploadComponent extends React.Component {
                         lowArr.push(results.data[i].Site_Heat_Demand_kW);
                         lowArr.push(results.data[i].Import_Electricity_kW);
                         lowArr.push(results.data[i].Export_Electricity_kW);
-                        console.log(lowArr);
+                        //console.log(lowArr);
                         topArr.push(lowArr);
                   }
-                  //console.log("Comp: " + topArr[0]);
+                  console.log("Comp: " + topArr);
                   localStorage.setItem('userArr', JSON.stringify(topArr));
                   //console.log("Comp2: " + localStorage.getItem('userArr'));
                   const link = document.querySelector('a');
@@ -106,26 +105,30 @@ class CsvUploadComponent extends React.Component {
     handleScreen = async (event) => {
         this.setState({csvUploaded: true});
         let localCopyArr = localStorage.getItem('userArr');
-        let localCopyCopy = [];
-        let userArr = [];
+        let wordString = "";
+        let rowArray = [];
+        let tableArray = [];
+        let wordArrayObject = [];
         let count = 0;
         for(let i = 0; i < localCopyArr.length; i++){
             if(localCopyArr[i] != "," && localCopyArr[i] != "[" && localCopyArr[i] != "]" && localCopyArr[i] != "\""){
-                localCopyCopy.push(localCopyArr[i]);
+                wordString = wordString + localCopyArr[i];
             }else{
                     if(count === 12){
-                        userArr.push(localCopyCopy);
+                        tableArray.push(rowArray);
+                        rowArray = [];
                         count = 0;
-                        localCopyCopy = [];
                     }if(localCopyArr[i] == ","){
-                        localCopyCopy.push(" ");
+                        wordArrayObject.push(wordString);
+                        rowArray.push(wordArrayObject);
+                        wordArrayObject = [];
+                        wordString = "";
                         count++;
                     }
 
             }
         }
-        console.log(JSON.stringify(userArr));
-        this.setState({csvData: userArr});
+        this.setState({csvData: tableArray});
     }
 
     returnHome = async (event) => {
@@ -149,7 +152,22 @@ class CsvUploadComponent extends React.Component {
                     
                     <ul>
                         {this.state.csvData.map((name) => (
-                            <li>Data: {name}</li>
+                            <div>
+                                <h1>Table</h1>
+                                <li>Date: {name[0]}</li>
+                                <li>Date: {name[1]}</li>
+                                <li>Date: {name[2]}</li>
+                                <li>Date: {name[3]}</li>
+                                <li>Date: {name[4]}</li>
+                                <li>Date: {name[5]}</li>
+                                <li>Date: {name[6]}</li>
+                                <li>Date: {name[7]}</li>
+                                <li>Date: {name[8]}</li>
+                                <li>Date: {name[9]}</li>
+                                <li>Date: {name[10]}</li>
+                                <li>Date: {name[11]}</li>
+
+                            </div>
                         ))}
                     </ul>
                 </div>    
