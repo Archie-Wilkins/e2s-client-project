@@ -59,12 +59,13 @@ class CsvUploadComponent extends React.Component {
                 dynamicTyping: true,
                 complete: function(results) {
                   let topArr = [];  
-                  for(let i = 0; i < results.data.length - 1; i++){
+                  localStorage.setItem('userArrLen', results.data.length);
+                  for(let i = 0; i < results.data.length; i++){
                     let lowArr = [];
-                    lowArr.push(results.data[i].first_name);
-                    lowArr.push(results.data[i].surname);
-                    console.log(lowArr);
-                    topArr.push(lowArr);
+                        lowArr.push(results.data[i].first_name);
+                        lowArr.push(results.data[i].surname);
+                        console.log(lowArr);
+                        topArr.push(lowArr);
                   }
                   console.log("Comp: " + topArr[0]);
                   localStorage.setItem('userArr', JSON.stringify(topArr));
@@ -85,7 +86,17 @@ class CsvUploadComponent extends React.Component {
     handleScreen = async (event) => {
         this.setState({csvUploaded: true});
         let localCopyArr = localStorage.getItem('userArr');
-        this.setState({csvData: localCopyArr});
+        let localCopyCopy = [];
+        let userArr = [];
+        for(let i = 0; i < localCopyArr.length; i++){
+            if(localCopyArr[i] != "," && localCopyArr[i] != "[" &&localCopyArr[i] != "]"){
+                localCopyCopy.push(localCopyArr[i]);
+            }else{
+                    userArr.push(localCopyCopy);
+                    localCopyCopy = [];
+            }
+        }
+        this.setState({csvData: userArr});
     }
 
     returnHome = async (event) => {
@@ -107,7 +118,12 @@ class CsvUploadComponent extends React.Component {
                 <div>
                     <h1>{this.state.csvData}</h1>
                     <button onClick={this.returnHome}>Back</button>
-
+                    
+                    <ul>
+                    {this.state.csvData.map((name) => (
+                    <li>{name}</li>
+                    ))}
+                    </ul>
                 </div>    
             )} 
         </div>
