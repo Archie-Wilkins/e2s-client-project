@@ -59,7 +59,7 @@ class CsvUploadComponent extends React.Component {
                 dynamicTyping: true,
                 complete: function(results) {
                   let topArr = [];  
-                  localStorage.setItem('userArrLen', results.data.length);
+                  /*localStorage.setItem('userArrLen', results.data.length);
                   for(let i = 0; i < results.data.length; i++){
                     let lowArr = [];
                         lowArr.push(results.data[i].first_name);
@@ -68,8 +68,28 @@ class CsvUploadComponent extends React.Component {
                         topArr.push(lowArr);
                   }
                   console.log("Comp: " + topArr[0]);
+                  localStorage.setItem('userArr', JSON.stringify(topArr));*/
+                  for(let i = 0; i < 5; i++){
+                    let lowArr = [];
+                        lowArr.push(results.data[i].Date);
+                        lowArr.push(results.data[i].CHP1_Electricity_Generation_kW);
+                        lowArr.push(results.data[i].CHP2_Electricity_Generation_kW);
+                        lowArr.push(results.data[i].CHP1_Heat_Output_kW);
+                        lowArr.push(results.data[i].CHP2_Heat_Output_kW);
+                        lowArr.push(results.data[i].Boiler_Heat_Output_kW);
+                        lowArr.push(results.data[i].Feels_Like_Temperature_Deg_C);
+                        lowArr.push(results.data[i].Wind_Speed_ms);
+                        lowArr.push(results.data[i].Site_Electricity_Demand_kW);
+                        lowArr.push(results.data[i].Day_ahead_UK_electricity_price);
+                        lowArr.push(results.data[i].Site_Heat_Demand_kW);
+                        lowArr.push(results.data[i].Import_Electricity_kW);
+                        lowArr.push(results.data[i].Export_Electricity_kW);
+                        console.log(lowArr);
+                        topArr.push(lowArr);
+                  }
+                  //console.log("Comp: " + topArr[0]);
                   localStorage.setItem('userArr', JSON.stringify(topArr));
-                  console.log("Comp2: " + localStorage.getItem('userArr'));
+                  //console.log("Comp2: " + localStorage.getItem('userArr'));
                   const link = document.querySelector('a');
                   const textBlob = new Blob([topArr], {type: 'text/csv'});
                   link.setAttribute('href', URL.createObjectURL(textBlob));
@@ -93,7 +113,7 @@ class CsvUploadComponent extends React.Component {
             if(localCopyArr[i] != "," && localCopyArr[i] != "[" && localCopyArr[i] != "]" && localCopyArr[i] != "\""){
                 localCopyCopy.push(localCopyArr[i]);
             }else{
-                    if(count === 2){
+                    if(count === 12){
                         userArr.push(localCopyCopy);
                         count = 0;
                         localCopyCopy = [];
@@ -125,12 +145,11 @@ class CsvUploadComponent extends React.Component {
             )}
             {this.state.csvUploaded === true&&(
                 <div>
-                    <h1>{this.state.csvData}</h1>
                     <button onClick={this.returnHome}>Back</button>
                     
                     <ul>
                         {this.state.csvData.map((name) => (
-                        <li>Name: {name}</li>
+                            <li>Data: {name}</li>
                         ))}
                     </ul>
                 </div>    
