@@ -114,7 +114,7 @@ class CsvUploadComponent extends React.Component {
             if(localCopyArr[i] != "," && localCopyArr[i] != "[" && localCopyArr[i] != "]" && localCopyArr[i] != "\""){
                 wordString = wordString + localCopyArr[i];
             }else{
-                    if(count === 12){
+                    if(count === 13){
                         tableArray.push(rowArray);
                         rowArray = [];
                         count = 0;
@@ -153,20 +153,20 @@ class CsvUploadComponent extends React.Component {
                     <ul>
                         {this.state.csvData.map((name) => (
                             <div>
-                                <h1>Table</h1>
+                                <h1>Data</h1>
                                 <li>Date: {name[0]}</li>
-                                <li>Date: {name[1]}</li>
-                                <li>Date: {name[2]}</li>
-                                <li>Date: {name[3]}</li>
-                                <li>Date: {name[4]}</li>
-                                <li>Date: {name[5]}</li>
-                                <li>Date: {name[6]}</li>
-                                <li>Date: {name[7]}</li>
-                                <li>Date: {name[8]}</li>
-                                <li>Date: {name[9]}</li>
-                                <li>Date: {name[10]}</li>
-                                <li>Date: {name[11]}</li>
-
+                                <li>CHP1_Electricity_Generation_kW: {name[1]}</li>
+                                <li>CHP2_Electricity_Generation_kW: {name[2]}</li>
+                                <li>CHP1_Heat_Output_kW: {name[3]}</li>
+                                <li>CHP2_Heat_Output_kW: {name[4]}</li>
+                                <li>Boiler_Heat_Output_kW: {name[5]}</li>
+                                <li>Feels_Like_Temperature_Deg_C: {name[6]}</li>
+                                <li>Wind_Speed_ms: {name[7]}</li>
+                                <li>Site_Electricity_Demand_kW: {name[8]}</li>
+                                <li>Day_ahead_UK_electricity_price: {name[9]}</li>
+                                <li>Site_Heat_Demand_kW: {name[10]}</li>
+                                <li>Import_Electricity_kW: {name[11]}</li>
+                                <li>Export_Electricity_kWL {name[12]}</li>
                             </div>
                         ))}
                     </ul>
