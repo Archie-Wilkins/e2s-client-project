@@ -88,14 +88,23 @@ class CsvUploadComponent extends React.Component {
         let localCopyArr = localStorage.getItem('userArr');
         let localCopyCopy = [];
         let userArr = [];
+        let count = 0;
         for(let i = 0; i < localCopyArr.length; i++){
-            if(localCopyArr[i] != "," && localCopyArr[i] != "[" &&localCopyArr[i] != "]"){
+            if(localCopyArr[i] != "," && localCopyArr[i] != "[" && localCopyArr[i] != "]" && localCopyArr[i] != "\""){
                 localCopyCopy.push(localCopyArr[i]);
             }else{
-                    userArr.push(localCopyCopy);
-                    localCopyCopy = [];
+                    if(count === 2){
+                        userArr.push(localCopyCopy);
+                        count = 0;
+                        localCopyCopy = [];
+                    }if(localCopyArr[i] == ","){
+                        localCopyCopy.push(" ");
+                        count++;
+                    }
+
             }
         }
+        console.log(JSON.stringify(userArr));
         this.setState({csvData: userArr});
     }
 
@@ -120,9 +129,9 @@ class CsvUploadComponent extends React.Component {
                     <button onClick={this.returnHome}>Back</button>
                     
                     <ul>
-                    {this.state.csvData.map((name) => (
-                    <li>{name}</li>
-                    ))}
+                        {this.state.csvData.map((name) => (
+                        <li>Name: {name}</li>
+                        ))}
                     </ul>
                 </div>    
             )} 
