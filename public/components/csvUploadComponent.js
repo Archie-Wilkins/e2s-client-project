@@ -136,6 +136,7 @@ class CsvUploadComponent extends React.Component {
         link.setAttribute('href', URL.createObjectURL(textBlob));
         link.setAttribute('download', localStorage.getItem('userArrName'));
         this.setState({csvData: tableArray});
+        this.setState({csvFileName: localStorage.getItem("userArrName")})
         document.getElementsByClassName('downloadCsvDataButton')[0].style.display = "block";
     }
 
@@ -145,7 +146,7 @@ class CsvUploadComponent extends React.Component {
     
     render() {
         return <div>
-            <a className='downloadCsvDataButton'>Download</a>
+            <a className='downloadCsvDataButton'>Download ({this.state.csvFileName})</a>
             {!this.state.csvUploaded &&(
                 <div>
                         <input type="file" id="csvFile" onChange={this.handleOnChange} name="file" accept=".csv"/>
@@ -157,6 +158,7 @@ class CsvUploadComponent extends React.Component {
             )}
             {this.state.csvUploaded === true&&(
                 <div>
+                    <h2>Yor Uploaded Data ({this.state.csvFileName})</h2>
                     <button onClick={this.returnHome}>Back</button>
                     <ul>
                         {this.state.csvData.map((name) => (
