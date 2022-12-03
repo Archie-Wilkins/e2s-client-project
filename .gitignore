@@ -5,5 +5,9 @@ node_modules/
 /.changeLog
 build
 yarn.lock
+<<<<<<< HEAD
 *.pack
 package-lock.json
+=======
+*.pack
+>>>>>>> main
