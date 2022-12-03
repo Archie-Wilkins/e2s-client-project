@@ -178,3 +178,11 @@
     color: black;
     margin-bottom: 10%;
 }
+
+.downloadCsvDataButton{
+    display: none;
+}
+
+.nowVisible{
+    display: block;
+}

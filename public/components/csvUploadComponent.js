@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as fs from "fs";
 import {parse} from "csv-parse";
 import Papa from "papaparse";
+import Link from 'next/link';
 class CsvUploadComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -14,6 +15,7 @@ class CsvUploadComponent extends React.Component {
         };
     }
     
+
     handlCsvRequest = async (event) => {
         event.preventDefault();
 
@@ -68,7 +70,7 @@ class CsvUploadComponent extends React.Component {
                   }
                   console.log("Comp: " + topArr[0]);
                   localStorage.setItem('userArr', JSON.stringify(topArr));*/
-                  for(let i = 0; i < results.data.length; i++){
+                  for(let i = 0; i < 100; i++){
                     let lowArr = [];
                         lowArr.push(results.data[i].Date);
                         lowArr.push(results.data[i].CHP1_Electricity_Generation_kW);
@@ -88,10 +90,11 @@ class CsvUploadComponent extends React.Component {
                   }
                   localStorage.setItem('userArr', JSON.stringify(topArr));
                   localStorage.setItem('userArrName', event.target.files[0].name);
-                  const link = document.querySelector('a');
+                  
+                  /*const link = document.querySelector('a');
                   const textBlob = new Blob([topArr], {type: 'text/csv'});
                   link.setAttribute('href', URL.createObjectURL(textBlob));
-                  link.setAttribute('download', `${event.target.files[0].name}`);
+                  link.setAttribute('download', `${event.target.files[0].name}`);*/
                   /*parseResults = results.data;
                   console.log("Parse flag: " + parseResults);
                   localStorage.setItem('userArr', parseResults);*/
@@ -127,7 +130,13 @@ class CsvUploadComponent extends React.Component {
 
             }
         }
+
+        const link = document.querySelector('a');
+        const textBlob = new Blob([tableArray], {type: 'text/csv'});
+        link.setAttribute('href', URL.createObjectURL(textBlob));
+        link.setAttribute('download', localStorage.getItem('userArrName'));
         this.setState({csvData: tableArray});
+        document.getElementsByClassName('downloadCsvDataButton')[0].style.display = "block";
     }
 
     returnHome = async (event) => {
@@ -136,19 +145,19 @@ class CsvUploadComponent extends React.Component {
     
     render() {
         return <div>
+            <a className='downloadCsvDataButton'>Download</a>
             {!this.state.csvUploaded &&(
                 <div>
                         <input type="file" id="csvFile" onChange={this.handleOnChange} name="file" accept=".csv"/>
                         <br/><br/><br/>
                         <button onClick={this.handleScreen}>Submit</button>
                         <br/><br/><br/>
-                        <a>Download</a>
+                        <Link href={"../resources/Data_Example.csv"}><p>Download Template</p></Link>
                 </div>  
             )}
             {this.state.csvUploaded === true&&(
                 <div>
                     <button onClick={this.returnHome}>Back</button>
-                    
                     <ul>
                         {this.state.csvData.map((name) => (
                             <div>
