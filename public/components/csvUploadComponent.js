@@ -68,7 +68,7 @@ class CsvUploadComponent extends React.Component {
                   }
                   console.log("Comp: " + topArr[0]);
                   localStorage.setItem('userArr', JSON.stringify(topArr));*/
-                  for(let i = 0; i < 5; i++){
+                  for(let i = 0; i < results.data.length; i++){
                     let lowArr = [];
                         lowArr.push(results.data[i].Date);
                         lowArr.push(results.data[i].CHP1_Electricity_Generation_kW);
@@ -86,9 +86,7 @@ class CsvUploadComponent extends React.Component {
                         //console.log(lowArr);
                         topArr.push(lowArr);
                   }
-                  console.log("Comp: " + topArr);
                   localStorage.setItem('userArr', JSON.stringify(topArr));
-                  //console.log("Comp2: " + localStorage.getItem('userArr'));
                   localStorage.setItem('userArrName', event.target.files[0].name);
                   const link = document.querySelector('a');
                   const textBlob = new Blob([topArr], {type: 'text/csv'});
