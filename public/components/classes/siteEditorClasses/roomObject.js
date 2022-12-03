@@ -1,19 +1,72 @@
 class RoomObject {
-    constructor() {
-        this._id = null;
-        this._name = null;
-        this._type = null;
-        this._position = null;
-        this._rotation = null;
-        this._scale = null;
-        this._material = null;
-        this._geometry = null;
-        this._parent = null;
-        this._children = [];
-        this._isLoaded = false;
-        this._isLoadedPromise = new Promise((resolve, reject) => {
-            this._isLoadedResolve = resolve;
-            this._isLoadedReject = reject;
-        });
+    constructor(tempId, roomName, roomSizeX, roomSizeY, roomPosX, roomPosY) {
+        this.tempId = tempId;
+        this.roomName = roomName;
+        this.roomSizeX = roomSizeX;
+        this.roomSizeY = roomSizeY;
+        this.roomPosX = roomPosX;
+        this.roomPosY = roomPosY;
+        this.roomAssets = [];
+        };
+
+    addAssetObject(assetObject) {
+        this.roomAssets.push(assetObject);
+    }
+
+    getJsonFormat() {
+        return {
+            name: this.roomName,
+            sizeX: this.roomSizeX,
+            sizeY: this.roomSizeY,
+            posX: this.roomPosX,
+            posY: this.roomPosY,
+        }
+    }
+
+    // Getters and Setters
+
+    getAssets() {
+        return this.roomAssets;
+    }
+
+    getRoomName() {
+        return this.roomName;
+    }
+
+    getRoomSizeX() {
+        return this.roomSizeX;
+    }
+
+    getRoomSizeY() {
+        return this.roomSizeY;
+    }
+
+    getRoomPosX() {
+        return this.roomPosX;
+    }
+
+    getRoomPosY() {
+        return this.roomPosY;
+    }
+
+    setRoomName(roomName) {
+        this.roomName = roomName;
+    }
+
+    setRoomSizeX(roomSizeX) {
+        this.roomSizeX = roomSizeX;
+    }
+
+    setRoomSizeY(roomSizeY) {
+        this.roomSizeY = roomSizeY;
+    }
+
+    setRoomPosX(roomPosX) {
+        this.roomPosX = roomPosX;
+    }
+
+    setRoomPosY(roomPosY) {
+        this.roomPosY = roomPosY;
     }
 }
+
