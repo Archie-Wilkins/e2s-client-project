@@ -1,7 +1,4 @@
-import * as mysql from "mysql";
-import DB from '../../db';
-import {withCookies, useCookies} from "react-cookie";
-import Cookies from 'universal-cookie';
+import user from "../../db/user";
 
 export default async function handler(req, res) {
     // Get data submitted in request's body.
@@ -15,7 +12,7 @@ export default async function handler(req, res) {
 
     try {
         //get decoded code from userID in table
-        let JSONcode = await DB.user.getUserResetCode(body.userID);
+        let JSONcode = await user.getUserResetCode(body.userID);
 
         let code = await JSONcode[0].decrypted_code;
 

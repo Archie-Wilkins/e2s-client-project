@@ -1,11 +1,4 @@
-import * as mysql from "mysql";
-import DB from '../../db';
-import {withCookies, useCookies} from "react-cookie";
-import Cookies from 'universal-cookie';
-import {isString} from "next/dist/build/webpack/plugins/jsconfig-paths-plugin";
-
-
-
+import user from "../../db/user";
 
 export default async function handler(req, res) {
     // Get data submitted in request's body.
@@ -19,7 +12,7 @@ export default async function handler(req, res) {
 
     try {
         //gets user ID that matches email entered
-        let findID = await DB.user.getUserIDFromEmail(body.email);
+        let findID = await user.getUserIDFromEmail(body.email);
         //if no user is found with that email
         if(findID.toString() === ""){
             //returns 'email not found'

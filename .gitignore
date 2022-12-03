@@ -6,5 +6,3 @@ node_modules/
 build
 yarn.lock
 *.pack
-*.pack
-
