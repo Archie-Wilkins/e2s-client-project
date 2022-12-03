@@ -2,16 +2,6 @@ import Link from "next/link";
 import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
 import EnergyCostForecastGraph from "../../public/components/graphs/toggleTimeChart";
 import React from "react";
-import {
-  LineChart,
-  Line,
-  Label,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
 
 class Forecasting extends React.Component {
   constructor(props) {
@@ -104,9 +94,12 @@ class Forecasting extends React.Component {
             </div>
 
             <EnergyCostForecastGraph
-              weeklyData={this.state.weeklyData}
-              monthlyData={this.state.monthlyData}
-              yearlyData={this.state.yearlyData}
+              toggle1={"Week"}
+              toggle2={"Month"}
+              toggle3={"Year"}
+              dataSet1={this.state.weeklyData}
+              dataSet2={this.state.monthlyData}
+              dataSet3={this.state.yearlyData}
               xAxis={"Date"}
               yAxis={"Cost (£)"}
               xAxisDataKey={"date"}
@@ -130,9 +123,12 @@ class Forecasting extends React.Component {
             </div>
 
             <EnergyCostForecastGraph
-              weeklyData={this.state.weeklyData}
-              monthlyData={this.state.monthlyData}
-              yearlyData={this.state.yearlyData}
+              toggle1={"Week"}
+              toggle2={"Month"}
+              toggle3={"Year"}
+              dataSet1={this.state.weeklyData}
+              dataSet2={this.state.monthlyData}
+              dataSet3={this.state.yearlyData}
               xAxis={"Date"}
               yAxis={"Energy Usage (kW/h)"}
               xAxisDataKey={"date"}
@@ -156,9 +152,12 @@ class Forecasting extends React.Component {
             </div>
 
             <EnergyCostForecastGraph
-              weeklyData={this.state.weeklyData}
-              monthlyData={this.state.monthlyData}
-              yearlyData={this.state.yearlyData}
+              toggle1={"Week"}
+              toggle2={"Month"}
+              toggle3={"Year"}
+              dataSet1={this.state.weeklyData}
+              dataSet2={this.state.monthlyData}
+              dataSet3={this.state.yearlyData}
               xAxis={"Date"}
               yAxis={"C02 Emissions (Kg)"}
               xAxisDataKey={"date"}

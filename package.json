@@ -17,18 +17,13 @@
     "next": "^13.0.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.6.0",
-<<<<<<< HEAD
     "react-charts": "^3.0.0-beta.50",
-    "react-dom": "^18.2.0",
-    "react-icons": "^4.6.0",
-    "recharts": "^2.1.16"
-=======
+    "recharts": "^2.1.16",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
     "react-validation": "^3.0.7",
     "universal-cookie": "^4.0.4"
->>>>>>> main
   },
   "scripts": {
     "dev": "next dev",

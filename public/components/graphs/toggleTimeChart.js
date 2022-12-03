@@ -54,7 +54,7 @@ class EnergyCostForecastGraph extends React.Component {
     console.log("1");
     return (
       <LineGraph
-        dataSet={this.props.weeklyData}
+        dataSet={this.props.dataSet1}
         xAxis={this.props.xAxis}
         yAxis={this.props.yAxis}
         xAxisDataKey={this.props.xAxisDataKey}
@@ -67,7 +67,7 @@ class EnergyCostForecastGraph extends React.Component {
     console.log("2");
     return (
       <LineGraph
-        dataSet={this.props.monthlyData}
+        dataSet={this.props.dataSet2}
         xAxis={this.props.xAxis}
         yAxis={this.props.yAxis}
         xAxisDataKey={this.props.xAxisDataKey}
@@ -80,7 +80,7 @@ class EnergyCostForecastGraph extends React.Component {
     console.log("3");
     return (
       <LineGraph
-        dataSet={this.props.yearlyData}
+        dataSet={this.props.dataSet3}
         xAxis={this.props.xAxis}
         yAxis={this.props.yAxis}
         xAxisDataKey={this.props.xAxisDataKey}
@@ -97,7 +97,7 @@ class EnergyCostForecastGraph extends React.Component {
             <ul className="d-flex blueBackground p-1 rounded noListStyle">
               <li className="whiteBackground d-flex justify-content-center">
                 <input
-                  value="Weekly"
+                  value={this.props.toggle1}
                   type="radio"
                   name={this.state.randomKey + "timeRange"}
                   className="invisibleInput"
@@ -115,7 +115,7 @@ class EnergyCostForecastGraph extends React.Component {
               </li>
               <li className="whiteBackground mx-1 d-flex justify-content-center">
                 <input
-                  value="Monthly"
+                  value={this.props.toggle2}
                   type="radio"
                   name={this.state.randomKey + "timeRange"}
                   className="invisibleInput"
@@ -133,7 +133,7 @@ class EnergyCostForecastGraph extends React.Component {
               </li>
               <li className="whiteBackground d-flex justify-content-center">
                 <input
-                  value="Yearly"
+                  value={this.props.toggle3}
                   type="radio"
                   name={this.state.randomKey + "timeRange"}
                   className="invisibleInput"
