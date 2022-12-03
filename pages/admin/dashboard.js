@@ -9,7 +9,9 @@ class Dashboard extends React.Component {
     this.state = {
       chosenBusinessRowArray: [],
       businessRequested: false,
+      chosenId: 0,
       employees: [
+        //{id: 0, sites: [{esm: "ray romano", site: "staton island"},{esm: "debrah", site: "nemos"}], business: "New York Times"},
         {id: 1, business: 'Larry\'s Birds', industry: 'Pets', director: 'Ray Romano', esms: ['Brad Garett', 'Sideshow Bob', 'Marie Frank'], sites: ['Cardiff City']},
         {id: 2, business: 'Michael\'s Jordans', industry: 'Sneakers', director: 'Kelsey Grammar', esms: ['Marris', 'Mel', 'Daphne'], sites: ['Liverpool Stadium', 'Birkenhead Produce']},
         {id: 3, business: 'Lionel Mess', industry: 'Catering', director: 'Stormzy', esms: ['Chance The Rapper', 'Childish Gambino', 'Earl Sweatshirt'], sites: ['Newport Abacws', 'Swansea University']},
@@ -17,12 +19,18 @@ class Dashboard extends React.Component {
     };
   }
 
-  handleBusinessRender(businessName) {
+  /*handleBusinessRender(businessName) {
     this.setState({ businessRequested: true });
 
     for (let i = 0; i < businessName.length; i++) {
       this.state.chosenBusinessRowArray.push(businessName[i].innerText);
     }
+  }*/
+
+  handleBusinessRender(businessId) {
+    console.log("Business: " + businessId);
+    this.setState({ businessRequested: true });
+    this.setState({chosenId: businessId});
   }
 
   handleReturn() {
@@ -45,34 +53,28 @@ class Dashboard extends React.Component {
                   <div className={"business-section"}>
                     {this.state.businessRequested === false && (
                       <div>
-                        <h1>View All Businesses</h1>
-
+                        <h1>View All Businesses</h1><br/>
+                        <div className="customTable">
                         {this.state.employees.map((employee, index) => {
                           return (
                             <div key={index}>
                               <h2>ID: {employee.id}</h2>
                               <h2>Business: {employee.business}</h2>
-                              <h2>Industry: {employee.industry}</h2>
                               <h2>Director: {employee.director}</h2>
-                              {employee.esms.map((esm, index) => {
-                                return (
-                                  <div key={index}>
-                                    <h2>ESM: {esm}</h2>
-                                  </div>
-                                );
-                              })}
-                              {employee.sites.map((site, index) => {
-                                return (
-                                  <div key={index}>
-                                    <h2>Site: {site}</h2>
-                                  </div>
-                                );
-                              })}
-
+                              <button
+                                    onClick={() =>
+                                      this.handleBusinessRender(
+                                        employee.id
+                                        )
+                                    }
+                                  >
+                                    Here
+                                  </button>
                               <hr />
                             </div>
                           );
                         })}
+                        </div>
 
                         <div className="tableHolder">
                           <table
@@ -233,15 +235,26 @@ class Dashboard extends React.Component {
                       </div>
                     )}
                     {this.state.businessRequested === true && (
-                      <div classname="businessSummaryBox">
-                        <h1>{this.state.chosenBusinessRowArray[1]}</h1>
-                        <br />
-                        <h3>ID: {this.state.chosenBusinessRowArray[0]}</h3>
-                        <h3>
-                          Industry: {this.state.chosenBusinessRowArray[2]}
-                        </h3>
-                        <h3>CEO: {this.state.chosenBusinessRowArray[3]}</h3>
-                        <br />
+                      <div className="businessSummaryBox">
+                          <h1>ID: {this.state.employees[this.state.chosenId - 1].id}</h1>
+                          <h1>Business: {this.state.employees[this.state.chosenId - 1].business}</h1>
+                          <h1>Industry: {this.state.employees[this.state.chosenId - 1].industry}</h1>
+                          <h1>Director: {this.state.employees[this.state.chosenId - 1].director}</h1>
+                          {this.state.employees[this.state.chosenId-1].esms.map((esm, index) => {
+                                return (
+                                  <div key={index}>
+                                    <h2>ESM: {esm}</h2>
+                                  </div>
+                                );
+                              })}
+                              {this.state.employees[this.state.chosenId-1].sites.map((site, index) => {
+                                return (
+                                  <div key={index}>
+                                    <h2>Site: {site}</h2>
+                                  </div>
+                                );
+                              })}
+                              <hr />
                         <br />
                         <button onClick={() => this.handleReturn()}>
                           Back
