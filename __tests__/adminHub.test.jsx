@@ -1,13 +1,13 @@
 import {fireEvent, render, screen, waitFor} from '@testing-library/react'
 import '@testing-library/jest-dom'
-import AdminDashboardComponent from '../public/components/adminDashboardComponent'
 import '@babel/preset-react'
 import React from 'react'
+import Dashboard from '../pages/admin/dashboard'
 
 describe('admin dashboard', () => {
 
     beforeEach(() => {
-        const { getByTestId, getByText } = render(<AdminDashboardComponent/>)
+        const { getByTestId, getByText } = render(<Dashboard/>)
     })
 
 
