@@ -89,10 +89,11 @@ class CsvUploadComponent extends React.Component {
                   console.log("Comp: " + topArr);
                   localStorage.setItem('userArr', JSON.stringify(topArr));
                   //console.log("Comp2: " + localStorage.getItem('userArr'));
+                  localStorage.setItem('userArrName', event.target.files[0].name);
                   const link = document.querySelector('a');
                   const textBlob = new Blob([topArr], {type: 'text/csv'});
                   link.setAttribute('href', URL.createObjectURL(textBlob));
-                  link.setAttribute('download', `${event.target.files[0].name}.txt`);
+                  link.setAttribute('download', `${event.target.files[0].name}`);
                   /*parseResults = results.data;
                   console.log("Parse flag: " + parseResults);
                   localStorage.setItem('userArr', parseResults);*/
