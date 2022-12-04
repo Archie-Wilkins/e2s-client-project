@@ -1,4 +1,3 @@
-var db = require('../../db/DatabaseCore.js');
 import user from "../../db/user";
 import {withCookies, useCookies} from "react-cookie";
 import Cookies from 'universal-cookie';
