@@ -92,21 +92,23 @@ class Dashboard extends React.Component {
                     )}
                     {this.state.businessRequested === true && (
                       <div className="businessSummaryBox">
-                          <h1>ID: {this.state.employees[this.state.chosenId - 1].id}</h1>
-                          <h1>Business: {this.state.employees[this.state.chosenId - 1].business}</h1>
-                          <h1>Industry: {this.state.employees[this.state.chosenId - 1].industry}</h1>
-                          <h1>Director: {this.state.employees[this.state.chosenId - 1].director}</h1>
+                          <p>ID: {this.state.employees[this.state.chosenId - 1].id}</p>
+                          <h1>{this.state.employees[this.state.chosenId - 1].business}</h1>
+                          <p>Industry: {this.state.employees[this.state.chosenId - 1].industry}</p>
+                          <p>Director: {this.state.employees[this.state.chosenId - 1].director}</p>
+                          <br/><h2>ESMs</h2>
                           {this.state.employees[this.state.chosenId-1].esms.map((esm, index) => {
-                                return (
+                              return (
                                   <div key={index}>
-                                    <h2>ESM: {esm}</h2>
+                                    <p>{esm}</p>
                                   </div>
                                 );
                               })}
-                              {this.state.employees[this.state.chosenId-1].sites.map((site, index) => {
-                                return (
+                          <br/><h2>Sites</h2>
+                          {this.state.employees[this.state.chosenId-1].sites.map((site, index) => {
+                              return (
                                   <div key={index}>
-                                    <h2>Site: {site}</h2>
+                                    <p>{site}</p>
                                   </div>
                                 );
                               })}
