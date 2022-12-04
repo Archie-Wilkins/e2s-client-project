@@ -54,184 +54,40 @@ class Dashboard extends React.Component {
                     {this.state.businessRequested === false && (
                       <div>
                         <h1>View All Businesses</h1><br/>
-                        <div className="customTable">
-                        {this.state.employees.map((employee, index) => {
-                          return (
-                            <div key={index}>
-                              <h2>ID: {employee.id}</h2>
-                              <h2>Business: {employee.business}</h2>
-                              <h2>Director: {employee.director}</h2>
-                              <button
-                                    onClick={() =>
-                                      this.handleBusinessRender(
-                                        employee.id
-                                        )
-                                    }
-                                  >
-                                    Here
-                                  </button>
-                              <hr />
-                            </div>
-                          );
-                        })}
-                        </div>
 
-                        <div className="tableHolder">
-                          <table
-                            className="table table-hover table-responsive"
-                            height="100"
-                            data-testid="businessTable"
-                          >
+                        <table className="table table-hover">
                             <thead>
                               <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Business Name</th>
-                                <th scope="col">Industry</th>
                                 <th scope="col">Director</th>
                                 <th scope={"col"}>View</th>
                               </tr>
                             </thead>
-                            <tbody>
-                              <tr>
-                                <th name="r1" scope="row">
-                                  1
-                                </th>
-                                <td name="r1" id={"row1Business"}>
-                                  Mark's Tools
-                                </td>
-                                <td name={"r1"}>Agriculture</td>
-                                <td name={"r1"}>Komodo Dragon</td>
-                                <td name={"r1"}>
-                                  <button
-                                    onClick={() =>
-                                      this.handleBusinessRender(
-                                        document.getElementsByName("r1")
-                                      )
-                                    }
-                                  >
-                                    Here
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th name={"r2"} scope="row">
-                                  2
-                                </th>
-                                <td name={"r2"}>Jakob's Ladders</td>
-                                <td name={"r2"}>Furniture</td>
-                                <td name={"r2"}>Jason Todd</td>
-                                <td>
-                                  <button
-                                    onClick={() =>
-                                      this.handleBusinessRender(
-                                        document.getElementsByName("r2")
-                                      )
-                                    }
-                                  >
-                                    Here
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th name="r3" scope="row">
-                                  3
-                                </th>
-                                <td name={"r3"} colSpan={"1"}>
-                                  Larry's Birds
-                                </td>
-                                <td name={"r3"}>Pets</td>
-                                <td name={"r3"}>Michael Jordan</td>
-                                <td>
-                                  <button
-                                    onClick={() =>
-                                      this.handleBusinessRender(
-                                        document.getElementsByName("r3")
-                                      )
-                                    }
-                                  >
-                                    Here
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th name={"r4"} scope="row">
-                                  4
-                                </th>
-                                <td name={"r4"}>Ace Chemicals</td>
-                                <td name={"r4"}>Chemicals</td>
-                                <td name={"r4"}>Jack Napier</td>
-                                <td>
-                                  <button
-                                    onClick={() =>
-                                      this.handleBusinessRender(
-                                        document.getElementsByName("r4")
-                                      )
-                                    }
-                                  >
-                                    Here
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th name="r5" scope="row">
-                                  5
-                                </th>
-                                <td name={"r5"}>Ace Chemicals</td>
-                                <td name={"r5"}>Chemicals</td>
-                                <td name={"r5"}>Jack Napier</td>
-                                <td>
-                                  <button
-                                    onClick={() =>
-                                      this.handleBusinessRender(
-                                        document.getElementsByName("r5")
-                                      )
-                                    }
-                                  >
-                                    Here
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th name="r5" scope="row">
-                                  6
-                                </th>
-                                <td name={"r5"}>Ace Chemicals</td>
-                                <td name={"r5"}>Chemicals</td>
-                                <td name={"r5"}>Jack Napier</td>
-                                <td>
-                                  <button
-                                    onClick={() =>
-                                      this.handleBusinessRender(
-                                        document.getElementsByName("r5")
-                                      )
-                                    }
-                                  >
-                                    Here
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th name="r5" scope="row">
-                                  7
-                                </th>
-                                <td name={"r5"}>Ace Chemicals</td>
-                                <td name={"r5"}>Chemicals</td>
-                                <td name={"r5"}>Jack Napier</td>
-                                <td>
-                                  <button
-                                    onClick={() =>
-                                      this.handleBusinessRender(
-                                        document.getElementsByName("r5")
-                                      )
-                                    }
-                                  >
-                                    Here
-                                  </button>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
+                            
+                          {this.state.employees.map((employee, index) => {
+                            return (
+                              <tbody key={index}>
+                                <tr>
+                                  <th scope="row">{employee.id}</th>
+                                  <td>{employee.business}</td>
+                                  <td>{employee.director}</td>
+                                  <td><button
+                                        onClick={() =>
+                                          this.handleBusinessRender(
+                                            employee.id
+                                            )
+                                        }
+                                      >
+                                        Here
+                                      </button></td>
+                                </tr>
+                              </tbody>
+                            );   
+                          })}
+                          
+                     
+                        </table>
                       </div>
                     )}
                     {this.state.businessRequested === true && (
