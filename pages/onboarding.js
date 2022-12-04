@@ -1,12 +1,12 @@
 import Link from "next/link"
+import SiteEditor from "../public/components/siteEditor.js"
 
 
 function OnboardingPage() {
-    return <div>
-        <Link href="/"><p>Home</p>
-        </Link>
-        <Link href="/contact"><p>Contact-Us Page</p></Link>
+    return <div className="root">
+        <SiteEditor />
     </div>
+
 }
 
 export default OnboardingPage
