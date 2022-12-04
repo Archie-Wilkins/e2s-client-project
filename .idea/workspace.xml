@@ -5,7 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/pages/admin/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/admin/dashboard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/site.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/api/getSiteDetails.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/api/getUserSite.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/api/getUserSiteFromEmail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/weeklyEmail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/client-development/1.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/client-development/1.pack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/1.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/1.pack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/2.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/2.pack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/server/middleware-build-manifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/middleware-build-manifest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/static/development/_buildManifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/development/_buildManifest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/trace" beforeDir="false" afterPath="$PROJECT_DIR$/.next/trace" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +34,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="46-forgot-password" />
+        <entry key="$PROJECT_DIR$" value="91-check-user-logged-in" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -57,8 +69,11 @@
       <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\pages\api" />
       <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\__tests__" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\pages" />
+    </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Jest.login">
     <configuration default="true" type="DjangoTestsConfigurationType">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -239,7 +254,21 @@
       <option name="project" value="LOCAL" />
       <updated>1669918454687</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="removes any User session cookie">
+      <created>1669984809674</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1669984809674</updated>
+    </task>
+    <task id="LOCAL-00007" summary="added sample users to SQL file">
+      <created>1669987160359</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1669987160359</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -263,7 +292,9 @@
     <MESSAGE value="login will deliver user to respective page after logging in" />
     <MESSAGE value="update to cookie system, now uses JSON. admin dashboard will check user role" />
     <MESSAGE value="removed file" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed file" />
+    <MESSAGE value="removes any User session cookie" />
+    <MESSAGE value="added sample users to SQL file" />
+    <option name="LAST_COMMIT_MESSAGE" value="added sample users to SQL file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
