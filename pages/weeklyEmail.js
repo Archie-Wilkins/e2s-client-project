@@ -4,8 +4,11 @@ import React from 'react';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
 import emailjs from 'emailjs-com';
-
-
+import jsPDF from 'jspdf';
+import pdfMake from 'pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import htmlToPdfmake from 'html-to-pdfmake';
+import LineGraph from '../public/components/lineGraph'
 
 class WeeklyEmailPage extends React.Component {
     constructor(props) {
@@ -89,13 +92,9 @@ class WeeklyEmailPage extends React.Component {
 
         //get historical weeks from siteID - API call
 
-
-
-
-
     }
 
-    sendEmail = async (event) => {
+    generateReport = async (event) => {
 
         event.preventDefault();
         //if form data isnt correct atm
@@ -106,6 +105,9 @@ class WeeklyEmailPage extends React.Component {
             console.log("no");
             return;
         }
+
+        document.getElementById("email-template").style.display = "block";
+        document.getElementById("generateButton").style.display = "block";
 
 
 
@@ -148,42 +150,157 @@ class WeeklyEmailPage extends React.Component {
         }
 
 
-        //emailjs to send email
-        emailjs.send('service_vhvmdc2', 'template_b4gj0c5', emailContent, 'V_nH2nvFeD1k31Dpg')
-            .then((result) => {
-                //if successful display "new code sent"
-                alert("sent email");
-            }, (error) => {
-                //if fails display "Error occured while sending email"
-                alert(error);
-            });
+        // //emailjs to send email
+        // emailjs.send('service_vhvmdc2', 'template_b4gj0c5', emailContent, 'V_nH2nvFeD1k31Dpg')
+        //     .then((result) => {
+        //         //if successful display "new code sent"
+        //         alert("sent email");
+        //     }, (error) => {
+        //         //if fails display "Error occured while sending email"
+        //         alert(error);
+        //     });
+
+
+    }
+
+    generatePDF = async () => {
+        //const input = document.getElementById('divToPrint');
+
+        const doc = new jsPDF();
+
+        //get table html
+        const pdfTable = document.getElementById('email-template');
+        //html to pdf format
+        var html = htmlToPdfmake(pdfTable.innerHTML);
+
+        const documentDefinition = { content: html };
+        pdfMake.vfs = pdfFonts.pdfMake.vfs;
+        pdfMake.createPdf(documentDefinition).open();
+
 
 
     }
 
 
     render() {
-        return <div className="loginBackground" onSubmit={this.sendEmail}>
-            <form>
-                <label>Email:</label>
-                <input type="email" id="email" name="email" placeholder="ESM email address..." onChange={this.getUser}></input>
-                <br/>
-                <label>Site: <label id="siteName"></label></label>
-                <br/>
-
-                <label>Week:</label>
-                <input list="week" name="week"></input>
-                <datalist id="week">
-                    <option value="28/11/2022 - 04/12/2022"/>
-                    <option value="21/11/2022 - 27/11/2022"/>
-                    <option value="14/11/2022 - 20/11/2022"/>
-                    <option value="07/11/2022 - 13/11/2022"/>
-                    <option value="31/10/2022 - 06/11/2022"/>
-                </datalist>
-                <br/>
-                <button type="submit">Generate report</button>
-            </form>
-
+        return <div>
+            <div className="loginBackground">
+                <form onSubmit={this.generateReport}>
+                    <label>Email:</label>
+                    <input type="email" id="email" name="email" placeholder="ESM email address..." onChange={this.getUser}></input>
+                    <br/>
+                    <label>Site: <label id="siteName"></label></label>
+                    <br/>
+                    <label>Week:</label>
+                    <input list="week" name="week"></input>
+                    <datalist id="week">
+                        <option value="28/11/2022 - 04/12/2022"/>
+                        <option value="21/11/2022 - 27/11/2022"/>
+                        <option value="14/11/2022 - 20/11/2022"/>
+                        <option value="07/11/2022 - 13/11/2022"/>
+                        <option value="31/10/2022 - 06/11/2022"/>
+                    </datalist>
+                    <br/>
+                    <button type="submit">Generate report</button>
+                </form>
+            </div>
+            <div className="hidden" id="email-template">
+                <h2>Newport Hospital | 07/11/2022 - 13/11/2022 weekly report</h2>
+                <div className="vertical-space"></div>
+                <div className="margin-left-1vw">
+                    <div>
+                        <div className="graph-container">
+                            <h2 className="margin-left-none">Energy usage</h2>
+                            <div><LineGraph></LineGraph></div>
+                        </div>
+                        <div>
+                            <h2>Total</h2>
+                            <div>
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>This week</th>
+                                        <th>Previous week</th>
+                                        <th>Historical average</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Emil</td>
+                                        <td>Tobias</td>
+                                        <td>Linus</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <h3>Overview</h3>
+                            <div>sample overview text</div>
+                        </div>
+                    </div>
+                    <div className="vertical-space"></div>
+                    <div>
+                        <div className="graph-container">
+                            <h2 className="margin-left-none">Carbon Emissions</h2>
+                            <div>graph here</div>
+                        </div>
+                        <div>
+                            <h2>Total</h2>
+                            <div>
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>This week</th>
+                                        <th>Previous week</th>
+                                        <th>Historical average</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Emil</td>
+                                        <td>Tobias</td>
+                                        <td>Linus</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <h3>Overview</h3>
+                            <div>sample overview text</div>
+                        </div>
+                    </div>
+                    <div className="vertical-space"></div>
+                    <div>
+                        <div className="graph-container">
+                            <h2 className="margin-left-none">Expenditure</h2>
+                            <div>graph here</div>
+                        </div>
+                        <div>
+                            <h2>Total</h2>
+                            <div>
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>This week</th>
+                                        <th>Previous week</th>
+                                        <th>Historical average</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Emil</td>
+                                        <td>Tobias</td>
+                                        <td>Linus</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <h3>Overview</h3>
+                            <div>sample overview text</div>
+                        </div>
+                    </div>
+                    <div className="vertical-space"></div>
+                </div>
+            </div>
+            <button className="hidden margin-left-1vw" id="generateButton" onClick={this.generatePDF}>generate pdf</button>
         </div>
     }
 }
