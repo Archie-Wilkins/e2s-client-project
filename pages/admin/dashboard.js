@@ -19,14 +19,6 @@ class Dashboard extends React.Component {
     };
   }
 
-  /*handleBusinessRender(businessName) {
-    this.setState({ businessRequested: true });
-
-    for (let i = 0; i < businessName.length; i++) {
-      this.state.chosenBusinessRowArray.push(businessName[i].innerText);
-    }
-  }*/
-
   handleBusinessRender(businessId) {
     console.log("Business: " + businessId);
     this.setState({ businessRequested: true });
