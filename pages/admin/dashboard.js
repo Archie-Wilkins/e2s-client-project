@@ -3,13 +3,19 @@ import Link from "next/link";
 import React from "react";
 import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
 
+// This is the dashboard component for admins
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      chosenBusinessRowArray: [],
+
+      // This is a variable used to decide whether to render all businesses, or jsut one
       businessRequested: false,
-      chosenId: 0,
+
+      // This variable tracks which business has been selected by the Admin to be viewed
+      chosenBusinessId: 0,
+      
+      // This is a mock dataset used to pull values from to render until the database is connected
       employees: [
         //{id: 0, sites: [{esm: "ray romano", site: "staton island"},{esm: "debrah", site: "nemos"}], business: "New York Times"},
         {id: 1, business: 'Larry\'s Birds', industry: 'Pets', director: 'Ray Romano', esms: ['Brad Garett', 'Sideshow Bob', 'Marie Frank'], sites: ['Cardiff City']},
@@ -19,17 +25,25 @@ class Dashboard extends React.Component {
     };
   }
 
+  // This function handles rendering the business data associated with a selected row in the table dataset.
   handleBusinessRender(businessId) {
-    console.log("Business: " + businessId);
+
+    // Update the boolean variable state used to determine whether to render a specific business to true.
     this.setState({ businessRequested: true });
-    this.setState({chosenId: businessId});
+    
+    // Update the state of the variable tracking which business has been selected by the Admin for viewing.
+    this.setState({chosenBusinessId: businessId});
   }
 
+  // This fucntion handles returning back to the default view of all businesses from the currently viewed business
   handleReturn() {
-    this.setState({ chosenBusinessRowArray: [] });
+
+    // Update the boolean variable state used to determine whether to render a specific business to false,
+    // by default rendering all businesses.
     this.setState({ businessRequested: false });
   }
 
+  // Return the contents of the Admin Dashboard page.
   render() {
     return (
       <div>
@@ -43,11 +57,16 @@ class Dashboard extends React.Component {
               <div className="row">
                 <div className="col-sm">
                   <div className={"business-section"}>
+                    {/*Check if the Admin has requested to view a specific business, and if not...*/}
                     {this.state.businessRequested === false && (
                       <div>
                         <h1>View All Businesses</h1><br/>
 
+                        {/*Display a table containing all businesses registered in the database.
+                           The table is made repsonsive using Bootstrap.*/}
                         <table className="table table-hover">
+                            {/*Column headers for the table. NOTE: only a small amount of data from
+                               each business is siplayed here.*/}
                             <thead>
                               <tr>
                                 <th scope="col">ID</th>
@@ -56,14 +75,16 @@ class Dashboard extends React.Component {
                                 <th scope={"col"}>View</th>
                               </tr>
                             </thead>
-                            
+                          {/*Map out the data from the mock database state to be rnedered in the table.*/}  
                           {this.state.employees.map((employee, index) => {
                             return (
                               <tbody key={index}>
+                                {/*Render each row using data from the given business index.*/}
                                 <tr>
                                   <th scope="row">{employee.id}</th>
                                   <td>{employee.business}</td>
                                   <td>{employee.director}</td>
+                                  {/*Call on the function to handle displaying data about a given business.*/}
                                   <td><button
                                         onClick={() =>
                                           this.handleBusinessRender(
@@ -77,19 +98,21 @@ class Dashboard extends React.Component {
                               </tbody>
                             );   
                           })}
-                          
-                     
                         </table>
                       </div>
                     )}
+
+                    {/*Check if the Admin has requested to view a specific business. If true...*/}
                     {this.state.businessRequested === true && (
                       <div className="businessSummaryBox">
-                          <p>ID: {this.state.employees[this.state.chosenId - 1].id}</p>
-                          <h1>{this.state.employees[this.state.chosenId - 1].business}</h1>
-                          <p>Industry: {this.state.employees[this.state.chosenId - 1].industry}</p>
-                          <p>Director: {this.state.employees[this.state.chosenId - 1].director}</p>
+                          {/*Display data from the given index of the mock database in the sections below.*/}
+                          <p>ID: {this.state.employees[this.state.chosenBusinessId - 1].id}</p>
+                          <h1>{this.state.employees[this.state.chosenBusinessId - 1].business}</h1>
+                          <p>Industry: {this.state.employees[this.state.chosenBusinessId - 1].industry}</p>
+                          <p>Director: {this.state.employees[this.state.chosenBusinessId - 1].director}</p>
                           <br/><h2>ESMs</h2>
-                          {this.state.employees[this.state.chosenId-1].esms.map((esm, index) => {
+                          {/*Map out all ESMs in a given business (as there may be more than one)*/}
+                          {this.state.employees[this.state.chosenBusinessId-1].esms.map((esm, index) => {
                               return (
                                   <div key={index}>
                                     <p>{esm}</p>
@@ -97,7 +120,8 @@ class Dashboard extends React.Component {
                                 );
                               })}
                           <br/><h2>Sites</h2>
-                          {this.state.employees[this.state.chosenId-1].sites.map((site, index) => {
+                          {/*Map out all sites in a given business (as there may be more than one)*/}
+                          {this.state.employees[this.state.chosenBusinessId-1].sites.map((site, index) => {
                               return (
                                   <div key={index}>
                                     <p>{site}</p>
@@ -106,6 +130,7 @@ class Dashboard extends React.Component {
                               })}
                               <hr />
                         <br />
+                        {/*Call the function to handle returning the Admin's view back to the default of all businesses*/}
                         <button onClick={() => this.handleReturn()}>
                           Back
                         </button>
