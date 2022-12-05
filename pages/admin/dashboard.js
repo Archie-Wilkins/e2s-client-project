@@ -35,6 +35,53 @@ class Dashboard extends React.Component {
     this.setState({chosenBusinessId: businessId});
   }
 
+  loginSubmitApi = async (event) => {
+
+    // Stop the form from submitting and refreshing the page.
+    event.preventDefault();
+
+    try{
+      
+        // API endpoint where we send form data.
+        const endpoint = '../api/displayData';
+
+        // Form the request for sending data to the server.
+        const options = {
+            // The method is POST because we are sending data.
+            method: 'POST',
+            // Tell the server we're sending JSON.
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }
+
+        // Send the form data to our forms API on Vercel and get a response.
+        const response = await fetch(endpoint, options)
+
+        // Get the response data from server as JSON.
+        // If server returns the name submitted, that means the form works.
+        const result = await response.json();
+        console.log(result);
+
+        /*if(result.data.message.toString() === "unsuccessfulLogin") {
+            //shows login was unsuccessful
+            document.getElementById("error").innerText = "password or email is incorrect";
+            document.getElementById("error").style.display = "block";
+            return;
+        } else if(result.data.message.toString() === "success"){
+            //else means login was successful
+            //creates session via cookie which holds user ID in 'result.data'
+            const cookies = new Cookies();
+            cookies.set('user', result.data.user, { path: '/' });
+            //will relocate to dashboard, currently just index/home page
+            window.location = "/";
+        }*/
+    } catch (e) {
+        console.log("error");
+    }
+
+}
+
   // This fucntion handles returning back to the default view of all businesses from the currently viewed business
   handleReturn() {
 
@@ -61,7 +108,7 @@ class Dashboard extends React.Component {
                     {this.state.businessRequested === false && (
                       <div>
                         <h1>View All Businesses</h1><br/>
-
+                        <button onClick={this.loginSubmitApi}>TEST</button>
                         {/*Display a table containing all businesses registered in the database.
                            The table is made repsonsive using Bootstrap.*/}
                         <table className="table table-hover">
