@@ -8,7 +8,10 @@ import jsPDF from 'jspdf';
 import pdfMake from 'pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import htmlToPdfmake from 'html-to-pdfmake';
-import LineGraph from '../public/components/lineGraph'
+import LineGraph from '../public/components/lineGraph';
+import Graph1 from '../public/images/weeklyEmail/Graph1.png';
+import GraphType2 from '../public/images/navbar/dashboard.png';
+
 
 class WeeklyEmailPage extends React.Component {
     constructor(props) {
@@ -16,9 +19,11 @@ class WeeklyEmailPage extends React.Component {
         this.state = {
             siteID:"",
             ready:"",
-            siteName:""
+            siteName:"",
         };
     }
+
+
 
     //toDO
     //auto check email as its entered DO NOW
@@ -29,6 +34,10 @@ class WeeklyEmailPage extends React.Component {
     //submit will only work when ready = "yes"
 
     getUser = async () => {
+        //resets site
+        document.getElementById("siteName").innerText = "";
+        this.state.siteName = "";
+
         //console.log("getUser called");
         const formEmail = document.getElementById("email").value;
 
@@ -109,7 +118,7 @@ class WeeklyEmailPage extends React.Component {
         document.getElementById("email-template").style.display = "block";
         document.getElementById("generateButton").style.display = "block";
 
-
+        document.getElementById("title").innerText = this.state.siteName + " | " + document.getElementById("week").value + " weekly report";
 
         //I have decided to use document.getElementById().value instead of event.target.email.value
         //this is because Jest hates getting values from an event
@@ -161,6 +170,8 @@ class WeeklyEmailPage extends React.Component {
         //     });
 
 
+
+
     }
 
     generatePDF = async () => {
@@ -192,7 +203,7 @@ class WeeklyEmailPage extends React.Component {
                     <label>Site: <label id="siteName"></label></label>
                     <br/>
                     <label>Week:</label>
-                    <input list="week" name="week"></input>
+                    <input list="week" name="week" id="week"></input>
                     <datalist id="week">
                         <option value="28/11/2022 - 04/12/2022"/>
                         <option value="21/11/2022 - 27/11/2022"/>
@@ -205,7 +216,7 @@ class WeeklyEmailPage extends React.Component {
                 </form>
             </div>
             <div className="hidden" id="email-template">
-                <h2>Newport Hospital | 07/11/2022 - 13/11/2022 weekly report</h2>
+                <h2 id="title">Newport Hospital | 07/11/2022 - 13/11/2022 weekly report</h2>
                 <div className="vertical-space"></div>
                 <div className="margin-left-1vw">
                     <div>
@@ -241,7 +252,8 @@ class WeeklyEmailPage extends React.Component {
                     <div>
                         <div className="graph-container">
                             <h2 className="margin-left-none">Carbon Emissions</h2>
-                            <div>graph here</div>
+                            <img style={{height: "100px", width: "100px"}}  src={require('../public/images/navbar/dashboard.png').default}></img>
+                            <div> image in here </div>
                         </div>
                         <div>
                             <h2>Total</h2>

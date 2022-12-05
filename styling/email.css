@@ -78,3 +78,9 @@ h2 {
 .margin-left-none {
     margin-left: 0px;
 }
+
+.graph1 {
+    background-image: url("../public/images/weeklyEmail/Graph1.png");
+    width: 100px;
+    height: 100px;
+}

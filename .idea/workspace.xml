@@ -5,19 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/db/site.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/api/getSiteDetails.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/api/getUserSite.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/api/getUserSiteFromEmail.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/weeklyEmail.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.next/cache/webpack/client-development/1.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/client-development/1.pack" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/1.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/1.pack" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/2.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/2.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/server/middleware-build-manifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/middleware-build-manifest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/static/development/_buildManifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/development/_buildManifest.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.next/trace" beforeDir="false" afterPath="$PROJECT_DIR$/.next/trace" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/weeklyEmail.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/weeklyEmail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styling/email.css" beforeDir="false" afterPath="$PROJECT_DIR$/styling/email.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +24,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="CSS File" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -55,6 +53,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/Users/c2064724/IdeaProjects/e2s-team-4/pages/api",
+    "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -268,7 +267,21 @@
       <option name="project" value="LOCAL" />
       <updated>1669987160359</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="created form to send email to user">
+      <created>1670158906105</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1670158906105</updated>
+    </task>
+    <task id="LOCAL-00009" summary="fixed render issues, can now generate pdf, got single static graph">
+      <created>1670171358661</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1670171358661</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -294,7 +307,9 @@
     <MESSAGE value="removed file" />
     <MESSAGE value="removes any User session cookie" />
     <MESSAGE value="added sample users to SQL file" />
-    <option name="LAST_COMMIT_MESSAGE" value="added sample users to SQL file" />
+    <MESSAGE value="created form to send email to user" />
+    <MESSAGE value="fixed render issues, can now generate pdf, got single static graph" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed render issues, can now generate pdf, got single static graph" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
