@@ -1,5 +1,5 @@
 import Link from "next/link"
-import SiteEditor from "../public/components/siteEditor.js"
+import SiteEditor from "../public/components/onboarding/siteEditor/siteEditor.js"
 
 
 function OnboardingPage() {
