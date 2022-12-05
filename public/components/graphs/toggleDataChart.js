@@ -1,0 +1,152 @@
+import "bootstrap/dist/css/bootstrap.min.css";
+import LineGraph from "./lineGraph.js";
+
+import React from "react";
+
+class ToggleDataChart extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentGraph: this.displayGraph(1),
+      randomKey: Math.floor(Math.random() * 10000000),
+    };
+  }
+
+  displayGraph = (graphNumber) => {
+    console.log("Yes" + graphNumber);
+    switch (graphNumber) {
+      case 1:
+        console.log("Yes" + "displayWeeklyGraph");
+        this.setState({
+          currentGraph: this.displayWeeklyGraph(),
+        });
+        return this.displayWeeklyGraph();
+      case 2:
+        console.log("Yes" + "displayMonthlyGraph");
+        this.setState({
+          currentGraph: this.displayMonthlyGraph(),
+        });
+        break;
+      case 3:
+        console.log("Yes" + "displayYearlyGraph");
+        this.setState({
+          currentGraph: this.displayYearlyGraph(),
+        });
+        break;
+      default:
+        this.setState({
+          currentGraph: this.displayWeeklyGraph(),
+        });
+    }
+  };
+
+  displayWeeklyGraph = () => {
+    console.log("1");
+    return (
+      <LineGraph
+        dataSet={this.props.dataSet}
+        xAxis={this.props.xAxis1}
+        yAxis={this.props.yAxis1}
+        xAxisDataKey={this.props.xAxisDataKey1}
+        yAxisDataKey={this.props.yAxisDataKey1}
+      />
+    );
+  };
+
+  displayMonthlyGraph = () => {
+    console.log("2");
+    return (
+      <LineGraph
+        dataSet={this.props.dataSet}
+        xAxis={this.props.xAxis2}
+        yAxis={this.props.yAxis2}
+        xAxisDataKey={this.props.xAxisDataKey2}
+        yAxisDataKey={this.props.yAxisDataKey2}
+      />
+    );
+  };
+
+  displayYearlyGraph = () => {
+    console.log("3");
+    return (
+      <LineGraph
+        dataSet={this.props.dataSet}
+        xAxis={this.props.xAxis3}
+        yAxis={this.props.yAxis3}
+        xAxisDataKey={this.props.xAxisDataKey3}
+        yAxisDataKey={this.props.yAxisDataKey3}
+      />
+    );
+  };
+
+  render() {
+    return (
+      <div className="row h-100 w-75">
+        <div className="col p-2 whiteBackground rounded vh-70 d-flex flex-column align-items-center ">
+          <div>
+            <ul className="d-flex blueBackground p-1 rounded noListStyle">
+              <li className="whiteBackground d-flex justify-content-center">
+                <input
+                  value={this.props.toggle1}
+                  type="radio"
+                  name={this.state.randomKey + "timeRange"}
+                  className="invisibleInput"
+                  id={this.state.randomKey + "radio1"}
+                  onClick={() => {
+                    this.displayGraph(1);
+                  }}
+                />
+                <label
+                  className="selectableLabel px-4"
+                  for={this.state.randomKey + "radio1"}
+                >
+                  {this.props.toggle1}
+                </label>
+              </li>
+              <li className="whiteBackground mx-1 d-flex justify-content-center">
+                <input
+                  value={this.props.toggle2}
+                  type="radio"
+                  name={this.state.randomKey + "timeRange"}
+                  className="invisibleInput"
+                  onClick={() => {
+                    this.displayGraph(2);
+                  }}
+                  id={this.state.randomKey + "radio2"}
+                />
+                <label
+                  className="selectableLabel px-4"
+                  for={this.state.randomKey + "radio2"}
+                >
+                  {this.props.toggle2}
+                </label>
+              </li>
+              <li className="whiteBackground d-flex justify-content-center">
+                <input
+                  value={this.props.toggle3}
+                  type="radio"
+                  name={this.state.randomKey + "timeRange"}
+                  className="invisibleInput"
+                  onClick={() => {
+                    this.displayGraph(3);
+                  }}
+                  id={this.state.randomKey + "radio3"}
+                />
+                <label
+                  className="selectableLabel px-4"
+                  for={this.state.randomKey + "radio3"}
+                >
+                  {this.props.toggle3}
+                </label>
+              </li>
+            </ul>
+          </div>
+
+          {this.state.currentGraph}
+        </div>
+      </div>
+    );
+  }
+}
+
+export default ToggleDataChart;

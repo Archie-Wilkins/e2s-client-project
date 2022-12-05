@@ -1,17 +1,23 @@
 .whiteText {
-    color: #FFFFFF;
+  color: #ffffff;
 }
 
 .accentText {
-    color: #EDB116;
+  color: #edb116;
 }
 
 .darkLink {
-    color: black;
-    text-decoration: underline;
+  color: black;
+  text-decoration: underline;
 }
 
 .darkLink:hover {
-    color: #EDB116;
-    cursor: pointer;
+  color: #edb116;
+  cursor: pointer;
+}
+
+.verticalLine {
+  height: 60px;
+  width: 1px;
+  background-color: white;
 }

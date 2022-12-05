@@ -1,6 +1,6 @@
 import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
-import EnergyCostForecastGraph from "../../public/components/graphs/toggleTimeChart";
-import ForecastingInfoBox from "../../public/components/dataDisplayBox/forecastingInfoBox.js";
+import ToggleDataChart from "../../public/components/graphs/toggleDataChart.js";
+import ForecastingInfoBox from "../../public/components/dataDisplayBox/forecastingNeedsImprovementBox.js";
 import React from "react";
 
 class Forecasting extends React.Component {
@@ -58,24 +58,34 @@ class Forecasting extends React.Component {
               </div>
             </div>
 
-            <EnergyCostForecastGraph
+            <ToggleDataChart
               toggle1={"Energy Costs"}
               toggle2={"Energy Usage"}
               toggle3={"C02 Emissions"}
-              dataSet1={this.state.weeklyData}
-              dataSet2={this.state.monthlyData}
-              dataSet3={this.state.yearlyData}
-              xAxis={"Date"}
-              yAxis={"Cost (£)"}
-              xAxisDataKey={"date"}
-              yAxisDataKey={"cost"}
+              dataSet={this.state.yearlyData}
+              // Graph 1
+              xAxis1={"Date"}
+              yAxis1={"Cost (£)"}
+              xAxisDataKey1={"date"}
+              yAxisDataKey1={"cost"}
+              // Graph 2
+              xAxis2={"Date"}
+              yAxis2={"Energy Usage (Mw/h)"}
+              xAxisDataKey2={"date"}
+              yAxisDataKey2={"energyUsage"}
+              // Graph 3
+              xAxis3={"Date"}
+              yAxis3={"C02 Emissions (Kg)"}
+              xAxisDataKey3={"date"}
+              yAxisDataKey3={"c02"}
             />
 
-            <div className="row mt-2 g-2 w-75">
-              <div className="col mr-1">
+            <div className="row my-2 g-2 w-75">
+              <div className="col">
                 <ForecastingInfoBox
                   unit="£"
                   forecastedData={this.state.PredictedEnergyCost}
+                  currentData={this.state.CurrentEnergyCost}
                 />
               </div>
               <div className="col whiteBackground rounded mx-1">Box 1</div>

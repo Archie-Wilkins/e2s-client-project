@@ -1,16 +1,24 @@
 .blueBackground {
-    background-color: #111D4A;
+  background-color: #111d4a;
 }
 
 .whiteBackground {
-    background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 .greyBackground {
-    background-color: #f3f3f3
+  background-color: #f3f3f3;
 }
 .whiteText {
-    color: #FFFFFF;
+  color: #ffffff;
 }
 .accentText {
-    color: #EDB116;
+  color: #edb116;
+}
+
+.redColor {
+  color: rgb(163, 2, 2);
+}
+
+.redBackground {
+  background-color: rgb(163, 2, 2);
 }
