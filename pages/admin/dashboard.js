@@ -61,21 +61,9 @@ class Dashboard extends React.Component {
         // Get the response data from server as JSON.
         // If server returns the name submitted, that means the form works.
         const result = await response.json();
-        console.log(result);
+        console.log(result.data.users);
 
-        /*if(result.data.message.toString() === "unsuccessfulLogin") {
-            //shows login was unsuccessful
-            document.getElementById("error").innerText = "password or email is incorrect";
-            document.getElementById("error").style.display = "block";
-            return;
-        } else if(result.data.message.toString() === "success"){
-            //else means login was successful
-            //creates session via cookie which holds user ID in 'result.data'
-            const cookies = new Cookies();
-            cookies.set('user', result.data.user, { path: '/' });
-            //will relocate to dashboard, currently just index/home page
-            window.location = "/";
-        }*/
+        
     } catch (e) {
         console.log("error");
     }
