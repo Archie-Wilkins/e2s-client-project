@@ -1,6 +1,6 @@
 import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
 import ToggleDataChart from "../../public/components/graphs/toggleDataChart.js";
-import ForecastingInfoBox from "../../public/components/dataDisplayBox/forecastingNeedsImprovementBox.js";
+import ForecastingInfoBox from "../../public/components/dataDisplayBox/forecastingInfoBox.js";
 import React from "react";
 
 class Forecasting extends React.Component {
@@ -83,13 +83,31 @@ class Forecasting extends React.Component {
             <div className="row my-2 g-2 w-75">
               <div className="col">
                 <ForecastingInfoBox
+                  title={"Predicted Energy Cost In 12 Months"}
+                  unitGoesBefore={true}
                   unit="£"
                   forecastedData={this.state.PredictedEnergyCost}
                   currentData={this.state.CurrentEnergyCost}
                 />
               </div>
-              <div className="col whiteBackground rounded mx-1">Box 1</div>
-              <div className="col whiteBackground rounded ml-1">Box 1</div>
+              <div className="col whiteBackground rounded mx-1">
+                <ForecastingInfoBox
+                  title={"Predicted Energy Usage In 12 Months"}
+                  unitGoesBefore={false}
+                  unit="Kw/h"
+                  forecastedData={this.state.CurrentEnergyUsage}
+                  currentData={this.state.PredictedEnergyUsage}
+                />
+              </div>
+              <div className="col whiteBackground rounded ml-1">
+                <ForecastingInfoBox
+                  title={"Predicted C02 Emissions In 12 Months"}
+                  unitGoesBefore={false}
+                  unit="Kg"
+                  forecastedData={this.state.CurrentC02Emissions}
+                  currentData={this.state.PredictedC02Emissions}
+                />
+              </div>
             </div>
           </div>
           {/* End of Forecastings for next 12 months */}

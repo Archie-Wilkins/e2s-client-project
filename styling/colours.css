@@ -16,9 +16,17 @@
 }
 
 .redColor {
-  color: rgb(163, 2, 2);
+  color: #910012;
+}
+
+.greenColor {
+  color: #2e6301;
 }
 
 .redBackground {
-  background-color: rgb(163, 2, 2);
+  background-color: #910012;
+}
+
+.greenBackground {
+  background-color: #2e6301;
 }

@@ -4,11 +4,19 @@ import React from "react";
 import { FaLongArrowAltUp } from "react-icons/fa";
 import { FaLongArrowAltDown } from "react-icons/fa";
 
-class ForecastingNeedsImprovementBox extends React.Component {
+class ForecastingOnTrackBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
+
+  calculatePercentageChange = () => {
+    return this.props.forecastedData - this.props.currentData;
+  };
+
+  calculateDifference = () => {
+    return this.props.forecastedData - this.props.currentData;
+  };
 
   render() {
     return (
@@ -18,17 +26,17 @@ class ForecastingNeedsImprovementBox extends React.Component {
           <p className="m-0">
             <b>{this.props.forecastedData}</b>
           </p>
-          <FaLongArrowAltUp color="#910012" />
-          <p className="redColor m-0">Up {this.props.change}</p>
+          <FaLongArrowAltDown color="#2e6301" />
+          <p className="greenColor m-0">Down {this.props.change}</p>
         </div>
-        <div className="w-100 redBackground rounded-bottom p-2">
+        <div className="w-100 greenBackground rounded-bottom p-2">
           {/* <p className="text-white text-center m-0 pt-1">
-            <b>Could be improved</b>
-          </p> */}
+          <b>Could be improved</b>
+        </p> */}
         </div>
       </div>
     );
   }
 }
 
-export default ForecastingNeedsImprovementBox;
+export default ForecastingOnTrackBox;
