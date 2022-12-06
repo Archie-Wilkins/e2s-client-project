@@ -232,7 +232,7 @@ returnAllSitesFromDatabaseApi = async (event) => {
                         {this.state.businessRequested === false &&(
                           <div>
                             <br/><h1>View All Businesses</h1>
-                              <table className="table table-hover" name="siteTable">
+                              <table className="table table-hover" name="siteTable" data-testid="businessTable">
                                   {/*Column headers for the table. NOTE: a reduced amount of data from
                                     each business is displayed here.*/}
                                   <thead>
