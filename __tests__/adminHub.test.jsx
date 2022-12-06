@@ -15,8 +15,5 @@ describe('admin dashboard', () => {
         const nav = screen.getByText("Onboarding")
         expect(nav).toBeInTheDocument()
     })
-    it('renders a table of businesses', () => {
-        const dashboard = screen.getByTestId("businessTable")
-        expect(dashboard).toBeInTheDocument()
-    })
+    
 })
