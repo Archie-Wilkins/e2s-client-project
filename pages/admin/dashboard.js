@@ -1,8 +1,8 @@
-<<<<<<< HEAD
 import "bootstrap/dist/css/bootstrap.min.css";
 import Link from "next/link";
-import React from "react";
 import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
+import React, { useLayoutEffect } from 'react';
+import Cookies from 'js-cookie';
 
 // This is the dashboard component for admins
 class Dashboard extends React.Component {
@@ -15,7 +15,17 @@ class Dashboard extends React.Component {
 
       // This variable tracks which business has been selected by the Admin to be viewed
       chosenBusinessId: 0,
+
+      displayDBData: false,
       
+      siteDataArray: [],
+
+      pageName: 'Admin Hub',
+
+      isAdmin: true,
+
+      isDirector: false,
+
       // This is a mock dataset used to pull values from to render until the database is connected
       employees: [
         //{id: 0, sites: [{esm: "ray romano", site: "staton island"},{esm: "debrah", site: "nemos"}], business: "New York Times"},
@@ -28,66 +38,6 @@ class Dashboard extends React.Component {
 
   // This function handles rendering the business data associated with a selected row in the table dataset.
   handleBusinessRender(businessId) {
-=======
-import Link from "next/link"
-import MainLayout from "../../public/components/layouts/mainLayoutShell.js"
-import React, { useLayoutEffect } from 'react';
-import Cookies from 'js-cookie'
-
-class SystemAdmin extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            pageName: 'System Admin ',
-            //Need to change this to get this 
-            //infomation from API
-            //Would be ideal to store these in some sort of cookie or global variable
-            //if these are not present then the nav bar will default to standard ESM nav bar 
-            isAdmin: true,
-            isDirector: true,
-        };
-    }
-
-    checkUser = async (event) => {
-        let userCookie
-
-        try {
-            userCookie = JSON.parse(Cookies.get().user);
-        } catch (e) {
-            console.log(e);
-        }
-
-        //console.log(userCookie);
-
-        //if user role is not 3, 3 = admin
-        if (userCookie.role != 3){
-            Cookies.remove('user');
-            window.location = "/login";
-        }
-    }
-
-    render() {
-        return <div onLoad={this.checkUser} onMouseEnter={this.checkUser}>
-            <MainLayout isAdmin={this.state.isAdmin} isDirector={this.state.isDirector} pageName={this.state.pageName}>
-                <div className="whiteBackground mt-5">
-                    <h1>System Admin </h1>
-                </div>
-                <h1>System Admin </h1>
-                <h1>System Admin </h1>
-                <h1>System Admin </h1>
-                <h1>System Admin </h1>
-                <h1>System Admin </h1>
-                <h1>System Admin </h1>
-                <h1>System Admin </h1>
-                <h1>System Admin </h1>
-                <h1>System Admin </h1>
-                <h1>System Admin </h1>
-                <h1>System Admin </h1>
-                <h1>System Admin </h1>
-                <h1>System Admin </h1>
-                <h1>System Admin </h1>
-                <h1>System Admin </h1>
->>>>>>> main
 
     // Update the boolean variable state used to determine whether to render a specific business to true.
     this.setState({ businessRequested: true });
@@ -96,7 +46,7 @@ class SystemAdmin extends React.Component {
     this.setState({chosenBusinessId: businessId});
   }
 
-  loginSubmitApi = async (event) => {
+  returnAllUsersFromDatabaseApi = async (event) => {
 
     // Stop the form from submitting and refreshing the page.
     event.preventDefault();
@@ -123,6 +73,8 @@ class SystemAdmin extends React.Component {
         // If server returns the name submitted, that means the form works.
         const result = await response.json();
         console.log(result.data.users);
+        this.setState({siteDataArray: result.data.users});
+        this.setState({displayDBData: true});
 
         
     } catch (e) {
@@ -139,11 +91,25 @@ class SystemAdmin extends React.Component {
     this.setState({ businessRequested: false });
   }
 
+  checkUser = async (event) => {
+
+    try {
+        let userCookie = JSON.parse(Cookies.get().user);
+        if (userCookie.role != 3){
+          Cookies.remove('user');
+          window.location = "/login";
+      }
+    } catch (e) {
+        console.log(e);
+    }
+
+  }
+
   // Return the contents of the Admin Dashboard page.
   render() {
     return (
-      <div>
-        <MainLayout isAdmin={true} pageName={"Admin Hub"}>
+      <div div onLoad={this.checkUser} onMouseEnter={this.checkUser}>
+        <MainLayout isAdmin={this.state.isAdmin} isDirector={this.state.isDirector} pageName={this.state.pageName}>
           <div className={"admin-header-container"}>
             <h1 className="dashboard-header">ADMIN DASHBOARD</h1>
             <hr className={"h1-underline"} />
@@ -153,11 +119,45 @@ class SystemAdmin extends React.Component {
               <div className="row">
                 <div className="col-sm">
                   <div className={"business-section"}>
+                    {this.state.displayDBData === true &&(
+                      <div>
+                        <table className="table table-hover">
+                            {/*Column headers for the table. NOTE: only a small amount of data from
+                               each business is siplayed here.*/}
+                            <thead>
+                              <tr>
+                                <th scope="col">User ID</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Firstname</th>
+                                <th scope="col">Surname</th>
+                                <th scope={"col"}>Phone Number</th>
+                                <th scope={"col"}>Role</th>
+                              </tr>
+                            </thead>
+                          {/*Map out the data from the mock database state to be rnedered in the table.*/}  
+                          {this.state.siteDataArray.map((employee, index) => {
+                            return (
+                              <tbody key={index}>
+                                {/*Render each row using data from the given business index.*/}
+                                <tr>
+                                  <th scope="row">{employee.user_id}</th>
+                                  <td>{employee.email}</td>
+                                  <td>{employee.first_name}</td>
+                                  <td>{employee.last_name}</td>
+                                  <td>{employee.phone_number}</td>
+                                  <td>{employee.role_id}</td>
+                                </tr>  
+                              </tbody>
+                            );   
+                          })}
+                        </table>
+                      </div>
+                    )}
                     {/*Check if the Admin has requested to view a specific business, and if not...*/}
                     {this.state.businessRequested === false && (
                       <div>
                         <h1>View All Businesses</h1><br/>
-                        <button onClick={this.loginSubmitApi}>TEST</button>
+                        <button onClick={this.returnAllUsersFromDatabaseApi}>TEST</button>
                         {/*Display a table containing all businesses registered in the database.
                            The table is made repsonsive using Bootstrap.*/}
                         <table className="table table-hover">
