@@ -24,6 +24,7 @@ export const setRoom = async (roomName, floorId, roomSizeX, roomSizeY, roomPosX,
     });
 }
 
+
 export default {
     getRoomsWithFloorId,
     setRoom

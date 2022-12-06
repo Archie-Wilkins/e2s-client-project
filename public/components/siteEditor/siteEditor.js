@@ -25,7 +25,7 @@ class SiteEditor extends React.Component{
         var the_Function = function(cell, formatterParams, onRendered){ //plain text value
 
             console.log(cell.getRow().getData().id);
-            siteTable.addColumn({title:"Floor", field:"fName", formatter:the_Function, formatterParams:{siteID:cell.getRow().getData().id}});
+
             return '<button type="submit" id="OpenImgUpload">ID upload</button></form>';
         };
 
@@ -49,7 +49,6 @@ class SiteEditor extends React.Component{
 
 //button's function for example
                         var Btn = document.createElement('Button');
-                        Btn.id = "Btn_Id";
                         console.log(Btn);
 
 
