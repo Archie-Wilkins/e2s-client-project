@@ -119,32 +119,38 @@ class LandingComponent extends React.Component {
             </nav>
                 <CarouselComponent/>
                 <div className={"landingBody"} aria-lable="body of the page">
-                    <h1 aria-label="about us header">About Us</h1><br/>
+                    <h1>About Us</h1><br/>
                     <hr className={"underline-style"}/>
                     <AccordionComponent/><br/>
-                    <h1 aria-label="enquiry form section header">Enquire</h1>
-                    <hr className={"underline-style"}/>
-                    <p aria-label="enquiry form section tag line">If you would like to request more information on how to get started, please fill
-                        out the form below and a member of the team will get back to you.</p>
+                    
+                    <div aria-label="sign up enquiry section heading">
+                        <h1>Enquire</h1>
+                        <hr className={"underline-style"}/>
+                        <p>If you would like to request more information on how to get started, please fill
+                            out the form below and a member of the team will get back to you.</p>
+                    </div>
 
                     {this.state.formSubmitted === true && (
-                        <div className={"enquiry-form"} aria-label="enquiry form">
+                        <div className={"enquiry-form"} aria-label="sign up enquiry form">
                             <div className={"enquiry-form-header"} aria-label="enquiry form header">
                                 <h1>REQUEST FORM</h1>
                             </div>
                             <div className={"enquiry-form-content"} aria-label="enquiry form summary content">
                                 <br/>
                                 {/*Ignored on text, switch for div tag sections */}
-                                <p aria-label="personal details section">Your request summary:</p>
-                                <br/>
-                                <label>Industry: {this.state.userIndustry}</label>
-                                <br/>
-                                <label>Business: {this.state.userBusiness}</label>
-                                <br/>
-                                <label>Email: {this.state.userEmail}</label>
-                                <br/>
-                                <label>Comments: {this.state.userComments}</label>
-                                <br/>
+                                <div aria-label="personal details summary section">
+                                    <h2>Your request summary:</h2>
+                                    <br/>
+                                    <label>Industry: {this.state.userIndustry}</label>
+                                    <br/>
+                                    <label>Business: {this.state.userBusiness}</label>
+                                    <br/>
+                                    <label>Email: {this.state.userEmail}</label>
+                                    <br/>
+                                    <label>Comments: {this.state.userComments}</label>
+                                    <br/>
+                                </div>
+                                
                                 <h2 aria-label="goals section">Goals</h2>
                                 <br/>
                                 {this.state.userCo2 === "true" && (
@@ -164,11 +170,11 @@ class LandingComponent extends React.Component {
                         </div>
                     )}
                     {!this.state.formSubmitted && (
-                        <form onSubmit={this.enquirySubmitApi} className={"enquiry-form"} method="post" id={"enquiryForm"} data-testid="form">
-                            <div className={"enquiry-form-header"}>
+                        <form onSubmit={this.enquirySubmitApi} aria-label="enquiry form" className={"enquiry-form"} method="post" id={"enquiryForm"} data-testid="form">
+                            <div className={"enquiry-form-header"} aria-label="enquiry form header">
                                 <h1>REQUEST FORM</h1>
                             </div>
-                            <div className={"enquiry-form-content"}>
+                            <div className={"enquiry-form-content"} aria-label="enquiry form questions section">
                                 <label htmlFor="industry">Which industry are you in? (Required)</label>
                                 <br/>
                                 <input type="text" id="industry" name="industry" required minLength={"1"} maxLength={"50"} data-testid="industry"/>
@@ -182,19 +188,19 @@ class LandingComponent extends React.Component {
                                 <input type="email" id="email" name="email" required minLength={"1"} maxLength={"50"} data-testid="email"/>
 
                                 <br/><br/>
-                                <div className="form-check">
+                                <div className="form-check" aria-label="co2 target checkbox">
                                     <input className="form-check-input" type="checkbox" value="" id="co2"/>
                                     <label className="form-check-label" htmlFor="flexCheckDefault">CO2 Emissions</label>
                                 </div>
-                                <div className="form-check">
+                                <div className="form-check" aria-label="spending target chechbox">
                                     <input className="form-check-input" type="checkbox" value="" id="spending"/>
                                     <label className="form-check-label" htmlFor="flexCheckDefault">Spending</label>
                                 </div>
-                                <div className="form-check">
+                                <div className="form-check" aria-label="energy target checkbox">
                                     <input className="form-check-input" type="checkbox" value="" id="energy"/>
                                     <label className="form-check-label" htmlFor="flexCheckDefault">Energy Use</label>
                                 </div>
-                                <div className="form-check">
+                                <div className="form-check" aria-label="technology checkbox">
                                     <input className="form-check-input" type="checkbox" value="" id="technology"/>
                                     <label className="form-check-label" htmlFor="flexCheckDefault">Technology Insights</label>
                                 </div>
@@ -204,7 +210,7 @@ class LandingComponent extends React.Component {
                             <label htmlFor={"enquiryCommentSection"} className={"enquiry-form-comment-section-label"}>Would you like to asky any questions? (Optional)</label>
                             <input type={"text"} className={"enquiry-form-comment-section"} id={"enquiryCommentSection"}></input>
                             <br/>
-                            <button type="submit" className={"enquiry-form-submit-button"}>Submit</button>
+                            <button type="submit" className={"enquiry-form-submit-button"} aria-label="submit enquiry form button">Submit</button>
                         </form>
                     )}
                 </div>
