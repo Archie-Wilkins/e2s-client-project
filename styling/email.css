@@ -81,6 +81,8 @@ h2 {
 
 .graph1 {
     background-image: url("../public/images/weeklyEmail/Graph1.png");
-    width: 100px;
-    height: 100px;
+    width: 100%;
+    aspect-ratio: auto 1030 / 507;
+    height: 100%;
+    background-size: cover;
 }

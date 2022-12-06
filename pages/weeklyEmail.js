@@ -11,6 +11,7 @@ import htmlToPdfmake from 'html-to-pdfmake';
 import LineGraph from '../public/components/lineGraph';
 import Graph1 from '../public/images/weeklyEmail/Graph1.png';
 import GraphType2 from '../public/images/navbar/dashboard.png';
+import FileBase64 from 'react-file-base64';
 
 
 class WeeklyEmailPage extends React.Component {
@@ -20,9 +21,9 @@ class WeeklyEmailPage extends React.Component {
             siteID:"",
             ready:"",
             siteName:"",
+            files: []
         };
     }
-
 
 
     //toDO
@@ -40,6 +41,9 @@ class WeeklyEmailPage extends React.Component {
 
         //console.log("getUser called");
         const formEmail = document.getElementById("email").value;
+
+
+
 
         //check user exists in database
 
@@ -174,12 +178,32 @@ class WeeklyEmailPage extends React.Component {
 
     }
 
-    generatePDF = async () => {
+    generatePDF = async (event) => {
+        event.preventDefault();
+
+        alert("attempting to send email");
+
+        // emailjs.send("service_vhvmdc2","template_74t4ffc",{
+        //     siteName: "NewportHospital",
+        //     dateStart: "28/11/2022",
+        //     dateEnd: "04/12/2022",
+        //     energyThisWeek: "123kW",
+        //     energyPreviousWeek: "133kW",
+        //     energyAverageWeek: "144kW",
+        //     carbonThisWeek: "144kg",
+        //     carbonPreviousWeek: "231kg",
+        //     carbonAverageWeek: "233kg",
+        //     expenditureThisWeek: "2142",
+        //     expenditurePreviousWeek: "2412",
+        //     expenditureAverageWeek: "2341",
+        //     email: "ethanaharris10@gmail.com",
+        // });
+
         //const input = document.getElementById('divToPrint');
-
+        //
         const doc = new jsPDF();
-
-        //get table html
+        //
+        // //get table html
         const pdfTable = document.getElementById('email-template');
         //html to pdf format
         var html = htmlToPdfmake(pdfTable.innerHTML);
@@ -193,7 +217,17 @@ class WeeklyEmailPage extends React.Component {
     }
 
 
+
     render() {
+
+        function importAll(r) {
+            let images = {};
+            r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+            return images;
+        }
+
+        const images = importAll(require.context('/pages/', false, /\.(png|jpe?g|svg)$/));
+
         return <div>
             <div className="loginBackground">
                 <form onSubmit={this.generateReport}>
@@ -252,8 +286,12 @@ class WeeklyEmailPage extends React.Component {
                     <div>
                         <div className="graph-container">
                             <h2 className="margin-left-none">Carbon Emissions</h2>
-                            <img style={{height: "100px", width: "100px"}}  src={require('../public/images/navbar/dashboard.png').default}></img>
-                            <div> image in here </div>
+                            {/*<img style={{height: "100px", width: "100px"}}  src={require('../public/images/navbar/dashboard.png').default}></img>*/}
+                            {/*<div style={{height: "1030", width: "507"}}>*/}
+                            {/*    <div className="graph1"></div>*/}
+                            {/*</div>*/}
+                            {/*<img src={"/_next/static/media/Graph1.b6d8bf7a.png"} />*/}
+
                         </div>
                         <div>
                             <h2>Total</h2>
@@ -283,7 +321,7 @@ class WeeklyEmailPage extends React.Component {
                     <div>
                         <div className="graph-container">
                             <h2 className="margin-left-none">Expenditure</h2>
-                            <div>graph here</div>
+                            <div></div>
                         </div>
                         <div>
                             <h2>Total</h2>

@@ -48,6 +48,18 @@ export const getSiteIDFromEmail = async (email) => {
     });
 }
 
+export const getSiteData = async (email) => {
+    return new Promise((resolve, reject) =>  {
+        db.query("SELECT user_data_site_data_crossref.site_id FROM user_data_site_data_crossref INNER JOIN user_data ON user_data_site_data_crossref.user_id = user_data.user_id WHERE user_data.email = " + "'" + email + "'", (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+
+    });
+}
+
 export default {
     all,
     getSiteIDFromUserID,
