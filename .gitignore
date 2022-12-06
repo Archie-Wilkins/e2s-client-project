@@ -1,8 +1,10 @@
 .next/
-node_modules/
+.node_modules/
 .idea/
 .npm/
 /.changeLog
 build
 yarn.lock
+package-lock.json
 *.pack
+node_modules
