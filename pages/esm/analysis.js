@@ -1,9 +1,10 @@
 import Link from "next/link";
 import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
 import EnergyCostForecastGraph from "../../public/components/graphs/toggleTimeChart";
+import ForecastingInfoBox from "../../public/components/dataDisplayBox/forecastingInfoBox.js";
 import React from "react";
 
-class Forecasting extends React.Component {
+class Analysis extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -75,6 +76,36 @@ class Forecasting extends React.Component {
         { date: "Nov", cost: 633, c02: 165, energyUsage: 150 },
         { date: "Dec", cost: 640, c02: 165, energyUsage: 150 },
       ],
+
+      // Energy Cost
+      energyCostThisWeek: 435,
+      energyCostLastWeek: 250,
+
+      energyCostThisMonth: 435,
+      energyCostLastMonth: 250,
+
+      energyCostThisYear: 435,
+      energyCostLastYear: 250,
+
+      // Energy Usage
+      energyUsageThisWeek: 435,
+      energyUsageLastWeek: 256,
+
+      energyUsageThisMonth: 435,
+      energyUsageLastMonth: 250,
+
+      energyUsageThisYear: 435,
+      energyUsageLastYear: 250,
+
+      // C02 Emissions
+      c02EmissionsThisWeek: 435,
+      c02EmissionsThisWeek: 250,
+
+      c02EmissionsThisMonth: 435,
+      c02EmissionsLastMonth: 250,
+
+      c02EmissionsThisYear: 435,
+      c02EmissionsLastYear: 250,
     };
   }
 
@@ -91,6 +122,40 @@ class Forecasting extends React.Component {
               <div className="col-lg rounded text-center">
                 <h2>Energy Cost</h2>
               </div>
+            </div>
+
+            <div className="row d-flex justify-content-around w-100">
+              <div className="col">
+                <ForecastingInfoBox
+                  title={"Past Week"}
+                  unitGoesBefore={true}
+                  unit="£"
+                  forecastedData={this.state.energyCostThisWeek}
+                  currentData={this.state.energyCostLastWeek}
+                />
+              </div>
+
+              <div className="col">
+                <ForecastingInfoBox
+                  title={"Past Month"}
+                  unitGoesBefore={true}
+                  unit="£"
+                  forecastedData={this.state.energyCostThisMonth}
+                  currentData={this.state.energyCostLastMonth}
+                />
+              </div>
+
+              <div className="col">
+                <ForecastingInfoBox
+                  title={"Past Year"}
+                  unitGoesBefore={true}
+                  unit="£"
+                  forecastedData={this.state.energyCostThisYear}
+                  currentData={this.state.energyCostLastYear}
+                />
+              </div>
+
+
             </div>
 
             <EnergyCostForecastGraph
@@ -114,6 +179,39 @@ class Forecasting extends React.Component {
               <div className="col-lg rounded text-center">
                 <h2>Energy Usage</h2>
               </div>
+            </div>
+
+            <div className="row d-flex justify-content-around w-100">
+              <div className="col">
+                <ForecastingInfoBox
+                  title={"Past Week"}
+                  unitGoesBefore={false}
+                  unit="Kw/h"
+                  forecastedData={this.state.energyUsageThisWeek}
+                  currentData={this.state.energyUsageLastWeek}
+                />
+              </div>
+
+              <div className="col">
+                <ForecastingInfoBox
+                  title={"Past Month"}
+                  unitGoesBefore={false}
+                  unit="Kw/h"
+                  forecastedData={this.state.energyUsageThisMonth}
+                  currentData={this.state.energyUsageLastMonth}
+                />
+              </div>
+
+              <div className="col">
+                <ForecastingInfoBox
+                  title={"Past Year"}
+                  unitGoesBefore={false}
+                  unit="Kw/h"
+                  forecastedData={this.state.energyUsageThisYear}
+                  currentData={this.state.energyUsageLastYear}
+                />
+              </div>
+
             </div>
 
             <EnergyCostForecastGraph
@@ -152,15 +250,45 @@ class Forecasting extends React.Component {
               yAxisDataKey={"c02"}
             />
           </div>
+
+
+          <div className="row d-flex justify-content-around w-100">
+            <div className="col">
+              <ForecastingInfoBox
+                title={"Past Week"}
+                unitGoesBefore={false}
+                unit="Kg"
+                forecastedData={this.state.c02EmissionsThisWeek}
+                currentData={this.state.c02EmissionsLastWeek}
+              />
+            </div>
+
+            <div className="col">
+              <ForecastingInfoBox
+                title={"Past Month"}
+                unitGoesBefore={false}
+                unit="Kg"
+                forecastedData={this.state.c02EmissionsThisWeek}
+                currentData={this.state.c02EmissionsLastWeek}
+              />
+            </div>
+
+            <div className="col">
+              <ForecastingInfoBox
+                title={"Past Year"}
+                unitGoesBefore={false}
+                unit="Kg"
+                forecastedData={this.state.c02EmissionsThisWeek}
+                currentData={this.state.c02EmissionsLastWeek}
+              />
+            </div>
+
+          </div>
           {/* End of C02 Emissions */}
         </MainLayout>
-
-        <Link href="/contact">
-          <p>Contact-Us Page</p>
-        </Link>
       </div>
     );
   }
 }
 
-export default Forecasting;
+export default Analysis;
