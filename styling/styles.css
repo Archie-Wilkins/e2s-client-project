@@ -1,188 +1,192 @@
-
-.landingHeader{
-    text-align: center;
-    margin-top: 5%;
-    margin-bottom: 5%;
+.landingHeader {
+  text-align: center;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
-.landingSubheader{
-    text-align: center;
+.landingSubheader {
+  text-align: center;
 }
 
-
-.carousel-inner{
-    background-color: white;
+.carousel-inner {
+  background-color: white;
 }
 
-.landing-carousel-1{
-    height: 670px;
-    width: 35%;
-    margin-right: auto;
-    background-image: url("../public/resources/c1.png");
-    background-repeat: no-repeat;
+.landing-carousel-1 {
+  height: 670px;
+  width: 35%;
+  margin-right: auto;
+  background-image: url("../public/resources/c1.png");
+  background-repeat: no-repeat;
 }
 
-.landing-carousel-2{
-    height: 670px;
-    margin-right: auto;
-    width: 35%;
-    background-image: url("../public/resources/c2.png");
-    background-repeat: no-repeat;
+.landing-carousel-2 {
+  height: 670px;
+  margin-right: auto;
+  width: 35%;
+  background-image: url("../public/resources/c2.png");
+  background-repeat: no-repeat;
 }
 
-.landing-carousel-3{
-    width: 35%;
-    height: 670px;
-    margin-right: auto;
-    background-image: url("../public/resources/light2.webp");
-    background-repeat: no-repeat;
+.landing-carousel-3 {
+  width: 35%;
+  height: 670px;
+  margin-right: auto;
+  background-image: url("../public/resources/light2.webp");
+  background-repeat: no-repeat;
 }
 
-.carousel-content{
-    color: white;
-    background-color: black;
+.carousel-content {
+  color: white;
+  background-color: black;
 }
 
-.carousel-content-box .carousel-button{
-    color: black;
-    margin-right: 20%;
-    margin-top: 10%;
-    margin-left: 10%;
-    background: none;
-    font-size: 50px;
-    border-radius: 10px;
+.carousel-content-box .carousel-button {
+  color: black;
+  margin-right: 20%;
+  margin-top: 10%;
+  margin-left: 10%;
+  background: none;
+  font-size: 50px;
+  border-radius: 10px;
 }
 
-.carousel-button:hover{
-    font-size: 52px;
-    background-color: white;
+.carousel-button:hover {
+  font-size: 52px;
+  background-color: white;
 }
 
-.carousel-content-box{
-    float: right;
-    display: block;
+.carousel-content-box {
+  float: right;
+  display: block;
 }
 
-.carousel-content-box h1{
-    margin-top: 10%;
-    margin-right: 20%;
-    margin-left: 10%;
+.carousel-content-box h1 {
+  margin-top: 10%;
+  margin-right: 20%;
+  margin-left: 10%;
 }
 
-.carousel-content-2{
-    color: black;
+.carousel-content-2 {
+  color: black;
 }
 
-.carousel-content-dark{
-    color: white;
+.carousel-content-dark {
+  color: white;
 }
 
-
-.landingBody{
-    width: inherit;
-    fill: #06064b;
-    padding: 5px;
-    background-color: rgba(0,0,0,0.10);
-    color: #06064b;
+.landingBody {
+  width: inherit;
+  fill: #06064b;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #06064b;
 }
 
-.underline-style{
-    border-top: 1px solid #06064b;
-    background-color: #06064b;
-    border-bottom: 1px solid #06064b;
+.underline-style {
+  border-top: 1px solid #06064b;
+  background-color: #06064b;
+  border-bottom: 1px solid #06064b;
 }
 
-.accordion{
-    margin-left: 1%;
-    width: 60%;
-    margin-right: auto;
+.accordion {
+  margin-left: 1%;
+  width: 60%;
+  margin-right: auto;
 }
 
-.landingBody h1{
-    margin-left: 1%;
+.landingBody h1 {
+  margin-left: 1%;
 }
 
-.landingBody p{
-    margin-left: 1%;
+.landingBody p {
+  margin-left: 1%;
 }
 
-.accordion-button{
-    background-color: #06064b !important;
-    color: white !important;
+.accordion-button {
+  background-color: #06064b !important;
+  color: white !important;
 }
 
-.accordion-button:hover{
-    background-color: gray !important;
-    color: cyan !important;
+.accordion-button:hover {
+  background-color: gray !important;
+  color: cyan !important;
 }
 
-.enquiry-form{
-    border: solid 1px black;
-    background-color: rgba(223, 230, 249, 1);
-    border-radius: 10px;
-    border-bottom-right-radius: 0px;
-    border-bottom-left-radius: 0px;
-    width: 60%;
-    margin-left: 1%;
-    margin-right: auto;
-    margin-bottom: 10%;
+.enquiry-form {
+  border: solid 1px black;
+  background-color: rgba(223, 230, 249, 1);
+  border-radius: 10px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  width: 60%;
+  margin-left: 1%;
+  margin-right: auto;
+  margin-bottom: 10%;
 }
 
-.enquiry-form-content{
-    display: block;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    color: black;
+.enquiry-form-content {
+  display: block;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  color: black;
 }
 
 .enquiry-form-header {
-    width: 100%;
-    border-radius: 10px;
-    border-bottom-right-radius: 0px;
-    border-bottom-left-radius: 0px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: rgba(16, 43, 112, 1);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  border-radius: 10px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgba(16, 43, 112, 1);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.enquiry-form-header h1{
-
+.enquiry-form-header h1 {
 }
 
 .enquiry-form-comment-section {
-    display: block;
-    width: 60%;
-    height: 100px;
-    margin-left: 10%;
-    margin-right: auto;
-    color: black;
+  display: block;
+  width: 60%;
+  height: 100px;
+  margin-left: 10%;
+  margin-right: auto;
+  color: black;
 }
 
 .enquiry-form-comment-section-label {
-    display: block;
-    width: 60%;
-    margin-left: 10%;
-    margin-right: auto;
-    color: black;
+  display: block;
+  width: 60%;
+  margin-left: 10%;
+  margin-right: auto;
+  color: black;
 }
 
 .enquiry-form-submit-button {
-    display: block;
-    margin-left: 10%;
-    margin-right: auto;
-    color: black;
-    margin-bottom: 10%;
+  display: block;
+  margin-left: 10%;
+  margin-right: auto;
+  color: black;
+  margin-bottom: 10%;
 }
 
-.downloadCsvDataButton{
-    display: none;
+.downloadCsvDataButton {
+  display: none;
 }
 
-.nowVisible{
-    display: block;
+.nowVisible {
+  display: block;
+}
+
+.vh-100 {
+  height: 100vh;
+}
+
+.vw-100 {
+  width: 100vw;
 }
