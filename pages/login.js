@@ -161,7 +161,7 @@ class LoginPage extends React.Component {
                             document.getElementById("error").style.display = "block";
                     }
                 } else {
-                    //if API request to get user role fails fails
+                    //if API request to get user role fails
                     document.getElementById("error").innerText = "error fetching user role";
                     document.getElementById("error").style.display = "block";
                     return;
