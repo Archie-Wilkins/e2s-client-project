@@ -27,6 +27,72 @@ class SiteEditorAdapter {
             }
         } catch (e) {
             console.log(e);
+            return null;
         }
     };
-}
+
+    // Class for mapping data from database to the objects to be used in site data.
+    async formatDataForSiteEditor() {
+
+        import AssetObject from 'baseClasses/assetObject';
+        import RoomObject from 'baseClasses/roomObject';
+        import FloorObject from 'baseClasses/floorObject';
+        import SiteObject from 'baseClasses/siteObject';
+
+        // Get the data from the database
+        const data = await this.pullDataForSiteEditor();
+
+        // Check for null response, then unleash the hounds
+        if (data){
+            try{
+                for (let i = 0; i < data.length; i++) {
+                    // Create a site object
+                    const site = new SiteObject(data[i].site_id, data[i].site_name, data[i].post_code,
+                        data[i].address_l1, data[i].address_l2, data[i].county, data[i].site_size_x,
+                        data[i].site_size_y);
+
+                    for (let j = 0; j < data[i].floors.length; j++) {
+                        // Create a floor object
+                        const floor = new FloorObject(data[i].floors[j].floor_id, data[i].floors[j].floor_number,
+                            data[i].floors[j].floor_size_x, data[i].floors[j].floor_size_y);
+
+                        for (let k = 0; k < data[i].floors[j].rooms.length; k++) {
+                            // Create a room object
+                            const room = new RoomObject(data[i].floors[j].rooms[k].room_id,
+                                data[i].floors[j].rooms[k].room_name, data[i].floors[j].rooms[k].room_size_x,
+                                data[i].floors[j].rooms[k].room_size_y, data[i].floors[j].rooms[k].room_pos_x,
+                                data[i].floors[j].rooms[k].room_pos_y);
+
+                            for (let l = 0; l < data[i].floors[j].rooms[k].assets.length; l++) {
+                                // Create an asset object
+                                const asset = new AssetObject(data[i].floors[j].rooms[k].assets[l].asset_id,
+                                    data[i].floors[j].rooms[k].assets[l].asset_name,
+                                    data[i].floors[j].rooms[k].assets[l].type_id,
+                                    data[i].floors[j].rooms[k].assets[l].energy_efficiency,
+                                    data[i].floors[j].rooms[k].assets[l].energy_demand,
+                                    data[i].floors[j].rooms[k].assets[l].emissions);
+
+                                // Add the asset to the room
+                                room.addAssetObject(asset);
+                            }
+
+                            // Add the room to the floor
+                            floor.addRoomObject(room);
+                        }
+
+                        // Add the floor to the site
+                        site.addFloorObject(floor);
+                    }
+
+                    // Add the site to the organisation
+                    this.organisation.addSite(site);
+                }
+            }
+            catch(e){
+                console.log(e);
+                return null;
+            }
+        }
+    }
+
+    }

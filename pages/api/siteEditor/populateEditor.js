@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     // Iterate through sites under org id, floors under site id, rooms under floor id, assets under room id.
     // This is disgusting, but it beats querying with 4 inner joins then deconstructing the data.
     // (hence in organisations db, there is a function that does the aformentioned)
-    // Mongo db would of helped greatly here
+    // Mongo db would have helped greatly here
 
     try {
         sites.getSitesWithOrgId(orgId).then((sites) => {
