@@ -6,10 +6,6 @@
     height: 800px;
 }
 
-.customTable{
-    overflow-y: scroll;
-    height: 50%;
-}
 
 .dashboard-sub-header{
     font-style: italic;

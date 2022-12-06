@@ -16,16 +16,22 @@ class Dashboard extends React.Component {
       // This variable tracks which business has been selected by the Admin to be viewed
       chosenBusinessId: 0,
 
+      // Variable to track whether data pulled from database is ready to be rendered
       displayDBData: false,
       
+      // Array to store all users registered to the site
       siteUserArray: [],
 
+      // Array to store all sites registered to the site
       siteDataArray: [],
 
+      // The page name rendered in the top nav-bar
       pageName: 'Admin Hub',
 
+      // Variable to define the user on the page as an Admin for any dynamic components or permissions
       isAdmin: true,
 
+      // Variable to define the user on the page as not a Director for any dynamic components or permissions
       isDirector: false,
 
       // This is a mock dataset used to pull values from to render until the database is connected
@@ -53,6 +59,7 @@ class Dashboard extends React.Component {
     // Stop the form from submitting and refreshing the page.
     //event.preventDefault();
 
+    // Use try catch in case the API cannot be reached.
     try{
       
         // API endpoint where we send form data.
@@ -72,23 +79,25 @@ class Dashboard extends React.Component {
         const response = await fetch(endpoint, options)
 
         // Get the response data from server as JSON.
-        // If server returns the name submitted, that means the form works.
         const result = await response.json();
-        console.log(result.data.users);
+
+        // Set the state array for users to the data returned from calling the API (users from the database).
         this.setState({siteUserArray: result.data.users});
+
+        // Set the state of the variable tracking whether data is ready to be rendered to true
         this.setState({displayDBData: true});
 
-        
+    // Handle any caught errors or responses which come from trying to access the API    
     } catch (e) {
+
+        // Return an error message to the user
         console.log("error");
     }
 
 }
 
+// Asynchronous function to collect all registered sites from the database.
 returnAllSitesFromDatabaseApi = async (event) => {
-
-  // Stop the form from submitting and refreshing the page.
-  //event.preventDefault();
 
   try{
     
@@ -109,10 +118,12 @@ returnAllSitesFromDatabaseApi = async (event) => {
       const response = await fetch(endpoint, options)
 
       // Get the response data from server as JSON.
-      // If server returns the name submitted, that means the form works.
       const result = await response.json();
-      console.log(result.data.sites);
+
+      // Set the state array for users to the data returned from calling the API (users from the database).
       this.setState({siteDataArray: result.data.sites});
+
+      // Set the state of the variable tracking whether data is ready to be rendered to true
       this.setState({displayDBData: true});
       
   } catch (e) {
@@ -129,28 +140,39 @@ returnAllSitesFromDatabaseApi = async (event) => {
     this.setState({ businessRequested: false });
   }
 
+  // Funtion used to validate user priveleges from the login page and remove cookies. It is also used to initialise data on the page.
   checkUser = async (event) => {
 
+    // Attempt to parse a user cookie
     try {
+
+        // Initialise the user cookie
         let userCookie = JSON.parse(Cookies.get().user);
+        
+        // If the user has the incorrect credentials for the page, remove them
         if (userCookie.role != 3){
           Cookies.remove('user');
           window.location = "/login";
       }
+      //catch erros
     } catch (e) {
         console.log(e);
     }
 
-    await this.returnAllSitesFromDatabaseApi();
+    // Wait for the async function to complete returning user data from the database
     await this.returnAllUsersFromDatabaseApi();
-    console.log("Check: " + JSON.stringify(this.state.siteDataArray));
 
+    // Wait for the async function to complete returning site data from the database
+    await this.returnAllSitesFromDatabaseApi();
   }
 
   // Return the contents of the Admin Dashboard page.
   render() {
     return (
+      // On laoding the main div, call the function to validate user priveleges and initialise data to be rendered
       <div div onLoad={this.checkUser} onMouseEnter={this.checkUser}>
+        
+        {/*Utilise a navbar with values based on the role of the current user*/}
         <MainLayout isAdmin={this.state.isAdmin} isDirector={this.state.isDirector} pageName={this.state.pageName}>
           <div className={"admin-header-container"}>
             <h1 className="dashboard-header">ADMIN DASHBOARD</h1>
@@ -161,15 +183,21 @@ returnAllSitesFromDatabaseApi = async (event) => {
               <div className="row">
                 <div className="col-sm">
                   <div className={"business-section"}>
+
+                  {/*Section to display all registered users */}  
                   <h1>View All Users</h1><br/>
+                    {/*If the data is not ready to be rendered, show the user a laoding message */}
                     {this.state.displayDBData === false&&(
                       <div>
-                        <h1>LOADING...</h1><br/>
+                        <h1>FETCHING DATA...</h1><br/>
                       </div>  
                     )}
+                    
+                    {/*Once the data is ready to be rendered, load it in */}
                     {this.state.displayDBData === true&&(
                       <div>
-                        <table className="table table-hover">
+                        {/*Table for user details */}
+                        <table className="table table-hover" name="userTable">
                             {/*Column headers for the table. NOTE: only a small amount of data from
                                each business is siplayed here.*/}
                             <thead>
@@ -182,7 +210,7 @@ returnAllSitesFromDatabaseApi = async (event) => {
                                 <th scope={"col"}>Role</th>
                               </tr>
                             </thead>
-                          {/*Map out the data from the mock database state to be rnedered in the table.*/}  
+                          {/*Map out the data from the atabase state to be rendered in the table.*/}  
                           {this.state.siteUserArray.map((employee, index) => {
                             return (
                               <tbody key={index}>
@@ -200,50 +228,52 @@ returnAllSitesFromDatabaseApi = async (event) => {
                           })}
                         </table>
                         
+                        {/*If the user has not requested to see a specific business, show them all businesses with limited information */}
                         {this.state.businessRequested === false &&(
                           <div>
                             <br/><h1>View All Businesses</h1>
-                        <table className="table table-hover">
-                            {/*Column headers for the table. NOTE: only a small amount of data from
-                               each business is siplayed here.*/}
-                            <thead>
-                              <tr>
-                                <th scope="col">Site ID</th>
-                                <th scope="col">Site Name</th>
-                                <th scope="col">Postcode</th>
-                                <th scope={"col"}>County</th>
-                                <th scope={"col"}>Size x</th>
-                                <th scope={"col"}>Size y</th>
-                                <th scope="col">View</th>
+                              <table className="table table-hover" name="siteTable">
+                                  {/*Column headers for the table. NOTE: a reduced amount of data from
+                                    each business is displayed here.*/}
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Site ID</th>
+                                      <th scope="col">Site Name</th>
+                                      <th scope="col">Postcode</th>
+                                      <th scope={"col"}>County</th>
+                                      <th scope={"col"}>Size x</th>
+                                      <th scope={"col"}>Size y</th>
+                                      <th scope="col">View</th>
 
-                              </tr>
-                            </thead>
-                          {/*Map out the data from the mock database state to be rnedered in the table.*/}  
-                          {this.state.siteDataArray.map((employee, index) => {
-                            return (
-                              <tbody key={index}>
-                                {/*Render each row using data from the given business index.*/}
-                                <tr>
-                                  <th scope="row">{employee.site_id}</th>
-                                  <td>{employee.site_name}</td>
-                                  <td>{employee.post_code}</td>
-                                  <td>{employee.county}</td>
-                                  <td>{employee.site_size_x}</td>
-                                  <td>{employee.site_size_y}</td>
-                                  <td><button
-                                        onClick={() =>
-                                          this.handleBusinessRender(
-                                            employee.site_id
-                                            )
-                                        }
-                                      >
-                                        Here
-                                      </button></td>
-                                </tr>  
-                              </tbody>
-                            );   
-                          })}
-                        </table>
+                                    </tr>
+                                  </thead>
+                                {/*Map out the data from the mock database state to be rendered in the table.*/}  
+                                {this.state.siteDataArray.map((employee, index) => {
+                                  return (
+                                    <tbody key={index}>
+                                      {/*Render each row using data from the given business index.*/}
+                                      <tr>
+                                        <th scope="row">{employee.site_id}</th>
+                                        <td>{employee.site_name}</td>
+                                        <td>{employee.post_code}</td>
+                                        <td>{employee.county}</td>
+                                        <td>{employee.site_size_x}</td>
+                                        <td>{employee.site_size_y}</td>
+                                        {/*A button to show more information about a site based on the site row clicked */}
+                                        <td><button
+                                              onClick={() =>
+                                                this.handleBusinessRender(
+                                                  employee.site_id
+                                                  )
+                                              }
+                                            >
+                                              Here
+                                            </button></td>
+                                      </tr>  
+                                    </tbody>
+                                  );   
+                                })}
+                              </table>
                           </div>
                         )}
                         
