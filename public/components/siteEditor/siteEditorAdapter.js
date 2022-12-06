@@ -5,22 +5,26 @@ class SiteEditorAdapter {
 
     async pullDataForSiteEditor() {
         try {
-            // API endpoint where we send form data.
+            // Get all possible site data for
             const endpoint = '/api/siteEditor/populateEditor';
 
             // Form the request for sending data to the server.
             const options = {
                 // The method is GET because we are getting data
                 method: 'GET',
-                // Tell the server we're sending JSON.
                 headers: {
                     'Content-Type': 'application/json',
                 },
             }
 
-            // Send the form data to our forms API on Vercel and get a response.
+            // Send the data to the API and wait for a response
             const response = await fetch(endpoint, options)
 
+            if (response.ok){
+                // Get the data from the response
+                // Return the data
+                return await response.json();
+            }
         } catch (e) {
             console.log(e);
         }

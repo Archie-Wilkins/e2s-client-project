@@ -22,6 +22,7 @@ class SiteEditor extends React.Component{
 
     componentDidMount() {
 
+        // ComponetDidMount is called after the component is rendered. This is where the table should be initialized.
         var the_Function = function(cell, formatterParams, onRendered){ //plain text value
 
             console.log(cell.getRow().getData().id);
