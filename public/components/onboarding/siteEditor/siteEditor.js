@@ -19,7 +19,15 @@ class SiteEditor extends React.Component{
             ]}
     ]
 
+
     componentDidMount() {
+
+        var the_Function = function(cell, formatterParams, onRendered){ //plain text value
+
+            console.log(cell.getRow().getData().id);
+            siteTable.addColumn({title:"Floor", field:"fName", formatter:the_Function, formatterParams:{siteID:cell.getRow().getData().id}});
+            return '<button type="submit" id="OpenImgUpload">ID upload</button></form>';
+        };
 
         this.siteTable = new Tabulator(this.reactRef, {
             height: "400px",
@@ -36,8 +44,18 @@ class SiteEditor extends React.Component{
                 {title: "County", field: "sCounty"},
                 {title: "Size X", field: "sSizeX"},
                 {title: "Size Y", field: "sSizeY"},
-                {title:"Button", field: "Button" ,formatter:the_Function,width:100, align:"center",cellClick:function(e, cell)}
+                {title:"Button", field: "Button",formatter:the_Function,
+                    width:100, align:"center",cellClick:function(e, cell){
+
+//button's function for example
+                        var Btn = document.createElement('Button');
+                        Btn.id = "Btn_Id";
+                        console.log(Btn);
+
+
+                    }}
             ],
+
             rowFormatter: function (row) {
                 //create and style holder elements
                 var floorHolderEl = document.createElement("div");
