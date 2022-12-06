@@ -95,118 +95,118 @@ class LandingComponent extends React.Component {
     }
 
     render() {
-        return <div className={"landing-page"}>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        return <div className={"landing-page"} aria-label="landing page">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="navigation bar">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="/">E2S</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <a class="navbar-brand" href="/" aria-label="e2s home button link">E2S</a>
+                    
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent" >
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/about">About Us</a>
+                        <a class="nav-link active" aria-label="about us link" aria-current="page" href="/about">About Us</a>
                         </li>
+
                         <li class="nav-item">
-                        <a class="nav-link" href="#">Energy Data</a>
+                        <a class="nav-link" aria-label="request industry energy usage data link" href="#">Energy Data</a>
                         </li>
+
                         <li class="nav-item">
-                        <a class="nav-link" href="#" onClick={this.handleFormScroll}>Sign Up</a>
+                        <a class="nav-link" aria-label="sign up link" href="#" onClick={this.handleFormScroll}>Sign Up</a>
                         </li>
                     </ul>
                     </div>
                 </div>
             </nav>
                 <CarouselComponent/>
-                <div className={"landingBody"}>
-    <h1>About Us</h1><br/>
-    <hr className={"underline-style"}/>
-    <AccordionComponent/><br/>
-    <h1>Enquire</h1>
-    <hr className={"underline-style"}/>
-    <p>If you would like to request more information on how to get started, please fill
-        out the form below and a member of the team will get back to you.</p>
+                <div className={"landingBody"} aria-lable="body of the page">
+                    <h1 aria-label="about us header">About Us</h1><br/>
+                    <hr className={"underline-style"}/>
+                    <AccordionComponent/><br/>
+                    <h1 aria-label="enquiry form section header">Enquire</h1>
+                    <hr className={"underline-style"}/>
+                    <p aria-label="enquiry form section tag line">If you would like to request more information on how to get started, please fill
+                        out the form below and a member of the team will get back to you.</p>
 
-    {this.state.formSubmitted === true && (
-        <div className={"enquiry-form"}>
-            <div className={"enquiry-form-header"}>
-                <h1>REQUEST FORM</h1>
-            </div>
-            <div className={"enquiry-form-content"}>
-                <br/>
-                <p>Your request summary:</p>
-                <br/>
-                <label>Industry: {this.state.userIndustry}</label>
-                <br/>
-                <label>Business: {this.state.userBusiness}</label>
-                <br/>
-                <label>Email: {this.state.userEmail}</label>
-                <br/>
-                <label>Comments: {this.state.userComments}</label>
-                <br/>
-                <h2>Goals</h2>
-                <br/>
-                {this.state.userCo2 === "true" && (
-                    <label>CO2</label>
-                )}
-                {this.state.userSpending === "true" && (
-                        <label>Spending</label>
-                )}
-                {this.state.userEnergy === "true" && (
-                        <label>Energy</label>
-                )}
-                {this.state.userTechnology === "true" && (
-                        <label>Technology</label>
-                )}            
-            </div>
-            <button onClick={this.handleReset} className={"enquiry-form-submit-button"}>BACK</button>
-        </div>
-    )}
-    {!this.state.formSubmitted && (
-        <form onSubmit={this.enquirySubmitApi} className={"enquiry-form"} method="post" id={"enquiryForm"} data-testid="form">
-            <div className={"enquiry-form-header"}>
-                <h1>REQUEST FORM</h1>
-            </div>
-            <div className={"enquiry-form-content"}>
-                <label htmlFor="industry">Which industry are you in? (Required)</label>
-                <br/>
-                <input type="text" id="industry" name="industry" required minLength={"1"} maxLength={"50"} data-testid="industry"/>
-                <br/><br/>
-                <label htmlFor="business">What is your business name? (Required)</label>
-                <br/>
-                <input type="text" id="business" name="business" required minLength={"1"} maxLength={"50"} data-testid="business"/>
-                <br/><br/>
-                <label htmlFor="email">What is your email address? (Required)</label>
-                <br/>
-                <input type="email" id="email" name="email" required minLength={"1"} maxLength={"50"} data-testid="email"/>
+                    {this.state.formSubmitted === true && (
+                        <div className={"enquiry-form"} aria-label="enquiry form">
+                            <div className={"enquiry-form-header"} aria-label="enquiry form header">
+                                <h1>REQUEST FORM</h1>
+                            </div>
+                            <div className={"enquiry-form-content"} aria-label="enquiry form summary content">
+                                <br/>
+                                {/*Ignored on text, switch for div tag sections */}
+                                <p aria-label="personal details section">Your request summary:</p>
+                                <br/>
+                                <label>Industry: {this.state.userIndustry}</label>
+                                <br/>
+                                <label>Business: {this.state.userBusiness}</label>
+                                <br/>
+                                <label>Email: {this.state.userEmail}</label>
+                                <br/>
+                                <label>Comments: {this.state.userComments}</label>
+                                <br/>
+                                <h2 aria-label="goals section">Goals</h2>
+                                <br/>
+                                {this.state.userCo2 === "true" && (
+                                    <label>CO2</label>
+                                )}
+                                {this.state.userSpending === "true" && (
+                                        <label>Spending</label>
+                                )}
+                                {this.state.userEnergy === "true" && (
+                                        <label>Energy</label>
+                                )}
+                                {this.state.userTechnology === "true" && (
+                                        <label>Technology</label>
+                                )}            
+                            </div>
+                            <button onClick={this.handleReset} className={"enquiry-form-submit-button"} aria-label="return home">BACK</button>
+                        </div>
+                    )}
+                    {!this.state.formSubmitted && (
+                        <form onSubmit={this.enquirySubmitApi} className={"enquiry-form"} method="post" id={"enquiryForm"} data-testid="form">
+                            <div className={"enquiry-form-header"}>
+                                <h1>REQUEST FORM</h1>
+                            </div>
+                            <div className={"enquiry-form-content"}>
+                                <label htmlFor="industry">Which industry are you in? (Required)</label>
+                                <br/>
+                                <input type="text" id="industry" name="industry" required minLength={"1"} maxLength={"50"} data-testid="industry"/>
+                                <br/><br/>
+                                <label htmlFor="business">What is your business name? (Required)</label>
+                                <br/>
+                                <input type="text" id="business" name="business" required minLength={"1"} maxLength={"50"} data-testid="business"/>
+                                <br/><br/>
+                                <label htmlFor="email">What is your email address? (Required)</label>
+                                <br/>
+                                <input type="email" id="email" name="email" required minLength={"1"} maxLength={"50"} data-testid="email"/>
 
-                <br/><br/>
-                <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="co2"/>
-                    <label className="form-check-label" htmlFor="flexCheckDefault">CO2 Emissions</label>
-                </div>
-                <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="spending"/>
-                    <label className="form-check-label" htmlFor="flexCheckDefault">Spending</label>
-                </div>
-                <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="energy"/>
-                    <label className="form-check-label" htmlFor="flexCheckDefault">Energy Use</label>
-                </div>
-                <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="technology"/>
-                    <label className="form-check-label" htmlFor="flexCheckDefault">Technology Insights</label>
-                </div>
-                <br/>
-            </div>
+                                <br/><br/>
+                                <div className="form-check">
+                                    <input className="form-check-input" type="checkbox" value="" id="co2"/>
+                                    <label className="form-check-label" htmlFor="flexCheckDefault">CO2 Emissions</label>
+                                </div>
+                                <div className="form-check">
+                                    <input className="form-check-input" type="checkbox" value="" id="spending"/>
+                                    <label className="form-check-label" htmlFor="flexCheckDefault">Spending</label>
+                                </div>
+                                <div className="form-check">
+                                    <input className="form-check-input" type="checkbox" value="" id="energy"/>
+                                    <label className="form-check-label" htmlFor="flexCheckDefault">Energy Use</label>
+                                </div>
+                                <div className="form-check">
+                                    <input className="form-check-input" type="checkbox" value="" id="technology"/>
+                                    <label className="form-check-label" htmlFor="flexCheckDefault">Technology Insights</label>
+                                </div>
+                                <br/>
+                            </div>
 
-            <label htmlFor={"enquiryCommentSection"} className={"enquiry-form-comment-section-label"}>Would you like to asky any questions? (Optional)</label>
-            <input type={"text"} className={"enquiry-form-comment-section"} id={"enquiryCommentSection"}></input>
-            <br/>
-            <button type="submit" className={"enquiry-form-submit-button"}>Submit</button>
-        </form>
-    )}
-
+                            <label htmlFor={"enquiryCommentSection"} className={"enquiry-form-comment-section-label"}>Would you like to asky any questions? (Optional)</label>
+                            <input type={"text"} className={"enquiry-form-comment-section"} id={"enquiryCommentSection"}></input>
+                            <br/>
+                            <button type="submit" className={"enquiry-form-submit-button"}>Submit</button>
+                        </form>
+                    )}
                 </div>
     </div>
     }
