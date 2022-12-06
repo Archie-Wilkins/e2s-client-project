@@ -8,10 +8,6 @@ import jsPDF from 'jspdf';
 import pdfMake from 'pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import htmlToPdfmake from 'html-to-pdfmake';
-import LineGraph from '../public/components/lineGraph';
-import Graph1 from '../public/images/weeklyEmail/Graph1.png';
-import GraphType2 from '../public/images/navbar/dashboard.png';
-import FileBase64 from 'react-file-base64';
 
 
 class WeeklyEmailPage extends React.Component {
@@ -38,6 +34,7 @@ class WeeklyEmailPage extends React.Component {
         //resets site
         document.getElementById("siteName").innerText = "";
         this.state.siteName = "";
+        this.state.siteID = "";
 
         //console.log("getUser called");
         const formEmail = document.getElementById("email").value;
@@ -76,6 +73,7 @@ class WeeklyEmailPage extends React.Component {
         //get site name from ID - API call
 
         //creates json using siteID from previous API call
+        this.state.siteID = result.data.site.toString();
         data = {siteID: result.data.site.toString()};
         JSONdata = JSON.stringify(data);
 
@@ -102,6 +100,66 @@ class WeeklyEmailPage extends React.Component {
         //update page information
         this.state.siteName = await result.county;
         document.getElementById("siteName").innerText = this.state.siteName;
+
+        //fetch site daily data
+
+        data = {siteID: this.state.siteID}
+        JSONdata = JSON.stringify(data);
+
+        endpoint = '/api/getSiteDailyData';
+        options = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json',},
+            body: JSONdata,
+        }
+        response = await fetch(endpoint, options)
+        result = await response.json();
+        //formats the JSON correctly
+        // stringResult = JSON.stringify(result);
+        // stringResult = stringResult.replace("[", "");
+        // stringResult = stringResult.replace("]", "");
+        //
+        //result = JSON.parse(result);
+
+        //console.log(result[1].energy_day_cost);
+
+        let weekArray = [];
+
+        let Monday;
+
+        for(var record in await result){
+            //const [year, month, day] = String(result[record].time_stamp).split('-');
+            //console.log(result[record].time_stamp);
+            //let days = new Date(year, day, month);
+
+            let [date, time] = result[record].day.split("T");
+            const [year, month, day] = date.split('-');
+            //console.log(result[record].day);
+            //let days = new Date(year, month, day);
+
+            let days = new Date(date);
+
+            //console.log(days.getDay());
+
+            if(days.getDay() === 0){
+                //start week
+                Monday = date;
+            }
+
+            if(days.getDay() === 6){
+                //end week
+                if(days.getDay() + new Date(Monday).getDay() === 6){
+                    weekArray.push(Monday + " - " + date);
+                }
+            }
+
+        }
+
+        console.log(weekArray);
+
+        //paginate them into weeks
+
+        //put them into options of {date} - {date} in dropdown
 
         //get historical weeks from siteID - API call
 
@@ -203,7 +261,7 @@ class WeeklyEmailPage extends React.Component {
         //
         const doc = new jsPDF();
         //
-        // //get table html
+        //get table html
         const pdfTable = document.getElementById('email-template');
         //html to pdf format
         var html = htmlToPdfmake(pdfTable.innerHTML);
@@ -219,15 +277,6 @@ class WeeklyEmailPage extends React.Component {
 
 
     render() {
-
-        function importAll(r) {
-            let images = {};
-            r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
-            return images;
-        }
-
-        const images = importAll(require.context('/pages/', false, /\.(png|jpe?g|svg)$/));
-
         return <div>
             <div className="loginBackground">
                 <form onSubmit={this.generateReport}>
@@ -256,7 +305,7 @@ class WeeklyEmailPage extends React.Component {
                     <div>
                         <div className="graph-container">
                             <h2 className="margin-left-none">Energy usage</h2>
-                            <div><LineGraph></LineGraph></div>
+                            <div></div>
                         </div>
                         <div>
                             <h2>Total</h2>

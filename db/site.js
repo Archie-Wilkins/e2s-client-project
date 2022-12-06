@@ -48,9 +48,11 @@ export const getSiteIDFromEmail = async (email) => {
     });
 }
 
-export const getSiteData = async (email) => {
+export const getSiteDataByDay = async (siteID) => {
     return new Promise((resolve, reject) =>  {
-        db.query("SELECT user_data_site_data_crossref.site_id FROM user_data_site_data_crossref INNER JOIN user_data ON user_data_site_data_crossref.user_id = user_data.user_id WHERE user_data.email = " + "'" + email + "'", (err, results) => {
+        db.query("SELECT site_id, SUM(energy_hour_usage) as energy_day_usage, SUM(energy_hour_cost) as energy_day_cost, SUM(energy_hour_output) as energy_day_output, SUM(energy_hour_imported) as energy_day_imported, SUM(energy_hour_exported) as energy_day_exported, AVG(temp_average) as average_day_temperature, AVG(wind_speed) as average_day_wind_speed, SUM(carbon_hour_emitted) as carbon_day_emitted, DATE(time_stamp) as day" +
+            " FROM site_energy_data WHERE site_id = '" + siteID + "'" +
+            " GROUP BY DATE(time_stamp);", (err, results) => {
             if(err) {
                 return reject(err);
             }
@@ -64,5 +66,6 @@ export default {
     all,
     getSiteIDFromUserID,
     getSiteDetails,
-    getSiteIDFromEmail
+    getSiteIDFromEmail,
+    getSiteDataByDay
 }
