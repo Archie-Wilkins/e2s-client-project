@@ -94,6 +94,17 @@ export const updateUserPassword = async (userID, password) => {
     });
 }
 
+export const getUserRoleID = async (userID) => {
+    return new Promise((resolve, reject) =>  {
+        db.query("SELECT role_id FROM user_data WHERE user_id = " + userID, (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+    });
+}
+
 
 export default {
     all,
@@ -102,5 +113,6 @@ export default {
     createResetRecord,
     getUserResetCode,
     updateUserPassword,
-    deleteResetRecord
+    deleteResetRecord,
+    getUserRoleID
 }

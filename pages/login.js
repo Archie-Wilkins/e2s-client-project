@@ -1,7 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import Cookies from 'universal-cookie';
+//import Cookies from 'universal-cookie';
 import { useState } from 'react';
+import Cookies from 'js-cookie'
+
 
 
 class LoginPage extends React.Component {
@@ -9,7 +11,8 @@ class LoginPage extends React.Component {
         super(props);
         this.state = {
             email: "",
-            password: ""
+            password: "",
+            userID: ""
         };
     }
 
@@ -99,20 +102,73 @@ class LoginPage extends React.Component {
             // If server returns the name submitted, that means the form works.
             const result = await response.json();
 
+            let userIdData;
+
+            //if a user has been returned from API
+            if(result.data.user){
+                //puts user ID into a data structure to be sent to retreive their roleID later
+                userIdData = await {userID: result.data.user.toString()}
+
+                //creates session via cookie which holds user ID in 'result.data'
+                //const cookies = new Cookies();
+                //cookies.set('user', result.data.user.toString(), { path: '/' });
+
+
+                const JSONdata = JSON.stringify(userIdData);
+
+                const cookieData = {
+                    user: result.data.user.toString(),
+                    role: result.data.role.toString(),
+                }
+
+                const JSONcookie = JSON.stringify(cookieData);
+
+                if(result.data.role){
+                    Cookies.remove('user');
+                    Cookies.set('user', JSONcookie, { expires: 1 });
+                }
+            }
+
             if(result.data.message.toString() === "unsuccessfulLogin") {
                 //shows login was unsuccessful
                 document.getElementById("error").innerText = "password or email is incorrect";
                 document.getElementById("error").style.display = "block";
                 return;
-            } else if(result.data.message.toString() === "success"){
-                //else means login was successful
-                //creates session via cookie which holds user ID in 'result.data'
-                const cookies = new Cookies();
-                cookies.set('user', result.data.user, { path: '/' });
-                //will relocate to dashboard, currently just index/home page
-                window.location = "/";
+            } else if(result.data.message.toString() === "success" ){
+                //login was successful
+                //creates API request to find user's role ID
+                const JSONdata = JSON.stringify(userIdData);
+                const endpoint = '/api/getUserRole';
+                const options = {method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSONdata,}
+                const response = await fetch(endpoint, options)
+                const result = await response.json();
+
+                if(result.data.message.toString() === "success"){
+
+                    //if successfully got user role
+                    switch(result.data.role.toString()) {
+                        case "1": //if user is an esm
+                            window.location = "/esm/dashboard";
+                            break;
+                        case "2": //if user is a Director
+                            window.location = "/director/dashboard";
+                            break;
+                        case "3": //if user is an admin
+                            window.location = "/admin/dashboard";
+                            break;
+                        default:
+                            document.getElementById("error").innerText = "failed to read userID";
+                            document.getElementById("error").style.display = "block";
+                    }
+                } else {
+                    //if API request to get user role fails fails
+                    document.getElementById("error").innerText = "error fetching user role";
+                    document.getElementById("error").style.display = "block";
+                    return;
+                }
             }
         } catch (e) {
+            console.log(e);
             document.getElementById("error").innerText = "API call error";
             document.getElementById("error").style.display = "block";
         }
