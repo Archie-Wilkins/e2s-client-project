@@ -18,6 +18,8 @@ class Dashboard extends React.Component {
 
       displayDBData: false,
       
+      siteUserArray: [],
+
       siteDataArray: [],
 
       pageName: 'Admin Hub',
@@ -49,7 +51,7 @@ class Dashboard extends React.Component {
   returnAllUsersFromDatabaseApi = async (event) => {
 
     // Stop the form from submitting and refreshing the page.
-    event.preventDefault();
+    //event.preventDefault();
 
     try{
       
@@ -73,13 +75,49 @@ class Dashboard extends React.Component {
         // If server returns the name submitted, that means the form works.
         const result = await response.json();
         console.log(result.data.users);
-        this.setState({siteDataArray: result.data.users});
+        this.setState({siteUserArray: result.data.users});
         this.setState({displayDBData: true});
 
         
     } catch (e) {
         console.log("error");
     }
+
+}
+
+returnAllSitesFromDatabaseApi = async (event) => {
+
+  // Stop the form from submitting and refreshing the page.
+  //event.preventDefault();
+
+  try{
+    
+      // API endpoint where we send form data.
+      const endpoint = '../api/returnSiteData';
+
+      // Form the request for sending data to the server.
+      const options = {
+          // The method is POST because we are sending data.
+          method: 'POST',
+          // Tell the server we're sending JSON.
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      }
+
+      // Send the form data to our forms API on Vercel and get a response.
+      const response = await fetch(endpoint, options)
+
+      // Get the response data from server as JSON.
+      // If server returns the name submitted, that means the form works.
+      const result = await response.json();
+      console.log(result.data.sites);
+      this.setState({siteDataArray: result.data.sites});
+      this.setState({displayDBData: true});
+      
+  } catch (e) {
+      console.log("error");
+  }
 
 }
 
@@ -103,6 +141,10 @@ class Dashboard extends React.Component {
         console.log(e);
     }
 
+    await this.returnAllSitesFromDatabaseApi();
+    await this.returnAllUsersFromDatabaseApi();
+    console.log("Check: " + JSON.stringify(this.state.siteDataArray));
+
   }
 
   // Return the contents of the Admin Dashboard page.
@@ -119,7 +161,13 @@ class Dashboard extends React.Component {
               <div className="row">
                 <div className="col-sm">
                   <div className={"business-section"}>
-                    {this.state.displayDBData === true &&(
+                  <h1>View All Users</h1><br/>
+                    {this.state.displayDBData === false&&(
+                      <div>
+                        <h1>LOADING...</h1><br/>
+                      </div>  
+                    )}
+                    {this.state.displayDBData === true&&(
                       <div>
                         <table className="table table-hover">
                             {/*Column headers for the table. NOTE: only a small amount of data from
@@ -135,7 +183,7 @@ class Dashboard extends React.Component {
                               </tr>
                             </thead>
                           {/*Map out the data from the mock database state to be rnedered in the table.*/}  
-                          {this.state.siteDataArray.map((employee, index) => {
+                          {this.state.siteUserArray.map((employee, index) => {
                             return (
                               <tbody key={index}>
                                 {/*Render each row using data from the given business index.*/}
@@ -151,80 +199,69 @@ class Dashboard extends React.Component {
                             );   
                           })}
                         </table>
-                      </div>
-                    )}
-                    {/*Check if the Admin has requested to view a specific business, and if not...*/}
-                    {this.state.businessRequested === false && (
-                      <div>
-                        <h1>View All Businesses</h1><br/>
-                        <button onClick={this.returnAllUsersFromDatabaseApi}>TEST</button>
-                        {/*Display a table containing all businesses registered in the database.
-                           The table is made repsonsive using Bootstrap.*/}
+                        
+                        {this.state.businessRequested === false &&(
+                          <div>
+                            <br/><h1>View All Businesses</h1>
                         <table className="table table-hover">
                             {/*Column headers for the table. NOTE: only a small amount of data from
                                each business is siplayed here.*/}
                             <thead>
                               <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Business Name</th>
-                                <th scope="col">Director</th>
-                                <th scope={"col"}>View</th>
+                                <th scope="col">Site ID</th>
+                                <th scope="col">Site Name</th>
+                                <th scope="col">Postcode</th>
+                                <th scope={"col"}>County</th>
+                                <th scope={"col"}>Size x</th>
+                                <th scope={"col"}>Size y</th>
+                                <th scope="col">View</th>
+
                               </tr>
                             </thead>
                           {/*Map out the data from the mock database state to be rnedered in the table.*/}  
-                          {this.state.employees.map((employee, index) => {
+                          {this.state.siteDataArray.map((employee, index) => {
                             return (
                               <tbody key={index}>
                                 {/*Render each row using data from the given business index.*/}
                                 <tr>
-                                  <th scope="row">{employee.id}</th>
-                                  <td>{employee.business}</td>
-                                  <td>{employee.director}</td>
-                                  {/*Call on the function to handle displaying data about a given business.*/}
+                                  <th scope="row">{employee.site_id}</th>
+                                  <td>{employee.site_name}</td>
+                                  <td>{employee.post_code}</td>
+                                  <td>{employee.county}</td>
+                                  <td>{employee.site_size_x}</td>
+                                  <td>{employee.site_size_y}</td>
                                   <td><button
                                         onClick={() =>
                                           this.handleBusinessRender(
-                                            employee.id
+                                            employee.site_id
                                             )
                                         }
                                       >
                                         Here
                                       </button></td>
-                                </tr>
+                                </tr>  
                               </tbody>
                             );   
                           })}
                         </table>
+                          </div>
+                        )}
+                        
                       </div>
-                    )}
+                    )}<br/>
+                    
 
                     {/*Check if the Admin has requested to view a specific business. If true...*/}
                     {this.state.businessRequested === true && (
                       <div className="businessSummaryBox">
                           {/*Display data from the given index of the mock database in the sections below.*/}
-                          <p>ID: {this.state.employees[this.state.chosenBusinessId - 1].id}</p>
-                          <h1>{this.state.employees[this.state.chosenBusinessId - 1].business}</h1>
-                          <p>Industry: {this.state.employees[this.state.chosenBusinessId - 1].industry}</p>
-                          <p>Director: {this.state.employees[this.state.chosenBusinessId - 1].director}</p>
-                          <br/><h2>ESMs</h2>
-                          {/*Map out all ESMs in a given business (as there may be more than one)*/}
-                          {this.state.employees[this.state.chosenBusinessId-1].esms.map((esm, index) => {
-                              return (
-                                  <div key={index}>
-                                    <p>{esm}</p>
-                                  </div>
-                                );
-                              })}
-                          <br/><h2>Sites</h2>
-                          {/*Map out all sites in a given business (as there may be more than one)*/}
-                          {this.state.employees[this.state.chosenBusinessId-1].sites.map((site, index) => {
-                              return (
-                                  <div key={index}>
-                                    <p>{site}</p>
-                                  </div>
-                                );
-                              })}
-                              <hr />
+                          <p>ID: {this.state.siteDataArray[this.state.chosenBusinessId - 1].site_id}</p>
+                          <h1>{this.state.siteDataArray[this.state.chosenBusinessId - 1].site_name}</h1>
+                          <p>Postcode: {this.state.siteDataArray[this.state.chosenBusinessId - 1].post_code}</p>
+                          <p>Address: {this.state.siteDataArray[this.state.chosenBusinessId - 1].address_l1}, {this.state.siteDataArray[this.state.chosenBusinessId - 1].address_l2}</p>
+                          <p>County: {this.state.siteDataArray[this.state.chosenBusinessId - 1].county}</p>
+                          <p>Site Size: {this.state.siteDataArray[this.state.chosenBusinessId - 1].site_size_x}, {this.state.siteDataArray[this.state.chosenBusinessId - 1].site_size_y}</p>
+                          <br/>
                         <br />
                         {/*Call the function to handle returning the Admin's view back to the default of all businesses*/}
                         <button onClick={() => this.handleReturn()}>
