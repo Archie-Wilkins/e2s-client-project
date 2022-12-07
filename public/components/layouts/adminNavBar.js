@@ -19,38 +19,38 @@ class adminNavBar extends React.Component {
 
     render() {
         return <div>
-            <div className="navbarContainer blueBackground fixed-top">
+            <div className="navbarContainer blueBackground fixed-top"  aria-label="navigational bar">
                 <div className="navbarContent">
 
-                    <Link className="w-100 navbarLink d-flex justify-content-center" href="/admin/dashboard">
+                    <Link className="w-100 navbarLink d-flex justify-content-center" href="/admin/dashboard"  aria-label="go home link">
                         <h1 data-testid="admin-logo" className='whiteText'>E<span className='accentText'>2</span>S</h1>
                     </Link>
 
                     <hr className="navbarLineBreak"></hr>
 
-                    <Link className="navbarLink d-flex align-items-center " href="/admin/dashboard">
+                    <Link className="navbarLink d-flex align-items-center " href="/admin/dashboard" aria-label="go to dashboard link">
                         <FaTachometerAlt />
                         <p>Dashboard</p>
                     </Link>
 
-                    <Link className=" navbarLink d-flex align-items-center" href="/admin/onboarding">
+                    <Link className=" navbarLink d-flex align-items-center" href="/admin/onboarding" aria-label="go to onboarding page link">
                         <FaHandshake />
                         <p>Onboarding</p>
                     </Link>
 
-                    <Link className=" navbarLink d-flex align-items-center" href="/admin/organisations">
+                    <Link className=" navbarLink d-flex align-items-center" href="/admin/organisations" aria-label="go to organisations page link">
                         <FaHouseUser />
                         <p>Organizations</p>
                     </Link>
 
-                    <Link className=" navbarLink d-flex align-items-center" href="/admin/users">
+                    <Link className=" navbarLink d-flex align-items-center" href="/admin/users" aria-label="view users page link">
                         <FaUsers />
                         <p>Users</p>
                     </Link>
 
                     <hr className="navbarLineBreak align-items-center"></hr>
 
-                    <div>
+                    <div aria-label="current user name section">
                         <p className='whiteText m-0'>Signed in as:</p>
                         <p className='whiteText m-0' data-testid="loggedUser">Dan Schnee</p>
                     </div>

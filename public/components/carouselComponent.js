@@ -45,7 +45,7 @@ class CarouselComponent extends React.Component {
     }
 
     render() {
-        return <div id="carouselExampleDark" className="carousel carousel-dark slide" data-bs-ride="carousel">
+        return <div id="carouselExampleDark" className="carousel carousel-dark slide" data-bs-ride="carousel" aria-label="carousel content">
         
         <div className="carousel-inner">
             {this.state.activeSlide === 1 &&(
@@ -112,12 +112,12 @@ class CarouselComponent extends React.Component {
             
         </div>
         <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
-                data-bs-slide="prev" onClick={this.handleCarouselUpdatePrev}>
+                data-bs-slide="prev" onClick={this.handleCarouselUpdatePrev} aria-label="back">
             <span className="carousel-control-prev-icon" aria-hidden="true"></span>
             <span className="visually-hidden">Previous</span>
         </button>
         <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
-                data-bs-slide="next" onClick={this.handleCarouselUpdateNext}>
+                data-bs-slide="next" onClick={this.handleCarouselUpdateNext} aria-label="next">
             <span className="carousel-control-next-icon" aria-hidden="true"></span>
             <span className="visually-hidden">Next</span>
         </button>
