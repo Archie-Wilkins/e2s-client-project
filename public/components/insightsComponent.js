@@ -261,7 +261,7 @@ class InsightsComponent extends React.Component {
     return (
       <div aria-label="Insights page content.">
         <div className="m-5 p-5 bg-light rounded d-flex flex-column align-items-center justify-content-around ">
-          <h1>Upload CSV</h1><br/>
+          <h1>CSV Insights</h1><br/>
 
           {/*Check that the user not yet uploaded a csv */}
           {!this.state.csvUploaded && (
