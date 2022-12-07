@@ -6,7 +6,7 @@ import BottomFooter from "../public/components/layouts/bottomFooter.js"
 import PublicTopNav from '../public/components/layouts/PublicTopNav';
 
 
-class LandingPage extends React.Component {
+class landingPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -214,4 +214,4 @@ class LandingPage extends React.Component {
 
 }
 
-export default LandingPage;
+export default landingPage;
