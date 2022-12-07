@@ -21,7 +21,7 @@ class publicTopNav extends React.Component {
                     <Link className="lightLink m-0" href="/#aboutUs"><p className="m-0">About Us</p></Link>
                     <Link className="lightLink m-0" href="/requestData"><p className="m-0">Request Data</p></Link>
                     <Link className="lightLink m-0" href="/login"><p className="m-0">Login</p></Link>
-                    <Link class="accentButton px-2 m-0" href="/#enquiryForm"><p className="m-0">Join Us</p></Link>
+                    <Link className="accentButton px-2 m-0" href="/#enquiryForm"><p className="m-0">Join Us</p></Link>
                 </div>
             </div>
         </div >
