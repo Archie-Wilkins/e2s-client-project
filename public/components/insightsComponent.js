@@ -31,10 +31,15 @@ class InsightsComponent extends React.Component {
       
       // Variable for all time spending in uploaded CSV data.
       totalSpent: 0,
+
+      // Variable to track energy usage of asset one over all uploaded time.   
+      asset1Usage: 0,
+
+      // Variable to track energy usage of asset two over all uploaded time.
+      asset2Usage: 0,
       
       // Variable for the number of days of data in uploaded CSV data.
       daysTracked: 0,
-
 
       // DATA BY DAY 
       // Variable for electricty used in the last day in uploaded CSV data.   
@@ -52,6 +57,12 @@ class InsightsComponent extends React.Component {
       // Variable for spending in the last day in uploaded CSV data.
       totalSpentDay: 0,
 
+      // Variable to track energy usage of asset two over the last day.
+      asset1UsageDay: 0,
+
+      // Variable to track energy usage of asset two over the last day.
+      asset2UsageDay: 0,
+
       // Boolean to assess whether the User has submitted a valid CSV file.
       isValidCsv: false,
       
@@ -66,6 +77,18 @@ class InsightsComponent extends React.Component {
         // The second selection reflects dates which will have been uploaded yet by users for the purpose of testing.
         val2: ["31/12/2020 23:30"],
       },
+
+      // Variable to track which energy zone the energy site resides in.
+      distributionNetwork: "EPN",
+
+      // Variable to track the amount of energy usage time spent in red-zone periods.
+      redZoneUsage: 0,
+
+      // Variable to track the amount of energy usage time spent in red-zone periods.
+      amberZoneUsage: 0,
+
+      // Variable to track the amount of energy usage time spent in red-zone periods.
+      greenZoneUsage: 0,
     };
   }
 
@@ -84,6 +107,24 @@ class InsightsComponent extends React.Component {
 
     // Variable to track whether or not the CSV parse is finished with its tasks before proceding. 
     let awaitFinish = "false";
+
+    // Constant variable to define which energy distribution network the site is connected to.
+    const localDistributionNetwork = this.state.distributionNetwork;
+
+    // Variable to count how many periods of energy usage were during green zone pricing.
+    let greenZoneCount = 0;
+
+    // Variable to count how many periods of energy usage were during amber zone pricing.
+    let amberZoneCount = 0;
+
+    // Variable to count how many periods of energy usage were during red zone pricing.
+    let redZoneCount = 0;
+
+    // Data begins on 01/01/2020 (a Wednesday). This variable tracks which day data is presented on.
+    let dayTracker = 3;
+
+    // Variable to check how many slots in a day have been checked. (Will never exceed 48)
+    let timeSlotsChecked = 0;
 
     // Parse the chosen User file using Papa.parse.
     Papa.parse(event.target.files[0], {
@@ -159,6 +200,42 @@ class InsightsComponent extends React.Component {
                     localEnergyExportDay = localEnergyExportDay + results.data[i].Export_Electricity_kW;
                     localSpendingDay = localSpendingDay + results.data[i].Day_ahead_UK_electricity_price*results.data[i].Site_Electricity_Demand_kW;
                 }
+
+                if(localDistributionNetwork === "EPN"){
+                    if(dayTracker - 1 < 5){
+                        let dateTime = "";
+                        for(let b = 11; b < 15; b++){
+                            if(b !== 13){
+                                dateTime = dateTime + results.data[i].Date[b];
+                                //console.log("dateTime char: " + results.data[i].Date[b])
+                            }
+                        }
+                        let timeNum = parseInt(dateTime);
+                        //let timeNum = dateTime;
+                        console.log("time num: " + String(timeNum));
+                        if(timeNum >= 160 && timeNum <= 190){
+                            redZoneCount = redZoneCount + 1;
+                        }
+                        if((timeNum >= 70 && timeNum <= 160) || (timeNum >= 190 && timeNum <= 230)){
+                            amberZoneCount = amberZoneCount + 1;
+                        }else{
+                            greenZoneCount = greenZoneCount + 1;
+                        }
+                    }
+                    if(timeSlotsChecked == 48){                    
+                        if(dayTracker < 7){
+                            dayTracker = dayTracker + 1;
+                        }
+                        else{
+                            dayTracker = 1;
+                        }
+                        timeSlotsChecked = 0;
+                    }
+                    else{
+                        greenZoneCount = greenZoneCount + 1;
+                    }
+                    timeSlotsChecked = timeSlotsChecked + 1;
+                }
             }
 
             // Calculate net energy uses by adding the postive electricty use to the negative electricty export.
@@ -195,6 +272,11 @@ class InsightsComponent extends React.Component {
             localStorage.setItem("exportDay", localEnergyExportDay);
             localStorage.setItem("netDay", localEnergyNetDay);
             localStorage.setItem("spendingDay", localSpendingDay);
+
+            localStorage.setItem("redZoneTotal", redZoneCount);
+            localStorage.setItem("amberZoneTotal", amberZoneCount);
+            localStorage.setItem("greenZoneTotal", greenZoneCount);
+
         }
     
         // If the parsing process is finished and the user has not submitted valid data....
@@ -249,6 +331,11 @@ class InsightsComponent extends React.Component {
     this.setState({ energyExportedDay: localStorage.getItem("exportDay") });
     this.setState({ netEnergyDay: localStorage.getItem("netDay") });
     this.setState({ totalSpentDay: localStorage.getItem("spendingDay") });
+
+    this.setState({redZoneUsage: localStorage.getItem("redZoneTotal")});
+    this.setState({amberZoneUsage: localStorage.getItem("amberZoneTotal")});
+    this.setState({greenZoneUsage: localStorage.getItem("greenZoneTotal")});   
+
   };
 
   // Function to handle returning back to CSV upload from the CSV metrics summary.
@@ -323,6 +410,9 @@ class InsightsComponent extends React.Component {
                                 <li>Spending: £{this.state.totalSpent}</li>
                                 <li>Average Daily Spending: £{this.state.totalSpent/this.state.daysTracked}</li>
                                 <li>Over {this.state.daysTracked} days</li>
+                                <li>Red: {this.state.redZoneUsage}</li>
+                                <li>Amber: {this.state.amberZoneUsage}</li>
+                                <li>Green: {this.state.greenZoneUsage}</li>
                             </ul>
                         </div>
 
