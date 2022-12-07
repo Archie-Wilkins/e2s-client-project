@@ -28,8 +28,10 @@ class InsightsComponent extends React.Component {
       totalSpentDay: 0,
       daysTrackedDay: 0,
 
+      isValid: false,
+
       dates:{
-        val: ["31/12/2020  23:30:00"],
+        val: ["31/12/2020 23:36", "01/01/2020 00:06"],
       },
     };
   }
@@ -37,62 +39,87 @@ class InsightsComponent extends React.Component {
   handleOnChange = async (event) => {
     event.preventDefault();
 
+    let arrayOfExistingDates = this.state.dates.val;
+    let valid = true;
+
     Papa.parse(event.target.files[0], {
       header: true,
       download: true,
       dynamicTyping: true,
       complete: function (results) {
-        let localUsedHeat = results.data[0].Site_Heat_Demand_kW;         
-        let localEnergyExport = results.data[0].Export_Electricity_kW; 
-        let localSpending = results.data[0].Day_ahead_UK_electricity_price*results.data[0].Site_Electricity_Demand_kW;        
-        let localUsedElectric = results.data[0].Site_Electricity_Demand_kW;
 
-        // There are 48 rows per day, the last row is null data, and we are accessing by index
-        let localUsedHeatDay = results.data[results.data.length-50].Site_Heat_Demand_kW;         
-        let localEnergyExportDay = results.data[results.data.length-50].Export_Electricity_kW; 
-        let localSpendingDay = results.data[results.data.length-50].Day_ahead_UK_electricity_price*results.data[0].Site_Electricity_Demand_kW;        
-        let localUsedElectricDay = results.data[results.data.length-50].Site_Electricity_Demand_kW;
-
-        // Start from second index as the first one is used earlier for explicit initialisation.
-        for (let i = 1; i < results.data.length -1; i++) {
-          localUsedElectric = localUsedElectric + results.data[i].Site_Electricity_Demand_kW;
-          localUsedHeat = localUsedHeat + results.data[i].Site_Heat_Demand_kW;
-          localEnergyExport = localEnergyExport + results.data[i].Export_Electricity_kW;
-          localSpending = localSpending + results.data[i].Day_ahead_UK_electricity_price*results.data[i].Site_Electricity_Demand_kW;  
-          if(i >= results.data.length - 50){
-            localUsedElectricDay = localUsedElectricDay + results.data[i].Site_Electricity_Demand_kW;
-            localUsedHeatDay = localUsedHeatDay + results.data[i].Site_Heat_Demand_kW;
-            localEnergyExportDay = localEnergyExportDay + results.data[i].Export_Electricity_kW;
-            localSpendingDay = localSpendingDay + results.data[i].Day_ahead_UK_electricity_price*results.data[i].Site_Electricity_Demand_kW;
-          }
+        for(let i = 0; i < arrayOfExistingDates.length; i++){
+            for(let x = 0; x < results.data.length - 1; x++){
+                if(arrayOfExistingDates[i] === results.data[x].Date){
+                    valid = false;
+                }
+            }
         }
 
-        let localEnergyNet = localUsedElectric + localEnergyExport;
-        let localEnergyNetDay = localUsedElectricDay + localEnergyExportDay;
-        
-        let localCopyDate = results.data[0].Date;
-        let dateWithoutTime = "";
-        for(let i = 0; i < 10; i++){
-            dateWithoutTime = dateWithoutTime + localCopyDate[i];
-        }
-        localStorage.setItem("startDate", dateWithoutTime);
+        console.log(valid);
+        if(valid === true){
+            let localUsedHeat = results.data[0].Site_Heat_Demand_kW;         
+            let localEnergyExport = results.data[0].Export_Electricity_kW; 
+            let localSpending = results.data[0].Day_ahead_UK_electricity_price*results.data[0].Site_Electricity_Demand_kW;        
+            let localUsedElectric = results.data[0].Site_Electricity_Demand_kW;
 
-        // All time data.
-        localStorage.setItem("electricty", localUsedElectric);
-        localStorage.setItem("heat", localUsedHeat);
-        localStorage.setItem("export", localEnergyExport);
-        localStorage.setItem("net", localEnergyNet);
-        localStorage.setItem("spending", localSpending);
-        localStorage.setItem("days", results.data.length/48);
+            // There are 48 rows per day, the last row is null data, and we are accessing by index
+            let localUsedHeatDay = results.data[results.data.length-50].Site_Heat_Demand_kW;         
+            let localEnergyExportDay = results.data[results.data.length-50].Export_Electricity_kW; 
+            let localSpendingDay = results.data[results.data.length-50].Day_ahead_UK_electricity_price*results.data[0].Site_Electricity_Demand_kW;        
+            let localUsedElectricDay = results.data[results.data.length-50].Site_Electricity_Demand_kW;
 
-        // Last 24 hours of data.
-        localStorage.setItem("electrictyDay", localUsedElectricDay);
-        localStorage.setItem("heatDay", localUsedHeatDay);
-        localStorage.setItem("exportDay", localEnergyExportDay);
-        localStorage.setItem("netDay", localEnergyNetDay);
-        localStorage.setItem("spendingDay", localSpendingDay);
+            // Start from second index as the first one is used earlier for explicit initialisation.
+            for (let i = 1; i < results.data.length -1; i++) {
+            localUsedElectric = localUsedElectric + results.data[i].Site_Electricity_Demand_kW;
+            localUsedHeat = localUsedHeat + results.data[i].Site_Heat_Demand_kW;
+            localEnergyExport = localEnergyExport + results.data[i].Export_Electricity_kW;
+            localSpending = localSpending + results.data[i].Day_ahead_UK_electricity_price*results.data[i].Site_Electricity_Demand_kW;  
+            if(i >= results.data.length - 50){
+                localUsedElectricDay = localUsedElectricDay + results.data[i].Site_Electricity_Demand_kW;
+                localUsedHeatDay = localUsedHeatDay + results.data[i].Site_Heat_Demand_kW;
+                localEnergyExportDay = localEnergyExportDay + results.data[i].Export_Electricity_kW;
+                localSpendingDay = localSpendingDay + results.data[i].Day_ahead_UK_electricity_price*results.data[i].Site_Electricity_Demand_kW;
+            }
+            }
+
+            let localEnergyNet = localUsedElectric + localEnergyExport;
+            let localEnergyNetDay = localUsedElectricDay + localEnergyExportDay;
+            
+            let localCopyDate = results.data[0].Date;
+            let dateWithoutTime = "";
+            for(let i = 0; i < 10; i++){
+                dateWithoutTime = dateWithoutTime + localCopyDate[i];
+            }
+            localStorage.setItem("startDate", dateWithoutTime);
+
+            // All time data.
+            localStorage.setItem("electricty", localUsedElectric);
+            localStorage.setItem("heat", localUsedHeat);
+            localStorage.setItem("export", localEnergyExport);
+            localStorage.setItem("net", localEnergyNet);
+            localStorage.setItem("spending", localSpending);
+            localStorage.setItem("days", results.data.length/48);
+
+            // Last 24 hours of data.
+            localStorage.setItem("electrictyDay", localUsedElectricDay);
+            localStorage.setItem("heatDay", localUsedHeatDay);
+            localStorage.setItem("exportDay", localEnergyExportDay);
+            localStorage.setItem("netDay", localEnergyNetDay);
+            localStorage.setItem("spendingDay", localSpendingDay);
+        }else{
+            console.log("Exists!");
+        }        
       },
     });
+
+    if(valid === false){
+        this.setState({isValid: false});
+    }
+
+    if(valid === true){
+        this.setState({isValid: true});
+    }
   };
 
   handleDataYear = async (event) => {
@@ -144,13 +171,16 @@ class InsightsComponent extends React.Component {
                 accept=".csv"
               />
 
-              <button
+              {this.state.isValid === true &&(
+                <button
                 type="button"
                 className="btn btn-primary mt-4"
                 onClick={this.handleScreen}
               >
                 Submit
               </button>
+              )}  
+              
 
               <p>
                 Your data must be in the format given in the CSV file below, or
