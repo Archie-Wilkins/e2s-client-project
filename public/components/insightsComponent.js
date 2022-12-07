@@ -10,6 +10,7 @@ class InsightsComponent extends React.Component {
     this.state = {
       csvUploaded: false,
       dataStartDate: "",
+      csvData: [],
 
       electrictyUsed: 0,
       heatUsed: 0,
@@ -27,38 +28,50 @@ class InsightsComponent extends React.Component {
       daysTrackedDay: 0,
 
       isValid: false,
+      errorReturn: false,
 
       dates:{
-        val: ["31/12/2020 23:36", "01/01/2020 00:06"],
+        val: ["31/12/2020 23:32", "01/01/2020 00:02"],
+        val2: ["31/12/2020 23:30"],
       },
     };
   }
 
   handleOnChange = async (event) => {
     event.preventDefault();
+    localStorage.setItem("validDates", false);
 
     let arrayOfExistingDates = this.state.dates.val;
-    //let valid = true;
+    let awaitFinish = "false";
 
     Papa.parse(event.target.files[0], {
       header: true,
       download: true,
       dynamicTyping: true,
       complete: function (results) {
-        localStorage.setItem("validDates", true);
         for(let i = 0; i < arrayOfExistingDates.length; i++){
             for(let x = 0; x < results.data.length - 1; x++){
                 if(arrayOfExistingDates[i] === results.data[x].Date){
-                    //valid = false;
-                    localStorage.setItem("validDates", false);
-                }
+                    console.log("MATCH");
+                    console.log("i: " + arrayOfExistingDates[i]);
+                    console.log("x: " + results.data[x].Date);
+                    localStorage.setItem("validDates", "false");
+                    awaitFinish = "true";
+                    break;
+                }else{
+                    if(i === arrayOfExistingDates.length - 1 && x === results.data.length - 2){
+                        awaitFinish = "true";
+                        localStorage.setItem("validDates", "true");
+                    }
+                }                
             }
         }
 
-        //console.log(valid);
-        //if(valid === true){
-        if(localStorage.getItem("validDates") === true){
-            this.setState({isValid: true});  
+        console.log("Current validity of files: " + localStorage.getItem("validDates"));
+        console.log("Currently done waiting: " + awaitFinish);
+
+        if(localStorage.getItem("validDates") === "true" && awaitFinish === "true"){
+            console.log("Succcess");
             let localUsedHeat = results.data[0].Site_Heat_Demand_kW;         
             let localEnergyExport = results.data[0].Export_Electricity_kW; 
             let localSpending = results.data[0].Day_ahead_UK_electricity_price*results.data[0].Site_Electricity_Demand_kW;        
@@ -72,26 +85,33 @@ class InsightsComponent extends React.Component {
 
             // Start from second index as the first one is used earlier for explicit initialisation.
             for (let i = 1; i < results.data.length -1; i++) {
-            localUsedElectric = localUsedElectric + results.data[i].Site_Electricity_Demand_kW;
-            localUsedHeat = localUsedHeat + results.data[i].Site_Heat_Demand_kW;
-            localEnergyExport = localEnergyExport + results.data[i].Export_Electricity_kW;
-            localSpending = localSpending + results.data[i].Day_ahead_UK_electricity_price*results.data[i].Site_Electricity_Demand_kW;  
-            if(i >= results.data.length - 50){
-                localUsedElectricDay = localUsedElectricDay + results.data[i].Site_Electricity_Demand_kW;
-                localUsedHeatDay = localUsedHeatDay + results.data[i].Site_Heat_Demand_kW;
-                localEnergyExportDay = localEnergyExportDay + results.data[i].Export_Electricity_kW;
-                localSpendingDay = localSpendingDay + results.data[i].Day_ahead_UK_electricity_price*results.data[i].Site_Electricity_Demand_kW;
-            }
+                
+                // all time data
+                localUsedElectric = localUsedElectric + results.data[i].Site_Electricity_Demand_kW;
+                localUsedHeat = localUsedHeat + results.data[i].Site_Heat_Demand_kW;
+                localEnergyExport = localEnergyExport + results.data[i].Export_Electricity_kW;
+                localSpending = localSpending + results.data[i].Day_ahead_UK_electricity_price*results.data[i].Site_Electricity_Demand_kW;  
+                
+                // data for day
+                if(i >= results.data.length - 50){
+                    localUsedElectricDay = localUsedElectricDay + results.data[i].Site_Electricity_Demand_kW;
+                    localUsedHeatDay = localUsedHeatDay + results.data[i].Site_Heat_Demand_kW;
+                    localEnergyExportDay = localEnergyExportDay + results.data[i].Export_Electricity_kW;
+                    localSpendingDay = localSpendingDay + results.data[i].Day_ahead_UK_electricity_price*results.data[i].Site_Electricity_Demand_kW;
+                }
             }
 
             let localEnergyNet = localUsedElectric + localEnergyExport;
             let localEnergyNetDay = localUsedElectricDay + localEnergyExportDay;
+            console.log("All time net energy usage: " + localEnergyNet);
             
+            // set starting date
             let localCopyDate = results.data[0].Date;
             let dateWithoutTime = "";
             for(let i = 0; i < 10; i++){
                 dateWithoutTime = dateWithoutTime + localCopyDate[i];
             }
+            console.log("Starting date: " + dateWithoutTime);
             localStorage.setItem("startDate", dateWithoutTime);
 
             // All time data.
@@ -108,24 +128,29 @@ class InsightsComponent extends React.Component {
             localStorage.setItem("exportDay", localEnergyExportDay);
             localStorage.setItem("netDay", localEnergyNetDay);
             localStorage.setItem("spendingDay", localSpendingDay);
-        }else{
+        }
+    
+        if(localStorage.getItem("validDates") === "false" && awaitFinish === "true"){
             console.log("Exists!");
-        }        
+        }
+
       },
-    });
+    });   
 
-    /*console.log(valid);
-    if(valid === false){
-        this.setState({isValid: false});
-    }
-
-    if(valid === true){
-        this.setState({isValid: true});
-    }*/
-  };
+  }
 
   handleScreen = async (event) => {
-    this.setState({ csvUploaded: true });
+
+    if(localStorage.getItem("validDates") === "true"){
+        this.setState({isValid: true});
+        this.setState({ csvUploaded: true });
+    }
+    
+    if(localStorage.getItem("validDates") === "false"){
+        this.setState({errorReturn: true});
+        this.setState({isValid: false}); 
+    }
+    
 
     this.setState({dataStartDate: localStorage.getItem("startDate")});
     this.setState({ electrictyUsed: localStorage.getItem("electricty")});
@@ -161,8 +186,6 @@ class InsightsComponent extends React.Component {
                 name="file"
                 accept=".csv"
               /><br/>
-
-              {this.state.isValid === true &&(
                 <button
                 type="button"
                 className="btn btn-primary mt-4"
@@ -170,9 +193,13 @@ class InsightsComponent extends React.Component {
               >
                 Submit
               </button>
-              )}
+
               {this.state.isValid === false &&(
-                <h2>Dates in file already uploaded! Please select a new file.</h2>
+                <div>
+                    {this.state.errorReturn === true &&(
+                        <h2>Dates in file already uploaded! Please select a new file.</h2>
+                    )}
+                </div>
               )}  
               
               <br/><br/>  
@@ -185,38 +212,41 @@ class InsightsComponent extends React.Component {
               </Link>
             </div>
           )}
-          {this.state.csvUploaded === true && (
+
+          {this.state.isValid === true &&(
             <div>
-              <button onClick={this.returnHome}>Back</button>
-              <div>
-                <ul>
-                    <h1>All Time Data</h1>
-                    <h2>Starting from: {this.state.dataStartDate}</h2>
-                    <li>Electricity: {this.state.electrictyUsed}</li>
-                    <li>Heat: {this.state.heatUsed}</li>
-                    <li>Electricty Exported: {this.state.energyExported}</li>
-                    <li>Net Energy: {this.state.netEnergy}</li>
-                    <li>Spending: £{this.state.totalSpent}</li>
-                    <li>Average Daily Spending: £{this.state.totalSpent/this.state.daysTracked}</li>
-                    <li>Over {this.state.daysTracked} days</li>
-                </ul>
-              </div>
-              <div>
-                <ul>
-                    <h1>Las 24 Hours Data</h1>
-                    <li>Electricity: {this.state.electrictyUsedDay}</li>
-                    <li>Heat: {this.state.heatUsedDay}</li>
-                    <li>Electricty Exported: {this.state.energyExportedDay}</li>
-                    <li>Net Energy: {this.state.netEnergyDay}</li>
-                    <li>Spending: £{this.state.totalSpentDay}</li>
-                    <li>Average Hourly Spending: £{this.state.totalSpentDay/24}</li>
-                </ul>
-              </div>
-              
-               
-              
+                {this.state.csvUploaded === true && (
+                    <div>
+                        <button onClick={this.returnHome}>Back</button>
+                        <div>
+                            <ul>
+                                <h1>All Time Data</h1>
+                                <h2>Starting from: {this.state.dataStartDate}</h2>
+                                <li>Electricity: {this.state.electrictyUsed}</li>
+                                <li>Heat: {this.state.heatUsed}</li>
+                                <li>Electricty Exported: {this.state.energyExported}</li>
+                                <li>Net Energy: {this.state.netEnergy}</li>
+                                <li>Spending: £{this.state.totalSpent}</li>
+                                <li>Average Daily Spending: £{this.state.totalSpent/this.state.daysTracked}</li>
+                                <li>Over {this.state.daysTracked} days</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul>
+                                <h1>Las 24 Hours Data</h1>
+                                <li>Electricity: {this.state.electrictyUsedDay}</li>
+                                <li>Heat: {this.state.heatUsedDay}</li>
+                                <li>Electricty Exported: {this.state.energyExportedDay}</li>
+                                <li>Net Energy: {this.state.netEnergyDay}</li>
+                                <li>Spending: £{this.state.totalSpentDay}</li>
+                                <li>Average Hourly Spending: £{this.state.totalSpentDay/24}</li>
+                            </ul>
+                        </div>
+                    </div>
+                )}
             </div>
           )}
+          
         </div>
       </div>
     );
