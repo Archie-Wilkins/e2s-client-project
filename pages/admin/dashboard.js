@@ -174,28 +174,28 @@ class Dashboard extends React.Component {
   render() {
     return (
       // On laoding the main div, call the function to validate user priveleges and initialise data to be rendered
-      <div div onLoad={this.checkUser} onMouseEnter={this.checkUser}>
+      <div onLoad={this.checkUser} onMouseEnter={this.checkUser} aria-label="admin dashboard content">
         {/*Utilise a navbar with values based on the role of the current user*/}
         <MainLayout
           isAdmin={this.state.isAdmin}
           isDirector={this.state.isDirector}
           pageName={this.state.pageName}
         >
-          <div className={"admin-header-container"}>
+          <div className={"admin-content-container"} aria-label="admin dashboard body">
             <h1 className="dashboard-header">ADMIN DASHBOARD</h1>
             <hr className={"h1-underline"} />
             <p className={"dashboard-sub-header"}>Welcome to E2S, Admin.</p>
             <br />
-            <div className={"admin-content"}>
+            <div className={"admin-content"} aria-label="admin dashboard section container">
               <div className="row">
                 <div className="col-sm">
-                  <div className={"business-section"}>
+                  <div className={"business-section"} aria-label="view registered data section">
                     {/*Section to display all registered users */}
                     <h1>View All Users</h1>
                     <br />
                     {/*If the data is not ready to be rendered, show the user a laoding message */}
                     {this.state.displayDBData === false && (
-                      <div>
+                      <div aria-label="fetching data section">
                         <h1>FETCHING DATA...</h1>
                         <br />
                       </div>
@@ -203,33 +203,33 @@ class Dashboard extends React.Component {
 
                     {/*Once the data is ready to be rendered, load it in */}
                     {this.state.displayDBData === true && (
-                      <div>
+                      <div aria-label="registered users section">
                         {/*Table for user details */}
-                        <table className="table table-hover" name="userTable">
+                        <table className="table table-hover" name="userTable" aria-label="users table">
                           {/*Column headers for the table. NOTE: only a small amount of data from
                                each business is siplayed here.*/}
-                          <thead>
+                          <thead aria-label="users table headers">
                             <tr>
-                              <th scope="col">User ID</th>
-                              <th scope="col">Email</th>
-                              <th scope="col">Firstname</th>
-                              <th scope="col">Surname</th>
-                              <th scope={"col"}>Phone Number</th>
-                              <th scope={"col"}>Role</th>
+                              <th scope="col" aria-label="user ID column">User ID</th>
+                              <th scope="col" aria-label="user email column">Email</th>
+                              <th scope="col" aria-label="user firstname column">Firstname</th>
+                              <th scope="col" aria-label="user surname column">Surname</th>
+                              <th scope="col" aria-label="user phone number column">Phone Number</th>
+                              <th scope="col" aria-label="user role column">Role</th>
                             </tr>
                           </thead>
                           {/*Map out the data from the atabase state to be rendered in the table.*/}
                           {this.state.siteUserArray.map((employee, index) => {
                             return (
-                              <tbody key={index}>
+                              <tbody key={index} aria-label="user table body">
                                 {/*Render each row using data from the given business index.*/}
-                                <tr>
-                                  <th scope="row">{employee.user_id}</th>
-                                  <td>{employee.email}</td>
-                                  <td>{employee.first_name}</td>
-                                  <td>{employee.last_name}</td>
-                                  <td>{employee.phone_number}</td>
-                                  <td>{employee.role_id}</td>
+                                <tr aria-label="user table row">
+                                  <th scope="row" aria-label="user id data">{employee.user_id}</th>
+                                  <td aria-label="user id data">{employee.email}</td>
+                                  <td aria-label="user firstname data">{employee.first_name}</td>
+                                  <td aria-label="user surname data">{employee.last_name}</td>
+                                  <td aria-label="user phone number data">{employee.phone_number}</td>
+                                  <td aria-label="user role data">{employee.role_id}</td>
                                 </tr>
                               </tbody>
                             );
@@ -238,45 +238,46 @@ class Dashboard extends React.Component {
 
                         {/*If the user has not requested to see a specific business, show them all businesses with limited information */}
                         {this.state.businessRequested === false && (
-                          <div aria-label="view all businesses section">
+                          <div aria-label="registered energy sites section">
                             <br />
                             <h1>View All Businesses</h1>
                             <table
                               className="table table-hover"
                               name="siteTable"
                               data-testid="businessTable"
+                              aria-label="site table"
                             >
                               {/*Column headers for the table. NOTE: a reduced amount of data from
                                     each business is displayed here.*/}
-                              <thead>
+                              <thead aria-label="energy site table headers">
                                 <tr>
-                                  <th scope="col">Site ID</th>
-                                  <th scope="col">Site Name</th>
-                                  <th scope="col">Postcode</th>
-                                  <th scope={"col"}>County</th>
-                                  <th scope={"col"}>Site Size </th>
-                                  <th scope="col">View</th>
+                                  <th scope="col" aria-label="site ID column">Site ID</th>
+                                  <th scope="col" aria-label="site name column">Site Name</th>
+                                  <th scope="col" aria-label="site postcode column">Postcode</th>
+                                  <th scope="col" aria-label="site county column">County</th>
+                                  <th scope="col" aria-label="site size column">Site Size </th>
+                                  <th scope="col" aria-label="view more site details column">View</th>
                                 </tr>
                               </thead>
                               {/*Map out the data from the mock database state to be rendered in the table.*/}
                               {this.state.siteDataArray.map(
                                 (employee, index) => {
                                   return (
-                                    <tbody key={index}>
+                                    <tbody key={index} aria-label="site table body">
                                       {/*Render each row using data from the given business index.*/}
-                                      <tr>
-                                        <th scope="row">{employee.site_id}</th>
-                                        <td>{employee.site_name}</td>
-                                        <td>{employee.post_code}</td>
-                                        <td>{employee.county}</td>
-                                        <td>
+                                      <tr aria-label="site table row">
+                                        <th scope="row" aria-label="site ID data">{employee.site_id}</th>
+                                        <td aria-label="site name data">{employee.site_name}</td>
+                                        <td aria-label="site postcode data">{employee.post_code}</td>
+                                        <td aria-label="site county data">{employee.county}</td>
+                                        <td aria-label="site size data">
                                           {employee.site_size_x *
                                             employee.site_size_y}{" "}
                                           sq. ft
                                         </td>
                                         {/*A button to show more information about a site based on the site row clicked */}
                                         <td>
-                                          <button
+                                          <button aria-label="expand business details button"
                                             onClick={() =>
                                               this.handleBusinessRender(
                                                 employee.site_id
@@ -300,71 +301,83 @@ class Dashboard extends React.Component {
 
                     {/*Check if the Admin has requested to view a specific business. If true...*/}
                     {this.state.businessRequested === true && (
-                      <div className="businessSummaryBox">
+                      <div className="businessSummaryBox" aria-label="registered sites section">
                         {/*Display data from the given index of the mock database in the sections below.*/}
-                        <p>
-                          ID:{" "}
-                          {
-                            this.state.siteDataArray[
-                              this.state.chosenBusinessId - 1
-                            ].site_id
-                          }
-                        </p>
-                        <h1>
-                          {
-                            this.state.siteDataArray[
-                              this.state.chosenBusinessId - 1
-                            ].site_name
-                          }
-                        </h1>
-                        <p>
-                          Postcode:{" "}
-                          {
-                            this.state.siteDataArray[
-                              this.state.chosenBusinessId - 1
-                            ].post_code
-                          }
-                        </p>
-                        <p>
-                          Address:{" "}
-                          {
-                            this.state.siteDataArray[
-                              this.state.chosenBusinessId - 1
-                            ].address_l1
-                          }
-                          ,{" "}
-                          {
-                            this.state.siteDataArray[
-                              this.state.chosenBusinessId - 1
-                            ].address_l2
-                          }
-                        </p>
-                        <p>
-                          County:{" "}
-                          {
-                            this.state.siteDataArray[
-                              this.state.chosenBusinessId - 1
-                            ].county
-                          }
-                        </p>
-                        <p>
-                          Site Size:{" "}
-                          {
-                            this.state.siteDataArray[
-                              this.state.chosenBusinessId - 1
-                            ].site_size_x
-                          }
-                          ,{" "}
-                          {
-                            this.state.siteDataArray[
-                              this.state.chosenBusinessId - 1
-                            ].site_size_y
-                          }
-                        </p>
+                        <div aria-label="site ID">
+                          <p>
+                            ID:{" "}
+                            {
+                              this.state.siteDataArray[
+                                this.state.chosenBusinessId - 1
+                              ].site_id
+                            }
+                          </p>
+                        </div>
+                        <div aria-label="site name">
+                          <h1>
+                            {
+                              this.state.siteDataArray[
+                                this.state.chosenBusinessId - 1
+                              ].site_name
+                            }
+                          </h1>
+                        </div>
+                        <div aria-label="site post code">
+                          <p>
+                            Postcode:{" "}
+                            {
+                              this.state.siteDataArray[
+                                this.state.chosenBusinessId - 1
+                              ].post_code
+                            }
+                          </p>
+                        </div>
+                        <div aria-label="site address first line">
+                          <p>
+                            Address:{" "}
+                            {
+                              this.state.siteDataArray[
+                                this.state.chosenBusinessId - 1
+                              ].address_l1
+                            }
+                            ,{" "}
+                            {
+                              this.state.siteDataArray[
+                                this.state.chosenBusinessId - 1
+                              ].address_l2
+                            }
+                          </p>
+                        </div>
+                        <div aria-label="site address second line">
+                          <p>
+                            County:{" "}
+                            {
+                              this.state.siteDataArray[
+                                this.state.chosenBusinessId - 1
+                              ].county
+                            }
+                          </p>
+                        </div>
+                        <div aria-label="site size in square feet">
+                          <p>
+                            Site Size:{" "}
+                            {
+                              this.state.siteDataArray[
+                                this.state.chosenBusinessId - 1
+                              ].site_size_x
+                            }
+                            ,{" "}
+                            {
+                              this.state.siteDataArray[
+                                this.state.chosenBusinessId - 1
+                              ].site_size_y
+                            }
+                          </p>
+                        </div>
                         <br />
                         <br />
                         {/*Call the function to handle returning the Admin's view back to the default of all businesses*/}
-                        <button onClick={() => this.handleReturn()}>
+                        <button onClick={() => this.handleReturn()} aria-label="return to all sites view">
                           Back
                         </button>
                       </div>
@@ -383,3 +396,11 @@ class Dashboard extends React.Component {
 }
 
 export default Dashboard;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////                  /////////////////                   /////////////////                      ///////
+////      /////////////////////////////     /////////      ////////////////    /////////////////////////
+///                   /////////////////////////////////   ////////////////                       //////
+//       ///////////////////////////////                 ///////////////////////////////////    //////
+//                     ///////////////                       /////////////                      /////
+////////////////////////////////////////////////////////////////////////////////////////////////////

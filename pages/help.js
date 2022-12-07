@@ -19,9 +19,9 @@ class HelpPage extends React.Component {
     }
 
     render() {
-        return <div>
-            <MainLayout isAdmin={this.state.isAdmin} isDirector={this.state.isDirector} pageName={this.state.pageName}>
-                <div className="whiteBackground mt-5">
+        return <div aria-label="help page">
+            <MainLayout isAdmin={this.state.isAdmin} aria-label="navigation bar" isDirector={this.state.isDirector} pageName={this.state.pageName}>
+                <div className="whiteBackground mt-5" aria-label="help page content">
                     <h1>Help</h1>
                 </div>
                 <h1>Help</h1>
@@ -41,8 +41,6 @@ class HelpPage extends React.Component {
                 <h1>Help</h1>
 
             </MainLayout >
-
-            <Link href="/contact"><p>Contact-Us Page</p></Link>
         </div >
     }
 
