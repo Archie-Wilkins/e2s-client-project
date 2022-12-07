@@ -94,6 +94,17 @@ class landingPage extends React.Component {
         window.scrollTo(0, 1200);
     }
 
+    displayWelcomeMessage = async (event) => {
+        console.log(
+'/////////////////////////////////////////////////////////////////////////////////////////////////////////////TOMORROW\n' +
+'//////                  ///////////////////                   /////////////////                      ///////TODAY   *\n' + 
+'/////      ///////////////////////////////  ///////////////   ////////////////    ///////////////////////// *TOMORROW \n' +
+'////                   ///////////////////////////////    //////////////////                     /////////TOMORROW *\n'+
+'///       /////////////////////////////////////       ////////  ///////////////////////////    //////////TODAY *    *\n'+
+'///                   ///////////////////                      /////////                      //////////   * TOMORROW\n'+
+'///////////////////////////////////////////////////////////////////////////////////////////////////////DAY    TOMORROW');
+    }
+
     render() {
         return <div>
             <PublicTopNav />
@@ -104,7 +115,7 @@ class landingPage extends React.Component {
                 {/* About Us information */}
                 <h1 className='mx-5 mt-3' id='aboutUsSection'>About Us</h1>
                 <hr className="underline-style" />
-
+                {/*<button onClick={this.displayWelcomeMessage}>Logo</button>*/}
                 <div>
                     <h3 className="mx-5">Who are we?</h3>
                     <p className="mx-5"><strong>We are E2S</strong>, a service as a platform to offer you a variety of tools to manage your energy usage. We support work sites in tracking all of their usage metrics, their spending, and their CO2 emissions. Our bespoke solution offers Directors and Site Managers in-depth reports on where their money is going. We offer forecasting data and predictions about where your energy usage is taking you and where you could be heading. You can set targets and we will offer you the best advice and planning to meet them. We offer new technology and feedback based on what will work best for you site!
