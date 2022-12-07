@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="removed file">
-      <change beforePath="$PROJECT_DIR$/__tests__/adminHub.test.jsx" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/__tests__/adminDashboard.text.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/landingPageTest.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/landingPageTest.test.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +60,7 @@
       <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\__tests__" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.LandingPage">
+  <component name="RunManager" selected="Jest.admin dashboard">
     <configuration default="true" type="DjangoTestsConfigurationType">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -182,16 +183,30 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="a page to upload and display csv data from a given template" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="admin dashboard" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/__tests__/csvUploadFrontEnd.test.jsx" />
+      <test-file value="$PROJECT_DIR$/__tests__/adminDashboard.text.jsx" />
       <test-names>
-        <test-name value="a page to upload and display csv data from a given template" />
+        <test-name value="admin dashboard" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="admin dashboard.renders an admin nav bar" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/__tests__/adminDashboard.text.jsx" />
+      <test-names>
+        <test-name value="admin dashboard" />
+        <test-name value="renders an admin nav bar" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -232,19 +247,6 @@
       <test-file value="$PROJECT_DIR$/__tests__/forgotPassword.test.jsx" />
       <method v="2" />
     </configuration>
-    <configuration name="forgot password" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/__tests__/forgotPassword.test.jsx" />
-      <test-names>
-        <test-name value="forgot password" />
-      </test-names>
-      <method v="2" />
-    </configuration>
     <configuration name="login" type="JavaScriptTestRunnerJest">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -259,18 +261,18 @@
       <item itemvalue="Jest.login" />
       <item itemvalue="Jest.forgor password" />
       <item itemvalue="Jest.LandingPage" />
-      <item itemvalue="Jest.a page to upload and display csv data from a given template" />
+      <item itemvalue="Jest.admin dashboard" />
+      <item itemvalue="Jest.admin dashboard.renders an admin nav bar" />
       <item itemvalue="Jest.dashboard (1)" />
       <item itemvalue="Jest.dashboard.renders request form" />
-      <item itemvalue="Jest.forgot password" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.admin dashboard" />
+        <item itemvalue="Jest.admin dashboard.renders an admin nav bar" />
         <item itemvalue="Jest.LandingPage" />
         <item itemvalue="Jest.dashboard.renders request form" />
         <item itemvalue="Jest.dashboard (1)" />
-        <item itemvalue="Jest.forgot password" />
-        <item itemvalue="Jest.a page to upload and display csv data from a given template" />
       </list>
     </recent_temporary>
   </component>

@@ -10,7 +10,7 @@ import LandingPage from '../pages/index'
 const apiRequest = jest.fn();
 
 describe('LandingPage', () => {
-    
+
     beforeEach(() => {
         render(<LandingPage/>)
     })
