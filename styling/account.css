@@ -1,0 +1,18 @@
+.account-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.line {
+    width: 300px;
+    border-bottom: 1px solid;
+}
+
+.account-profile-picture-container {
+    margin: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
