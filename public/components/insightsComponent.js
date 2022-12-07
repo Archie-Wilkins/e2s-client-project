@@ -8,11 +8,9 @@ class InsightsComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      csvData: [],
-      csvFileName: "",
       csvUploaded: false,
-      csvFileBody: null,
       dataStartDate: "",
+
       electrictyUsed: 0,
       heatUsed: 0,
       energyExported: 0,
@@ -40,24 +38,27 @@ class InsightsComponent extends React.Component {
     event.preventDefault();
 
     let arrayOfExistingDates = this.state.dates.val;
-    let valid = true;
+    //let valid = true;
 
     Papa.parse(event.target.files[0], {
       header: true,
       download: true,
       dynamicTyping: true,
       complete: function (results) {
-
+        localStorage.setItem("validDates", true);
         for(let i = 0; i < arrayOfExistingDates.length; i++){
             for(let x = 0; x < results.data.length - 1; x++){
                 if(arrayOfExistingDates[i] === results.data[x].Date){
-                    valid = false;
+                    //valid = false;
+                    localStorage.setItem("validDates", false);
                 }
             }
         }
 
-        console.log(valid);
-        if(valid === true){
+        //console.log(valid);
+        //if(valid === true){
+        if(localStorage.getItem("validDates") === true){
+            this.setState({isValid: true});  
             let localUsedHeat = results.data[0].Site_Heat_Demand_kW;         
             let localEnergyExport = results.data[0].Export_Electricity_kW; 
             let localSpending = results.data[0].Day_ahead_UK_electricity_price*results.data[0].Site_Electricity_Demand_kW;        
@@ -113,25 +114,15 @@ class InsightsComponent extends React.Component {
       },
     });
 
+    /*console.log(valid);
     if(valid === false){
         this.setState({isValid: false});
     }
 
     if(valid === true){
         this.setState({isValid: true});
-    }
+    }*/
   };
-
-  handleDataYear = async (event) => {
-  }
-
-  handleDataMonth = async (event) => {
-    
-  }
-
-  handleDataDay = async (event) => {
-    
-  }
 
   handleScreen = async (event) => {
     this.setState({ csvUploaded: true });
@@ -159,7 +150,7 @@ class InsightsComponent extends React.Component {
     return (
       <div>
         <div className="m-5 p-5 bg-light rounded d-flex flex-column align-items-center justify-content-around ">
-          <h1>Upload CSV</h1>
+          <h1>Upload CSV</h1><br/>
          
           {!this.state.csvUploaded && (
             <div className="d-flex flex-column align-items-center justify-content-around ">
@@ -169,7 +160,7 @@ class InsightsComponent extends React.Component {
                 onChange={this.handleOnChange}
                 name="file"
                 accept=".csv"
-              />
+              /><br/>
 
               {this.state.isValid === true &&(
                 <button
@@ -179,9 +170,12 @@ class InsightsComponent extends React.Component {
               >
                 Submit
               </button>
+              )}
+              {this.state.isValid === false &&(
+                <h2>Dates in file already uploaded! Please select a new file.</h2>
               )}  
               
-
+              <br/><br/>  
               <p>
                 Your data must be in the format given in the CSV file below, or
                 else it won't format:
