@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/pages/api/getSiteHistoricalData.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/api/getSiteWeekData.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/1.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/1.pack" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/2.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/2.pack" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.next/trace" beforeDir="false" afterPath="$PROJECT_DIR$/.next/trace" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/site.js" beforeDir="false" afterPath="$PROJECT_DIR$/db/site.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/weeklyEmail.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/weeklyEmail.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -107,7 +104,7 @@
       <workItem from="1668597087432" duration="9361000" />
       <workItem from="1669564178596" duration="299000" />
       <workItem from="1670340237808" duration="57000" />
-      <workItem from="1670340317603" duration="28555000" />
+      <workItem from="1670340317603" duration="36270000" />
     </task>
     <task id="LOCAL-00001" summary="forgot password works with new db changes, login can redirect user to forgot password">
       <created>1669817857237</created>
@@ -200,7 +197,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670349424596</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="fetches site data and console logs it">
+      <created>1670426128818</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1670426128818</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,7 +236,8 @@
     <MESSAGE value="commit before merge main into branch" />
     <MESSAGE value="merge" />
     <MESSAGE value="splits database data into weeks" />
-    <option name="LAST_COMMIT_MESSAGE" value="splits database data into weeks" />
+    <MESSAGE value="fetches site data and console logs it" />
+    <option name="LAST_COMMIT_MESSAGE" value="fetches site data and console logs it" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
