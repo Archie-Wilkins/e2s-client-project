@@ -180,21 +180,21 @@ class LoginPage extends React.Component {
     }
 
     render() {
-        return <div className="loginBackground">
-            <div className="loginPanelContainer">
-                <div className="loginPanelBanner">
+        return <div className="loginBackground" aria-label="login page">
+            <div className="loginPanelContainer" aria-label="login page content">
+                <div className="loginPanelBanner" aria-label="login page header">
                     <h2 className="loginHeader">Sign In</h2>
                 </div>
 
-                <form className="loginForm" onSubmit={this.loginSubmitApi} data-testid="form">
+                <form className="loginForm" onSubmit={this.loginSubmitApi} data-testid="form" aria-label="login form">
                     <div className="textInputValue">Email</div>
-                    <input type="email" id="email" name="email" className="textInputBox"></input>
+                    <input type="email" id="email" name="email" aria-label="email input box" className="textInputBox"></input>
                     <div className="textInputValue">Password</div>
-                    <input type="password" id="password" name="password" className="textInputBox" data-testid="password"></input>
+                    <input type="password" id="password" name="password" className="textInputBox" aria-label="password input box" data-testid="password"></input>
                     <div className="errorTextHolder"><div className="errorText" id="error" data-testid="error"></div></div>
-                    <div><button className="loginButton" name="submit" type="submit">Login</button></div>
+                    <div><button className="loginButton" name="submit" aria-label="submit logn button" type="submit">Login</button></div>
                 </form>
-                <div className="helpArea">
+                <div className="helpArea" aria-label="login help section">
                     <div className="helpText">Dont have an account?</div>
                     <div className="helpTextContainer"><div className="clickHereText">click here</div><div className="smallText">to contact our team about joining</div></div>
                     <div className="helpText">Forgot password?</div>

@@ -2,7 +2,7 @@ import Link from "next/link"
 
 
 function SiteComparePage() {
-    return <div>
+    return <div  aria-label="site comparison page">
         <Link href="/"><p>Home</p>
         </Link>
         <Link href="/contact"><p>Contact-Us Page</p></Link>
