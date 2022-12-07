@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/__tests__/weeklyEmail.test.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/1.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/1.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/2.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/2.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/trace" beforeDir="false" afterPath="$PROJECT_DIR$/.next/trace" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/weeklyEmail.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/weeklyEmail.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +44,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/c2064724/IdeaProjects/e2s-team-4",
+    "last_opened_file_path": "C:/Users/c2064724/IdeaProjects/e2s-team-4/__tests__/weeklyEmail.test.jsx",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -60,14 +57,14 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\pages\api" />
       <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\__tests__" />
+      <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\pages\api" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\pages" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.login">
+  <component name="RunManager" selected="Jest.weeklyEmail">
     <configuration name="forgor password" type="JavaScriptTestRunnerJest">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -88,8 +85,19 @@
       <test-file value="$PROJECT_DIR$/__tests__/login.test.jsx" />
       <method v="2" />
     </configuration>
+    <configuration name="weeklyEmail" type="JavaScriptTestRunnerJest">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST_FILE" />
+      <test-file value="$PROJECT_DIR$/__tests__/weeklyEmail.test.jsx" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Jest.login" />
+      <item itemvalue="Jest.weeklyEmail" />
       <item itemvalue="Jest.forgor password" />
     </list>
   </component>
@@ -104,7 +112,7 @@
       <workItem from="1668597087432" duration="9361000" />
       <workItem from="1669564178596" duration="299000" />
       <workItem from="1670340237808" duration="57000" />
-      <workItem from="1670340317603" duration="36270000" />
+      <workItem from="1670340317603" duration="38155000" />
     </task>
     <task id="LOCAL-00001" summary="forgot password works with new db changes, login can redirect user to forgot password">
       <created>1669817857237</created>
@@ -204,7 +212,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670426128818</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="will send email report to email and generate performance overview text">
+      <created>1670433990349</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1670433990349</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -237,7 +252,8 @@
     <MESSAGE value="merge" />
     <MESSAGE value="splits database data into weeks" />
     <MESSAGE value="fetches site data and console logs it" />
-    <option name="LAST_COMMIT_MESSAGE" value="fetches site data and console logs it" />
+    <MESSAGE value="will send email report to email and generate performance overview text" />
+    <option name="LAST_COMMIT_MESSAGE" value="will send email report to email and generate performance overview text" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
