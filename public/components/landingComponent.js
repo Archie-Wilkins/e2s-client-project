@@ -1,10 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import {Router} from "next/router";
-import AccordionComponent from "./accordionComponent.js"
 import CarouselComponent from "./carouselComponent.js"
-import MainLayout from "./layouts/mainLayoutShell.js"
 
 class LandingComponent extends React.Component {
     constructor(props) {
@@ -95,7 +92,7 @@ class LandingComponent extends React.Component {
     }
 
     render() {
-        return <div className={"landing-page"} aria-label="landing page">
+        return <div className="landing-page" aria-label="landing page">
             <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="navigation bar">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="/" aria-label="e2s home button link">E2S</a>
@@ -118,20 +115,34 @@ class LandingComponent extends React.Component {
                 </div>
             </nav>
                 <CarouselComponent/>
-                <div className={"landingBody"} aria-lable="body of the page">
-                    <h1>About Us</h1><br/>
-                    <hr className={"underline-style"}/>
-                    <AccordionComponent/><br/>
-                    
+            <div className={"landingBody"} aria-label="body of the page">
+
+                {/* About Us information */}
+                <h1 className='mx-5 mt-3'>About Us</h1>
+                <hr className="underline-style" />
+
+                <div>
+                    <h3 className="mx-5">Who are we?</h3>
+                    <p className="mx-5"><strong>We are E2S</strong>, a service as a platform to offer you a variety of tools to manage your energy usage. We support work sites in tracking all of their usage metrics, their spending, and their CO2 emissions. Our bespoke solution offers Directors and Site Managers in-depth reports on where their money is going. We offer forecasting data and predictions about where your energy usage is taking you and where you could be heading. You can set targets and we will offer you the best advice and planning to meet them. We offer new technology and feedback based on what will work best for you site!
+                    </p>
+                    <h3 className="mx-5">What do we do?</h3>
+                    <p className="mx-5">We assist large sites across the UK in managing their energy use and taking control of their finances. Through our forecasting, insights, and recommendations, we help companies to reduce their emissions and increase their efficiency.</p>
+                    <h3 className="mx-5">What can we do for you?</h3>
+                    <p className="mx-5">We can help your site to become its best version. With our analysis suite of tools, you will be on the road to saving money and saving the environment.</p>
+                    <b className="mx-5">Start today?</b>
+                </div>
+
+
+                {/* End of About Us Information  */}
                     <div aria-label="sign up enquiry section heading">
-                        <h1>Enquire</h1>
-                        <hr className={"underline-style"}/>
-                        <p>If you would like to request more information on how to get started, please fill
+                    <h1 className='mx-5'>Enquire</h1>
+                    <hr className="underline-style" />
+                    <p className='mx-5'>If you would like to request more information on how to get started, please fill
                             out the form below and a member of the team will get back to you.</p>
                     </div>
 
                     {this.state.formSubmitted === true && (
-                        <div className={"enquiry-form"} aria-label="sign up enquiry form">
+                    <div className="enquiry-form className='mx-5'" aria-label="sign up enquiry form">
                             <div className={"enquiry-form-header"} aria-label="enquiry form header">
                                 <h1>REQUEST FORM</h1>
                             </div>

@@ -114,15 +114,8 @@
 }
 
 .enquiry-form {
-  border: solid 1px black;
   background-color: rgba(223, 230, 249, 1);
-  border-radius: 10px;
-  border-bottom-right-radius: 0px;
-  border-bottom-left-radius: 0px;
   width: 60%;
-  margin-left: 1%;
-  margin-right: auto;
-  margin-bottom: 10%;
 }
 
 .enquiry-form-content {
@@ -165,14 +158,6 @@
   margin-left: 10%;
   margin-right: auto;
   color: black;
-}
-
-.enquiry-form-submit-button {
-  display: block;
-  margin-left: 10%;
-  margin-right: auto;
-  color: black;
-  margin-bottom: 10%;
 }
 
 .downloadCsvDataButton {

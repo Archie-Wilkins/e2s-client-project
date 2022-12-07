@@ -16,7 +16,7 @@ describe('dashboard', () => {
     let form
 
     beforeEach(() => {
-        const { getByTestId, getByText } = render(<LandingComponent/>)
+        const { getByTestId, getByText } = render(<I/>)
 
         emailInput = screen.getByTestId('email')
         businessInput = screen.getByTestId('business')

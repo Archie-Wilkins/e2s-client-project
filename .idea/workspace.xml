@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/pages/admin/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/admin/dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/landingPageTest.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/landingPageTest.test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/components/landingComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/components/landingComponent.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,29 +39,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Git.Branch.Popup.ShowAllRemotes": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/c2064724/IdeaProjects/e2s-team-4/pages/api",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "C:/Users/c2064724/IdeaProjects/e2s-team-4/node_modules/jest",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Git.Branch.Popup.ShowAllRemotes&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/c2064724/IdeaProjects/e2s-team-4/pages/api&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;C:/Users/c2064724/IdeaProjects/e2s-team-4/node_modules/jest&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\pages\api" />
       <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\__tests__" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Jest.login">
     <configuration default="true" type="DjangoTestsConfigurationType">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -77,26 +80,6 @@
       <option name="CUSTOM_SETTINGS" value="false" />
       <option name="USE_OPTIONS" value="false" />
       <option name="OPTIONS" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="forgor password" type="JavaScriptTestRunnerJest">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST_FILE" />
-      <test-file value="$PROJECT_DIR$/__tests__/forgotPassword.test.jsx" />
-      <method v="2" />
-    </configuration>
-    <configuration name="login" type="JavaScriptTestRunnerJest">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST_FILE" />
-      <test-file value="$PROJECT_DIR$/__tests__/login.test.jsx" />
       <method v="2" />
     </configuration>
     <configuration default="true" type="JetRunConfigurationType">
@@ -188,6 +171,26 @@
       <option name="USE_PATTERN" value="false" />
       <method v="2" />
     </configuration>
+    <configuration name="forgor password" type="JavaScriptTestRunnerJest">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST_FILE" />
+      <test-file value="$PROJECT_DIR$/__tests__/forgotPassword.test.jsx" />
+      <method v="2" />
+    </configuration>
+    <configuration name="login" type="JavaScriptTestRunnerJest">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST_FILE" />
+      <test-file value="$PROJECT_DIR$/__tests__/login.test.jsx" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Jest.login" />
       <item itemvalue="Jest.forgor password" />
@@ -270,7 +273,6 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/pages/api/login.js</url>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
