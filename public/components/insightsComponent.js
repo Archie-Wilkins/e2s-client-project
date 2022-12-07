@@ -12,6 +12,7 @@ class InsightsComponent extends React.Component {
       csvFileName: "",
       csvUploaded: false,
       csvFileBody: null,
+      dataStartDate: "",
       electrictyUsed: 0,
       heatUsed: 0,
       energyExported: 0,
@@ -26,6 +27,10 @@ class InsightsComponent extends React.Component {
       netEnergyDay: 0,
       totalSpentDay: 0,
       daysTrackedDay: 0,
+
+      dates:{
+        val: ["31/12/2020  23:30:00"],
+      },
     };
   }
 
@@ -65,6 +70,13 @@ class InsightsComponent extends React.Component {
         let localEnergyNet = localUsedElectric + localEnergyExport;
         let localEnergyNetDay = localUsedElectricDay + localEnergyExportDay;
         
+        let localCopyDate = results.data[0].Date;
+        let dateWithoutTime = "";
+        for(let i = 0; i < 10; i++){
+            dateWithoutTime = dateWithoutTime + localCopyDate[i];
+        }
+        localStorage.setItem("startDate", dateWithoutTime);
+
         // All time data.
         localStorage.setItem("electricty", localUsedElectric);
         localStorage.setItem("heat", localUsedHeat);
@@ -97,6 +109,7 @@ class InsightsComponent extends React.Component {
   handleScreen = async (event) => {
     this.setState({ csvUploaded: true });
 
+    this.setState({dataStartDate: localStorage.getItem("startDate")});
     this.setState({ electrictyUsed: localStorage.getItem("electricty")});
     this.setState({ heatUsed: localStorage.getItem("heat") });
     this.setState({ energyExported: localStorage.getItem("export") });
@@ -154,6 +167,7 @@ class InsightsComponent extends React.Component {
               <div>
                 <ul>
                     <h1>All Time Data</h1>
+                    <h2>Starting from: {this.state.dataStartDate}</h2>
                     <li>Electricity: {this.state.electrictyUsed}</li>
                     <li>Heat: {this.state.heatUsed}</li>
                     <li>Electricty Exported: {this.state.energyExported}</li>
