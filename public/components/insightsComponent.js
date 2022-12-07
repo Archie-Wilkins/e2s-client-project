@@ -89,6 +89,9 @@ class InsightsComponent extends React.Component {
 
       // Variable to track the amount of energy usage time spent in red-zone periods.
       greenZoneUsage: 0,
+
+      // Variable to count how many rows of data are being accessed.
+      numberOfDataRows:0,
     };
   }
 
@@ -112,7 +115,7 @@ class InsightsComponent extends React.Component {
     const localDistributionNetwork = this.state.distributionNetwork;
 
     // Variable to count how many periods of energy usage were during green zone pricing.
-    let greenZoneCount = 0;
+    let greenZoneCount = 1;
 
     // Variable to count how many periods of energy usage were during amber zone pricing.
     let amberZoneCount = 0;
@@ -176,6 +179,9 @@ class InsightsComponent extends React.Component {
             let localSpending = results.data[0].Day_ahead_UK_electricity_price*results.data[0].Site_Electricity_Demand_kW;        
             let localUsedElectric = results.data[0].Site_Electricity_Demand_kW;
 
+            let localAsset1 = results.data[0].CHP1_Electricity_Generation_kW;
+            let localAsset2 = results.data[0].CHP2_Electricity_Generation_kW;
+
             // Initialise local variables used to calculate the total values of each column for the last day.
             // There are 48 rows per day, the last row is null data, and we are accessing by index so we use -50.
             let localUsedHeatDay = results.data[results.data.length-50].Site_Heat_Demand_kW;         
@@ -191,7 +197,9 @@ class InsightsComponent extends React.Component {
                 localUsedHeat = localUsedHeat + results.data[i].Site_Heat_Demand_kW;
                 localEnergyExport = localEnergyExport + results.data[i].Export_Electricity_kW;
                 localSpending = localSpending + results.data[i].Day_ahead_UK_electricity_price*results.data[i].Site_Electricity_Demand_kW;  
-                
+                localAsset1 = localAsset1 + results.data[i].CHP1_Electricity_Generation_kW;
+                localAsset2 = localAsset2 + results.data[i].CHP2_Electricity_Generation_kW;
+
                 // Last day data incrementing by adding data in each index together.
                 // This only starts on the last 48 relevant rows of data.
                 if(i >= results.data.length - 50){
@@ -201,40 +209,71 @@ class InsightsComponent extends React.Component {
                     localSpendingDay = localSpendingDay + results.data[i].Day_ahead_UK_electricity_price*results.data[i].Site_Electricity_Demand_kW;
                 }
 
+                // Check if the current site is part of the EPN distribution network.
                 if(localDistributionNetwork === "EPN"){
-                    if(dayTracker - 1 < 5){
+
+                    // Check if the day is Monday through Friday.
+                    if(dayTracker < 6){
+
+                        // If it is, create a substring from the date handed in the csv.
                         let dateTime = "";
-                        for(let b = 11; b < 15; b++){
+
+                        // Split the date and the time apart in the cell.
+                        // .split()
+                        for(let b = 11; b < 16; b++){
                             if(b !== 13){
                                 dateTime = dateTime + results.data[i].Date[b];
-                                //console.log("dateTime char: " + results.data[i].Date[b])
                             }
                         }
+
+                        // Convert the data into an integer
                         let timeNum = parseInt(dateTime);
-                        //let timeNum = dateTime;
-                        console.log("time num: " + String(timeNum));
-                        if(timeNum >= 160 && timeNum <= 190){
+
+                        // Evaluate which time period the time falls between.
+                        if(timeNum >= 1600 && timeNum <= 1900){
+
+                            // Increment counters to track how many periods of time were using which tariff of cost.
                             redZoneCount = redZoneCount + 1;
                         }
-                        if((timeNum >= 70 && timeNum <= 160) || (timeNum >= 190 && timeNum <= 230)){
+                        if((timeNum >= 700 && timeNum < 1600) || (timeNum > 1900 && timeNum <= 2300)){
                             amberZoneCount = amberZoneCount + 1;
-                        }else{
+                        }if(timeNum > 2300 || timeNum < 700){
                             greenZoneCount = greenZoneCount + 1;
                         }
                     }
-                    if(timeSlotsChecked == 48){                    
-                        if(dayTracker < 7){
-                            dayTracker = dayTracker + 1;
-                        }
-                        else{
-                            dayTracker = 1;
-                        }
-                        timeSlotsChecked = 0;
-                    }
-                    else{
+
+                    if(dayTracker === 6 || dayTracker === 7){
+
+                        // If it is Saturday or Sunday, there price will only ever be green zone. 
                         greenZoneCount = greenZoneCount + 1;
                     }
-                    timeSlotsChecked = timeSlotsChecked + 1;
+
+
+                    // If 48 time slots have been checked, an entire day of data has been passed.
+                    if(timeSlotsChecked == 48){
+                        
+                        // Check if it is Sunday (Monday - 1, Tuesday - 2, ..., Sunday - 7).
+                        if(dayTracker < 7){
+
+                            // Move the day tracker forward a day.
+                            dayTracker = dayTracker + 1;
+                        }
+
+                        if(dayTracker === 7){
+
+                            // If the day is Sunday, reset it to Monday after all slots have been checked.
+                            dayTracker = 1;
+                        }
+
+                        // Reset the number of slots checked for a day.
+                        timeSlotsChecked = 0;
+                    }
+
+                    if(timeSlotsChecked < 48){
+                        // Increment the number of slots checked for the day.
+                        timeSlotsChecked = timeSlotsChecked + 1;
+                    }
+                    
                 }
             }
 
@@ -255,8 +294,12 @@ class InsightsComponent extends React.Component {
                 dateWithoutTime = dateWithoutTime + localCopyDate[i];
             }
 
+            //console.log("Total slots: " + String(results.data.length - 1));
+
             // Save the start date to local storage so that it can be later accessed and saved to state.
             localStorage.setItem("startDate", dateWithoutTime);
+
+            localStorage.setItem("csvSize", results.data.length - 1);
 
             // All time data local storage initialisation.
             localStorage.setItem("electricty", localUsedElectric);
@@ -264,6 +307,8 @@ class InsightsComponent extends React.Component {
             localStorage.setItem("export", localEnergyExport);
             localStorage.setItem("net", localEnergyNet);
             localStorage.setItem("spending", localSpending);
+            localStorage.setItem("asset1", localAsset1);
+            localStorage.setItem("asset2", localAsset2);
             localStorage.setItem("days", results.data.length/48);
 
             // Last day data local storage initialisation.
@@ -272,6 +317,14 @@ class InsightsComponent extends React.Component {
             localStorage.setItem("exportDay", localEnergyExportDay);
             localStorage.setItem("netDay", localEnergyNetDay);
             localStorage.setItem("spendingDay", localSpendingDay);
+
+            // Set local storage variables for the total number of slots in each zone.
+            console.log("R: " + redZoneCount);
+            console.log("A: " + amberZoneCount);
+            console.log("G: " + greenZoneCount);
+            console.log("Percentage in red: " + String(redZoneCount/(results.data.length-1)*100));
+            console.log("Percentage in amber: " + String(amberZoneCount/(results.data.length-1)*100));
+            console.log("Percentage in green: " + String(greenZoneCount/(results.data.length-1)*100));
 
             localStorage.setItem("redZoneTotal", redZoneCount);
             localStorage.setItem("amberZoneTotal", amberZoneCount);
@@ -321,6 +374,8 @@ class InsightsComponent extends React.Component {
     this.setState({ energyExported: localStorage.getItem("export") });
     this.setState({ netEnergy: localStorage.getItem("net") });
     this.setState({ totalSpent: localStorage.getItem("spending") });
+    this.setState({ asset1Usage: localStorage.getItem("asset1") });
+    this.setState({ asset2Usage: localStorage.getItem("asset2") });
     
     // Save the calculated number of days of data uploaded to the state. 
     this.setState({daysTracked: localStorage.getItem("days")});
@@ -332,9 +387,11 @@ class InsightsComponent extends React.Component {
     this.setState({ netEnergyDay: localStorage.getItem("netDay") });
     this.setState({ totalSpentDay: localStorage.getItem("spendingDay") });
 
+    // Set the state variables for each zone with how many slots each zone observed.
     this.setState({redZoneUsage: localStorage.getItem("redZoneTotal")});
     this.setState({amberZoneUsage: localStorage.getItem("amberZoneTotal")});
     this.setState({greenZoneUsage: localStorage.getItem("greenZoneTotal")});   
+    this.setState({numberOfDataRows: localStorage.getItem("csvSize")});
 
   };
 
@@ -410,9 +467,15 @@ class InsightsComponent extends React.Component {
                                 <li>Spending: £{this.state.totalSpent}</li>
                                 <li>Average Daily Spending: £{this.state.totalSpent/this.state.daysTracked}</li>
                                 <li>Over {this.state.daysTracked} days</li>
-                                <li>Red: {this.state.redZoneUsage}</li>
-                                <li>Amber: {this.state.amberZoneUsage}</li>
-                                <li>Green: {this.state.greenZoneUsage}</li>
+                                {this.state.asset1Usage >= this.state.asset2Usage &&(
+                                    <li>Aasset 1 is using more energy!</li>
+                                )}
+                                {this.state.asset1Usage < this.state.asset2Usage &&(
+                                    <li>Aasset 2 is using more energy!</li>
+                                )}
+                                <li>Red Zone Energy Usage: {(this.state.redZoneUsage/this.state.numberOfDataRows)*100}%</li>
+                                <li>Amber Zone Energy Usage: {(this.state.amberZoneUsage/this.state.numberOfDataRows)*100}%</li>
+                                <li>Green Zone Energy Usage: {(this.state.greenZoneUsage/this.state.numberOfDataRows)*100}%</li>
                             </ul>
                         </div>
 
