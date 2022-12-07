@@ -4,80 +4,139 @@ import { parse } from "csv-parse";
 import Papa from "papaparse";
 import Link from "next/link";
 
+// This Component renders the page which returns insights to users based on uploaded CSV data
 class InsightsComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      
+      // Variable used to track whether or not users have completed attempting to upload a CSV.
       csvUploaded: false,
+    
+      // String used to record the first given date in uploaded CSV data.
       dataStartDate: "",
-      csvData: [],
 
+      // DATA BY ALL TIME
+      // Variable for all time electricty used in uploaded CSV data.
       electrictyUsed: 0,
+      
+      // Variable for all time heat used in uploaded CSV data.
       heatUsed: 0,
+      
+      // Variable for all time energy exported in uploaded CSV data.
       energyExported: 0,
+      
+      // Variable for all time net energy used in uploaded CSV data (calculated by comparing site demand versus export).
       netEnergy: 0,
+      
+      // Variable for all time spending in uploaded CSV data.
       totalSpent: 0,
+      
+      // Variable for the number of days of data in uploaded CSV data.
       daysTracked: 0,
 
-      //This method will be chnaged when pulling from the dataase
-      electrictyUsedDay: 0,
-      heatUsedDay: 0,
-      energyExportedDay: 0,
-      netEnergyDay: 0,
-      totalSpentDay: 0,
-      daysTrackedDay: 0,
 
-      isValid: false,
+      // DATA BY DAY 
+      // Variable for electricty used in the last day in uploaded CSV data.   
+      electrictyUsedDay: 0,
+      
+      // Variable for heat used in the last day in uploaded CSV data.
+      heatUsedDay: 0,
+      
+      // Variable for energy exported in the last day in uploaded CSV data.
+      energyExportedDay: 0,
+      
+      // Variable for net energy use in the last day in uploaded CSV data.
+      netEnergyDay: 0,
+      
+      // Variable for spending in the last day in uploaded CSV data.
+      totalSpentDay: 0,
+
+      // Boolean to assess whether the User has submitted a valid CSV file.
+      isValidCsv: false,
+      
+      // Boolean to assess whether or not to return an error to the User when they try to upload their CSV.
       errorReturn: false,
 
+      // Mock data to test cases wherein data for specified dates has already been uploaded.
       dates:{
+        // The first selection reflects dates which will not have been uploaded yet by users for the purpose of testing.
         val: ["31/12/2020 23:32", "01/01/2020 00:02"],
+
+        // The second selection reflects dates which will have been uploaded yet by users for the purpose of testing.
         val2: ["31/12/2020 23:30"],
       },
     };
   }
 
+  // Async function to handle the User choosing a CSV file to upload.
   handleOnChange = async (event) => {
+
+    // Prevent the page beinf refreshed by the function.
     event.preventDefault();
+
+    // Initialise local storage value for whether or not the user has given data with valid dates. The data is
+    // not sensitive so localStorage is appropriate as state variable cannot be accessed during the CSV parse.
     localStorage.setItem("validDates", false);
 
+    // Initialise an array of mocked dates already uploaded by the user to the mock state data.
     let arrayOfExistingDates = this.state.dates.val;
+
+    // Variable to track whether or not the CSV parse is finished with its tasks before proceding. 
     let awaitFinish = "false";
 
+    // Parse the chosen User file using Papa.parse.
     Papa.parse(event.target.files[0], {
       header: true,
       download: true,
       dynamicTyping: true,
+
+      // On completing all rows of parsing...
       complete: function (results) {
+
+        // For-loop through all existing mocked dates (to later be updated with database calls).
         for(let i = 0; i < arrayOfExistingDates.length; i++){
+
+            // Then for-loop through all user-submitted dates in the CSV file.
+            // The final row of data is read as 'null' so we disregard it when reading.
             for(let x = 0; x < results.data.length - 1; x++){
+
+                // If any of the uploaded dates match any dates on file, 
                 if(arrayOfExistingDates[i] === results.data[x].Date){
-                    console.log("MATCH");
-                    console.log("i: " + arrayOfExistingDates[i]);
-                    console.log("x: " + results.data[x].Date);
+                    
+                    // Update the local storage variable Boolean for valid user input to false.
                     localStorage.setItem("validDates", "false");
+
+                    // Notify the system that the user is done with their current CSV upload attempt.
                     awaitFinish = "true";
+
+                    // Exit the for loop to avoid the Boolean being altered again.
                     break;
                 }else{
+                    // If on the very last row of uploaded data and existing data no match has been foudn...
                     if(i === arrayOfExistingDates.length - 1 && x === results.data.length - 2){
+
+                        // Notify the system that the user is done with their current CSV upload attempt.
                         awaitFinish = "true";
+
+                        // Notify the system that the user has inputted a valid CSV file.
                         localStorage.setItem("validDates", "true");
                     }
                 }                
             }
         }
 
-        console.log("Current validity of files: " + localStorage.getItem("validDates"));
-        console.log("Currently done waiting: " + awaitFinish);
-
+        // If the parsing process is finished and the user has submitted valid data....
         if(localStorage.getItem("validDates") === "true" && awaitFinish === "true"){
-            console.log("Succcess");
+            
+            // Initialise local variables used to calculate the total values of each column for all time.
             let localUsedHeat = results.data[0].Site_Heat_Demand_kW;         
             let localEnergyExport = results.data[0].Export_Electricity_kW; 
             let localSpending = results.data[0].Day_ahead_UK_electricity_price*results.data[0].Site_Electricity_Demand_kW;        
             let localUsedElectric = results.data[0].Site_Electricity_Demand_kW;
 
-            // There are 48 rows per day, the last row is null data, and we are accessing by index
+            // Initialise local variables used to calculate the total values of each column for the last day.
+            // There are 48 rows per day, the last row is null data, and we are accessing by index so we use -50.
             let localUsedHeatDay = results.data[results.data.length-50].Site_Heat_Demand_kW;         
             let localEnergyExportDay = results.data[results.data.length-50].Export_Electricity_kW; 
             let localSpendingDay = results.data[results.data.length-50].Day_ahead_UK_electricity_price*results.data[0].Site_Electricity_Demand_kW;        
@@ -86,13 +145,14 @@ class InsightsComponent extends React.Component {
             // Start from second index as the first one is used earlier for explicit initialisation.
             for (let i = 1; i < results.data.length -1; i++) {
                 
-                // all time data
+                // All time data incrementing by adding data in each index together.
                 localUsedElectric = localUsedElectric + results.data[i].Site_Electricity_Demand_kW;
                 localUsedHeat = localUsedHeat + results.data[i].Site_Heat_Demand_kW;
                 localEnergyExport = localEnergyExport + results.data[i].Export_Electricity_kW;
                 localSpending = localSpending + results.data[i].Day_ahead_UK_electricity_price*results.data[i].Site_Electricity_Demand_kW;  
                 
-                // data for day
+                // Last day data incrementing by adding data in each index together.
+                // This only starts on the last 48 relevant rows of data.
                 if(i >= results.data.length - 50){
                     localUsedElectricDay = localUsedElectricDay + results.data[i].Site_Electricity_Demand_kW;
                     localUsedHeatDay = localUsedHeatDay + results.data[i].Site_Heat_Demand_kW;
@@ -101,20 +161,27 @@ class InsightsComponent extends React.Component {
                 }
             }
 
+            // Calculate net energy uses by adding the postive electricty use to the negative electricty export.
             let localEnergyNet = localUsedElectric + localEnergyExport;
             let localEnergyNetDay = localUsedElectricDay + localEnergyExportDay;
-            console.log("All time net energy usage: " + localEnergyNet);
             
-            // set starting date
+            // Initialise the first date given in the CSV file.
             let localCopyDate = results.data[0].Date;
+
+            // Data is submitted with dates and times in one cell, but for display purposes we want to remove the time.
             let dateWithoutTime = "";
+
+            // The date will only ever be 10 characters long e.g., DD/MM/YYYY.
             for(let i = 0; i < 10; i++){
+
+                // Build the string for the date to be displayed.
                 dateWithoutTime = dateWithoutTime + localCopyDate[i];
             }
-            console.log("Starting date: " + dateWithoutTime);
+
+            // Save the start date to local storage so that it can be later accessed and saved to state.
             localStorage.setItem("startDate", dateWithoutTime);
 
-            // All time data.
+            // All time data local storage initialisation.
             localStorage.setItem("electricty", localUsedElectric);
             localStorage.setItem("heat", localUsedHeat);
             localStorage.setItem("export", localEnergyExport);
@@ -122,7 +189,7 @@ class InsightsComponent extends React.Component {
             localStorage.setItem("spending", localSpending);
             localStorage.setItem("days", results.data.length/48);
 
-            // Last 24 hours of data.
+            // Last day data local storage initialisation.
             localStorage.setItem("electrictyDay", localUsedElectricDay);
             localStorage.setItem("heatDay", localUsedHeatDay);
             localStorage.setItem("exportDay", localEnergyExportDay);
@@ -130,8 +197,11 @@ class InsightsComponent extends React.Component {
             localStorage.setItem("spendingDay", localSpendingDay);
         }
     
+        // If the parsing process is finished and the user has not submitted valid data....
         if(localStorage.getItem("validDates") === "false" && awaitFinish === "true"){
-            console.log("Exists!");
+
+            // Give the user an alert that their attempt has failed.
+            window.alert("Inputted data clashed with existing data. Please try again with a new file.");
         }
 
       },
@@ -139,27 +209,41 @@ class InsightsComponent extends React.Component {
 
   }
 
+  // Function to handle rendering a screen of summary data post CSV upload.
   handleScreen = async (event) => {
 
+    // Check if the local storage has recorded the user as having uploaded a valid CSV.
     if(localStorage.getItem("validDates") === "true"){
-        this.setState({isValid: true});
+        
+        // Set the state variable for tracking a valid CSV upload to true.
+        this.setState({isValidCsv: true});
+
+        // Set the state variable for tracking a CSV upload to true.
         this.setState({ csvUploaded: true });
     }
     
+    // Check if the local storage has recorded the user as having uploaded an invalid CSV.
     if(localStorage.getItem("validDates") === "false"){
+
+        // Set an error response for the user to true.
         this.setState({errorReturn: true});
-        this.setState({isValid: false}); 
+
+        // Set the variable for valid CSV upload to false.
+        this.setState({isValidCsv: false}); 
     }
     
-
+    // Save calculated totals for all columns for all time to their relative state variables.
     this.setState({dataStartDate: localStorage.getItem("startDate")});
     this.setState({ electrictyUsed: localStorage.getItem("electricty")});
     this.setState({ heatUsed: localStorage.getItem("heat") });
     this.setState({ energyExported: localStorage.getItem("export") });
     this.setState({ netEnergy: localStorage.getItem("net") });
     this.setState({ totalSpent: localStorage.getItem("spending") });
+    
+    // Save the calculated number of days of data uploaded to the state. 
     this.setState({daysTracked: localStorage.getItem("days")});
 
+    // Save calculated totals for all columns for the last day to their relative state variables.
     this.setState({ electrictyUsedDay: localStorage.getItem("electrictyDay")});
     this.setState({ heatUsedDay: localStorage.getItem("heatDay") });
     this.setState({ energyExportedDay: localStorage.getItem("exportDay") });
@@ -167,24 +251,28 @@ class InsightsComponent extends React.Component {
     this.setState({ totalSpentDay: localStorage.getItem("spendingDay") });
   };
 
+  // Function to handle returning back to CSV upload from the CSV metrics summary.
   returnHome = async (event) => {
     this.setState({ csvUploaded: false });
   };
 
+  // Render the contents of the page.
   render() {
     return (
-      <div>
+      <div aria-label="Insights page content.">
         <div className="m-5 p-5 bg-light rounded d-flex flex-column align-items-center justify-content-around ">
           <h1>Upload CSV</h1><br/>
-         
+
+          {/*Check that the user not yet uploaded a csv */}
           {!this.state.csvUploaded && (
-            <div className="d-flex flex-column align-items-center justify-content-around ">
+            <div className="d-flex flex-column align-items-center justify-content-around " aria-label="upload csv section">
               <input
                 type="file"
                 id="csvFile"
                 onChange={this.handleOnChange}
                 name="file"
                 accept=".csv"
+                aria-label="select CSV date file button"
               /><br/>
                 <button
                 type="button"
@@ -194,31 +282,37 @@ class InsightsComponent extends React.Component {
                 Submit
               </button>
 
-              {this.state.isValid === false &&(
-                <div>
+              {/*Check that the user has attempted to upload an invalid csv */} 
+              {this.state.isValidCsv === false &&(
+                <div aria-label="selected csv invalid message">
                     {this.state.errorReturn === true &&(
                         <h2>Dates in file already uploaded! Please select a new file.</h2>
                     )}
                 </div>
               )}  
               
-              <br/><br/>  
-              <p>
-                Your data must be in the format given in the CSV file below, or
-                else it won't format:
-              </p>
-              <Link href={"../resources/Data_Example.csv"}>
-                <p>Download Template</p>
-              </Link>
+              <br/><br/>
+              <div aria-label="Download csv template file section">  
+                <p>
+                    Your data must be in the format given in the CSV file below, or
+                    else it won't format:
+                </p>
+                <Link href={"../resources/Data_Example.csv"} aria-label="file download link">
+                    <p>Download Template</p>
+                </Link>
+              </div>
             </div>
           )}
 
-          {this.state.isValid === true &&(
-            <div>
+          {/*Check that the user has attempted to upload a valid CSV*/}             
+          {this.state.isValidCsv === true &&(
+            <div aria-label="valid csv upload summary section">
                 {this.state.csvUploaded === true && (
                     <div>
-                        <button onClick={this.returnHome}>Back</button>
-                        <div>
+                        <button onClick={this.returnHome} aria-label="return to upload button">Back</button>
+                        
+                        {/*Display all time data */}
+                        <div aria-label="all time insights section">
                             <ul>
                                 <h1>All Time Data</h1>
                                 <h2>Starting from: {this.state.dataStartDate}</h2>
@@ -231,7 +325,9 @@ class InsightsComponent extends React.Component {
                                 <li>Over {this.state.daysTracked} days</li>
                             </ul>
                         </div>
-                        <div>
+
+                        {/*Display data for the last day */}
+                        <div aria-label="last day insights section">
                             <ul>
                                 <h1>Las 24 Hours Data</h1>
                                 <li>Electricity: {this.state.electrictyUsedDay}</li>

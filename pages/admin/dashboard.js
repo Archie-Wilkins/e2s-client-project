@@ -238,7 +238,7 @@ class Dashboard extends React.Component {
 
                         {/*If the user has not requested to see a specific business, show them all businesses with limited information */}
                         {this.state.businessRequested === false && (
-                          <div>
+                          <div aria-label="view all businesses section">
                             <br />
                             <h1>View All Businesses</h1>
                             <table
