@@ -15,3 +15,12 @@
     color: #EDB116;
     cursor: pointer;
 }
+.lightLink {
+    color: white;
+    text-decoration: none;
+}
+
+.lightLink:hover {
+    color: #EDB116;
+    cursor: pointer;
+}

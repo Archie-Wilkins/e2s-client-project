@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import CarouselComponent from "../public/components/carouselComponent"
 import BottomFooter from "../public/components/layouts/bottomFooter.js"
+import PublicTopNav from '../public/components/layouts/PublicTopNav';
 
 
 class LandingPage extends React.Component {
@@ -94,33 +95,14 @@ class LandingPage extends React.Component {
     }
 
     render() {
-        return <div className="landing-page" aria-label="landing page">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="navigation bar">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="/" aria-label="e2s home button link">E2S</a>
+        return <div>
+            <PublicTopNav />
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent" >
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-label="about us link" aria-current="page" href="/about">About Us</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" aria-label="request industry energy usage data link" href="#">Energy Data</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" aria-label="sign up link" href="#" onClick={this.handleFormScroll}>Sign Up</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
             <CarouselComponent />
             <div className="landingBody" aria-label="body of the page">
 
                 {/* About Us information */}
-                <h1 className='mx-5 mt-3'>About Us</h1>
+                <h1 className='mx-5 mt-3' id='aboutUsSection'>About Us</h1>
                 <hr className="underline-style" />
 
                 <div>
