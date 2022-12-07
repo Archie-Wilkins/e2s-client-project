@@ -460,22 +460,22 @@ class InsightsComponent extends React.Component {
                             <ul>
                                 <h1>All Time Data</h1>
                                 <h2>Starting from: {this.state.dataStartDate}</h2>
-                                <li>Electricity: {this.state.electrictyUsed}</li>
-                                <li>Heat: {this.state.heatUsed}</li>
-                                <li>Electricty Exported: {this.state.energyExported}</li>
-                                <li>Net Energy: {this.state.netEnergy}</li>
-                                <li>Spending: £{this.state.totalSpent}</li>
-                                <li>Average Daily Spending: £{this.state.totalSpent/this.state.daysTracked}</li>
-                                <li>Over {this.state.daysTracked} days</li>
+                                <li>Electricity: {parseFloat(this.state.electrictyUsed).toFixed(0)}</li>
+                                <li>Heat: {parseFloat(this.state.heatUsed).toFixed(0)}</li>
+                                <li>Electricty Exported: {parseFloat(this.state.energyExported).toFixed(0)}</li>
+                                <li>Net Energy: {parseFloat(this.state.netEnergy).toFixed(0)}</li>
+                                <li>Spending: £{parseFloat(this.state.totalSpent).toFixed(2)}</li>
+                                <li>Average Daily Spending: £{parseFloat(this.state.totalSpent/this.state.daysTracked).toFixed(2)}</li>
+                                <li>Over {parseFloat(this.state.daysTracked).toFixed(0)} days</li>
                                 {this.state.asset1Usage >= this.state.asset2Usage &&(
-                                    <li>Aasset 1 is using more energy!</li>
+                                    <li>Asset 1 is using more energy!</li>
                                 )}
                                 {this.state.asset1Usage < this.state.asset2Usage &&(
-                                    <li>Aasset 2 is using more energy!</li>
+                                    <li>Asset 2 is using more energy!</li>
                                 )}
-                                <li>Red Zone Energy Usage: {(this.state.redZoneUsage/this.state.numberOfDataRows)*100}%</li>
-                                <li>Amber Zone Energy Usage: {(this.state.amberZoneUsage/this.state.numberOfDataRows)*100}%</li>
-                                <li>Green Zone Energy Usage: {(this.state.greenZoneUsage/this.state.numberOfDataRows)*100}%</li>
+                                <li>Red Zone Energy Usage: {parseFloat((this.state.redZoneUsage/this.state.numberOfDataRows)*100).toFixed(2)}%</li>
+                                <li>Amber Zone Energy Usage: {parseFloat((this.state.amberZoneUsage/this.state.numberOfDataRows)*100).toFixed(2)}%</li>
+                                <li>Green Zone Energy Usage: {parseFloat((this.state.greenZoneUsage/this.state.numberOfDataRows)*100).toFixed(2)}%</li>
                             </ul>
                         </div>
 
@@ -483,12 +483,12 @@ class InsightsComponent extends React.Component {
                         <div aria-label="last day insights section">
                             <ul>
                                 <h1>Las 24 Hours Data</h1>
-                                <li>Electricity: {this.state.electrictyUsedDay}</li>
-                                <li>Heat: {this.state.heatUsedDay}</li>
-                                <li>Electricty Exported: {this.state.energyExportedDay}</li>
-                                <li>Net Energy: {this.state.netEnergyDay}</li>
-                                <li>Spending: £{this.state.totalSpentDay}</li>
-                                <li>Average Hourly Spending: £{this.state.totalSpentDay/24}</li>
+                                <li>Electricity: {parseFloat(this.state.electrictyUsedDay).toFixed(0)}</li>
+                                <li>Heat: {parseFloat(this.state.heatUsedDay).toFixed(0)}</li>
+                                <li>Electricty Exported: {parseFloat(this.state.energyExportedDay).toFixed(0)}</li>
+                                <li>Net Energy: {parseFloat(this.state.netEnergyDay).toFixed(0)}</li>
+                                <li>Spending: £{parseFloat(this.state.totalSpentDay).toFixed(2)}</li>
+                                <li>Average Hourly Spending: £{parseFloat(this.state.totalSpentDay/24).toFixed(2)}</li>
                             </ul>
                         </div>
                     </div>
