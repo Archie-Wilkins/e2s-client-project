@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import '@babel/preset-react'
 import React from 'react'
-import PublicTopNav from '../public/components/layouts/PublicTopNav';
+import PublicTopNav from '../public/components/layouts/publicTopNav.js';
 
 
 describe('publicTopNavBar', () => {
