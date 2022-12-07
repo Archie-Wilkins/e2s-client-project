@@ -96,10 +96,10 @@ class CsvUploadComponent extends React.Component {
 
   render() {
     return (
-      <div>
+      <div aria-label="upload csv page">
         <div className="m-5 p-5 bg-light rounded d-flex flex-column align-items-center justify-content-around ">
           <h1>Upload CSV</h1>
-          <a className="downloadCsvDataButton">
+          <a className="downloadCsvDataButton" aria-label="download csv data button">
             Download ({this.state.csvFileName})
           </a>
           {!this.state.csvUploaded && (
@@ -110,12 +110,14 @@ class CsvUploadComponent extends React.Component {
                 onChange={this.handleOnChange}
                 name="file"
                 accept=".csv"
+                aria-label="select csv file button"
               />
 
               <button
                 type="button"
                 className="btn btn-primary mt-4"
                 onClick={this.handleScreen}
+                aria-label="submit csv file button"
               >
                 Submit
               </button>
@@ -124,18 +126,18 @@ class CsvUploadComponent extends React.Component {
                 Your data must be in the format given in the CSV file below, or
                 else it won't format:
               </p>
-              <Link href={"../resources/Data_Example.csv"}>
+              <Link href={"../resources/Data_Example.csv"} aria-label="download template file link">
                 <p>Download Template</p>
               </Link>
             </div>
           )}
           {this.state.csvUploaded === true && (
-            <div>
+            <div aria-label="uploaded file summary page">
               <h2>Yor Uploaded Data ({this.state.csvFileName})</h2>
-              <button onClick={this.returnHome}>Back</button>
+              <button onClick={this.returnHome} aria-label="go back button">Back</button>
               <ul>
                 {this.state.csvData.map((name) => (
-                  <div>
+                  <div aria-label="file data section">
                     <h1>Data</h1>
                     <li>Date: {name[0]}</li>
                     <li>CHP1_Electricity_Generation_kW: {name[1]}</li>

@@ -18,7 +18,7 @@ class Onboarding extends React.Component {
     }
 
     render() {
-        return <div>
+        return <div aria-label="onboarding page content">
             <h1>onboarding</h1>
         </div >
     }

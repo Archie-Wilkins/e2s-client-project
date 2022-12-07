@@ -1,23 +1,40 @@
 .whiteText {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 .accentText {
-  color: #edb116;
+    color: #edb116;
 }
 
 .darkLink {
-  color: black;
-  text-decoration: underline;
+    color: black;
+    text-decoration: underline;
 }
 
 .darkLink:hover {
-  color: #edb116;
-  cursor: pointer;
+    color: #EDB116;
+    cursor: pointer;
 }
 
-.verticalLine {
-  height: 60px;
-  width: 1px;
-  background-color: white;
+.lightLink {
+    color: white;
+    text-decoration: none;
+}
+
+.lightLink:hover {
+    color: #EDB116;
+    cursor: pointer;
+}
+
+.accentButton {
+    color: black;
+    background-color: #EDB116;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.accentButton:hover {
+    color: black;
+    background-color: white;
+    cursor: pointer;
 }

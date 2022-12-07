@@ -69,58 +69,58 @@ class NavBar extends React.Component {
     render() {
     return <div>
         <div className="navbarContainer blueBackground fixed-top">
-            <div className="navbarContent">
+            <div className="navbarContent" aria-label="navigational bar">
 
-                <Link className="w-100 navbarLink d-flex justify-content-center" href="/">
+                <Link className="w-100 navbarLink d-flex justify-content-center" href="/" aria-label="go home link">
                     <h1 data-testid="logo" className='whiteText'>E<span className='accentText'>2</span>S</h1>
                 </Link>
 
                 <hr className="navbarLineBreak"></hr>
 
-                <Link className="navbarLink d-flex align-items-center " href="/">
+                <Link className="navbarLink d-flex align-items-center " href="/" aria-label="go to dashboard link">
                     <FaTachometerAlt />
                     <p>Dashboard</p>
                 </Link>
 
-                <Link className=" navbarLink d-flex align-items-center" href="/siteForecasting">
+                <Link className=" navbarLink d-flex align-items-center" href="/siteForecasting" aria-label="go to site forecasting link">
                     <FaCloud />
                     <p>Forecastings</p>
                 </Link>
 
-                <Link className=" navbarLink d-flex align-items-center" href="/sitePerformance">
+                <Link className=" navbarLink d-flex align-items-center" href="/sitePerformance" aria-label="go to analysis page link">
                     <FaChartLine />
                     <p>Analysis</p>
                 </Link>
 
-                <Link className=" navbarLink d-flex align-items-center" href="/siteAssets">
+                <Link className=" navbarLink d-flex align-items-center" href="/siteAssets" aria-label="view site assets link">
                     <FaListAlt />
                     <p>Assets</p>
                 </Link>
 
-                <Link className=" navbarLink d-flex align-items-center" href="/viewReports">
+                <Link className=" navbarLink d-flex align-items-center" href="/viewReports" aria-label="go to view reports page link">
                     <FaBook />
                     <p>Reports</p>
                 </Link>
 
-                <Link className=" navbarLink d-flex align-items-center" href="/siteCompare">
+                <Link className=" navbarLink d-flex align-items-center" href="/siteCompare" aria-label="go to site comparison page link">
                     <FaBalanceScale />
                     <p>Compare</p>
                 </Link>
 
-                <Link className=" navbarLink d-flex align-items-center" href="/billValidation">
+                <Link className=" navbarLink d-flex align-items-center" href="/billValidation" aria-label="go to bill validaiton page link">
                     <FaDollarSign />
                     <p>Validate Bills</p>
                 </Link>
 
                 <hr className="navbarLineBreak"></hr>
 
-                <Link className=" navbarLink d-flex align-items-center" href="/help">
+                <Link className=" navbarLink d-flex align-items-center" href="/help" aria-label="go to help page link">
 
                     <FaRegQuestionCircle />
                     <p>Help</p>
                 </Link>
 
-                <Link className=" navbarLink d-flex align-items-center" href="/account">
+                <Link className=" navbarLink d-flex align-items-center" href="/account" aria-label="go to account page link">
                     <FaUserCog />
                     <p>Account</p>
                 </Link>
@@ -129,7 +129,7 @@ class NavBar extends React.Component {
 
                 <hr className="navbarLineBreak align-items-center"></hr>
 
-                <div>
+                <div aria-label="current site content">
                     <p className='whiteText m-0'>Viewing Site:</p>
                     <p className='whiteText m-0 changeSite position-relative' onClick={this.changeSiteMenuToggle}>{this.state.usersSites[this.state.currentActiveSiteId]}</p>
                     <div className="position-absolute top-50" >
@@ -143,7 +143,7 @@ class NavBar extends React.Component {
                     </div>
                 </div>
 
-                <div>
+                <div aria-label="signed in user details section">
                     <p className='whiteText m-0'>Signed in as:</p>
                     <p className='whiteText m-0'>Dan Schnee</p>
                 </div>
