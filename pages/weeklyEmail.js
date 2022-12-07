@@ -17,9 +17,11 @@ class WeeklyEmailPage extends React.Component {
             siteID:"",
             ready:"",
             siteName:"",
-            files: []
+            validEmail:""
         };
     }
+
+
 
 
     //toDO
@@ -31,15 +33,15 @@ class WeeklyEmailPage extends React.Component {
     //submit will only work when ready = "yes"
 
     getUser = async () => {
+        event.preventDefault();
         //resets site
         document.getElementById("siteName").innerText = "";
         this.state.siteName = "";
         this.state.siteID = "";
+        this.state.validEmail = "false";
 
         //console.log("getUser called");
         const formEmail = document.getElementById("email").value;
-
-
 
 
         //check user exists in database
@@ -92,11 +94,15 @@ class WeeklyEmailPage extends React.Component {
 
         result = JSON.parse(stringResult);
 
+        //if user is not related to a site
         if(!result.site_id) {
             //make red/orange X show
             console.log("no site id");
             return;
         }
+        //user has a valid email
+        this.state.validEmail = "true";
+
         //update page information
         this.state.siteName = await result.county;
         document.getElementById("siteName").innerText = this.state.siteName;
@@ -114,14 +120,6 @@ class WeeklyEmailPage extends React.Component {
         }
         response = await fetch(endpoint, options)
         result = await response.json();
-        //formats the JSON correctly
-        // stringResult = JSON.stringify(result);
-        // stringResult = stringResult.replace("[", "");
-        // stringResult = stringResult.replace("]", "");
-        //
-        //result = JSON.parse(result);
-
-        //console.log(result[1].energy_day_cost);
 
         let weekArray = [];
 
@@ -155,249 +153,317 @@ class WeeklyEmailPage extends React.Component {
 
         }
 
-        console.log(weekArray);
+        let selectBox = document.getElementById("weeks");
+        selectBox.innerHTML="";
 
-        //paginate them into weeks
-
-        //put them into options of {date} - {date} in dropdown
-
-        //get historical weeks from siteID - API call
-
+        weekArray.forEach(date =>{
+            let dateOption = new Option(date,date.value);
+            selectBox.options.add(dateOption);
+        })
     }
 
-    generateReport = async (event) => {
-
-        event.preventDefault();
-        //if form data isnt correct atm
-
-
-        if(!this.state.ready.value === "no"){
-            //output error
-            console.log("no");
-            return;
-        }
-
-        document.getElementById("email-template").style.display = "block";
-        document.getElementById("generateButton").style.display = "block";
-
-        document.getElementById("title").innerText = this.state.siteName + " | " + document.getElementById("week").value + " weekly report";
-
-        //I have decided to use document.getElementById().value instead of event.target.email.value
-        //this is because Jest hates getting values from an event
-        //and they do the exact same thing pretty much
-
-        const email = document.getElementById("email").value;
-
-        //get time frame from selected timeframe in form
-
-        //create graph images
-        //graphs should have current week, historical average and previous week (if possible)
-
-        //add information:
-        //this week total usage for each metric
-        //previous week total usage for each metric
-        //Historical average
-
-        //get observations:
-        //  1. (site name) has used X more/less than the previous week
-        //  2. (site name) has used X more/less this week than the sites historical average, keep up the good work
-        //  3. (if current week) you have X potential improvements
-
-
-        const emailContent = {
-            email: email,
-            siteName: this.state.siteName.value,
-            dateStart: "07/11/2022",
-            dateEnd: "13/11/2022",
-            energyThisWeek: "21,142Kw",
-            energyPreviousWeek: "21,237Kw",
-            energyAverageWeek: "21,431Kw",
-            carbonThisWeek: "12,652Kg",
-            carbonPreviousWeek: "12,530Kg",
-            carbonAverageWeek: "12,600Kg",
-            expenditureThisWeek: "£4,230",
-            expenditurePreviousWeek: "£4,253",
-            expenditureAverageWeek: "£4,243",
-        }
-
-
-        // //emailjs to send email
-        // emailjs.send('service_vhvmdc2', 'template_b4gj0c5', emailContent, 'V_nH2nvFeD1k31Dpg')
-        //     .then((result) => {
-        //         //if successful display "new code sent"
-        //         alert("sent email");
-        //     }, (error) => {
-        //         //if fails display "Error occured while sending email"
-        //         alert(error);
-        //     });
-
-
-
-
-    }
-
-    generatePDF = async (event) => {
+    sendEmail = async (event) => {
         event.preventDefault();
 
-        alert("attempting to send email");
+        // this.state.validEmail = "false";
+        // this.state.siteID = "";
+        // this.state.siteName = "";
+        // let selectBox = document.getElementById("weeks");
+        // selectBox.innerHTML="Fetch user data";
+        // document.getElementById("siteName").innerText = "";
+        // this.state.ready = "no";
+
+        //check email is valid
+        if(this.state.validEmail === "false"){
+            alert("invalid email, if email is correct please fetch user data");
+        }
+
+        if(this.state.ready === "no"){
+            alert("please make sure all fields are correctly filled out");
+        }
+
+        //get email
+
+        const userEmail = document.getElementById("email").value;
+
+        //get site Name
+
+        const siteName = this.state.siteName;
+
+        //get date
+
+        const date = document.getElementById("weeks").value;
+
+        const dateStart = date.substring(0, 10);
+
+        const dateEnd = date.substring(13, date.length)
+
+
+        //get energy this week
+
+        //make api get this siteweek data
+
+        let data = {
+            siteID: this.state.siteID,
+            dateStart: date.substring(0, 10),
+            dateEnd: date.substring(13, date.length)
+        }
+
+        let JSONdata = JSON.stringify(data);
+
+        let endpoint = '/api/getSiteWeekData';
+        let options = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json',},
+            body: JSONdata,
+        }
+        let response = await fetch(endpoint, options)
+        let result = await response.json();
+
+        let stringResult = JSON.stringify(result);
+        stringResult = stringResult.replace("[", "");
+        stringResult = stringResult.replace("]", "");
+
+        result = JSON.parse(stringResult);
+
+        //energy this week
+        console.log(result.energy_week_usage + "kW");
+
+        const thisEnergyUsage = result.energy_week_usage + "kW";
+
+        //carbon this week
+        console.log(result.carbon_week_emitted + "kg");
+
+        const thisCarbonUsage = result.carbon_week_emitted + "kg";
+
+        //expenditure this week
+        console.log("£" + result.energy_week_cost);
+
+        const thisExpenditure = "£" + result.energy_week_cost;
+
+        //get energy previous week
+
+        //get previous week start
+        let prevStart = new Date();
+
+        const previousWeekStart = Date.parse(date.substring(0, 10)) - (7 * 24 * 60 * 60 * 1000);
+
+        //get previous week end
+        const previousWeekEnd = Date.parse(date.substring(13, date.length)) - (7 * 24 * 60 * 60 * 1000);
+
+        //get previous week date and format it
+
+        //format date function from: https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
+        function formatDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + (d.getDate()),
+                year = d.getFullYear();
+
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+
+        //make api get previous siteweek data
+        data = {
+             siteID: this.state.siteID,
+             dateStart: formatDate(previousWeekStart),
+             dateEnd: formatDate(previousWeekEnd)
+         }
+
+        JSONdata = JSON.stringify(data);
+
+        endpoint = '/api/getSiteWeekData';
+        options = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json',},
+            body: JSONdata,
+        }
+        response = await fetch(endpoint, options)
+        result = await response.json();
+
+        stringResult = JSON.stringify(result);
+        stringResult = stringResult.replace("[", "");
+        stringResult = stringResult.replace("]", "");
+
+        result = JSON.parse(stringResult);
+
+        console.log("previous week");
+
+
+        //energy previous week
+        console.log(result.energy_week_usage + "kW");
+
+        const previousEnergyUsage = result.energy_week_usage + "kW";
+
+        //carbon previous week
+        console.log(result.carbon_week_emitted + "kg");
+
+        const previousCarbonUsage = result.carbon_week_emitted + "kg";
+
+        //expenditure previous week
+        console.log("£" + result.energy_week_cost);
+
+        const previousExpenditure = "£" + result.energy_week_cost;
+
+
+
+
+
+        //get energy site average week
+
+        //make api get previous siteweek data
+
+        //produce energy overview
+
+        data = {
+            siteID: this.state.siteID
+        }
+
+        JSONdata = JSON.stringify(data);
+
+        endpoint = '/api/getSiteHistoricalData';
+        options = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json',},
+            body: JSONdata,
+        }
+        response = await fetch(endpoint, options)
+        result = await response.json();
+
+        stringResult = JSON.stringify(result);
+        stringResult = stringResult.replace("[", "");
+        stringResult = stringResult.replace("]", "");
+
+        result = JSON.parse(stringResult);
+
+        console.log("average history");
+
+        //energy previous week
+        console.log(result.energy_week_usage + "kW");
+
+        const averageEnergyUsage = result.energy_week_usage + "kW";
+
+        //carbon previous week
+        console.log(result.carbon_week_emitted + "kg");
+
+        const averageCarbonUsage = result.carbon_week_emitted + "kg";
+
+        //expenditure previous week
+        console.log("£" + result.energy_week_cost);
+
+        const averageExpenditure = "£" + result.energy_week_cost;
+
+
+
+
+
+
 
         // emailjs.send("service_vhvmdc2","template_74t4ffc",{
         //     siteName: "NewportHospital",
-        //     dateStart: "28/11/2022",
-        //     dateEnd: "04/12/2022",
+        //     date: "",
         //     energyThisWeek: "123kW",
         //     energyPreviousWeek: "133kW",
         //     energyAverageWeek: "144kW",
+        //     energyOverview: "Newport Hospital has used 95Kw less of energy than the previous week. Keep up the good work!\n" +
+        //         "\n" +
+        //         "\n" +
+        //         "\n" +
+        //         "Newport Hospital is 289Kw under its historical average for energy consumption",
         //     carbonThisWeek: "144kg",
         //     carbonPreviousWeek: "231kg",
         //     carbonAverageWeek: "233kg",
+        //     carbonOverview: "Newport Hospital has used 95Kg less of energy than the previous week. Keep up the good work!\n" +
+        //         "\n" +
+        //         "\n" +
+        //         "\n" +
+        //         "Newport Hospital is 52Kg under its historical average for energy consumption\n" +
+        //         "\n" +
+        //         "\n" +
+        //         "\n" +
+        //         "You currently have 2 potential improvements for energy and carbon.",
         //     expenditureThisWeek: "2142",
         //     expenditurePreviousWeek: "2412",
         //     expenditureAverageWeek: "2341",
+        //     expenditureOverview: "\n" +
+        //         "Newport Hospital has spent £23 less than the previous week. Keep up the good work!\n" +
+        //         "\n" +
+        //         "\n" +
+        //         "\n" +
+        //         "Newport Hospital is £13 under its historical average for expenditure\n" +
+        //         "\n" +
+        //         "\n" +
+        //         "\n" +
+        //         "You currently have 1 potential improvements for expenditure.",
         //     email: "ethanaharris10@gmail.com",
-        // });
+        // }, 'V_nH2nvFeD1k31Dpg').then((result) => {
+        //                 alert("email sent");
+        //             }, (error) => {
+        //                 alert("email failed: " + error);
+        //             });
+
+
+
 
         //const input = document.getElementById('divToPrint');
         //
-        const doc = new jsPDF();
+        //const doc = new jsPDF();
         //
         //get table html
-        const pdfTable = document.getElementById('email-template');
+        //const pdfTable = document.getElementById('email-template');
         //html to pdf format
-        var html = htmlToPdfmake(pdfTable.innerHTML);
+        //var html = htmlToPdfmake(pdfTable.innerHTML);
 
-        const documentDefinition = { content: html };
-        pdfMake.vfs = pdfFonts.pdfMake.vfs;
-        pdfMake.createPdf(documentDefinition).open();
+        //const documentDefinition = { content: html };
+        //pdfMake.vfs = pdfFonts.pdfMake.vfs;
+        //pdfMake.createPdf(documentDefinition).open();
+
+
+
 
 
 
     }
 
+    updateEmail = async (event) => {
+        this.state.validEmail = "false";
+        this.state.siteID = "";
+        this.state.siteName = "";
+        let selectBox = document.getElementById("weeks");
+        selectBox.innerHTML="Fetch user data";
+        document.getElementById("siteName").innerText = "";
+        this.state.ready = "no";
+    }
 
+    weekSelected = async (event) => {
+        this.state.ready = "yes";
+    }
 
     render() {
+        //const { siteHistory = []  = this.state.siteHistory;
+        //console.log(this.state.siteHistory);
         return <div>
             <div className="loginBackground">
-                <form onSubmit={this.generateReport}>
+                <form>
                     <label>Email:</label>
-                    <input type="email" id="email" name="email" placeholder="ESM email address..." onChange={this.getUser}></input>
+                    <input type="email" id="email" name="email" placeholder="ESM email address..." onChange={this.updateEmail}></input>
+                    <button onClick={this.getUser}>Fetch User Data</button>
                     <br/>
                     <label>Site: <label id="siteName"></label></label>
                     <br/>
                     <label>Week:</label>
-                    <input list="week" name="week" id="week"></input>
-                    <datalist id="week">
-                        <option value="28/11/2022 - 04/12/2022"/>
-                        <option value="21/11/2022 - 27/11/2022"/>
-                        <option value="14/11/2022 - 20/11/2022"/>
-                        <option value="07/11/2022 - 13/11/2022"/>
-                        <option value="31/10/2022 - 06/11/2022"/>
-                    </datalist>
+                    <select id="weeks" onClick={this.weekSelected}>
+                        <option value="sample date">sampleDate</option>
+                    </select>
                     <br/>
-                    <button type="submit">Generate report</button>
+                    <button onClick={this.sendEmail}>Send Report</button>
                 </form>
-            </div>
-            <div className="hidden" id="email-template">
-                <h2 id="title">Newport Hospital | 07/11/2022 - 13/11/2022 weekly report</h2>
-                <div className="vertical-space"></div>
-                <div className="margin-left-1vw">
-                    <div>
-                        <div className="graph-container">
-                            <h2 className="margin-left-none">Energy usage</h2>
-                            <div></div>
-                        </div>
-                        <div>
-                            <h2>Total</h2>
-                            <div>
-                                <table>
-                                    <thead>
-                                    <tr>
-                                        <th>This week</th>
-                                        <th>Previous week</th>
-                                        <th>Historical average</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>Emil</td>
-                                        <td>Tobias</td>
-                                        <td>Linus</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <h3>Overview</h3>
-                            <div>sample overview text</div>
-                        </div>
-                    </div>
-                    <div className="vertical-space"></div>
-                    <div>
-                        <div className="graph-container">
-                            <h2 className="margin-left-none">Carbon Emissions</h2>
-                            {/*<img style={{height: "100px", width: "100px"}}  src={require('../public/images/navbar/dashboard.png').default}></img>*/}
-                            {/*<div style={{height: "1030", width: "507"}}>*/}
-                            {/*    <div className="graph1"></div>*/}
-                            {/*</div>*/}
-                            {/*<img src={"/_next/static/media/Graph1.b6d8bf7a.png"} />*/}
-
-                        </div>
-                        <div>
-                            <h2>Total</h2>
-                            <div>
-                                <table>
-                                    <thead>
-                                    <tr>
-                                        <th>This week</th>
-                                        <th>Previous week</th>
-                                        <th>Historical average</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>Emil</td>
-                                        <td>Tobias</td>
-                                        <td>Linus</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <h3>Overview</h3>
-                            <div>sample overview text</div>
-                        </div>
-                    </div>
-                    <div className="vertical-space"></div>
-                    <div>
-                        <div className="graph-container">
-                            <h2 className="margin-left-none">Expenditure</h2>
-                            <div></div>
-                        </div>
-                        <div>
-                            <h2>Total</h2>
-                            <div>
-                                <table>
-                                    <thead>
-                                    <tr>
-                                        <th>This week</th>
-                                        <th>Previous week</th>
-                                        <th>Historical average</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>Emil</td>
-                                        <td>Tobias</td>
-                                        <td>Linus</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <h3>Overview</h3>
-                            <div>sample overview text</div>
-                        </div>
-                    </div>
-                    <div className="vertical-space"></div>
-                </div>
+                <br/>
             </div>
             <button className="hidden margin-left-1vw" id="generateButton" onClick={this.generatePDF}>generate pdf</button>
         </div>

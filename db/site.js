@@ -62,10 +62,37 @@ export const getSiteDataByDay = async (siteID) => {
     });
 }
 
+export const getSiteWeekData = async (siteID, dateStart, dateEnd) => {
+    return new Promise((resolve, reject) =>  {
+        db.query("SELECT site_id, SUM(energy_hour_usage) as energy_week_usage, SUM(energy_hour_cost) as energy_week_cost, SUM(carbon_hour_emitted) as carbon_week_emitted" +
+        " FROM site_energy_data WHERE site_id = " + siteID + " AND time_stamp > convert( '" + dateStart + " 00:00:00', datetime) AND time_stamp < convert('" + dateEnd + " 23:00:00', datetime) GROUP BY site_id;", (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+    });
+}
+
+export const getSiteWeekHistoricalAverage = async (siteID) => {
+    return new Promise((resolve, reject) =>  {
+        db.query("SELECT site_id, AVG(energy_hour_usage) * 7 * 24 as energy_week_usage, AVG(energy_hour_cost) * 7 * 24 as energy_week_cost, AVG(carbon_hour_emitted) * 7 * 24 as carbon_week_emitted" +
+        " FROM site_energy_data WHERE site_id = " + siteID +
+        " GROUP BY site_id;", (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+    });
+}
+
 export default {
     all,
     getSiteIDFromUserID,
     getSiteDetails,
     getSiteIDFromEmail,
-    getSiteDataByDay
+    getSiteDataByDay,
+    getSiteWeekData,
+    getSiteWeekHistoricalAverage
 }
