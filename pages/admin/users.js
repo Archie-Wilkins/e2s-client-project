@@ -21,7 +21,7 @@ class Users extends React.Component {
     render() {
         return <div>
             <MainLayout isAdmin={this.state.isAdmin} isDirector={this.state.isDirector} pageName={this.state.pageName}>
-                <div className="whiteBackground mt-5">
+                <div className="whiteBackground mt-5" aria-label="users page content">
                     <h1>Users</h1>
                 </div>
                 <h1>Users</h1>

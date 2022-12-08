@@ -107,7 +107,7 @@ class WeeklyEmailPage extends React.Component {
 
         //loops through dates in JSON response to find weeks
         for(var record in await result){
-            let [date, time] = result[record].day.split("T");
+            let [date, time] = result[record].time_stamp.split("T");
             const [year, month, day] = date.split('-');
 
             let days = new Date(date);
@@ -192,7 +192,7 @@ class WeeklyEmailPage extends React.Component {
         result = JSON.parse(stringResult);
 
         //energy this week
-        const thisEnergyUsage = result.energy_week_usage;
+        const thisEnergyUsage = result.energy_week_demand;
 
         //carbon this week
         const thisCarbonUsage = result.carbon_week_emitted;
@@ -248,7 +248,7 @@ class WeeklyEmailPage extends React.Component {
         //JSON holds previous weeks site data
 
         //energy previous week
-        const previousEnergyUsage = result.energy_week_usage;
+        const previousEnergyUsage = result.energy_week_demand;
 
         //carbon previous week
         const previousCarbonUsage = result.carbon_week_emitted;
@@ -275,13 +275,13 @@ class WeeklyEmailPage extends React.Component {
 
 
         //energy average week
-        const averageEnergyUsage = result.energy_week_usage;
+        const averageEnergyUsage = result.energy_avg_week_demand;
 
         //carbon average week
-        const averageCarbonUsage = result.carbon_week_emitted;
+        const averageCarbonUsage = result.carbon_avg_week_emitted;
 
         //expenditure average week
-        const averageExpenditure = result.energy_week_cost;
+        const averageExpenditure = result.energy_avg_week_cost;
 
 
 
