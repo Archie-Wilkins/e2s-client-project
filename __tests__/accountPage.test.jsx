@@ -12,7 +12,7 @@ describe('account', () => {
     })
 
     it('account page render text', () => {
-        const account = screen.getByText("Account")
+        const account = screen.getByText("logout")
         expect(account).toBeInTheDocument()
     })
 

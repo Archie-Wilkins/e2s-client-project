@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/account.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/account.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/components/layouts/navBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/components/layouts/navBar.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +123,7 @@
       <workItem from="1669564178596" duration="299000" />
       <workItem from="1670340237808" duration="57000" />
       <workItem from="1670340317603" duration="38155000" />
-      <workItem from="1670515466783" duration="796000" />
+      <workItem from="1670515466783" duration="1817000" />
     </task>
     <task id="LOCAL-00001" summary="forgot password works with new db changes, login can redirect user to forgot password">
       <created>1669817857237</created>
@@ -253,7 +251,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670513491395</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="updated check cookie events to use componentDidMount(), added User's first name to NavBar">
+      <created>1670516559005</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1670516559005</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -290,7 +295,8 @@
     <MESSAGE value="added image and details to account, fixed cookie check, fixed login redirect" />
     <MESSAGE value="account will now load current user's data" />
     <MESSAGE value="created render test for account page" />
-    <option name="LAST_COMMIT_MESSAGE" value="created render test for account page" />
+    <MESSAGE value="updated check cookie events to use componentDidMount(), added User's first name to NavBar" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated check cookie events to use componentDidMount(), added User's first name to NavBar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
