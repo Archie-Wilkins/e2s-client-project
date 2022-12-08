@@ -4,6 +4,8 @@ import {useRouter} from 'next/router'
 import React from "react";
 import Cookies from "js-cookie";
 import profilePic from "../public/resources/profilePic.png"
+import NavBar from "../public/components/layouts/navBar";
+
 
 class AccountPage extends React.Component {
     constructor(props) {
@@ -22,7 +24,7 @@ class AccountPage extends React.Component {
         window.location = "/login";
     }
 
-    onLoad = async (event) => {
+    async componentDidMount() {
         //fetch user data from user id from cookie
         try {
             //get JSON being stored in user cookie
@@ -89,7 +91,7 @@ class AccountPage extends React.Component {
 
 
     render() {
-        return <div className="loginBackground" aria-label="account page" onMouseEnter={this.onLoad}>
+        return <div className="loginBackground" aria-label="account page">
             <div className="account-container" aria-label="account page content">
                 <h2>Account</h2>
                 <div className="line"></div>
@@ -99,7 +101,7 @@ class AccountPage extends React.Component {
                 <p id="role" aria-label="user's role"></p>
                 <button onClick={this.logout} aria-label="logout button">logout</button>
             </div>
-
+            <NavBar></NavBar>
         </div>
     }
 }

@@ -147,7 +147,8 @@ class Dashboard extends React.Component {
   }
 
   // Funtion used to validate user priveleges from the login page and remove cookies. It is also used to initialise data on the page.
-  checkUser = async (event) => {
+  async componentDidMount() {
+    //will check user is allowed on this page first
     // Attempt to parse a user cookie
     try {
       // Initialise the user cookie
@@ -176,7 +177,7 @@ class Dashboard extends React.Component {
   render() {
     return (
       // On laoding the main div, call the function to validate user priveleges and initialise data to be rendered
-      <div onLoad={this.checkUser} onMouseEnter={this.checkUser} aria-label="admin dashboard content">
+      <div onLoad={this.checkUser} aria-label="admin dashboard content">
         {/*Utilise a navbar with values based on the role of the current user*/}
         <MainLayout
           isAdmin={this.state.isAdmin}
