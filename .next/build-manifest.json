@@ -25,10 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/esm/analysis": [
+    "/esm/forecasting": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/esm/analysis.js"
+      "static/chunks/pages/esm/forecasting.js"
     ]
   },
   "ampFirstPages": []

@@ -51,14 +51,21 @@ class Forecasting extends React.Component {
           pageName={this.state.pageName}
         >
           {/* Forecastings for next 12 months */}
-          <div className="container d-flex flex-column align-items-center w-100">
-            <div className="row mt-5 w-75">
-              <div className="col-lg rounded text-center">
+          <div className="d-flex flex-column align-items-center w-100">
+            <div className="mt-3 w-75">
+              <div className="rounded text-center">
                 <h2>Forecastings for next 12 months</h2>
               </div>
             </div>
 
-            <ToggleDataChart
+            <div className="w-75 ">
+
+              <div className="w-100 vh-60 mb-3 p-3 whiteBackground rounded">
+                {/* Don't ask why but this needs to be here otherwise 
+                  the graph doesnt display
+                */}
+                <h3></h3>
+                <ToggleDataChart
               toggle1={"Energy Costs"}
               toggle2={"Energy Usage"}
               toggle3={"C02 Emissions"}
@@ -79,9 +86,14 @@ class Forecasting extends React.Component {
               xAxisDataKey3={"date"}
               yAxisDataKey3={"c02"}
             />
+              </div>
 
-            <div className="row my-2 g-2 w-75">
-              <div className="col">
+            </div>
+
+
+
+            <div className="my-2 mb-5 w-75 d-flex justify-content-around">
+
                 <ForecastingInfoBox
                   title={"Predicted Energy Cost In 12 Months"}
                   unitGoesBefore={true}
@@ -89,8 +101,7 @@ class Forecasting extends React.Component {
                   forecastedData={this.state.PredictedEnergyCost}
                   currentData={this.state.CurrentEnergyCost}
                 />
-              </div>
-              <div className="col whiteBackground rounded mx-1">
+
                 <ForecastingInfoBox
                   title={"Predicted Energy Usage In 12 Months"}
                   unitGoesBefore={false}
@@ -98,8 +109,7 @@ class Forecasting extends React.Component {
                   forecastedData={this.state.CurrentEnergyUsage}
                   currentData={this.state.PredictedEnergyUsage}
                 />
-              </div>
-              <div className="col whiteBackground rounded ml-1">
+
                 <ForecastingInfoBox
                   title={"Predicted C02 Emissions In 12 Months"}
                   unitGoesBefore={false}
@@ -109,7 +119,7 @@ class Forecasting extends React.Component {
                 />
               </div>
             </div>
-          </div>
+
           {/* End of Forecastings for next 12 months */}
         </MainLayout>
       </div>

@@ -7,9 +7,16 @@ class ToggleDataChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentGraph: this.displayGraph(1),
-      randomKey: Math.floor(Math.random() * 10000000),
+      currentGraph: null,
+      randomKey: null,
     };
+  }
+
+  componentDidMount() {
+    this.setState({
+      randomKey: Math.floor(Math.random() * 100000),
+    });
+    this.displayGraph(1);
   }
 
   displayGraph = (graphNumber) => {
@@ -81,13 +88,13 @@ class ToggleDataChart extends React.Component {
 
   render() {
     return (
-      <div className="row h-100 w-75">
-        <div className="col p-2 whiteBackground rounded vh-70 d-flex flex-column align-items-center ">
+      <div className="row h-100 w-100">
+        <div className="col whiteBackground rounded d-flex flex-column align-items-center ">
           <div>
             <ul className="d-flex blueBackground p-1 rounded noListStyle">
               <li className="whiteBackground d-flex justify-content-center">
                 <input
-                  value={this.props.toggle1}
+                  value="Weekly"
                   type="radio"
                   name={this.state.randomKey + "timeRange"}
                   className="invisibleInput"
@@ -98,14 +105,14 @@ class ToggleDataChart extends React.Component {
                 />
                 <label
                   className="selectableLabel px-4"
-                  for={this.state.randomKey + "radio1"}
+                  htmlFor={this.state.randomKey + "radio1"}
                 >
-                  {this.props.toggle1}
+                  Weekly
                 </label>
               </li>
               <li className="whiteBackground mx-1 d-flex justify-content-center">
                 <input
-                  value={this.props.toggle2}
+                  value="Monthly"
                   type="radio"
                   name={this.state.randomKey + "timeRange"}
                   className="invisibleInput"
@@ -116,14 +123,14 @@ class ToggleDataChart extends React.Component {
                 />
                 <label
                   className="selectableLabel px-4"
-                  for={this.state.randomKey + "radio2"}
+                  htmlFor={this.state.randomKey + "radio2"}
                 >
-                  {this.props.toggle2}
+                  Monthly
                 </label>
               </li>
               <li className="whiteBackground d-flex justify-content-center">
                 <input
-                  value={this.props.toggle3}
+                  value="Yearly"
                   type="radio"
                   name={this.state.randomKey + "timeRange"}
                   className="invisibleInput"
@@ -134,9 +141,9 @@ class ToggleDataChart extends React.Component {
                 />
                 <label
                   className="selectableLabel px-4"
-                  for={this.state.randomKey + "radio3"}
+                  htmlFor={this.state.randomKey + "radio3"}
                 >
-                  {this.props.toggle3}
+                  Yearly
                 </label>
               </li>
             </ul>

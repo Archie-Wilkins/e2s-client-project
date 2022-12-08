@@ -13,7 +13,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-class EnergyCostForecastGraph extends React.Component {
+class ToggleTimeChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -159,4 +159,4 @@ class EnergyCostForecastGraph extends React.Component {
   }
 }
 
-export default EnergyCostForecastGraph;
+export default ToggleTimeChart;

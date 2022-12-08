@@ -13,7 +13,7 @@ class ForecastingNeedsImprovementBox extends React.Component {
   render() {
     return (
       <div className="whiteBackground rounded">
-        <p className="my-0 text-center mx-1">{this.props.title}</p>
+        <p className="my-0 text-center mx-2">{this.props.title}</p>
         <div className="d-flex justify-content-center align-items-center mt-1">
           <p className="m-0">
             <b>{this.props.forecastedData}</b>

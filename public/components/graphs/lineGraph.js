@@ -19,7 +19,7 @@ class LineGraph extends React.Component {
   render() {
     return (
       <div className="w-100 h-100">
-        <ResponsiveContainer>
+        <ResponsiveContainer width="100%" height="100%">
           <LineChart data={this.props.dataSet}>
             <Line
               type="monotone"
