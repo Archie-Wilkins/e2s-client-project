@@ -19,7 +19,23 @@ class BillValidation extends React.Component {
             dateIsValid: false,
             invoiceTotal: 0,
             invoiceIsNum: false,
+            
+            datesOnRecord: {
+                years: ["2018","2019","2020","2021","2022"],
+            }
         };
+    }
+
+    initialiseOptions = async (event) => {
+        for(let year in this.state.datesOnRecord.years){
+            let newOption = document.createElement("option");
+            newOption.setAttribute('value', this.state.datesOnRecord.years[year]);
+
+            let optionText = document.createTextNode(this.state.datesOnRecord.years[year]);
+            newOption.appendChild(optionText);
+
+            document.getElementById("yearStuff").appendChild(newOption);
+        }
     }
 
     submitDate = async (event) => {
@@ -44,7 +60,28 @@ class BillValidation extends React.Component {
             this.setState({invoiceTotal: parseFloat(document.getElementById("amountInvoiced").value).toFixed(2)});
             this.setState({invoiceIsNum: true});
         }
+
     } 
+
+     // Funtion used to validate user priveleges from the login page and remove cookies. It is also used to initialise data on the page.
+    checkUser = async (event) => {
+        // Attempt to parse a user cookie
+        try {
+        // Initialise the user cookie
+        let userCookie = JSON.parse(Cookies.get().user);
+
+        // If the user has the incorrect credentials for the page, remove them
+        if (userCookie.role != 3) {
+            Cookies.remove("user");
+            window.location = "/login";
+        }
+        //catch erros
+        } catch (e) {
+        // No action
+        }
+
+        await this.initialiseOptions();
+    };
     
 
     render() {
@@ -66,7 +103,7 @@ class BillValidation extends React.Component {
                         
                         {/*Make dyanmic so that it auto updates in later years */}
                         <select id="yearStuff" onChange={this.updateValue} aria-label="select which year to validate dropdown">
-                            <option yearValue="2012">2012</option>
+                            {/*<option yearValue="2012">2012</option>
                             <option yearValue="2013">2013</option>
                             <option yearValue="2014">2014</option>
                             <option yearValue="2015">2015</option>
@@ -76,7 +113,7 @@ class BillValidation extends React.Component {
                             <option yearValue="2019">2019</option>
                             <option yearValue="2020">2020</option>
                             <option yearValue="2021">2021</option>
-                            <option yearValue="2022">2022</option>
+                            <option yearValue="2022">2022</option>*/}
                             {/*Add a check for current year using external server */}
                         </select>
                         
