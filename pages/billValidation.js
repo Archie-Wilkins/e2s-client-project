@@ -17,12 +17,16 @@ class BillValidation extends React.Component {
             currentlyCalculating: false,
             dateSubmitted: false,
             dateIsValid: false,
+            invoiceTotal: 0,
+            invoiceIsNum: true,
         };
     }
 
     submitDate = async (event) => {
+        //this.setState({invoiceTotal: parseFloat(document.getElementById("amountInvoiced").value)});
         console.log(this.state.selectedYear);
         console.log(this.state.selectedMonth);
+        console.log(this.state.invoiceTotal);
         this.setState({dateSubmitted: true});
         this.setState({currentlyCalculating: true});
         this.setState({currentlyCalculating: false});
@@ -31,7 +35,17 @@ class BillValidation extends React.Component {
     updateValue = async (event) => {
         this.setState({selectedMonth: document.getElementById("monthStuff").value});
         this.setState({selectedYear: document.getElementById("yearStuff").value});
-    }  
+        const localInvoiceTextVar = parseFloat(document.getElementById("amountInvoiced").value);
+        if(localInvoiceTextVar * 0 != 0 || localInvoiceTextVar <= 0){
+            console.log("Invalid invoice amount.")
+            this.setState({invoiceIsNum: false});
+        }else{
+            console.log("Valid invoice amount: " + localInvoiceTextVar);
+            this.setState({invoiceTotal: parseFloat(document.getElementById("amountInvoiced").value).toFixed(2)});
+            this.setState({invoiceIsNum: true});
+        }
+    } 
+    
 
     render() {
         return ( <div onLoad={this.checkUser} onMouseEnter={this.checkUser} aria-label="Bill validation page">
@@ -82,8 +96,16 @@ class BillValidation extends React.Component {
                         </select>
 
                         {/*Initially we will check only for 31 days*/}
-
-                        <button onClick={this.submitDate}>submit</button>
+                        <label>Enter the amount you have been invoiced for your chosen month (£)</label>
+                        <input id="amountInvoiced" onInput={this.updateValue}></input>
+                        {!this.state.invoiceIsNum &&(
+                            <p>ERROR, you can only submit numbers!</p>
+                        )}
+                        {this.state.invoiceIsNum === "true" &&(
+                            <p></p>
+                        )}
+                        <br/><br/>
+                        <button onClick={this.submitDate}>Submit</button>
                     </div>
 
                     <div>
