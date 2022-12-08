@@ -173,7 +173,7 @@ class Dashboard extends React.Component {
   // Return the contents of the Admin Dashboard page.
   render() {
     return (
-      // On laoding the main div, call the function to validate user priveleges and initialise data to be rendered
+      // On loading the main div, call the function to validate user priveleges and initialise data to be rendered
       <div onLoad={this.checkUser} onMouseEnter={this.checkUser} aria-label="admin dashboard content">
         {/*Utilise a navbar with values based on the role of the current user*/}
         <MainLayout

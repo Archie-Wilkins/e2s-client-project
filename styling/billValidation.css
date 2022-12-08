@@ -1,0 +1,8 @@
+.billValidationPageContent{
+    display: flex;
+    text-align: center;
+    background-color: #f2f2f2;
+    margin-left: 10%;
+    padding-left: 10%;
+    flex-direction: column;
+}
