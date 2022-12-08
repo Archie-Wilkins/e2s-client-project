@@ -6,7 +6,6 @@ class AssetObject{
         this.name = name;
         this.typeId = type;
         this.energyEfficiency = energyEfficiency;
-        this.energyDemand = energyDemand;
         this.emissions = emissions;
 
     }
@@ -16,7 +15,6 @@ class AssetObject{
             name: this.name,
             typeId: this.typeId,
             energyEfficiency: this.energyEfficiency,
-            energyDemand: this.energyDemand,
             emissions: this.emissions
         }
     }
@@ -36,10 +34,6 @@ class AssetObject{
         return this.energyEfficiency;
     }
 
-    getEnergyDemand() {
-        return this.energyDemand;
-    }
-
     getEmissions() {
         return this.emissions;
     }
@@ -56,9 +50,6 @@ class AssetObject{
         this.energyEfficiency = energyEfficiency;
     }
 
-    setEnergyDemand(energyDemand) {
-        this.energyDemand = energyDemand;
-    }
 
     setEmissions(emissions) {
         this.emissions = emissions;

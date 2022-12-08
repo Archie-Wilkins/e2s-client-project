@@ -1,5 +1,5 @@
 import {TabulatorFull as Tabulator} from "tabulator-tables";
-
+import Constants from "./constants";
 
 class TableFactory {
     constructor() {
@@ -41,25 +41,32 @@ class TableFactory {
         return table;
     }
 
-    createTableDataForSiteEditor(siteObjectData) {
+    createSiteEditorTable(siteObjectData, tableID, tableConfig) {
 
-        var nestedData = [];
-        siteObjectData.forEach(siteObject => {
-            var siteJson = siteObject.getJsonFormat();
-            siteObject.getFloors().forEach(floor => {
-                var floorJson = floor.getJsonFormat();
-                floor.getRooms().forEach(room => {
-                    var roomJson = room.getJsonFormat();
-                    room.getAssets().forEach(asset => {
-                        var assetJson = asset.getJsonFormat();
-                        roomJson.push({"assets": assetJson});
+        function createTableDataForSiteEditor(siteObjectData)
+        {
+            var nestedData = [];
+            siteObjectData.forEach(siteObject => {
+                var siteJson = siteObject.getJsonFormat();
+                siteObject.getFloors().forEach(floor => {
+                    var floorJson = floor.getJsonFormat();
+                    floor.getRooms().forEach(room => {
+                        var roomJson = room.getJsonFormat();
+                        room.getAssets().forEach(asset => {
+                            var assetJson = asset.getJsonFormat();
+                            roomJson.push({"assets": assetJson});
+                        });
+                        floorJson.push({"rooms": roomJson});
                     });
-                    floorJson.push({"rooms": roomJson});
+                    siteJson.push({"floors": floorJson});
                 });
-                siteJson.push({"floors": floorJson});
             });
-        });
 
-        return nestedData;
+            return nestedData;
+        }
+
+        var tableData = createTableDataForSiteEditor(siteObjectData);
+        var columnData = Constants.SITE_EDITOR_COLUMNS();
+
     }
 }
