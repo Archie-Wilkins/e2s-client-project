@@ -31,7 +31,8 @@ class BillValidation extends React.Component {
             months: ["january", "february", "march", "april", "may", 
                      "june", "july", "august", "september", "october", "november", "december"],
 
-            historicalSiteData: [],         
+            historicalSiteData: [],
+            calculatedInvoiceTotal: 0,         
         };
     }
 
@@ -73,11 +74,19 @@ class BillValidation extends React.Component {
     
           // Set the state array for users to the data returned from calling the API (users from the database).
           this.setState({ historicalSiteData: result.data.sites });
-    
+          let localCostTally = 0;
+
+          for(let i = 0; i < result.data.sites.length; i++){
+            localCostTally = localCostTally + result.data.sites[i].energy_hour_cost;
+          }
+
+          this.setState({calculatedInvoiceTotal: localCostTally});
+          
         } catch (e) {
           // No action
+          console.log("Error"); 
         }
-      };
+    };
 
     submitDate = async (event) => {
         
@@ -110,8 +119,8 @@ class BillValidation extends React.Component {
             this.setState({currentlyCalculating: false});
         }
         
-        
-      }
+        console.log(this.state.calculatedInvoiceTotal);
+    }
 
     updateValue = async (event) => {
         this.setState({dateIsValid: "unin"});
@@ -146,7 +155,6 @@ class BillValidation extends React.Component {
         await this.initialiseOptions();
     };
     
-
     render() {
         return ( <div onLoad={this.checkUser} onMouseEnter={this.checkUser} aria-label="Bill validation page">
             <MainLayout
@@ -215,7 +223,16 @@ class BillValidation extends React.Component {
                                             <div>
                                                 <h3>{this.state.selectedMonth} {this.state.selectedYear}</h3>
                                                 <h3>Invoice Amount: £{this.state.invoiceTotal}</h3>
-
+                                                <h3>Calculated Amount: £{parseFloat(this.state.calculatedInvoiceTotal).toFixed(2)}</h3>
+                                                
+                                                {this.state.invoiceTotal > this.state.calculatedInvoiceTotal &&(
+                                                    <h3>Invoice is too much!</h3>
+                                                )}
+                                                {this.state.invoiceTotal == this.state.calculatedInvoiceTotal &&(
+                                                    <h3>Invoice is correct.</h3>
+                                                )}{this.state.invoiceTotal < this.state.calculatedInvoiceTotal &&(
+                                                    <h3>Invoice is too low.</h3>
+                                                )}
                                             </div>
                                         )}
                                     </div>
