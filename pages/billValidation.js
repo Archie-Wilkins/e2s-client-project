@@ -93,15 +93,15 @@ class BillValidation extends React.Component {
         let monthNum = 0; // January default
 
         await this.returnAllSitesFromDatabaseApi();
-        console.log(this.state.historicalSiteData);
         for(let month in this.state.months){
             if(this.state.selectedMonth === this.state.months[month]){
                 monthNum = month;
+                break;
             }
         }
 
         if(this.state.selectedYear === this.state.currentLimit[0]){
-            if(monthNum > parseFloat(this.state.currentLimit[1])-1){
+            if(monthNum < parseFloat(this.state.currentLimit[1])-1){
                 this.setState({dateIsValid: "true"});
                 this.setState({dateSubmitted: true});
                 this.setState({currentlyCalculating: true});
