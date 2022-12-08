@@ -3,6 +3,7 @@ import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
 import EnergyCostForecastGraph from "../../public/components/graphs/toggleTimeChart";
 import ForecastingInfoBox from "../../public/components/dataDisplayBox/forecastingInfoBox.js";
 import React from "react";
+import BottomFooter from "../../public/components/layouts/bottomFooter.js";
 
 class Analysis extends React.Component {
   constructor(props) {
@@ -99,7 +100,7 @@ class Analysis extends React.Component {
 
       // C02 Emissions
       c02EmissionsThisWeek: 435,
-      c02EmissionsThisWeek: 250,
+      c02EmissionsLastWeek: 250,
 
       c02EmissionsThisMonth: 435,
       c02EmissionsLastMonth: 250,
@@ -124,8 +125,8 @@ class Analysis extends React.Component {
               </div>
             </div>
 
-            <div className="row d-flex justify-content-around w-100">
-              <div className="col">
+            <div className="row d-flex justify-content-around w-75 mb-2">
+              <div className="col p-0">
                 <ForecastingInfoBox
                   title={"Past Week"}
                   unitGoesBefore={true}
@@ -135,7 +136,7 @@ class Analysis extends React.Component {
                 />
               </div>
 
-              <div className="col">
+              <div className="col p-0 mx-2">
                 <ForecastingInfoBox
                   title={"Past Month"}
                   unitGoesBefore={true}
@@ -145,7 +146,7 @@ class Analysis extends React.Component {
                 />
               </div>
 
-              <div className="col">
+              <div className="col p-0">
                 <ForecastingInfoBox
                   title={"Past Year"}
                   unitGoesBefore={true}
@@ -181,8 +182,8 @@ class Analysis extends React.Component {
               </div>
             </div>
 
-            <div className="row d-flex justify-content-around w-100">
-              <div className="col">
+            <div className="row d-flex justify-content-around w-75 mb-2" >
+              <div className="col p-0">
                 <ForecastingInfoBox
                   title={"Past Week"}
                   unitGoesBefore={false}
@@ -192,7 +193,7 @@ class Analysis extends React.Component {
                 />
               </div>
 
-              <div className="col">
+              <div className="col p-0 mx-2">
                 <ForecastingInfoBox
                   title={"Past Month"}
                   unitGoesBefore={false}
@@ -202,7 +203,7 @@ class Analysis extends React.Component {
                 />
               </div>
 
-              <div className="col">
+              <div className="col p-0">
                 <ForecastingInfoBox
                   title={"Past Year"}
                   unitGoesBefore={false}
@@ -230,13 +231,44 @@ class Analysis extends React.Component {
           {/* End of Energy Usage */}
 
           {/* C02 Emissions */}
-          <div className="container d-flex flex-column align-items-center w-100">
+          <div className="container d-flex flex-column align-items-center w-100 mb-5">
             <div className="row mt-5 w-75">
               <div className="col-lg rounded text-center">
                 <h2>C02 Emissions</h2>
               </div>
             </div>
 
+            <div className="row d-flex justify-content-around w-75 mb-2">
+              <div className="col p-0">
+              <ForecastingInfoBox
+                title={"Past Week"}
+                unitGoesBefore={false}
+                unit="Kg"
+                forecastedData={this.state.c02EmissionsThisWeek}
+                currentData={this.state.c02EmissionsLastWeek}
+              />
+            </div>
+
+              <div className="col p-0 mx-2">
+              <ForecastingInfoBox
+                title={"Past Month"}
+                unitGoesBefore={false}
+                unit="Kg"
+                  forecastedData={this.state.c02EmissionsThisMonth}
+                  currentData={this.state.c02EmissionsLastMonth}
+              />
+            </div>
+
+              <div className="col p-0">
+              <ForecastingInfoBox
+                title={"Past Year"}
+                unitGoesBefore={false}
+                unit="Kg"
+                  forecastedData={this.state.c02EmissionsThisMonth}
+                  currentData={this.state.c02EmissionsLastMonth}
+              />
+            </div>
+            </div>
             <EnergyCostForecastGraph
               toggle1={"Week"}
               toggle2={"Month"}
@@ -250,41 +282,9 @@ class Analysis extends React.Component {
               yAxisDataKey={"c02"}
             />
           </div>
-
-
-          <div className="row d-flex justify-content-around w-100">
-            <div className="col">
-              <ForecastingInfoBox
-                title={"Past Week"}
-                unitGoesBefore={false}
-                unit="Kg"
-                forecastedData={this.state.c02EmissionsThisWeek}
-                currentData={this.state.c02EmissionsLastWeek}
-              />
-            </div>
-
-            <div className="col">
-              <ForecastingInfoBox
-                title={"Past Month"}
-                unitGoesBefore={false}
-                unit="Kg"
-                forecastedData={this.state.c02EmissionsThisWeek}
-                currentData={this.state.c02EmissionsLastWeek}
-              />
-            </div>
-
-            <div className="col">
-              <ForecastingInfoBox
-                title={"Past Year"}
-                unitGoesBefore={false}
-                unit="Kg"
-                forecastedData={this.state.c02EmissionsThisWeek}
-                currentData={this.state.c02EmissionsLastWeek}
-              />
-            </div>
-
-          </div>
           {/* End of C02 Emissions */}
+
+          <BottomFooter className="mt-3" />
         </MainLayout>
       </div>
     );
