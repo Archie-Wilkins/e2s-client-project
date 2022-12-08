@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import {useRouter} from 'next/router'
 import React from "react";
 import Cookies from "js-cookie";
+import profilePic from "../public/resources/profilePic.png"
 
 class AccountPage extends React.Component {
     constructor(props) {
@@ -14,9 +15,16 @@ class AccountPage extends React.Component {
         };
     }
 
+
     logout = async (event) => {
+        //removes user
         Cookies.remove("user");
         window.location = "/login";
+    }
+
+    onLoad = async (event) => {
+        //fetch user data from user id from cookie
+
     }
 
 
@@ -25,11 +33,10 @@ class AccountPage extends React.Component {
             <div className="account-container" aria-label="account page content">
                 <h2>Account</h2>
                 <div className="line"></div>
-                <div className="account-profile-picture-container" aria-label="account profile picture">
-                    <img style={{width: "150px", height: "150px"}} src={"/_next/static/media/profilePic.fd0cd22e.png"}/>
-                    {/*<img src={profilePic}/>*/}
-                </div>
+                <div className="account-profile-picture-container" aria-label="account profile picture"></div>
                 {/*<img>sample profile picture</img>*/}
+                <h3 id="name">Ethan Allen-Harris</h3>
+                <p id="role">ESM</p>
                 <button onClick={this.logout} aria-label="logout button">logout</button>
             </div>
 

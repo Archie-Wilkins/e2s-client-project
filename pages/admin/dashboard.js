@@ -154,13 +154,15 @@ class Dashboard extends React.Component {
       let userCookie = JSON.parse(Cookies.get().user);
 
       // If the user has the incorrect credentials for the page, remove them
-      if (userCookie.role != 3) {
+      if (userCookie.role != 1) {
         Cookies.remove("user");
         window.location = "/login";
       }
       //catch erros
     } catch (e) {
-      // No action
+      // No cookie found
+      //return to login
+      window.location = "/login";
     }
 
     // Wait for the async function to complete returning user data from the database
