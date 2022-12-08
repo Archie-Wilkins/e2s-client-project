@@ -18,7 +18,7 @@ class BillValidation extends React.Component {
             dateSubmitted: false,
             dateIsValid: false,
             invoiceTotal: 0,
-            invoiceIsNum: true,
+            invoiceIsNum: false,
         };
     }
 
@@ -104,12 +104,11 @@ class BillValidation extends React.Component {
                             {!this.state.invoiceIsNum &&(
                                 <p>ERROR, you can only submit numbers!</p>
                             )}
-                            {this.state.invoiceIsNum === "true" &&(
-                                <p></p>
+                            {this.state.invoiceIsNum === true &&(
+                                <button onClick={this.submitDate} aria-label="submit all data button">Submit</button>
                             )}
                         </div>
                         <br/><br/>
-                        <button onClick={this.submitDate} aria-label="submit all data button">Submit</button>
                     </div>
 
                     <div aria-label="validation data summary">
