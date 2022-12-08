@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="removed file">
-      <change afterPath="$PROJECT_DIR$/pages/accountView.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styling/account.css" afterDir="false" />
+    <list default="true" id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/account.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/account.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/accountView.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,7 +219,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669918454687</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="frontend created for account/logout">
+      <created>1670447613394</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1670447613394</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -244,7 +250,8 @@
     <MESSAGE value="login will deliver user to respective page after logging in" />
     <MESSAGE value="update to cookie system, now uses JSON. admin dashboard will check user role" />
     <MESSAGE value="removed file" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed file" />
+    <MESSAGE value="frontend created for account/logout" />
+    <option name="LAST_COMMIT_MESSAGE" value="frontend created for account/logout" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
