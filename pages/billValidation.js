@@ -30,6 +30,8 @@ class BillValidation extends React.Component {
 
             months: ["january", "february", "march", "april", "may", 
                      "june", "july", "august", "september", "october", "november", "december"],
+
+            historicalSiteData: [],         
         };
     }
 
@@ -48,10 +50,41 @@ class BillValidation extends React.Component {
         }
     }
 
+    returnAllSitesFromDatabaseApi = async (event) => {
+        try {
+          // API endpoint where we send form data.
+          const endpoint = "/api/returnAllHistoricalSiteDataApi";
+    
+          // Form the request for sending data to the server.
+          const options = {
+            // The method is POST because we are sending data.
+            method: "POST",
+            // Tell the server we're sending JSON.
+            headers: {
+              "Content-Type": "application/json",
+            },
+          };
+    
+          // Send the form data to our forms API on Vercel and get a response.
+          const response = await fetch(endpoint, options);
+    
+          // Get the response data from server as JSON.
+          const result = await response.json();
+    
+          // Set the state array for users to the data returned from calling the API (users from the database).
+          this.setState({ historicalSiteData: result.data.sites });
+    
+        } catch (e) {
+          // No action
+        }
+      };
+
     submitDate = async (event) => {
         
         let monthNum = 0; // January default
 
+        await this.returnAllSitesFromDatabaseApi();
+        console.log(this.state.historicalSiteData);
         for(let month in this.state.months){
             if(this.state.selectedMonth === this.state.months[month]){
                 monthNum = month;
