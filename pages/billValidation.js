@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useLayoutEffect } from "react";
 import Cookies from "js-cookie";
 import MainLayout from "../public/components/layouts/mainLayoutShell.js";
+import { faSmileWink } from "@fortawesome/free-solid-svg-icons";
 
 // This is the component for ESMs to validate their bills
 class BillValidation extends React.Component {
@@ -16,51 +17,80 @@ class BillValidation extends React.Component {
             selectedMonth: "january",
             currentlyCalculating: false,
             dateSubmitted: false,
-            dateIsValid: false,
+            dateIsValid: "nothing",
             invoiceTotal: 0,
             invoiceIsNum: false,
+            loadedYears:false,
             
             datesOnRecord: {
                 years: ["2018","2019","2020","2021","2022"],
-            }
+            },
+
+            currentLimit: ["2022", "10"],
+
+            months: ["january", "february", "march", "april", "may", 
+                     "june", "july", "august", "september", "october", "november", "december"],
         };
     }
 
     initialiseOptions = async (event) => {
-        for(let year in this.state.datesOnRecord.years){
-            let newOption = document.createElement("option");
-            newOption.setAttribute('value', this.state.datesOnRecord.years[year]);
+        if(!this.state.loadedYears){
+            for(let year in this.state.datesOnRecord.years){
+                let newOption = document.createElement("option");
+                newOption.setAttribute('value', this.state.datesOnRecord.years[year]);
 
-            let optionText = document.createTextNode(this.state.datesOnRecord.years[year]);
-            newOption.appendChild(optionText);
+                let optionText = document.createTextNode(this.state.datesOnRecord.years[year]);
+                newOption.appendChild(optionText);
 
-            document.getElementById("yearStuff").appendChild(newOption);
+                document.getElementById("yearStuff").appendChild(newOption);
+            }
+            this.setState({loadedYears: true});
         }
     }
 
     submitDate = async (event) => {
-        //this.setState({invoiceTotal: parseFloat(document.getElementById("amountInvoiced").value)});
-        console.log(this.state.selectedYear);
-        console.log(this.state.selectedMonth);
-        console.log(this.state.invoiceTotal);
-        this.setState({dateSubmitted: true});
-        this.setState({currentlyCalculating: true});
-        this.setState({currentlyCalculating: false});
+        
+        let monthNum = 0; // January default
+
+        for(let month in this.state.months){
+            if(this.state.selectedMonth === this.state.months[month]){
+                monthNum = month;
+            }
+        }
+
+        if(this.state.selectedYear === this.state.currentLimit[0]){
+            if(monthNum > parseFloat(this.state.currentLimit[1])-1){
+                this.setState({dateIsValid: "true"});
+                this.setState({dateSubmitted: true});
+                this.setState({currentlyCalculating: true});
+                this.setState({currentlyCalculating: false});
+            }else{
+                this.setState({dateIsValid: "false"});
+            }
+        }else{
+            console.log(this.state.selectedYear);
+            console.log(this.state.selectedMonth);
+            console.log(this.state.invoiceTotal);
+            this.setState({dateIsValid: "true"});
+            this.setState({dateSubmitted: true});
+            this.setState({currentlyCalculating: true});
+            this.setState({currentlyCalculating: false});
+        }
+        
+        
       }
 
     updateValue = async (event) => {
+        this.setState({dateIsValid: "unin"});
         this.setState({selectedMonth: document.getElementById("monthStuff").value});
         this.setState({selectedYear: document.getElementById("yearStuff").value});
         const localInvoiceTextVar = parseFloat(document.getElementById("amountInvoiced").value);
         if(localInvoiceTextVar * 0 != 0 || localInvoiceTextVar <= 0){
-            console.log("Invalid invoice amount.")
             this.setState({invoiceIsNum: false});
         }else{
-            console.log("Valid invoice amount: " + localInvoiceTextVar);
             this.setState({invoiceTotal: parseFloat(document.getElementById("amountInvoiced").value).toFixed(2)});
             this.setState({invoiceIsNum: true});
         }
-
     } 
 
      // Funtion used to validate user priveleges from the login page and remove cookies. It is also used to initialise data on the page.
@@ -103,18 +133,6 @@ class BillValidation extends React.Component {
                         
                         {/*Make dyanmic so that it auto updates in later years */}
                         <select id="yearStuff" onChange={this.updateValue} aria-label="select which year to validate dropdown">
-                            {/*<option yearValue="2012">2012</option>
-                            <option yearValue="2013">2013</option>
-                            <option yearValue="2014">2014</option>
-                            <option yearValue="2015">2015</option>
-                            <option yearValue="2016">2016</option>
-                            <option yearValue="2017">2017</option>
-                            <option yearValue="2018">2018</option>
-                            <option yearValue="2019">2019</option>
-                            <option yearValue="2020">2020</option>
-                            <option yearValue="2021">2021</option>
-                            <option yearValue="2022">2022</option>*/}
-                            {/*Add a check for current year using external server */}
                         </select>
                         
                         <select id="monthStuff" onChange={this.updateValue} aria-label="select which month to validate dropdown">
@@ -151,12 +169,25 @@ class BillValidation extends React.Component {
                     <div aria-label="validation data summary">
                         {this.state.dateSubmitted &&(
                             <div>
-                                {this.state.currentlyCalculating &&(
-                                    <p>VALIDATING....</p>
+                                {this.state.dateIsValid === "false" &&(
+                                    <p>ERROR: for {this.state.selectedYear} you only have data until {this.state.months[this.state.currentLimit[1]-1]}</p>
                                 )}
-                                {!this.state.currentlyCalculating &&(
-                                    <p>CHECKED</p>
+                                {this.state.dateIsValid === "true" &&(
+                                    <div>
+                                        <p>SUMMARY</p>
+                                        {this.state.currentlyCalculating &&(
+                                            <p>VALIDATING....</p>
+                                        )}
+                                        {!this.state.currentlyCalculating &&(
+                                            <div>
+                                                <h3>{this.state.selectedMonth} {this.state.selectedYear}</h3>
+                                                <h3>Invoice Amount: £{this.state.invoiceTotal}</h3>
+
+                                            </div>
+                                        )}
+                                    </div>
                                 )}
+                                
                             </div>
                         )}
                     </div>
