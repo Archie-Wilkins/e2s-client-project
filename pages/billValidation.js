@@ -65,7 +65,7 @@ class BillValidation extends React.Component {
                         <h3>SELECT THE START DATE FOR THE INVOICE</h3>
                         
                         {/*Make dyanmic so that it auto updates in later years */}
-                        <select id="yearStuff" onChange={this.updateValue}>
+                        <select id="yearStuff" onChange={this.updateValue} aria-label="select which year to validate dropdown">
                             <option yearValue="2012">2012</option>
                             <option yearValue="2013">2013</option>
                             <option yearValue="2014">2014</option>
@@ -80,7 +80,7 @@ class BillValidation extends React.Component {
                             {/*Add a check for current year using external server */}
                         </select>
                         
-                        <select id="monthStuff" onChange={this.updateValue}>
+                        <select id="monthStuff" onChange={this.updateValue} aria-label="select which month to validate dropdown">
                             <option monthValue="january">JANUARY</option>
                             <option monthValue="february">FEBRUARY</option>
                             <option monthValue="march">MARCH</option>
@@ -97,18 +97,22 @@ class BillValidation extends React.Component {
 
                         {/*Initially we will check only for 31 days*/}
                         <label>Enter the amount you have been invoiced for your chosen month (£)</label>
-                        <input id="amountInvoiced" onInput={this.updateValue}></input>
-                        {!this.state.invoiceIsNum &&(
-                            <p>ERROR, you can only submit numbers!</p>
-                        )}
-                        {this.state.invoiceIsNum === "true" &&(
-                            <p></p>
-                        )}
+                        <input id="amountInvoiced" onInput={this.updateValue} aria-label="input invoice total box"></input>
+
+                        {/*Error messages for errors */}
+                        <div aria-label="invoice amount error section">
+                            {!this.state.invoiceIsNum &&(
+                                <p>ERROR, you can only submit numbers!</p>
+                            )}
+                            {this.state.invoiceIsNum === "true" &&(
+                                <p></p>
+                            )}
+                        </div>
                         <br/><br/>
-                        <button onClick={this.submitDate}>Submit</button>
+                        <button onClick={this.submitDate} aria-label="submit all data button">Submit</button>
                     </div>
 
-                    <div>
+                    <div aria-label="validation data summary">
                         {this.state.dateSubmitted &&(
                             <div>
                                 {this.state.currentlyCalculating &&(
