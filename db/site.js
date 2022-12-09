@@ -1,3 +1,4 @@
+
 var db = require('./DatabaseCore.js');
 
 export const all = async () => {
@@ -12,15 +13,38 @@ export const all = async () => {
     });
 }
 
-export const insertHistoricalData = async (a,b,c,d,e,f,g,h,i,j,k,l,m) => {
+export const insertHistoricalTest = async () => {
     return new Promise((resolve, reject) =>  {
-        db.query("INSERT into sites_historic(site_id, supplier_id, energy_hour_usage, energy_hour_cost, energy_hour_output, energy_hour_imported, energy_hour_exported, energy_hour_demand, heat_hour_demand, feels_like, wind_speed, carbon_day_emitted, time_stamp) Values (" +"'" + a + "',"+"'" + b + "',"+"'" + c + "',"+"'" + d + "',"+"'" + e + "',"+"'" + f + "',"+"'" + g + "',"+"'" + h + "',"+"'" + i + "',"+"'" + j + "',"+"'" + k + "',"+"'" + l + "'"+"'" + m + "')", (err, results) => {
+        let query = "Insert into sites_historic(site_id, supplier_id, energy_demand, heat_demand, energy_cost, energy_output, energy_imported, energy_exported, feels_like, wind_speed, carbon_emitted, time_stamp) VALUES (" + 2 + "," + 2 + "," + 2 + ","+ 2 + "," + 2 + "," + 2 + "," + 2 + "," + 2 + "," + 2 + ","+ 2 + ","+ 5 + ","+ "01/01/2020 00:00" + ")";
+        console.log(query);
+        db.query(query, (err, results) => {
+        //db.query("INSERT into sites_historic(site_id, supplier_id, energy_demand, heat_demand, energy_cost, energy_output, energy_imported, energy_exported, feels_like, wind_speed, carbon_emitted, time_stamp) Values (" +"'" + a + "',"+"'" + b + "',"+"'" + c + "',"+"'" + d + "',"+"'" + e + "',"+"'" + f + "',"+"'" + g + "',"+"'" + h + "',"+"'" + i + "',"+"'" + j + "')", (err, results) => {
             if(err) {
+                console.log("Error");
                 return reject(err);
             }
             resolve(results);
         });
+    });
+}
 
+export const insertHistoricalData = async (a,b,c,d,e,f,g,h,i,j,k,l) => {
+    let newDateTime = "";
+    newDateTime = newDateTime + l[6] + l[7] + l[8] + l[9] + "-" + l[3] + l[4] + "-" +
+    l[0] + l[1] + " " + l[10] + l[11] + l[12] + l[13] + l[14] + ":00";
+
+    return new Promise((resolve, reject) =>  {
+        let query = "Insert into sites_historic(site_id, supplier_id, energy_demand, heat_demand, energy_cost, energy_output, energy_imported, energy_exported, feels_like, wind_speed, carbon_emitted, time_stamp) VALUES (" + "'" + a + "'," + "'" + b + "'," + "'"+ c + "',"+ "'"+ d + "'," + "'"+ e + "'," + "'"+ f + "'," + "'"+ g + "'," + "'"+ h + "'," + "'"+ i + "',"+ "'"+ j + "',"+ "'"+ k + "',"+ "'"+ newDateTime + "'"+")";
+        console.log(query);
+        
+        db.query(query, (err, results) => {
+        //db.query("INSERT into sites_historic(site_id, supplier_id, energy_demand, heat_demand, energy_cost, energy_output, energy_imported, energy_exported, feels_like, wind_speed, carbon_emitted, time_stamp) Values (" +"'" + a + "',"+"'" + b + "',"+"'" + c + "',"+"'" + d + "',"+"'" + e + "',"+"'" + f + "',"+"'" + g + "',"+"'" + h + "',"+"'" + i + "',"+"'" + j + "')", (err, results) => {
+            if(err) {
+                console.log("Error");
+                return reject(err);
+            }
+            resolve(results);
+        });
     });
 }
 
@@ -105,5 +129,6 @@ export default {
     getSiteIDFromEmail,
     getSiteDataByDay,
     getSiteWeekData,
-    getSiteWeekHistoricalAverage
+    getSiteWeekHistoricalAverage,
+    insertHistoricalData
 }
