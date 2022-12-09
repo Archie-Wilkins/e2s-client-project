@@ -9,13 +9,14 @@ import TableFactory from "./tableFactory.js";
 class SiteEditor extends React.Component{
 
     reactRef = React.createRef();
+    siteEditorAdapter = new SiteEditorAdapter(1);
+    tableFactory = new TableFactory();
+    siteObjectData = this.siteEditorAdapter.formatDataForSiteEditor();
+    // TODO: If site object data is none, return an error message
 
     componentDidMount() {
 
-        var siteEditorAdapter = new SiteEditorAdapter(1);
-        var tableFactory = new TableFactory();
-        var siteObjectData = siteEditorAdapter.formatDataForSiteEditor();
-        var table = tableFactory.createSiteEditorTable(siteObjectData, this.reactRef);
+        var table = this.tableFactory.createSiteEditorTable(this.siteObjectData, this.reactRef);
         table.redraw(true);
 
     }

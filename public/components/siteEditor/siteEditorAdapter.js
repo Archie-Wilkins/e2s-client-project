@@ -3,7 +3,6 @@ import RoomObject from './baseClasses/roomObject.js';
 import FloorObject from './baseClasses/floorObject.js';
 import SiteObject from './baseClasses/siteObject.js';
 
-
 export default class SiteEditorAdapter {
     constructor(organisation) {
         // TODO - This is the organisation object at a later point
@@ -14,8 +13,8 @@ export default class SiteEditorAdapter {
     async pullDataForSiteEditor() {
         try {
             // Get all possible site data for
-            const endpoint = '/api/siteEditor/populateEditor';
-
+            const endpoint = '/api/login';
+            console.log("Getting sites");
             // Form the request for sending data to the server.
             const options = {
                 // The method is GET because we are getting data
@@ -44,6 +43,11 @@ export default class SiteEditorAdapter {
     async formatDataForSiteEditor() {
         // Get the data from the database
         const data = await this.pullDataForSiteEditor();
+
+        if (data === null) {
+            console.log("Error getting data from database");
+            return null;
+        }
 
         // Check for null response, then unleash the hounds
         if (data){
