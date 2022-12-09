@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from "next/link"
 import ToggleSite from "./toggleSite.js"
 import React from 'react';
-
+import Cookies from "js-cookie";
 
 
 // React Icons
@@ -31,7 +31,8 @@ class NavBar extends React.Component {
                 3: "Heath Hospital",
                 5: "St Davids Hospital",
                 6: "Singleton Hopsital"
-            }
+            },
+            name: ""
         };
     }
 
@@ -65,6 +66,32 @@ class NavBar extends React.Component {
             displaySiteToggle: false
         })
     }
+
+    async componentDidMount() {
+        try {
+            //get JSON being stored in user cookie
+            const userCookie = JSON.parse(Cookies.get().user);
+            //store in data
+            const data = {userID: userCookie.user}
+            let JSONdata = JSON.stringify(data);
+            const endpoint = '/api/getUserDetails';
+            const options = {method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSONdata,}
+            const response = await fetch(endpoint, options)
+            let result = await response.json();
+            let stringResult = JSON.stringify(result);
+            stringResult = stringResult.replace("[", "");
+            stringResult = stringResult.replace("]", "");
+            result = JSON.parse(stringResult);
+            this.state.name = result.first_name;
+            document.getElementById("navName").innerText = this.state.name;
+        } catch (e){
+            alert("API failed " + e);
+            //window.location = "/login";
+        }
+    }
+
+
+
 
     render() {
     return <div>
@@ -145,7 +172,7 @@ class NavBar extends React.Component {
 
                 <div aria-label="signed in user details section">
                     <p className='whiteText m-0'>Signed in as:</p>
-                    <p className='whiteText m-0'>Dan Schnee</p>
+                    <p className='whiteText m-0' id="navName"></p>
                 </div>
 
             </div>
