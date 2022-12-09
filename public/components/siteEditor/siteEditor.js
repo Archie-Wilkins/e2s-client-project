@@ -27,7 +27,12 @@ class SiteEditor extends React.Component{
 
             console.log(cell.getRow().getData().id);
 
-            return '<button type="submit" id="OpenImgUpload">ID upload</button></form>';
+            return  <div>
+
+                    <img src='../public/images/siteEditor/binBlank.svg'
+                     onMouseOver="../public/images/siteEditor/binRed.svg';"
+                     onMouseOut="../public/images/siteEditor/binBlank.svg';" height={16} width={16}/>
+                    </div>
         };
 
         this.siteTable = new Tabulator(this.reactRef, {

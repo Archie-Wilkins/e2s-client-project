@@ -1,4 +1,4 @@
-
+import OnboardingResult from './onboardingResult';
 
 class OnboardingBuilder {
     constructor() {

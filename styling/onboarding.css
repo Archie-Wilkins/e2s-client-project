@@ -1,0 +1,21 @@
+.onboardingLogo{
+    font-family: "Open Sans Bold", "Open Sans", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 120px;
+}
+
+.onboardingCentreTab{
+    border-width: 0px;
+    position: absolute;
+    left: 517px;
+    top: 118px;
+    width: 907px;
+    height: 650px;
+    display: flex;
+    font-family: "Source Sans Pro SemiBold", "Source Sans Pro", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 72px;
+    color: #000000;
+}

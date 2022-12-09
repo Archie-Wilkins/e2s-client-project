@@ -8,6 +8,7 @@ class TableFactory {
 
     createFlatTable(tableID, tableConfig, tableData = []) {
         tableConfig.push({"data": tableData});
+        tableConfig.push({"columns": tableColumns});
         return new Tabulator(tableID, {
             tableConfig
         });
@@ -15,7 +16,7 @@ class TableFactory {
 
     createNestedTable(tableID, tableData, tableColumns, tableConfig, tabulatorTable) {
         tableConfig.push({"data": tableData});
-        tableConfig.push({"columns": [tableColumns]});
+        tableConfig.push({"columns": tableColumns});
         var table = new Tabulator(tableID, {
             tableConfig,
             rowFormatter: function (row) {
@@ -67,6 +68,7 @@ class TableFactory {
 
         var tableData = createTableDataForSiteEditor(siteObjectData);
         var columnData = Constants.SITE_EDITOR_COLUMNS();
+        var assetsTable = this.createFlatTable(tableID, tableConfig, tableData);
 
     }
 }
