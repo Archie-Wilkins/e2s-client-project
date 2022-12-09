@@ -8,48 +8,13 @@ class ViewReportsPage extends React.Component {
         super(props);
         this.state = {
             site: "",
-            list: {}
-        };
+            list: {},
+            sites: {},
+            filteredList: []
+        }
     }
 
     async componentDidMount() {
-
-
-
-
-
-
-        //TO-DO list
-        //- create front end DONE
-        //create filter boxes (non-functional at this moment) DONE
-        //create table to show data DONE
-
-
-
-        //create event to fill table with dummy data:
-        //    break into get site weeks
-        //  - get organisation name
-        //  - get site name
-        //  - get site location
-        //  - get weeks
-        //download button will download dummy data
-        //create filtering
-        //replace both table data and download data with real database data
-
-
-        //get list of all sites
-
-        //get Site name
-        //Site location
-        //Weeks available for reporting
-        //Add download button for each week
-        //clicking download will download the CSV data for that week
-
-
-
-    }
-
-    getData = async () => {
         try {
             //generate data to be sent off (required for API fetch even if not needed)
             const data = {sample: "s"};
@@ -64,11 +29,11 @@ class ViewReportsPage extends React.Component {
             }
             let response = await fetch(endpoint, options)
 
-            let sites = await response.json();
+            this.state.sites = await response.json();
 
 
             //if response returned no data
-            if (sites === ""){
+            if (this.state.sites === ""){
                 alert("database pull failed");
                 return;
             }
@@ -96,6 +61,7 @@ class ViewReportsPage extends React.Component {
                 return;
             }
 
+
             //logic for fetching data
             //loop through all records
 
@@ -103,16 +69,15 @@ class ViewReportsPage extends React.Component {
             let Monday;
             let listHtml = "";
             let currentSite = "";
+            let countEntries = 0;
 
-            for(var site in await sites) {
+            for(var site in await this.state.sites) {
                 //alert(sites[site].site_id);
-                currentSite = sites[site].site_id;
+                currentSite = this.state.sites[site].site_id;
                 //let siteOnly = JSON.parse(result.filter(({element}) => element.site_id === currentSite));
                 var site_filter = this.state.list.filter( element => element.site_id === parseInt(currentSite));
-                console.log(site_filter);
                 for (var record in await site_filter) {
                     let [date, time] = site_filter[record].time_stamp.split("T");
-                    const [year, month, day] = date.split('-');
 
                     let days = new Date(date);
 
@@ -127,26 +92,94 @@ class ViewReportsPage extends React.Component {
                         //end week
                         //and push the monday & sunday to array
                         if (days.getDay() + new Date(Monday).getDay() === 1) {
+                            countEntries++;
                             weekArray.push(Monday + " - " + date + " : " + site_filter[record].site_name);
                             listHtml = listHtml + '<tr class="reportListRow"><td class="reportListRowText">' + site_filter[record].name + '</td><td class="reportListRowText">' + site_filter[record].site_name + '</td><td class="reportListRowText">' + site_filter[record].county + '</td><td class="reportListRowText">' + Monday + ' - ' + date + '</td><td class="reportButtonHolder"><button class="reportDownloadButton">download</button></td></tr>'
                         }
                     }
                 }
             }
-            console.log(weekArray);
             const list = document.getElementById("list");
+
+
+            document.getElementById("resultsNumber").innerText = countEntries + " of " + countEntries;
 
             //list.innerHTML = '<tr class="reportListRow"><td class="reportListRowText">Organisation</td><td class="reportListRowText">Site Name</td><td class="reportListRowText">Site Location</td><td class="reportListRowText">Dates Data Available</td><td class="reportButtonHolder"><button class="reportDownloadButton">download</button></td></tr>'
 
             list.innerHTML = listHtml;
 
-            console.log(weekArray);
         } catch (e) {
             alert("error: " + e);
         }
     }
 
 
+    filter = async () => {
+
+        const list = document.getElementById("list");
+        list.innerHTML = "";
+
+        //have a state variable for each filter, if vlaue is not empty dont bother filtering it
+
+        const orgFilter = document.getElementById("org").value;
+        const nameFilter = document.getElementById("name").value;
+        const countyFilter = document.getElementById("county").value;
+        const dateFilter = document.getElementById("date").value;
+
+        this.state.filteredList = this.state.list;
+
+        if (orgFilter !== ""){
+            this.state.filteredList = this.state.list.filter( element => element.name.includes(orgFilter));
+            console.log(this.state.filteredList);
+        }
+        if (nameFilter !== ""){
+            this.state.filteredList = this.state.filteredList.filter( element => element.site_name.includes(nameFilter));
+        }
+        if (countyFilter !== ""){
+            this.state.filteredList = this.state.filteredList.filter( element => element.county.includes(countyFilter));
+        }
+        if (dateFilter !== ""){
+            this.state.filteredList = this.state.filteredList.filter( element => element.time_stamp.includes(dateFilter));
+        }
+
+
+
+        let Monday;
+        let listHtml = "";
+        let currentSite = "";
+
+        for(var site in this.state.sites) {
+            //alert(sites[site].site_id);
+            currentSite = this.state.sites[site].site_id;
+            //let siteOnly = JSON.parse(result.filter(({element}) => element.site_id === currentSite));
+            var site_filter = this.state.filteredList.filter( element => element.site_id === parseInt(currentSite));
+            for (var record in await site_filter) {
+                let [date, time] = site_filter[record].time_stamp.split("T");
+
+                let days = new Date(date);
+
+                //if day is a monday
+                if (site_filter[record].site_id === currentSite && days.getDay() === 1) {
+                    //store monday's date
+                    Monday = date;
+                }
+
+                //if day is a sunday
+                if (site_filter[record].site_id === currentSite && days.getDay() === 0) {
+                    //end week
+                    //and push the monday & sunday to array
+                    if (days.getDay() + new Date(Monday).getDay() === 1) {
+                        listHtml = listHtml + '<tr class="reportListRow"><td class="reportListRowText">' + site_filter[record].name + '</td><td class="reportListRowText">' + site_filter[record].site_name + '</td><td class="reportListRowText">' + site_filter[record].county + '</td><td class="reportListRowText">' + Monday + ' - ' + date + '</td><td class="reportButtonHolder"><button class="reportDownloadButton">download</button></td></tr>'
+                    }
+                }
+            }
+        }
+
+
+
+        list.innerHTML = listHtml;
+
+    }
 
 
     render() {
@@ -160,22 +193,22 @@ class ViewReportsPage extends React.Component {
                     <div className="reportFilterContainer">
                         <div className="reportFilterElement">
                             <p className="reportFilterText">Organisation name</p>
-                            <input className="reportFilterBox" />
+                            <input className="reportFilterBox" id="org" onChange={this.filter} />
                         </div>
                         <div className="reportFilterElement">
                             <p className="reportFilterText">Site name</p>
-                            <input className="reportFilterBox" />
+                            <input className="reportFilterBox" id="name" onChange={this.filter} />
                         </div>
                         <div className="reportFilterElement">
                             <p className="reportFilterText">Site location</p>
-                            <input className="reportFilterBox" />
+                            <input className="reportFilterBox" id="county" onChange={this.filter} />
                         </div>
                         <div className="reportFilterElement">
                             <p className="reportFilterText">Dates available</p>
-                            <input className="reportFilterBox" />
+                            <input className="reportFilterBox" id="date" onChange={this.filter} />
                         </div>
-                        <button className="filterReportsButton" onClick={this.getData}>Filter</button>
-                        <p className="resultsText">Results: </p><p className="resultsText fw-normal">20 of 224</p>
+                        <button className="filterReportsButton">Filter</button>
+                        <p className="resultsText">Results: </p><p className="resultsText fw-normal" id="resultsNumber"></p>
                     </div>
                     <div className="centerHorizontally">
                         <div className="reportsListContainer">
