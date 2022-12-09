@@ -144,17 +144,16 @@ class LoginPage extends React.Component {
                 const result = await response.json();
 
                 if(result.data.message.toString() === "success"){
-
                     //if successfully got user role
                     switch(result.data.role.toString()) {
-                        case "1": //if user is an esm
-                            window.location = "/esm/dashboard";
+                        case "1": //if user is an admin
+                            window.location = "/admin/dashboard";
                             break;
                         case "2": //if user is a Director
                             window.location = "/director/dashboard";
                             break;
-                        case "3": //if user is an admin
-                            window.location = "/admin/dashboard";
+                        case "3": //if user is an esm
+                            window.location = "/esm/dashboard";
                             break;
                         default:
                             document.getElementById("error").innerText = "failed to read userID";
