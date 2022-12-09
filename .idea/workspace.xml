@@ -4,36 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-<<<<<<< HEAD
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/client-development/0.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/client-development/0.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/client-development/index.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/client-development/index.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/client-development/index.pack.old" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/client-development/index.pack.old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/0.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/0.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/1.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/1.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/2.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/2.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/index.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/index.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/index.pack.old" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/index.pack.old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/server/pages-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/pages-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/chunks/webpack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/trace" beforeDir="false" afterPath="$PROJECT_DIR$/.next/trace" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/login.js" afterDir="false" />
-=======
-      <change beforePath="$PROJECT_DIR$/.next/build-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/.next/build-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/server/middleware-build-manifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/middleware-build-manifest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/server/pages-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/pages-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/chunks/webpack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/static/development/_buildManifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/development/_buildManifest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/trace" beforeDir="false" afterPath="$PROJECT_DIR$/.next/trace" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
->>>>>>> proposed-login-changes-db-edit
-      <change beforePath="$PROJECT_DIR$/public/components/loginComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/components/loginComponent.js" afterDir="false" />
+    <list default="true" id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="removed file">
+      <change beforePath="$PROJECT_DIR$/pages/dashboard.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/landingPageV2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/siteForecasting.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/sitePerformance.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -52,30 +40,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-<<<<<<< HEAD
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/c2064724/IdeaProjects/e2s-team-4",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "C:/Users/c2064724/IdeaProjects/e2s-team-4/node_modules/jest",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
-  }
-}]]></component>
-  <component name="RunManager" selected="Jest.login">
-=======
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Git.Branch.Popup.ShowAllRemotes&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/c21012295/IdeaProjects/e2s-team-4&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/archi/OneDrive/Documents/Uni Year 3/Commercial Frameworks/e2s-team-4-v2/__tests__&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -85,8 +56,14 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Jest.forecasting">
->>>>>>> proposed-login-changes-db-edit
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\archi\OneDrive\Documents\Uni Year 3\Commercial Frameworks\e2s-team-4-v2\__tests__" />
+      <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\pages\api" />
+      <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\__tests__" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Jest.admin dashboard">
     <configuration default="true" type="DjangoTestsConfigurationType">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -107,75 +84,6 @@
       <option name="OPTIONS" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="forecasting" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/__tests__/navbar.test.jsx" />
-      <test-names>
-        <test-name value="forecasting" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="forecasting.renders a forecasting tab" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/__tests__/navbar.test.jsx" />
-      <test-names>
-        <test-name value="forecasting" />
-        <test-name value="renders a forecasting tab" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="forecasting.renders a hhhhforecasting tab" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/__tests__/navbar.test.jsx" />
-      <test-names>
-        <test-name value="forecasting" />
-        <test-name value="renders a hhhhforecasting tab" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="has forecasting.has forecasting.rnjjjj a forecasting tab" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/__tests__/navbar.test.jsx" />
-      <test-names>
-        <test-name value="has forecasting" />
-        <test-name value="has forecasting" />
-        <test-name value="rnjjjj a forecasting tab" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-<<<<<<< HEAD
-    <configuration name="login" type="JavaScriptTestRunnerJest" temporary="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST_FILE" />
-      <test-file value="$PROJECT_DIR$/__tests__/login.test.jsx" />
-      <method v="2" />
-    </configuration>
-=======
->>>>>>> proposed-login-changes-db-edit
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
         <option name="Make" enabled="true" />
@@ -265,23 +173,109 @@
       <option name="USE_PATTERN" value="false" />
       <method v="2" />
     </configuration>
-<<<<<<< HEAD
+    <configuration name="LandingPage" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/__tests__/landingPageTest.test.jsx" />
+      <test-names>
+        <test-name value="LandingPage" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="admin dashboard" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/__tests__/adminDashboard.text.jsx" />
+      <test-names>
+        <test-name value="admin dashboard" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="admin dashboard.renders an admin nav bar" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/__tests__/adminDashboard.text.jsx" />
+      <test-names>
+        <test-name value="admin dashboard" />
+        <test-name value="renders an admin nav bar" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="dashboard (1)" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/__tests__/landingPageTest.test.jsx" />
+      <test-names>
+        <test-name value="dashboard" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="dashboard.renders request form" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/__tests__/landingPageTest.test.jsx" />
+      <test-names>
+        <test-name value="dashboard" />
+        <test-name value="renders request form" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="forgor password" type="JavaScriptTestRunnerJest">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST_FILE" />
+      <test-file value="$PROJECT_DIR$/__tests__/forgotPassword.test.jsx" />
+      <method v="2" />
+    </configuration>
+    <configuration name="login" type="JavaScriptTestRunnerJest">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST_FILE" />
+      <test-file value="$PROJECT_DIR$/__tests__/login.test.jsx" />
+      <method v="2" />
+    </configuration>
     <list>
-      <item itemvalue="Jest.forecasting" />
-      <item itemvalue="Jest.forecasting.renders a forecasting tab" />
-      <item itemvalue="Jest.forecasting.renders a hhhhforecasting tab" />
-      <item itemvalue="Jest.has forecasting.has forecasting.rnjjjj a forecasting tab" />
       <item itemvalue="Jest.login" />
+      <item itemvalue="Jest.forgor password" />
+      <item itemvalue="Jest.LandingPage" />
+      <item itemvalue="Jest.admin dashboard" />
+      <item itemvalue="Jest.admin dashboard.renders an admin nav bar" />
+      <item itemvalue="Jest.dashboard (1)" />
+      <item itemvalue="Jest.dashboard.renders request form" />
     </list>
-=======
->>>>>>> proposed-login-changes-db-edit
     <recent_temporary>
       <list>
-        <item itemvalue="Jest.login" />
-        <item itemvalue="Jest.forecasting" />
-        <item itemvalue="Jest.forecasting.renders a hhhhforecasting tab" />
-        <item itemvalue="Jest.forecasting.renders a forecasting tab" />
-        <item itemvalue="Jest.has forecasting.has forecasting.rnjjjj a forecasting tab" />
+        <item itemvalue="Jest.admin dashboard" />
+        <item itemvalue="Jest.admin dashboard.renders an admin nav bar" />
+        <item itemvalue="Jest.LandingPage" />
+        <item itemvalue="Jest.dashboard.renders request form" />
+        <item itemvalue="Jest.dashboard (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -295,15 +289,45 @@
       <updated>1668597082849</updated>
       <workItem from="1668597087432" duration="9361000" />
       <workItem from="1669564178596" duration="299000" />
+      <workItem from="1670417128139" duration="7000" />
+      <workItem from="1670417139758" duration="224000" />
     </task>
-    <task id="LOCAL-00001" summary="small fixes, tests now work">
-      <created>1669730694880</created>
+    <task id="LOCAL-00001" summary="forgot password works with new db changes, login can redirect user to forgot password">
+      <created>1669817857237</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1669730694880</updated>
+      <updated>1669817857237</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="converted pages to ES6, fixed css naming conventions">
+      <created>1669820804149</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1669820804150</updated>
+    </task>
+    <task id="LOCAL-00003" summary="login will deliver user to respective page after logging in">
+      <created>1669909220441</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1669909220441</updated>
+    </task>
+    <task id="LOCAL-00004" summary="update to cookie system, now uses JSON. admin dashboard will check user role">
+      <created>1669917807014</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1669917807014</updated>
+    </task>
+    <task id="LOCAL-00005" summary="removed file">
+      <created>1669918454687</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1669918454687</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -321,7 +345,22 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="small fixes, tests now work" />
-    <option name="LAST_COMMIT_MESSAGE" value="small fixes, tests now work" />
+    <MESSAGE value="now uses new database access" />
+    <MESSAGE value="forgot password works with new db changes, login can redirect user to forgot password" />
+    <MESSAGE value="converted pages to ES6, fixed css naming conventions" />
+    <MESSAGE value="login will deliver user to respective page after logging in" />
+    <MESSAGE value="update to cookie system, now uses JSON. admin dashboard will check user role" />
+    <MESSAGE value="removed file" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed file" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/pages/api/login.js</url>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

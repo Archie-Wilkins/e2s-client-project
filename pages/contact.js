@@ -2,7 +2,7 @@ import Link from "next/link"
 
 
 function ContactPage() {
-    return<div className="container p-3">
+    return<div className="container p-3" aria-label="contact page content">
 
 
 

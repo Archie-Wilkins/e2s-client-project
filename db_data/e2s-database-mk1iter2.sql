@@ -456,3 +456,12 @@ CREATE TABLE IF NOT EXISTS `password_reset` (
     ) ENGINE=InnoDB;
 
 Insert into user_data (email, password, first_name, last_name, phone_number, role_id) Values ('ethanaharris10@gmail.com', aes_encrypt('password', 'ethan'), 'Ethan', 'Allen-Harris', '07324625123', 1);
+
+-- Bob@gmail.com ESM
+Insert into user_data (email, password, first_name, last_name, phone_number, role_id) Values ('bob@gmail.com', aes_encrypt('password', 'ethan'), 'Bob', 'Bobson', '07324625123', 3);
+
+-- mike@gmail.com Director
+Insert into user_data (email, password, first_name, last_name, phone_number, role_id) Values ('mike@gmail.com', aes_encrypt('password', 'ethan'), 'Mike', 'Smith', '07324625123', 2);
+
+--  garry@gmail.com Admin
+Insert into user_data (email, password, first_name, last_name, phone_number, role_id) Values ('garry@gmail.com', aes_encrypt('password', 'ethan'), 'Garry', 'Hulk', '07324625123', 1);

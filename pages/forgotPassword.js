@@ -304,31 +304,31 @@ class ForgotPassword extends React.Component {
     }
 
     render() {
-        return<div className="loginBackground">
+        return<div className="loginBackground" aria-label="forgot password page content">
             {/*send code to email*/}
-            <div className="loginPanelContainer" id="page1" data-testid="page1">
-                <div className="forgotPasswordPanelBanner">
+            <div className="loginPanelContainer" id="page1" data-testid="page1" aria-label="forgot password form section">
+                <div className="forgotPasswordPanelBanner" aria-label="forgot password form header">
                     <h2 className="loginHeader">Reset Password</h2>
                 </div>
                 <div className="forgotPasswordFormContainer">
-                    <form className="forgotPasswordForm" onSubmit={this.submitEmail} data-testid="email-form">
+                    <form className="forgotPasswordForm" onSubmit={this.submitEmail} data-testid="email-form" aria-label="forgot password form">
                         <div className="textInputValue">Email</div>
-                        <input type="email" id="email" name="email" className="textInputBox" data-testid="email"></input>
+                        <input type="email" id="email" name="email" aria-label="email input box" className="textInputBox" data-testid="email"></input>
                         <div className="errorTextHolder"><div className="errorText" id="error" data-testid="email-error">sample error text</div></div>
-                        <div><button className="loginButton" name="submit" type="submit">send code</button></div>
+                        <div><button className="loginButton" name="submit" type="submit" aria-label="submit forgot password request">send code</button></div>
                     </form>
 
                 </div>
             </div>
             {/*enter code*/}
-            <div className="loginPanelContainer displayNone" id="page2">
-                <div className="forgotPasswordPanelBanner">
+            <div className="loginPanelContainer displayNone" id="page2" aria-label="forgot password code confirmation page">
+                <div className="forgotPasswordPanelBanner" aria-label="forgot password form header">
                     <h2 className="loginHeader">Reset Password</h2>
                 </div>
                 <div className="textInputValue">Your email should have recieved a code</div>
                 <div className="forgotPasswordFormContainer">
                     <form className="forgotPasswordForm" onSubmit={this.submitCode} data-testid="code-form">
-                        <div className="textInputValue">Code</div>
+                        <div className="textInputValue" aria-label="confirmation code section">Code</div>
                         <input  id="code" name="code" className="textInputBox"  data-testid="code"></input>
                         <div className="errorTextHolder"><div className="errorText" id="error2" data-testid="code-error"></div></div>
                         <div><button className="loginButton" name="submit" type="submit">submit code</button></div>
@@ -344,19 +344,19 @@ class ForgotPassword extends React.Component {
 
             </div>
             {/*enter new password*/}
-            <div className="loginPanelContainer displayNone" id="page3">
-                <div className="forgotPasswordPanelBanner">
+            <div className="loginPanelContainer displayNone" id="page3" aria-label="create a new password page">
+                <div className="forgotPasswordPanelBanner" aria-label="forgot password form header">
                     <h2 className="loginHeader">Reset Password</h2>
                 </div>
-                <div className="forgotPasswordFormContainer">
-                    <form className="forgotPasswordForm" onSubmit={this.submitNewPassword} data-testid="password-form">
+                <div className="forgotPasswordFormContainer" aria-label="create a new password form section">
+                    <form className="forgotPasswordForm" onSubmit={this.submitNewPassword} data-testid="password-form" aria-label="create a new password form">
                         <div className="textInputValue">Password</div>
-                        <input type="password" id="password1" name="password1" className="textInputBox" data-testid="password1"></input>
+                        <input type="password" id="password1" name="password1" className="textInputBox" data-testid="password1" aria-label="enter new password box"></input>
                         <div className="errorTextHolder"/>
                         <div className="textInputValue">Confirm Password</div>
-                        <input type="password" id="password2" name="password2" className="textInputBox" data-testid="password2"></input>
+                        <input type="password" id="password2" name="password2" className="textInputBox" data-testid="password2" aria-label="confirm new password box"></input>
                         <div className="errorTextHolder"><div className="errorText" id="error3" data-testid="password-error"></div></div>
-                        <div><button className="loginButton" name="submit" type="submit">submit</button></div>
+                        <div><button className="loginButton" name="submit" type="submit" aria-label="submit new password button">submit</button></div>
                     </form>
                 </div>
             </div>
