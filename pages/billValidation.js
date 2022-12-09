@@ -4,6 +4,7 @@ import React, { useLayoutEffect } from "react";
 import Cookies from "js-cookie";
 import MainLayout from "../public/components/layouts/mainLayoutShell.js";
 import { faSmileWink } from "@fortawesome/free-solid-svg-icons";
+import { InputGroup } from "react-bootstrap";
 
 // This is the component for ESMs to validate their bills
 class BillValidation extends React.Component {
@@ -32,7 +33,11 @@ class BillValidation extends React.Component {
                      "june", "july", "august", "september", "october", "november", "december"],
 
             historicalSiteData: [],
-            calculatedInvoiceTotal: 0,         
+            calculatedInvoiceTotal: 0,
+            historicalFirstMonth: "",
+            historicalFirstYear: "",
+            historicalLastMonth: "",
+            historicalLastYear: "",         
         };
     }
 
@@ -76,6 +81,33 @@ class BillValidation extends React.Component {
           this.setState({ historicalSiteData: result.data.sites });
           let localCostTally = 0;
 
+          let localDateTimeStr = "";
+          let localDateTimeStrEnd = "";
+
+            for(let g = 0; g < 7; g++){
+                //console.log("g: " + g);
+                if(g < 4){
+                    localDateTimeStr = localDateTimeStr + result.data.sites[0].time_stamp[g];
+                    localDateTimeStrEnd = localDateTimeStrEnd + result.data.sites[result.data.sites.length-1].time_stamp[g];
+                }
+                if(g == 4){
+                    this.setState({historicalFirstYear: localDateTimeStr});
+                    this.setState({historicalLastYear: localDateTimeStrEnd});
+                    localDateTimeStr = "";
+                    localDateTimeStrEnd = "";
+                }
+                if(g > 4 && g < 7){
+                    localDateTimeStr = localDateTimeStr + result.data.sites[0].time_stamp[g];
+                    localDateTimeStrEnd = localDateTimeStrEnd + result.data.sites[result.data.sites.length-1].time_stamp[g];
+                    if(g == 6){
+                        this.setState({historicalFirstMonth: localDateTimeStr});
+                        this.setState({historicalLastMonth: localDateTimeStrEnd});
+                        localDateTimeStr = "";
+                        localDateTimeStrEnd = "";
+                    }
+                }  
+            }
+
           for(let i = 0; i < result.data.sites.length; i++){
             localCostTally = localCostTally + result.data.sites[i].energy_hour_cost;
           }
@@ -100,8 +132,10 @@ class BillValidation extends React.Component {
             }
         }
 
-        if(this.state.selectedYear === this.state.currentLimit[0]){
-            if(monthNum < parseFloat(this.state.currentLimit[1])-1){
+        //if(this.state.selectedYear === this.state.currentLimit[0]){
+          if(this.state.selectedYear === this.state.historicalLastYear){  
+            //if(monthNum < parseFloat(this.state.currentLimit[1])-1){
+              if(monthNum < parseFloat(this.state.historicalLastMonth)){  
                 this.setState({dateIsValid: "true"});
                 this.setState({dateSubmitted: true});
                 this.setState({currentlyCalculating: true});
@@ -110,9 +144,9 @@ class BillValidation extends React.Component {
                 this.setState({dateIsValid: "false"});
             }
         }else{
-            console.log(this.state.selectedYear);
+            /*console.log(this.state.selectedYear);
             console.log(this.state.selectedMonth);
-            console.log(this.state.invoiceTotal);
+            console.log(this.state.invoiceTotal);*/
             this.setState({dateIsValid: "true"});
             this.setState({dateSubmitted: true});
             this.setState({currentlyCalculating: true});
@@ -211,7 +245,7 @@ class BillValidation extends React.Component {
                         {this.state.dateSubmitted &&(
                             <div>
                                 {this.state.dateIsValid === "false" &&(
-                                    <p>ERROR: for {this.state.selectedYear} you only have data until {this.state.months[this.state.currentLimit[1]-1]}</p>
+                                    <p>ERROR: for {this.state.selectedYear} you only have data until {this.state.historicalLastMonth}</p>
                                 )}
                                 {this.state.dateIsValid === "true" &&(
                                     <div>
