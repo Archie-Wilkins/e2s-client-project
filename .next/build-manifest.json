@@ -29,6 +29,16 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/esm/analysis.js"
+    ],
+    "/esm/dashboard": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/esm/dashboard.js"
+    ],
+    "/weeklyEmail": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/weeklyEmail.js"
     ]
   },
   "ampFirstPages": []

@@ -102,6 +102,7 @@ class Forecasting extends React.Component {
                   currentData={this.state.CurrentEnergyCost}
                 />
 
+              <div className="mx-2">
                 <ForecastingInfoBox
                   title={"Predicted Energy Usage In 12 Months"}
                   unitGoesBefore={false}
@@ -109,6 +110,7 @@ class Forecasting extends React.Component {
                   forecastedData={this.state.CurrentEnergyUsage}
                   currentData={this.state.PredictedEnergyUsage}
                 />
+              </div>
 
                 <ForecastingInfoBox
                   title={"Predicted C02 Emissions In 12 Months"}

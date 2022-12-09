@@ -1,10 +1,8 @@
 import Link from "next/link";
 import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
 import EnergyCostForecastGraph from "../../public/components/graphs/toggleTimeChart";
-import StackGraph from "../../public/components/graphs/stackGraph";
 
 import ToggleStackChart from "../../public/components/graphs/toggleStackChart.js";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 import ForecastingInfoBox from "../../public/components/dataDisplayBox/forecastingInfoBox.js";
 import React from "react";
@@ -182,7 +180,7 @@ class Analysis extends React.Component {
           {/* Energy Usage */}
           <div className="container d-flex flex-column align-items-center w-100">
             <div className="row mt-5 w-75">
-              <div className="col-lg rounded text-center">
+              <div className="col rounded text-center">
                 <h2>Energy Usage</h2>
               </div>
             </div>
@@ -222,7 +220,7 @@ class Analysis extends React.Component {
 
 
 
-            <div className="w-100 vh-100 d-flex justify-content-center">
+            <div className="w-100 vh-60 d-flex justify-content-center">
               <ToggleStackChart
                 dataSet1={this.state.weeklyData}
                 dataSet2={this.state.monthlyData}

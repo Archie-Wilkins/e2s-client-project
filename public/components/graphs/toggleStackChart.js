@@ -84,7 +84,7 @@ class ToggleTimeChart extends React.Component {
   render() {
     return (
       <div className="row h-100 w-75">
-        <div className="col p-2 whiteBackground rounded vh-70 d-flex flex-column align-items-center ">
+        <div className="col p-2 whiteBackground rounded d-flex flex-column align-items-center ">
           <div>
             <ul className="d-flex blueBackground p-1 rounded noListStyle">
               <li className="whiteBackground d-flex justify-content-center">

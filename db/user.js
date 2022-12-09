@@ -105,6 +105,17 @@ export const getUserRoleID = async (userID) => {
     });
 }
 
+export const getUserRecord = async (userID) => {
+    return new Promise((resolve, reject) =>  {
+        db.query("SELECT * FROM user_credentials WHERE user_id = " + userID, (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+    });
+}
+
 
 export default {
     all,
@@ -114,5 +125,6 @@ export default {
     getUserResetCode,
     updateUserPassword,
     deleteResetRecord,
-    getUserRoleID
+    getUserRoleID,
+    getUserRecord
 }
