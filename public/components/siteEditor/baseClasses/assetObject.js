@@ -1,4 +1,4 @@
-class AssetObject{
+export default class AssetObject{
     constructor(tempId, name, typeId, energyEfficiency, energyDemand, emissions){
 
         // Somehow validate length and type of these for the database input

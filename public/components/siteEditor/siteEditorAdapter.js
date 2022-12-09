@@ -1,7 +1,15 @@
-class SiteEditorAdapter {
+import AssetObject from './baseClasses/assetObject.js';
+import RoomObject from './baseClasses/roomObject.js';
+import FloorObject from './baseClasses/floorObject.js';
+import SiteObject from './baseClasses/siteObject.js';
+
+
+export default class SiteEditorAdapter {
     constructor(organisation) {
+        // TODO - This is the organisation object at a later point
         this.organisation = organisation;
     }
+
 
     async pullDataForSiteEditor() {
         try {
@@ -15,6 +23,7 @@ class SiteEditorAdapter {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                body: JSON.stringify({org: this.organisation})
             }
 
             // Send the data to the API and wait for a response
@@ -33,12 +42,6 @@ class SiteEditorAdapter {
 
     // Class for mapping data from database to the objects to be used in site data.
     async formatDataForSiteEditor() {
-
-        import AssetObject from 'baseClasses/assetObject';
-        import RoomObject from 'baseClasses/roomObject';
-        import FloorObject from 'baseClasses/floorObject';
-        import SiteObject from 'baseClasses/siteObject';
-
         // Get the data from the database
         const data = await this.pullDataForSiteEditor();
 

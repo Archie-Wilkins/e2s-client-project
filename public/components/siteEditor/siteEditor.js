@@ -1,8 +1,8 @@
 import React from "react";
 import {TabulatorFull as Tabulator} from "tabulator-tables"; //import Tabulator library
 import "tabulator-tables/dist/css/tabulator.min.css"; //import Tabulator stylesheet
-import SiteEditorAdapter from "./siteEditorAdapter";
-import TableFactory from "./tableFactory";
+import SiteEditorAdapter from "./siteEditorAdapter.js";
+import TableFactory from "./tableFactory.js";
 
 // https://tabulator.info/docs/5.4/frameworks#react
 
@@ -12,7 +12,7 @@ class SiteEditor extends React.Component{
 
     componentDidMount() {
 
-        var siteEditorAdapter = new SiteEditorAdapter();
+        var siteEditorAdapter = new SiteEditorAdapter(1);
         var tableFactory = new TableFactory();
         var siteObjectData = siteEditorAdapter.formatDataForSiteEditor();
         var table = tableFactory.createSiteEditorTable(siteObjectData, this.reactRef);

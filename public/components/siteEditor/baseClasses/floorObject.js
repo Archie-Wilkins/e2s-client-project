@@ -1,4 +1,4 @@
-class FloorObject{
+export default class FloorObject{
     constructor(tempId, floorNumber, floorSizeX, floorSizeY){
         this.tempId = tempId;
         this.floorNumber = floorNumber;

@@ -18,6 +18,7 @@ export default async function handler(req, res) {
     // Mongo db would have helped greatly here
 
     try {
+        console.log("Getting sites");
         sites.getSitesWithOrgId(orgId).then((sites) => {
             for (let i = 0; i < sites.length; i++) {
                 floors.getFloorsWithSiteId(sites[i].site_id).then((floors) => {
@@ -34,6 +35,7 @@ export default async function handler(req, res) {
                     sites[i].floors = floors;
                 });
             }
+            console.log(sites);
             res.status(200).json({data: sites});
         });
     } catch(e){

@@ -1,4 +1,4 @@
-class RoomObject {
+export default class RoomObject {
     constructor(tempId, roomName, roomSizeX, roomSizeY, roomPosX, roomPosY) {
         this.tempId = tempId;
         this.roomName = roomName;

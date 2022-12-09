@@ -1,7 +1,7 @@
 import {TabulatorFull as Tabulator} from "tabulator-tables";
 import Constants from "./constants";
 
-class TableFactory {
+export default class TableFactory {
     constructor() {
 
     }
@@ -50,8 +50,10 @@ class TableFactory {
 
     createSiteEditorTable(siteObjectData, reactRef) {
 
-        function createTableDataForSiteEditor(siteObjectData)
-        {
+        function createTableDataForSiteEditor(siteObjectData) {
+
+            console.log(siteObjectData);
+            console.log("Trying for each")
             var nestedData = [];
             siteObjectData.forEach(siteObject => {
                 var siteJson = siteObject.getJsonFormat();

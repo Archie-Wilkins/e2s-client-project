@@ -1,4 +1,4 @@
-class SiteObject {
+export default class SiteObject {
     constructor(tempId, siteName, sitePostcode, siteAddress1, siteAddress2, county, sizeX, sizeY)
     {
         this.tempId = tempId
