@@ -8,7 +8,9 @@ import '../styling/adminHub.css';
 import '../styling/mainLayout.css';
 import '../styling/text.css';
 import '../styling/login.css';
-import '../styling/styles.css'
+import '../styling/styles.css';
+import '../styling/reports.css';
+
 
 export default function App({ Component, pageProps }) {
     return (
