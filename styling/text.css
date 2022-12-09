@@ -1,0 +1,40 @@
+.whiteText {
+    color: #ffffff;
+}
+
+.accentText {
+    color: #edb116;
+}
+
+.darkLink {
+    color: black;
+    text-decoration: underline;
+}
+
+.darkLink:hover {
+    color: #EDB116;
+    cursor: pointer;
+}
+
+.lightLink {
+    color: white;
+    text-decoration: none;
+}
+
+.lightLink:hover {
+    color: #EDB116;
+    cursor: pointer;
+}
+
+.accentButton {
+    color: black;
+    background-color: #EDB116;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.accentButton:hover {
+    color: black;
+    background-color: white;
+    cursor: pointer;
+}

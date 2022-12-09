@@ -1,0 +1,9 @@
+.topNavBar {
+    margin-left: 20ch;
+    width: calc(100vw - 20ch);
+    height: 6ch;
+}
+
+.searchBar {
+    border: 0px solid;
+}

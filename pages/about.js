@@ -1,9 +1,7 @@
 import Link from "next/link"
-import NavBar from "../public/components/navBar.js"
 
 function AboutUsPage() {
-    return <div>
-        <NavBar />
+    return <div aria-label="about us page content">
         <Link href="/"><p>Home</p>
         </Link>
         <Link href="/contact"><p>Contact-Us Page</p></Link>

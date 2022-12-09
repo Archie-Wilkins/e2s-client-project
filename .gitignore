@@ -1,2 +1,11 @@
+.next/
+.node_modules/
+.idea/
+.npm/
+/.changeLog
+build
+yarn.lock
+package-lock.json
+*.pack
 node_modules
-.next
+.next/server/pages-manifest.json
