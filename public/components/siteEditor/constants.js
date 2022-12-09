@@ -1,5 +1,9 @@
-class Constants {
-  static get SITE_EDITOR_COLUMNS() {
+export default class Constants {
+    constructor() {
+
+    }
+
+  SITE_EDITOR_COLUMNS() {
 
       // TODO: Check if this custom formatter can be found
       // TODO: The last column of every table right now is not using a custom formatter.
@@ -54,11 +58,12 @@ class Constants {
     ];
   }
 
-  static get SITE_EDITOR_CONFIG() {
+  SITE_EDITOR_CONFIG() {
       // TODO: Can the button cross be added to the column defaults?
       return {
           height: "800px",
           layout: "fitColumns",
+          columns: [],
           columnDefaults: {
               editor: "input",
               resizable: true

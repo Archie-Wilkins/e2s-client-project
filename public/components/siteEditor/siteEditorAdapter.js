@@ -2,45 +2,42 @@ import AssetObject from './baseClasses/assetObject.js';
 import RoomObject from './baseClasses/roomObject.js';
 import FloorObject from './baseClasses/floorObject.js';
 import SiteObject from './baseClasses/siteObject.js';
+import axios from "axios";
 
 export default class SiteEditorAdapter {
     constructor(organisation) {
         // TODO - This is the organisation object at a later point
+        console.log("SiteEditorAdapter constructor called with value of " + organisation);
         this.organisation = organisation;
     }
 
 
-    async pullDataForSiteEditor() {
+    pullDataForSiteEditor = async (event) => {
         try {
             // Get all possible site data for
-            const endpoint = '/api/login';
             console.log("Getting sites");
-            // Form the request for sending data to the server.
-            const options = {
-                // The method is GET because we are getting data
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({org: this.organisation})
-            }
-
-            // Send the data to the API and wait for a response
-            const response = await fetch(endpoint, options)
-
-            if (response.ok){
-                // Get the data from the response
-                // Return the data
-                return await response.json();
-            }
-        } catch (e) {
+            await axios.post(
+                {
+                    url: "api/populateEditor",
+                    data: {orgId: 1},
+                }).then((response) => {
+                console.log(response);
+                if (response.data.message.toString() === "success") {
+                    // TODO - This is the response.data.data object at a later point
+                    return response.data.data;
+                }
+                else{
+                    console.log("Error");
+                    return null
+                }
+            })}
+        catch (e) {
             console.log(e);
             return null;
         }
-    };
-
+    }
     // Class for mapping data from database to the objects to be used in site data.
-    async formatDataForSiteEditor() {
+    formatDataForSiteEditor = async (event) => {
         // Get the data from the database
         const data = await this.pullDataForSiteEditor();
 

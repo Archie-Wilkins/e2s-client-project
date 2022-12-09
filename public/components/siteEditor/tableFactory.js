@@ -7,18 +7,28 @@ export default class TableFactory {
     }
 
     // The flat table would be at the bottom of the site editor (i.e the table that shows all the assets)
-    createFlatTable(tableID, tableConfig, tableColumns, tableData = []) {
-        tableConfig.push({"data": tableData});
-        tableConfig.push({"columns": tableColumns});
+    createFlatTable(tableID, tableConfig= {}, tableColumns= [], tableData = []) {
+        if (tableData.length > 0) {
+            tableConfig.data = tableData;
+        }
+        if (tableColumns === []) {
+            return null;
+        }
+        tableConfig.columns = tableColumns;
         var table = new Tabulator(tableID, {
             tableConfig
         });
         return table;
     }
 
-    createNestedTable(tableID, tableData, tableColumns, tableConfig, tabulatorTable) {
-        tableConfig.push({"data": tableData});
-        tableConfig.push({"columns": tableColumns});
+    createNestedTable(tableID, tableConfig= {}, tableColumns= [], tableData=[], tabulatorTable) {
+        if (tableData.length > 0) {
+            tableConfig.data = tableData;
+        }
+        if (tableColumns === []) {
+            return null;
+        }
+        tableConfig.columns = tableColumns;
         var table = new Tabulator(tableID, {
             tableConfig,
             rowFormatter: function (row) {
@@ -51,35 +61,50 @@ export default class TableFactory {
     createSiteEditorTable(siteObjectData, reactRef) {
 
         function createTableDataForSiteEditor(siteObjectData) {
-
-            console.log(siteObjectData);
-            console.log("Trying for each")
-            var nestedData = [];
-            siteObjectData.forEach(siteObject => {
-                var siteJson = siteObject.getJsonFormat();
-                siteObject.getFloors().forEach(floor => {
-                    var floorJson = floor.getJsonFormat();
-                    floor.getRooms().forEach(room => {
-                        var roomJson = room.getJsonFormat();
-                        room.getAssets().forEach(asset => {
-                            var assetJson = asset.getJsonFormat();
-                            roomJson.push({"assets": assetJson});
+            try {
+                console.log(siteObjectData);
+                console.log("Trying for each")
+                var nestedData = [];
+                siteObjectData.forEach(siteObject => {
+                    var siteJson = siteObject.getJsonFormat();
+                    siteObject.getFloors().forEach(floor => {
+                        var floorJson = floor.getJsonFormat();
+                        floor.getRooms().forEach(room => {
+                            var roomJson = room.getJsonFormat();
+                            room.getAssets().forEach(asset => {
+                                var assetJson = asset.getJsonFormat();
+                                roomJson.push({"assets": assetJson});
+                            });
+                            floorJson.push({"rooms": roomJson});
                         });
-                        floorJson.push({"rooms": roomJson});
+                        siteJson.push({"floors": floorJson});
                     });
-                    siteJson.push({"floors": floorJson});
                 });
-            });
 
-            return nestedData;
+                return nestedData;
+            } catch (error) {
+                console.log(error);
+                return [];
+            }
         }
 
+        const constantsFile = new Constants();
         var tableData = createTableDataForSiteEditor(siteObjectData);
-        var columnData = Constants.SITE_EDITOR_COLUMNS();
-        var tableConfig = Constants.SITE_EDITOR_CONFIG();
+        var columnData = constantsFile.SITE_EDITOR_COLUMNS();
+        var tableConfig = constantsFile.SITE_EDITOR_CONFIG();
+        console.log(tableConfig);
         var assetsTable = this.createFlatTable("#assetsTable", tableConfig, columnData[3], tableData);
+        if (assetsTable === null) {
+            return null;
+        }
         var roomsTable = this.createNestedTable('#roomsTable', tableData, columnData[2], tableConfig, assetsTable);
+        if (roomsTable === null) {
+            return null;
+        }
         var floorsTable = this.createNestedTable('#floorsTable', tableData, columnData[1], tableConfig, roomsTable);
+        if (floorsTable === null) {
+            return null;
+        }
         return this.createNestedTable(reactRef, tableData, columnData[0], tableConfig, floorsTable);
 
     }
