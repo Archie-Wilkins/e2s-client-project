@@ -16,8 +16,9 @@ export default async function handler(req, res) {
 
     try {
         //gets user ID that matches email entered
+        console.log("Try")
         let findID = await user.getUserIDFromEmail(body.email);
-
+        console.log(findID)
         //if no user is found with that email
         if(findID.toString() === ""){
             //returns unsuccessfulLogin
@@ -27,18 +28,18 @@ export default async function handler(req, res) {
         //if ID has been found
         //stores UserID in variable
         let userID = await findID[0].user_id;
-
+        console.log(userID)
         //gets password from UserID
         let getPassword = await user.getPasswordFromID(userID);
-
+        console.log(getPassword)
         //then checks if the decrypted password matches users sent password
         if (await getPassword[0].decrypted_password === body.password)
         {
             //will fetch roleID of user
             let getRoleID = await user.getUserRoleID(userID);
-
             let RoleID = await getRoleID[0].role_id;
-
+            console.log("Go")
+            console.log(getRoleID)
             //returns successful response with the userID to login
             return res.status(200).json({data: {message:"success", user:userID, role:RoleID}});//returns userID instead of 'unsuccessfulLogin' if successful
         }
