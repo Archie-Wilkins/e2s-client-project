@@ -2007,9 +2007,9 @@ INSERT INTO `user_credentials` (`user_id`, `email`, `password`, `first_name`, `l
 	(1, 'ethanaharris10@gmail.com', aes_encrypt('password', 'ethan'), 'Ethan', 'Allen-Harris', '2024014634', 3),
 	(2, 'archiesundqvist@outlook.com', aes_encrypt('password', 'ethan'), 'Archie', 'Sundqvist', '1884074747', 3),
 	(3, 'archie.wilkins17@gmail.com', aes_encrypt('password', 'ethan'), 'Archie', 'Wilkins', '03337591018', 3),
-	(4, 'deannorris@live.co.uk', 'Imnotateacher!!!', 'Dean', 'Norris', '0818719819', 2),
-	(5, 'masterbox@gmail.com', 'box2ee?', 'Master', 'Box', '0000000000', 2),
-	(6, 'archiesundqvist@outlook.com', 'password12!', 'Archie', 'Sundqvist', '02920243600', 1);
+	(4, 'deannorris@live.co.uk', aes_encrypt('password', 'ethan'), 'Dean', 'Norris', '0818719819', 2),
+	(5, 'masterbox@gmail.com', aes_encrypt('password', 'ethan'), 'Master', 'Box', '0000000000', 2),
+	(6, 'archiesundqvist@outlook.com', aes_encrypt('password', 'ethan'), 'Archie', 'Sundqvist', '02920243600', 1);
 /*!40000 ALTER TABLE `user_credentials` ENABLE KEYS */;
 
 -- Dumping structure for table e2s_db.user_director
