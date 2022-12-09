@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="removed file">
-      <change beforePath="$PROJECT_DIR$/pages/dashboard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/landingPageV2.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/siteForecasting.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/sitePerformance.js" beforeDir="false" />
+    <list default="true" id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +15,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="CSS File" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -26,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="46-forgot-password" />
+        <entry key="$PROJECT_DIR$" value="13-weekly-email-reports" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -46,198 +43,35 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/archi/OneDrive/Documents/Uni Year 3/Commercial Frameworks/e2s-team-4-v2/__tests__&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/c2064724/IdeaProjects/e2s-team-4/__tests__/accountPage.test.jsx&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs.jest.jest_package&quot;: &quot;C:/Users/archi/OneDrive/Documents/Uni Year 3/Commercial Frameworks/e2s-team-4-v2/node_modules/jest&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;C:/Users/c2064724/IdeaProjects/e2s-team-4/node_modules/jest&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\archi\OneDrive\Documents\Uni Year 3\Commercial Frameworks\e2s-team-4-v2\__tests__" />
-      <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\pages\api" />
       <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\__tests__" />
+      <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\pages\api" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\pages" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.admin dashboard">
-    <configuration default="true" type="DjangoTestsConfigurationType">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="TARGET" value="" />
-      <option name="SETTINGS_FILE" value="" />
-      <option name="CUSTOM_SETTINGS" value="false" />
-      <option name="USE_OPTIONS" value="false" />
-      <option name="OPTIONS" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="PyBehaveRunConfigurationType" factoryName="Behave">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="ADDITIONAL_ARGS" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="Python.FlaskServer">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="launchJavascriptDebuger" value="false" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="Tox" factoryName="Tox">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="tests" factoryName="Doctests">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <method v="2" />
-    </configuration>
-    <configuration name="LandingPage" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Jest.Account">
+    <configuration name="Account" type="JavaScriptTestRunnerJest">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/__tests__/landingPageTest.test.jsx" />
-      <test-names>
-        <test-name value="LandingPage" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="admin dashboard" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/__tests__/adminDashboard.text.jsx" />
-      <test-names>
-        <test-name value="admin dashboard" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="admin dashboard.renders an admin nav bar" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/__tests__/adminDashboard.text.jsx" />
-      <test-names>
-        <test-name value="admin dashboard" />
-        <test-name value="renders an admin nav bar" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="dashboard (1)" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/__tests__/landingPageTest.test.jsx" />
-      <test-names>
-        <test-name value="dashboard" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="dashboard.renders request form" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/__tests__/landingPageTest.test.jsx" />
-      <test-names>
-        <test-name value="dashboard" />
-        <test-name value="renders request form" />
-      </test-names>
+      <scope-kind value="TEST_FILE" />
+      <test-file value="$PROJECT_DIR$/__tests__/accountPage.test.jsx" />
       <method v="2" />
     </configuration>
     <configuration name="forgor password" type="JavaScriptTestRunnerJest">
@@ -260,24 +94,22 @@
       <test-file value="$PROJECT_DIR$/__tests__/login.test.jsx" />
       <method v="2" />
     </configuration>
+    <configuration name="weeklyEmail" type="JavaScriptTestRunnerJest">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST_FILE" />
+      <test-file value="$PROJECT_DIR$/__tests__/weeklyEmail.test.jsx" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Jest.login" />
+      <item itemvalue="Jest.weeklyEmail" />
+      <item itemvalue="Jest.Account" />
       <item itemvalue="Jest.forgor password" />
-      <item itemvalue="Jest.LandingPage" />
-      <item itemvalue="Jest.admin dashboard" />
-      <item itemvalue="Jest.admin dashboard.renders an admin nav bar" />
-      <item itemvalue="Jest.dashboard (1)" />
-      <item itemvalue="Jest.dashboard.renders request form" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Jest.admin dashboard" />
-        <item itemvalue="Jest.admin dashboard.renders an admin nav bar" />
-        <item itemvalue="Jest.LandingPage" />
-        <item itemvalue="Jest.dashboard.renders request form" />
-        <item itemvalue="Jest.dashboard (1)" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -289,8 +121,9 @@
       <updated>1668597082849</updated>
       <workItem from="1668597087432" duration="9361000" />
       <workItem from="1669564178596" duration="299000" />
-      <workItem from="1670417128139" duration="7000" />
-      <workItem from="1670417139758" duration="224000" />
+      <workItem from="1670340237808" duration="57000" />
+      <workItem from="1670340317603" duration="38155000" />
+      <workItem from="1670515466783" duration="1817000" />
     </task>
     <task id="LOCAL-00001" summary="forgot password works with new db changes, login can redirect user to forgot password">
       <created>1669817857237</created>
@@ -327,7 +160,105 @@
       <option name="project" value="LOCAL" />
       <updated>1669918454687</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="removes any User session cookie">
+      <created>1669984809674</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1669984809674</updated>
+    </task>
+    <task id="LOCAL-00007" summary="added sample users to SQL file">
+      <created>1669987160359</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1669987160359</updated>
+    </task>
+    <task id="LOCAL-00008" summary="created form to send email to user">
+      <created>1670158906105</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1670158906105</updated>
+    </task>
+    <task id="LOCAL-00009" summary="fixed render issues, can now generate pdf, got single static graph">
+      <created>1670171358661</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1670171358661</updated>
+    </task>
+    <task id="LOCAL-00010" summary="will update report title according to form information.">
+      <created>1670248024469</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1670248024469</updated>
+    </task>
+    <task id="LOCAL-00011" summary="commit before merge main into branch">
+      <created>1670334861453</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1670334861453</updated>
+    </task>
+    <task id="LOCAL-00012" summary="merge">
+      <created>1670335174516</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1670335174516</updated>
+    </task>
+    <task id="LOCAL-00013" summary="splits database data into weeks">
+      <created>1670349424596</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1670349424596</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fetches site data and console logs it">
+      <created>1670426128818</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1670426128818</updated>
+    </task>
+    <task id="LOCAL-00015" summary="will send email report to email and generate performance overview text">
+      <created>1670433990349</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1670433990349</updated>
+    </task>
+    <task id="LOCAL-00016" summary="added image and details to account, fixed cookie check, fixed login redirect">
+      <created>1670509693679</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1670509693679</updated>
+    </task>
+    <task id="LOCAL-00017" summary="account will now load current user's data">
+      <created>1670512888253</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1670512888254</updated>
+    </task>
+    <task id="LOCAL-00018" summary="created render test for account page">
+      <created>1670513491395</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1670513491395</updated>
+    </task>
+    <task id="LOCAL-00019" summary="updated check cookie events to use componentDidMount(), added User's first name to NavBar">
+      <created>1670516559005</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1670516559005</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -351,7 +282,21 @@
     <MESSAGE value="login will deliver user to respective page after logging in" />
     <MESSAGE value="update to cookie system, now uses JSON. admin dashboard will check user role" />
     <MESSAGE value="removed file" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed file" />
+    <MESSAGE value="removes any User session cookie" />
+    <MESSAGE value="added sample users to SQL file" />
+    <MESSAGE value="created form to send email to user" />
+    <MESSAGE value="fixed render issues, can now generate pdf, got single static graph" />
+    <MESSAGE value="will update report title according to form information." />
+    <MESSAGE value="commit before merge main into branch" />
+    <MESSAGE value="merge" />
+    <MESSAGE value="splits database data into weeks" />
+    <MESSAGE value="fetches site data and console logs it" />
+    <MESSAGE value="will send email report to email and generate performance overview text" />
+    <MESSAGE value="added image and details to account, fixed cookie check, fixed login redirect" />
+    <MESSAGE value="account will now load current user's data" />
+    <MESSAGE value="created render test for account page" />
+    <MESSAGE value="updated check cookie events to use componentDidMount(), added User's first name to NavBar" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated check cookie events to use componentDidMount(), added User's first name to NavBar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
