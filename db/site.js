@@ -31,11 +31,11 @@ export const insertHistoricalTest = async () => {
 export const insertHistoricalData = async (a,b,c,d,e,f,g,h,i,j,k,l) => {
     let newDateTime = "";
     newDateTime = newDateTime + l[6] + l[7] + l[8] + l[9] + "-" + l[3] + l[4] + "-" +
-    l[0] + l[1] + " " + l[10] + l[11] + l[12] + l[13] + l[14] + ":00";
+    l[0] + l[1] + " " + l[10] + l[11] + l[12] + l[13] + l[14] + l[15]+ ":00";
 
     return new Promise((resolve, reject) =>  {
         let query = "Insert into sites_historic(site_id, supplier_id, energy_demand, heat_demand, energy_cost, energy_output, energy_imported, energy_exported, feels_like, wind_speed, carbon_emitted, time_stamp) VALUES (" + "'" + a + "'," + "'" + b + "'," + "'"+ c + "',"+ "'"+ d + "'," + "'"+ e + "'," + "'"+ f + "'," + "'"+ g + "'," + "'"+ h + "'," + "'"+ i + "',"+ "'"+ j + "',"+ "'"+ k + "',"+ "'"+ newDateTime + "'"+")";
-        console.log(query);
+        //console.log(query);
         
         db.query(query, (err, results) => {
         //db.query("INSERT into sites_historic(site_id, supplier_id, energy_demand, heat_demand, energy_cost, energy_output, energy_imported, energy_exported, feels_like, wind_speed, carbon_emitted, time_stamp) Values (" +"'" + a + "',"+"'" + b + "',"+"'" + c + "',"+"'" + d + "',"+"'" + e + "',"+"'" + f + "',"+"'" + g + "',"+"'" + h + "',"+"'" + i + "',"+"'" + j + "')", (err, results) => {
