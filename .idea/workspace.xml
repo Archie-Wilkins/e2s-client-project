@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/pages/api/getReportListData.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styling/reports.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/api/getAllSites.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/site.js" beforeDir="false" afterPath="$PROJECT_DIR$/db/site.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/viewReports.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/viewReports.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styling/reports.css" beforeDir="false" afterPath="$PROJECT_DIR$/styling/reports.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -264,7 +262,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670516559005</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="added front-end, will fetch all site data upon loading">
+      <created>1670610863436</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1670610863436</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -302,7 +307,8 @@
     <MESSAGE value="account will now load current user's data" />
     <MESSAGE value="created render test for account page" />
     <MESSAGE value="updated check cookie events to use componentDidMount(), added User's first name to NavBar" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated check cookie events to use componentDidMount(), added User's first name to NavBar" />
+    <MESSAGE value="added front-end, will fetch all site data upon loading" />
+    <option name="LAST_COMMIT_MESSAGE" value="added front-end, will fetch all site data upon loading" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

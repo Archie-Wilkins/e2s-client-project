@@ -7,7 +7,8 @@ class ViewReportsPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            site: ""
+            site: "",
+            list: {}
         };
     }
 
@@ -36,6 +37,7 @@ class ViewReportsPage extends React.Component {
         //replace both table data and download data with real database data
 
 
+        //get list of all sites
 
         //get Site name
         //Site location
@@ -49,77 +51,102 @@ class ViewReportsPage extends React.Component {
 
     getData = async () => {
         try {
+            //generate data to be sent off (required for API fetch even if not needed)
             const data = {sample: "s"};
             const JSONdata = JSON.stringify(data);
 
-            //API request to get site details
-            const endpoint = '/api/getReportListData';
-            const options = {
+            //API request to get all sites
+            let endpoint = '/api/getAllSites';
+            let options = {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json',},
                 body: JSONdata,
             }
-            const response = await fetch(endpoint, options)
+            let response = await fetch(endpoint, options)
 
-            let result = await response.json();
-            alert(result[0].time_stamp);
-            alert(result[31].time_stamp);
-            //DB returns JSON wrapped in [] which javascript doesn't like
-            //so we stringify it, remove [], then parse back to JSON
-            // let stringResult = JSON.stringify(result);
-            // stringResult = stringResult.replace("[", "");
-            // stringResult = stringResult.replace("]", "");
-            // result = JSON.parse(stringResult);
+            let sites = await response.json();
+
+
             //if response returned no data
-            if (result === ""){
+            if (sites === ""){
                 alert("database pull failed");
                 return;
             }
 
 
+
+
+
+            //API request to get site details
+            endpoint = '/api/getReportListData';
+            options = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json',},
+                body: JSONdata,
+            }
+            response = await fetch(endpoint, options)
+            this.state.list = await response.json();
+
+            // var data_filter = result.filter( element => element.site_id === parseInt())
+            // console.log(data_filter)
+
+            //if response returned no data
+            if (this.state.list === ""){
+                alert("database pull failed");
+                return;
+            }
+
             //logic for fetching data
             //loop through all records
 
-
-
-
-
             let weekArray = [];
             let Monday;
+            let listHtml = "";
+            let currentSite = "";
 
-            for(var record in await result){
-                let [date, time] = result[record].time_stamp.split("T");
-                const [year, month, day] = date.split('-');
+            for(var site in await sites) {
+                //alert(sites[site].site_id);
+                currentSite = sites[site].site_id;
+                //let siteOnly = JSON.parse(result.filter(({element}) => element.site_id === currentSite));
+                var site_filter = this.state.list.filter( element => element.site_id === parseInt(currentSite));
+                console.log(site_filter);
+                for (var record in await site_filter) {
+                    let [date, time] = site_filter[record].time_stamp.split("T");
+                    const [year, month, day] = date.split('-');
 
-                let days = new Date(date);
+                    let days = new Date(date);
 
-                //if day is a monday
-                if(days.getDay() === 0){
-                    //store monday's date
-                    Monday = date;
-                }
+                    //if day is a monday
+                    if (site_filter[record].site_id === currentSite && days.getDay() === 1) {
+                        //store monday's date
+                        Monday = date;
+                    }
 
-                //if day is a sunday
-                if(days.getDay() === 6){
-                    //end week
-                    //and push the monday & sunday to array
-                    if(days.getDay() + new Date(Monday).getDay() === 6){
-                        weekArray.push(Monday + " - " + date + " : " + result[record].site_name);
+                    //if day is a sunday
+                    if (site_filter[record].site_id === currentSite && days.getDay() === 0) {
+                        //end week
+                        //and push the monday & sunday to array
+                        if (days.getDay() + new Date(Monday).getDay() === 1) {
+                            weekArray.push(Monday + " - " + date + " : " + site_filter[record].site_name);
+                            listHtml = listHtml + '<tr class="reportListRow"><td class="reportListRowText">' + site_filter[record].name + '</td><td class="reportListRowText">' + site_filter[record].site_name + '</td><td class="reportListRowText">' + site_filter[record].county + '</td><td class="reportListRowText">' + Monday + ' - ' + date + '</td><td class="reportButtonHolder"><button class="reportDownloadButton">download</button></td></tr>'
+                        }
                     }
                 }
             }
+            console.log(weekArray);
+            const list = document.getElementById("list");
 
+            //list.innerHTML = '<tr class="reportListRow"><td class="reportListRowText">Organisation</td><td class="reportListRowText">Site Name</td><td class="reportListRowText">Site Location</td><td class="reportListRowText">Dates Data Available</td><td class="reportButtonHolder"><button class="reportDownloadButton">download</button></td></tr>'
 
-
-
-
-            //for
+            list.innerHTML = listHtml;
 
             console.log(weekArray);
         } catch (e) {
             alert("error: " + e);
         }
     }
+
+
 
 
     render() {
@@ -152,22 +179,26 @@ class ViewReportsPage extends React.Component {
                     </div>
                     <div className="centerHorizontally">
                         <div className="reportsListContainer">
-                            {/*<table>*/}
-                            {/*    <tr className="reportsListHeader">*/}
-                            {/*        <td className="reportHeaderText">Organisation</td>*/}
-                            {/*        <td className="reportHeaderText">Site Name</td>*/}
-                            {/*        <td className="reportHeaderText">Site Location</td>*/}
-                            {/*        <td className="reportHeaderText">Dates Data Available</td>*/}
-                            {/*        <td className="reportHeaderText">Download Data (CSV)</td>*/}
-                            {/*    </tr>*/}
-                            {/*    <tr className="reportListRow">*/}
-                            {/*        <td className="reportListRowText">Organisation</td>*/}
-                            {/*        <td className="reportListRowText">Site Name</td>*/}
-                            {/*        <td className="reportListRowText">Site Location</td>*/}
-                            {/*        <td className="reportListRowText">Dates Data Available</td>*/}
-                            {/*        <td className="reportButtonHolder"><button className="reportDownloadButton">download</button></td>*/}
-                            {/*    </tr>*/}
-                            {/*</table>*/}
+                            <table>
+                                <thead>
+                                <tr className="reportsListHeader">
+                                    <th className="reportHeaderText">Organisation</th>
+                                    <th className="reportHeaderText">Site Name</th>
+                                    <th className="reportHeaderText">Site Location</th>
+                                    <th className="reportHeaderText">Dates Data Available</th>
+                                    <th className="reportHeaderText">Download Data (CSV)</th>
+                                </tr>
+                                </thead>
+                                <tbody id="list" className="reportDataList">
+                                {/*<tr className="reportListRow">*/}
+                                {/*    <td className="reportListRowText">Organisation</td>*/}
+                                {/*    <td className="reportListRowText">Site Name</td>*/}
+                                {/*    <td className="reportListRowText">Site Location</td>*/}
+                                {/*    <td className="reportListRowText">Dates Data Available</td>*/}
+                                {/*    <td className="reportButtonHolder"><button className="reportDownloadButton">download</button></td>*/}
+                                {/*</tr>*/}
+                                </tbody>
+                            </table>
 
                         </div>
                     </div>
