@@ -15,6 +15,7 @@ class ViewReportsPage extends React.Component {
         }
     }
 
+    //on page load
     async componentDidMount() {
         try {
             //generate data to be sent off (required for API fetch even if not needed)
@@ -50,16 +51,13 @@ class ViewReportsPage extends React.Component {
             response = await fetch(endpoint, options)
             this.state.list = await response.json();
 
-            // var data_filter = result.filter( element => element.site_id === parseInt())
-            // console.log(data_filter)
-
             //if response returned no data
             if (this.state.list === ""){
                 alert("database pull failed");
                 return;
             }
 
-
+            //calls filter event to display the data
             this.filter();
 
 
@@ -70,83 +68,89 @@ class ViewReportsPage extends React.Component {
 
 
     filter = async () => {
-
+        //fetches HTML element to insert the HTML list into
         const list = document.getElementById("list");
         list.innerHTML = "";
 
-        //have a state variable for each filter, if vlaue is not empty dont bother filtering it
-
+        //fetches each filter textbox value
         const orgFilter = document.getElementById("org").value;
         const nameFilter = document.getElementById("name").value;
         const countyFilter = document.getElementById("county").value;
         const dateFilter = document.getElementById("date").value;
 
+        //filtered list will store a filtered down version of the original data set
         this.state.filteredList = this.state.list;
 
+        //if organisation filter isn't empty
         if (orgFilter !== ""){
             this.state.filteredList = this.state.list.filter( element => element.name.includes(orgFilter));
         }
+        //if name filter isn't empty
         if (nameFilter !== ""){
             this.state.filteredList = this.state.filteredList.filter( element => element.site_name.includes(nameFilter));
         }
+        //if county filter isn't empty
         if (countyFilter !== ""){
             this.state.filteredList = this.state.filteredList.filter( element => element.county.includes(countyFilter));
         }
+        //if date filter isn't empty
         if (dateFilter !== ""){
             this.state.filteredList = this.state.filteredList.filter( element => element.time_stamp.includes(dateFilter));
         }
 
-
-
+        //initialise variable for sorting the list and assigning id's
         let Monday;
         let listHtml = "";
         let currentSite = "";
         let id = 0;
 
+        //double for loop to retreive each site's weekly records
         for(var site in this.state.sites) {
-            //alert(sites[site].site_id);
+            //stores current siteID in variable
             currentSite = this.state.sites[site].site_id;
-            //let siteOnly = JSON.parse(result.filter(({element}) => element.site_id === currentSite));
+            //filters list down into current site
             var site_filter = this.state.filteredList.filter( element => element.site_id === parseInt(currentSite));
+            //loops through list of site data
             for (var record in await site_filter) {
+                //splits the time_stamp into date and time
                 let [date, time] = site_filter[record].time_stamp.split("T");
-
+                //converts string "date" into Date object
                 let days = new Date(date);
 
                 //if day is a monday
-                if (site_filter[record].site_id === currentSite && days.getDay() === 1) {
+                if (days.getDay() === 1) {
                     //store monday's date
                     Monday = date;
                 }
 
                 //if day is a sunday
-                if (site_filter[record].site_id === currentSite && days.getDay() === 0) {
-                    //end week
-                    //and push the monday & sunday to array
+                if (days.getDay() === 0) {
+                    //end week and add new HTML record
+                    //increment id for new record
                     id++;
                     if (days.getDay() + new Date(Monday).getDay() === 1) {
+                        //listHtml gets a new row added to it
                         listHtml = listHtml + '<tr class="reportListRow"><td class="reportListRowText">' + site_filter[record].name + '</td>' +
                             '<td class="reportListRowText">' + site_filter[record].site_name + '</td>' +
                             '<td class="reportListRowText">' + site_filter[record].county + '</td>' +
                             '<td class="reportListRowText">' + Monday + ' - ' + date + '</td>' +
                             '<td class="reportButtonHolder"><div id="data'+ id +'" style="display: none">' + site_filter[record].site_id + ' ' + Monday + '|' + date + ' ' + site_filter[record].site_name +'</div><button class="reportDownloadButton" id="btn' + id + '">download</button></td></tr>'
+                        //data relating to record is hidden in this <div> above
                     }
                 }
             }
         }
 
-
-        // let datetime = "01/01/2020 00:00:00";
-        // let [date, time] = datetime.split(" ");
-        // let [year, month, day] = date.split('/');
-        // let newDate = year + "-" + month + "-" + day;
-
+        //sets results innerText to id which doubles as a counter of records
         document.getElementById("resultsNumber").innerText = id;
 
+        //sets innerHTML to list generated in double for loop above
         list.innerHTML = listHtml;
 
+        //loops up to id/record count
         for (let i = 1; i < id+1; i++){
             try{
+                //fetches button and add's onClick function to them
                 let btn = document.getElementById("btn"+i);
                 btn.addEventListener('click', function (){
                     clickDetect(i);
@@ -154,12 +158,13 @@ class ViewReportsPage extends React.Component {
             } catch (e) {}
         }
 
+        //download button clicked
         async function clickDetect(id) {
+            //splits the data fetched from the hidden <div> in each record
             const [siteID, week, siteName] = document.getElementById("data" + id).innerText.split(" ");
             const [weekStart, weekEnd] = week.split("|");
 
-            alert(siteID + " " + weekStart + " " + weekEnd);
-
+            //stored the data in an object to be sent to API
             const data = {
                 siteID: siteID,
                 dateStart: weekStart,
@@ -174,10 +179,10 @@ class ViewReportsPage extends React.Component {
             }
             let response = await fetch(endpoint, options)
             let result = await response.json();
+            //API has fetched JSON response of the sites data for the selected timeframe
 
 
-
-            //JSON to csv download ripped from
+            //JSON to csv download code sourced from: https://chat.openai.com/
 
             // Get keys from the JSON data
             const keys = Object.keys(result[0]);
@@ -197,15 +202,13 @@ class ViewReportsPage extends React.Component {
             link.click();
             document.body.removeChild(link);
 
+            //try to download csv
             try{
                 this.downloadCSV(csv);
             } catch (e) {}
 
-
-
         }
     }
-
 
     render() {
         return <div aria-label="view reports page">
