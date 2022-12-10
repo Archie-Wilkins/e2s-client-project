@@ -280,7 +280,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670625715024</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="small front end changes">
+      <created>1670676969067</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1670676969067</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -321,7 +328,8 @@
     <MESSAGE value="added front-end, will fetch all site data upon loading" />
     <MESSAGE value="will filter JSON into approptiate sites and weeks" />
     <MESSAGE value="filters now work, now fetches data upon loading page" />
-    <option name="LAST_COMMIT_MESSAGE" value="filters now work, now fetches data upon loading page" />
+    <MESSAGE value="small front end changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="small front end changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

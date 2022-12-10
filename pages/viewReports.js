@@ -10,7 +10,8 @@ class ViewReportsPage extends React.Component {
             site: "",
             list: {},
             sites: {},
-            filteredList: []
+            filteredList: [],
+            id: 0
         }
     }
 
@@ -62,51 +63,8 @@ class ViewReportsPage extends React.Component {
             }
 
 
-            //logic for fetching data
-            //loop through all records
+            this.filter();
 
-            let weekArray = [];
-            let Monday;
-            let listHtml = "";
-            let currentSite = "";
-            let countEntries = 0;
-
-            for(var site in await this.state.sites) {
-                //alert(sites[site].site_id);
-                currentSite = this.state.sites[site].site_id;
-                //let siteOnly = JSON.parse(result.filter(({element}) => element.site_id === currentSite));
-                var site_filter = this.state.list.filter( element => element.site_id === parseInt(currentSite));
-                for (var record in await site_filter) {
-                    let [date, time] = site_filter[record].time_stamp.split("T");
-
-                    let days = new Date(date);
-
-                    //if day is a monday
-                    if (site_filter[record].site_id === currentSite && days.getDay() === 1) {
-                        //store monday's date
-                        Monday = date;
-                    }
-
-                    //if day is a sunday
-                    if (site_filter[record].site_id === currentSite && days.getDay() === 0) {
-                        //end week
-                        //and push the monday & sunday to array
-                        if (days.getDay() + new Date(Monday).getDay() === 1) {
-                            countEntries++;
-                            weekArray.push(Monday + " - " + date + " : " + site_filter[record].site_name);
-                            listHtml = listHtml + '<tr class="reportListRow"><td class="reportListRowText">' + site_filter[record].name + '</td><td class="reportListRowText">' + site_filter[record].site_name + '</td><td class="reportListRowText">' + site_filter[record].county + '</td><td class="reportListRowText">' + Monday + ' - ' + date + '</td><td class="reportButtonHolder"><button class="reportDownloadButton">download</button></td></tr>'
-                        }
-                    }
-                }
-            }
-            const list = document.getElementById("list");
-
-
-            document.getElementById("resultsNumber").innerText = countEntries + " of " + countEntries;
-
-            //list.innerHTML = '<tr class="reportListRow"><td class="reportListRowText">Organisation</td><td class="reportListRowText">Site Name</td><td class="reportListRowText">Site Location</td><td class="reportListRowText">Dates Data Available</td><td class="reportButtonHolder"><button class="reportDownloadButton">download</button></td></tr>'
-
-            list.innerHTML = listHtml;
 
         } catch (e) {
             alert("error: " + e);
@@ -147,6 +105,7 @@ class ViewReportsPage extends React.Component {
         let Monday;
         let listHtml = "";
         let currentSite = "";
+        let id = 0;
 
         for(var site in this.state.sites) {
             //alert(sites[site].site_id);
@@ -168,30 +127,45 @@ class ViewReportsPage extends React.Component {
                 if (site_filter[record].site_id === currentSite && days.getDay() === 0) {
                     //end week
                     //and push the monday & sunday to array
+                    id++;
                     if (days.getDay() + new Date(Monday).getDay() === 1) {
-                        listHtml = listHtml + '<tr class="reportListRow"><td class="reportListRowText">' + site_filter[record].name + '</td><td class="reportListRowText">' + site_filter[record].site_name + '</td><td class="reportListRowText">' + site_filter[record].county + '</td><td class="reportListRowText">' + Monday + ' - ' + date + '</td><td class="reportButtonHolder"><button class="reportDownloadButton">download</button></td></tr>'
+                        listHtml = listHtml + '<tr class="reportListRow"><td class="reportListRowText">' + site_filter[record].name + '</td>' +
+                            '<td class="reportListRowText">' + site_filter[record].site_name + '</td>' +
+                            '<td class="reportListRowText">' + site_filter[record].county + '</td>' +
+                            '<td class="reportListRowText">' + Monday + ' - ' + date + '</td>' +
+                            '<td class="reportButtonHolder"><button class="reportDownloadButton" id="btn' + id + '">download</button></td></tr>'
                     }
                 }
             }
         }
 
 
-        let datetime = "01/01/2020 00:00:00";
-        let [date, time] = datetime.split(" ");
-        let [year, month, day] = date.split('/');
-        let newDate = year + "-" + month + "-" + day;
+        // let datetime = "01/01/2020 00:00:00";
+        // let [date, time] = datetime.split(" ");
+        // let [year, month, day] = date.split('/');
+        // let newDate = year + "-" + month + "-" + day;
+
 
 
         list.innerHTML = listHtml;
 
-    }
+        for (let i = 1; i < id+1; i++){
+            console.log("btn"+i);
+            let btn = document.getElementById("btn"+i);
+            btn.addEventListener('click', function (){
+                clickDetect(i);
+            });
+        }
 
+        function clickDetect(event){
+            alert(event);
+        }
+    }
 
     render() {
         return <div aria-label="view reports page">
             <NavBar></NavBar>
             <div className="reportBackground greyBackground">
-
                 <div aria-label="view reports container" className="reportsContainer">
                     <h4 className="m-3 fw-bold">Site Data</h4>
                     <p className="m-2 m-lg-3 fw-bold">Filters</p>
@@ -227,16 +201,8 @@ class ViewReportsPage extends React.Component {
                                 </tr>
                                 </thead>
                                 <tbody id="list" className="reportDataList">
-                                {/*<tr className="reportListRow">*/}
-                                {/*    <td className="reportListRowText">Organisation</td>*/}
-                                {/*    <td className="reportListRowText">Site Name</td>*/}
-                                {/*    <td className="reportListRowText">Site Location</td>*/}
-                                {/*    <td className="reportListRowText">Dates Data Available</td>*/}
-                                {/*    <td className="reportButtonHolder"><button className="reportDownloadButton">download</button></td>*/}
-                                {/*</tr>*/}
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
                 </div>
