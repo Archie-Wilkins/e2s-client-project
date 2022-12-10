@@ -43,67 +43,6 @@ class BillValidation extends React.Component {
             historicalLastYear: "",         
         };
 
-        /*useEffect(() => {
-            async function fetchData() {
-                try {
-                    // API endpoint where we send form data.
-                    const endpoint = "/api/returnAllHistoricalSiteDataApi";
-              
-                    // Form the request for sending data to the server.
-                    const options = {
-                      // The method is POST because we are sending data.
-                      method: "GET",
-                      // Tell the server we're sending JSON.
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                    };
-              
-                    // Send the form data to our forms API on Vercel and get a response.
-                    const response = await fetch(endpoint, options);
-              
-                    // Get the response data from server as JSON.
-                    const result = await response.json();
-            
-                    this.setState({ historicalSiteData: result.data.sites });
-                    
-                    let yearsArr = [];
-                    let monthArr = [];
-            
-                    for(let i = 0; i < result.data.sites.length; i++){
-                        let datetime = result.data.sites[i][0];
-                        let [date, time] = datetime.toString().split(" ");
-                        let [day, month, year] = date.split('/');
-                        if(i === 0){
-                            yearsArr.push(year);
-                            monthArr.push(month);
-                        }
-                        if(i > 0){
-                            for(let x = 0; x < yearsArr.length; x++){
-                                if(year === yearsArr[x]){
-                                    for(let z = 0; z < monthArr.length; z++){
-                                        if(month !== monthArr[z]){
-                                            monthArr.push(month);
-                                        }
-                                    }
-                                }
-                                else if(year !== yearsArr[x]){
-                                    yearsArr.push(year);
-                                }
-                            }
-                        }
-                    }
-            
-                    this.setState({historicalYears: yearsArr});
-                    this.setState({historicalMonths: monthArr});
-            
-                }catch(e){
-                    console.log("error");
-                }
-            }
-            fetchData();
-        }, []);*/
-
     }
 
     // Function to initialise years which are available from the database.
@@ -122,6 +61,7 @@ class BillValidation extends React.Component {
         }
     }
 
+    /// IN USE
     initialiseData = async (event) => {
         try {
             console.log("API started");
@@ -154,17 +94,15 @@ class BillValidation extends React.Component {
             let lastYear = result.data.sites[result.data.sites.length - 1].time_stamp[0]+result.data.sites[result.data.sites.length - 1].time_stamp[1]+result.data.sites[result.data.sites.length - 1].time_stamp[2]+result.data.sites[result.data.sites.length - 1].time_stamp[3];
             let lastMonth = result.data.sites[result.data.sites.length - 1].time_stamp[5]+result.data.sites[result.data.sites.length - 1].time_stamp[6];
 
-            console.log("FLAG");
-            console.log("First year: " + firstYear);
+            /*console.log("First year: " + firstYear);
             console.log("First month: " + firstMonth);
             console.log("Last year: " + lastYear);
-            console.log("Last month: " + lastMonth);
+            console.log("Last month: " + lastMonth);*/
 
             this.setState({historicalFirstMonth: firstMonth});
             this.setState({historicalFirstYear: firstYear}); 
             this.setState({historicalLastMonth: lastMonth}); 
             this.setState({historicalLastYear: lastYear});
-            console.log("FLAG2");
 
             /*for(let i = 0; i < 2000; i++){
                 console.log(i);
@@ -196,12 +134,10 @@ class BillValidation extends React.Component {
             // Initialise the number of years on record
             let numberofYears = 0;
             numberofYears = lastYear-firstYear;
-            console.log("FLAG3");
 
             // Check if there is only only 1 partial year on record (e.g., 7 months in 2018),
             // And check that there is data associated with the year
             if(numberofYears === 0 && this.state.historicalFirstMonth !== ""){
-                console.log("FLAG4");
 
                 let newOption = document.createElement("option");
                 newOption.setAttribute('value', firstYear);
@@ -211,28 +147,18 @@ class BillValidation extends React.Component {
 
                 document.getElementById("yearStuff").appendChild(newOption);
             }else if(numberofYears >= 1){
-                console.log("FLAG5");
                 for(let i = 0; i <= numberofYears; i++){
-                    console.log("loop");
-                    console.log("first year: " + firstYear);
-                    console.log("i: " + i);
                     let floatYear = parseFloat(firstYear);
                     let floatI = parseFloat(i);
                     let localTotal = (floatYear/1) + (floatI/1);
                     
-                    console.log("Calc test: " + localTotal);
-
                     let newOption = document.createElement("option");
-                    console.log("Parse test: " + localTotal);
                     newOption.setAttribute('value', localTotal);
-                    console.log("FLAG6");
 
                     let optionText = document.createTextNode(localTotal);
                     newOption.appendChild(optionText);
-                    console.log("FLAG7");
     
                     document.getElementById("yearStuff").appendChild(newOption);
-                    console.log("Flag8");
                 }
             }
         }catch(e){
@@ -240,6 +166,7 @@ class BillValidation extends React.Component {
         }
     }
 
+    // TO BE UPDATED TO ONLY RETURN 
     returnAllSitesFromDatabaseApi = async (event) => {
         try {
           // API endpoint where we send form data.
@@ -311,33 +238,95 @@ class BillValidation extends React.Component {
         }
     };
 
+    claculateExpectedInvoiceApi = async (event) => {
+        try {
+            // API endpoint where we send form data.
+            const endpoint = "/api/returnAllHistoricalSiteDataApi";
+      
+            // Form the request for sending data to the server.
+            const options = {
+              // The method is POST because we are sending data.
+              method: "POST",
+              // Tell the server we're sending JSON.
+              headers: {
+                "Content-Type": "application/json",
+              },
+            };
+      
+            // Send the form data to our forms API on Vercel and get a response.
+            const response = await fetch(endpoint, options);
+      
+            // Get the response data from server as JSON.
+            const result = await response.json();
+      
+            // Set the state array for users to the data returned from calling the API (users from the database).
+            let localCostTally = 0;
+  
+            let startingIndex = 0;
+            let firstYear = result.data.sites[0].time_stamp[0]+result.data.sites[0].time_stamp[1]+result.data.sites[0].time_stamp[2]+result.data.sites[0].time_stamp[3];
+            let firstMonth = result.data.sites[0].time_stamp[5]+result.data.sites[0].time_stamp[6];
+
+            let localMonth = this.state.selectedMonth;
+            
+            let localMonthNum = 0;
+            for(let i = 0; i < this.state.months.length; i++){
+                if(localMonth.toLowerCase() === this.state.months[i]){
+                    localMonthNum = i + 1;
+                }
+            }
+
+            let localYear = this.state.selectedYear;
+            
+            console.log("First year:" + firstYear);
+            console.log("First month:" + firstMonth);
+            console.log("Last year:" + localYear);
+            console.log("Last month:" + localMonthNum);
+
+
+            let yearDifference = localYear/1 - firstYear/1;
+            let monthDifference = localMonthNum - firstMonth/1;
+
+            let indexStartpoint = ((365 * 48) * yearDifference) + (monthDifference * (31*48));
+            console.log("Start: " + indexStartpoint);
+
+            for(let i = indexStartpoint; i < (indexStartpoint/1 + (31*48)); i++){
+                localCostTally = localCostTally + result.data.sites[i].energy_cost/1;
+                console.log("Value " + result.data.sites[i].energy_cost);
+            }
+  
+            this.setState({calculatedInvoiceTotal: localCostTally});
+            
+          } catch (e) {
+            // No action
+            console.log("Error"); 
+          }
+    }
+
     submitDate = async (event) => {
         
         let monthNum = 0; // January default
 
-        await this.returnAllSitesFromDatabaseApi();
+        //await this.returnAllSitesFromDatabaseApi(); !!!
+        await this.claculateExpectedInvoiceApi();
         for(let month in this.state.months){
-            if(this.state.selectedMonth === this.state.months[month]){
+            if(this.state.selectedMonth.toLowerCase() === this.state.months[month]){
                 monthNum = month;
-                break;
             }
         }
 
-        //if(this.state.selectedYear === this.state.currentLimit[0]){
-          if(this.state.selectedYear === this.state.historicalLastYear){  
-            //if(monthNum < parseFloat(this.state.currentLimit[1])-1){
+        if(this.state.selectedYear === this.state.historicalLastYear){  
               if(monthNum < parseFloat(this.state.historicalLastMonth)){  
+                console.log("Flag 1");
                 this.setState({dateIsValid: "true"});
                 this.setState({dateSubmitted: true});
                 this.setState({currentlyCalculating: true});
                 this.setState({currentlyCalculating: false});
             }else{
+                console.log("Flag 1X");
                 this.setState({dateIsValid: "false"});
             }
         }else{
-            /*console.log(this.state.selectedYear);
-            console.log(this.state.selectedMonth);
-            console.log(this.state.invoiceTotal);*/
+            console.log("Flag 2");
             this.setState({dateIsValid: "true"});
             this.setState({dateSubmitted: true});
             this.setState({currentlyCalculating: true});
@@ -349,6 +338,9 @@ class BillValidation extends React.Component {
 
     updateValue = async (event) => {
         this.setState({dateIsValid: "unin"});
+        console.log("Selected month: " + document.getElementById("monthStuff").value);
+        console.log("Selected year: " + document.getElementById("yearStuff").value);
+
         this.setState({selectedMonth: document.getElementById("monthStuff").value});
         this.setState({selectedYear: document.getElementById("yearStuff").value});
         const localInvoiceTextVar = parseFloat(document.getElementById("amountInvoiced").value);
@@ -377,7 +369,6 @@ class BillValidation extends React.Component {
         // No action
         }
 
-        //await this.initialiseOptions();
     };
     
     render() {
