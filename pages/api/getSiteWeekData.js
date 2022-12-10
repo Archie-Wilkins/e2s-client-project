@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     //checks siteID, dateStart, dateEnd
     if (!body.siteID || !body.dateStart || !body.dateEnd) {
         // Sends a HTTP bad request error code
-        return res.status(400).json({data: 'Missing data!'})
+        return res.status(400).json({ data: 'Missing data!' })
     }
 
     try {

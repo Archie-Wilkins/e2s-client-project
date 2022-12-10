@@ -73,6 +73,32 @@ export const getSiteWeekData = async (siteID, dateStart, dateEnd) => {
     });
 }
 
+export const getSiteDataDayRange6Hourly = async (siteID, dateStart, dateEnd) => {
+    return new Promise((resolve, reject) => {
+        db.query("SELECT site_id, energy_demand, heat_demand, energy_cost, energy_output, energy_imported, energy_exported, feels_like, wind_speed, carbon_emitted, time_stamp as date" +
+            " FROM sites_historic WHERE site_id = " + siteID + " AND time_stamp > convert( '" + dateStart + " 00:00:00', datetime) AND time_stamp < convert('" + dateEnd + " 23:00:00', datetime) GROUP BY DAY(date), HOUR(date);", (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(results);
+            });
+    });
+}
+
+export const getSiteDataDayRangeDaily = async (siteID, dateStart, dateEnd) => {
+    return new Promise((resolve, reject) => {
+        db.query("SELECT site_id, energy_demand, heat_demand, energy_cost, energy_output, energy_imported, energy_exported, feels_like, wind_speed, carbon_emitted, DATE_FORMAT(time_stamp, '%d/%m/%y %H:%i') as date" +
+            " FROM sites_historic WHERE site_id = " + siteID + " AND time_stamp > convert( '" + dateStart + " 00:00:00', datetime) AND time_stamp < convert('" + dateEnd + " 23:00:00', datetime) GROUP BY DAY(date);", (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(results);
+            });
+    });
+}
+
+
+
 export const getSiteWeekHistoricalAverage = async (siteID) => {
     return new Promise((resolve, reject) =>  {
         db.query("SELECT site_id, AVG(energy_demand) * 7 * 48 as energy_avg_week_demand, AVG(heat_demand) * 7 * 48 as heat_avg_week_demand, AVG(energy_cost) * 7 * 48 as energy_avg_week_cost, AVG(energy_output) * 7 * 48 as energy_avg_week_output, AVG(energy_imported) * 7 * 48 as energy_avg_week_imported, AVG(energy_exported) * 7 * 48 as energy_avg_week_exported, AVG(feels_like) * 7 * 48 as week_avg_temp, AVG(wind_speed) * 7 * 48 as week_avg_wind, avg(carbon_emitted) as carbon_avg_week_emitted" +
@@ -93,5 +119,7 @@ export default {
     getSiteIDFromEmail,
     getSiteDataByDay,
     getSiteWeekData,
-    getSiteWeekHistoricalAverage
+    getSiteWeekHistoricalAverage,
+    getSiteDataDayRange6Hourly,
+    getSiteDataDayRangeDaily
 }

@@ -20,22 +20,18 @@ class ToggleDataChart extends React.Component {
   }
 
   displayGraph = (graphNumber) => {
-    console.log("Yes" + graphNumber);
     switch (graphNumber) {
       case 1:
-        console.log("Yes" + "displayWeeklyGraph");
         this.setState({
           currentGraph: this.displayWeeklyGraph(),
         });
         return this.displayWeeklyGraph();
       case 2:
-        console.log("Yes" + "displayMonthlyGraph");
         this.setState({
           currentGraph: this.displayMonthlyGraph(),
         });
         break;
       case 3:
-        console.log("Yes" + "displayYearlyGraph");
         this.setState({
           currentGraph: this.displayYearlyGraph(),
         });

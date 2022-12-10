@@ -23,22 +23,18 @@ class ToggleTimeChart extends React.Component {
   }
 
   displayGraph = (graphNumber) => {
-    console.log("Yes" + graphNumber);
     switch (graphNumber) {
       case 1:
-        console.log("Yes" + "displayWeeklyGraph");
         this.setState({
           currentGraph: this.displayWeeklyGraph(),
         });
         return this.displayWeeklyGraph();
       case 2:
-        console.log("Yes" + "displayMonthlyGraph");
         this.setState({
           currentGraph: this.displayMonthlyGraph(),
         });
         break;
       case 3:
-        console.log("Yes" + "displayYearlyGraph");
         this.setState({
           currentGraph: this.displayYearlyGraph(),
         });
@@ -51,7 +47,6 @@ class ToggleTimeChart extends React.Component {
   };
 
   displayWeeklyGraph = () => {
-    console.log("1");
     return (
       <LineGraph
         dataSet={this.props.dataSet1}
@@ -64,7 +59,6 @@ class ToggleTimeChart extends React.Component {
   };
 
   displayMonthlyGraph = () => {
-    console.log("2");
     return (
       <LineGraph
         dataSet={this.props.dataSet2}
@@ -77,7 +71,6 @@ class ToggleTimeChart extends React.Component {
   };
 
   displayYearlyGraph = () => {
-    console.log("3");
     return (
       <LineGraph
         dataSet={this.props.dataSet3}

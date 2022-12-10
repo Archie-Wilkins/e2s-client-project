@@ -3,7 +3,5 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/esm/analysis": "pages/esm/analysis.js",
-  "/api/getUserDetails": "pages/api/getUserDetails.js",
-  "/weeklyEmail": "pages/weeklyEmail.js",
-  "/esm/dashboard": "pages/esm/dashboard.js"
+  "/api/getSiteDataTimeRange6Hourly": "pages/api/getSiteDataTimeRange6Hourly.js"
 }

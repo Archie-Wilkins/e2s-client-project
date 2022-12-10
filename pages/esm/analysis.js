@@ -1,4 +1,5 @@
-import Link from "next/link";
+
+
 import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
 import EnergyCostForecastGraph from "../../public/components/graphs/toggleTimeChart";
 
@@ -7,6 +8,7 @@ import ToggleStackChart from "../../public/components/graphs/toggleStackChart.js
 import ForecastingInfoBox from "../../public/components/dataDisplayBox/forecastingInfoBox.js";
 import React from "react";
 import BottomFooter from "../../public/components/layouts/bottomFooter.js";
+import { getSiteDataEvery6Hours } from "../../public/services/HistoricalSiteData.js";
 
 class Analysis extends React.Component {
   constructor(props) {
@@ -81,6 +83,10 @@ class Analysis extends React.Component {
         { date: "Dec", cost: 640, c02: 165, energyUsage: 150, energyIn: 120 },
       ],
 
+      graphDataWeekly: null,
+      graphDataMonthly: null,
+      graphDataYearly: null, 
+
       // Energy Cost
       energyCostThisWeek: 435,
       energyCostLastWeek: 250,
@@ -111,6 +117,34 @@ class Analysis extends React.Component {
       c02EmissionsThisYear: 435,
       c02EmissionsLastYear: 250,
     };
+  }
+
+  async componentDidMount() {
+
+    console.log("Week")
+    let weeklyData2 = await getSiteDataEvery6Hours("3", "2018-12-22", "2018-12-31")
+
+    console.log("Month")
+    let monthlyData2 = await getSiteDataEvery6Hours("3", "2018-12-01", "2018-12-31")
+
+    console.log("Year")
+    let yearlyData2 = await getSiteDataEvery6Hours("3", "2018-01-01", "2018-12-31")
+
+    //Come back to inorder to convert timestamp into nicer format
+    // for (let i = 0; i <= weeklyData2.length; i++) {
+    // let item = weeklyData2[i];
+    // var date = new Date(item['date']);
+    // let formattedDate = date.getTime();
+    // item['date'] = formattedDate;
+    // }
+    // console
+    console.log(weeklyData2);
+
+    this.setState({
+      graphDataWeekly: weeklyData2,
+      graphDataMonthly: monthlyData2,
+      graphDataYearly: yearlyData2
+    });
   }
 
   render() {
@@ -166,13 +200,13 @@ class Analysis extends React.Component {
               toggle1={"Week"}
               toggle2={"Month"}
               toggle3={"Year"}
-              dataSet1={this.state.weeklyData}
-              dataSet2={this.state.monthlyData}
-              dataSet3={this.state.yearlyData}
+              dataSet1={this.state.graphDataWeekly}
+              dataSet2={this.state.graphDataMonthly}
+              dataSet3={this.state.graphDataYearly}
               xAxis={"Date"}
               yAxis={"Cost (£)"}
               xAxisDataKey={"date"}
-              yAxisDataKey={"cost"}
+              yAxisDataKey={"energy_cost"}
             />
           </div>
           {/* End of Energy Cost */}
@@ -222,13 +256,13 @@ class Analysis extends React.Component {
 
             <div className="w-100 vh-60 d-flex justify-content-center">
               <ToggleStackChart
-                dataSet1={this.state.weeklyData}
-                dataSet2={this.state.monthlyData}
-                dataSet3={this.state.yearlyData}
-                xAxis={"Date"}
+                dataSet1={this.state.graphDataWeekly}
+                dataSet2={this.state.graphDataMonthly}
+                dataSet3={this.state.graphDataYearly}
+                xAxis={"date"}
                 yAxis={"Energy Input/Output (Kw)"}
-                area1={"energyUsage"}
-                area2={"energyIn"}
+                area1={"energy_demand"}
+                area2={"energy_imported"}
             />
             </div>
           </div>
