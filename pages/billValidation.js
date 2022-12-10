@@ -22,6 +22,7 @@ class BillValidation extends React.Component {
             invoiceTotal: 0,
             invoiceIsNum: false,
             loadedYears:false,
+            pageLoaded: false,
             
             datesOnRecord: {
                 years: ["2018","2019","2020","2021","2022"],
@@ -63,6 +64,7 @@ class BillValidation extends React.Component {
 
     /// IN USE
     initialiseData = async (event) => {
+        this.setState({pageLoaded: true});
         try {
             console.log("API started");
 
@@ -384,7 +386,9 @@ class BillValidation extends React.Component {
                     <hr/>
                     <h3>Upload your energy invoices for validation</h3>
                 </div>
-                <button onClick={this.initialiseData}>Get Started</button>
+                {!this.state.pageLoaded &&(
+                    <button onClick={this.initialiseData}>Get Started</button>
+                )}
                 <div aria-label="Invoice data section">
                     <div>
                         <h3>SELECT THE START DATE FOR THE INVOICE</h3>
