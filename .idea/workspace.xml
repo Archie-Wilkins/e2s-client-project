@@ -273,7 +273,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670619550173</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="filters now work, now fetches data upon loading page">
+      <created>1670625715024</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1670625715024</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -313,7 +320,8 @@
     <MESSAGE value="updated check cookie events to use componentDidMount(), added User's first name to NavBar" />
     <MESSAGE value="added front-end, will fetch all site data upon loading" />
     <MESSAGE value="will filter JSON into approptiate sites and weeks" />
-    <option name="LAST_COMMIT_MESSAGE" value="will filter JSON into approptiate sites and weeks" />
+    <MESSAGE value="filters now work, now fetches data upon loading page" />
+    <option name="LAST_COMMIT_MESSAGE" value="filters now work, now fetches data upon loading page" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

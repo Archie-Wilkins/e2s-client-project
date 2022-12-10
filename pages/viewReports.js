@@ -176,6 +176,11 @@ class ViewReportsPage extends React.Component {
         }
 
 
+        let datetime = "01/01/2020 00:00:00";
+        let [date, time] = datetime.split(" ");
+        let [year, month, day] = date.split('/');
+        let newDate = year + "-" + month + "-" + day;
+
 
         list.innerHTML = listHtml;
 
@@ -207,8 +212,7 @@ class ViewReportsPage extends React.Component {
                             <p className="reportFilterText">Dates available</p>
                             <input className="reportFilterBox" id="date" onChange={this.filter} />
                         </div>
-                        <button className="filterReportsButton">Filter</button>
-                        <p className="resultsText">Results: </p><p className="resultsText fw-normal" id="resultsNumber"></p>
+                        <div><p className="resultsText fw-normal" id="resultsNumber"></p><p className="resultsText">Results: </p></div>
                     </div>
                     <div className="centerHorizontally">
                         <div className="reportsListContainer">
