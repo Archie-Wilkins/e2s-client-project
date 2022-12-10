@@ -14,8 +14,6 @@ class CsvUploadComponent extends React.Component {
     };
   }
 
-  
-
   handleOnChange = async (event) => {
     event.preventDefault();
 

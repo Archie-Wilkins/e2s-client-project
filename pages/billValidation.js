@@ -1,10 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Link from "next/link";
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useEffect } from "react";
 import Cookies from "js-cookie";
 import MainLayout from "../public/components/layouts/mainLayoutShell.js";
-import { faSmileWink } from "@fortawesome/free-solid-svg-icons";
-import { InputGroup } from "react-bootstrap";
+import { csvToJson } from "convert-csv-to-json/src/csvToJson.js";
+
 
 // This is the component for ESMs to validate their bills
 class BillValidation extends React.Component {
@@ -29,6 +29,9 @@ class BillValidation extends React.Component {
 
             currentLimit: ["2022", "10"],
 
+            historicalYears: [],
+            historicalMonths: [],
+
             months: ["january", "february", "march", "april", "may", 
                      "june", "july", "august", "september", "october", "november", "december"],
 
@@ -39,20 +42,201 @@ class BillValidation extends React.Component {
             historicalLastMonth: "",
             historicalLastYear: "",         
         };
+
+        /*useEffect(() => {
+            async function fetchData() {
+                try {
+                    // API endpoint where we send form data.
+                    const endpoint = "/api/returnAllHistoricalSiteDataApi";
+              
+                    // Form the request for sending data to the server.
+                    const options = {
+                      // The method is POST because we are sending data.
+                      method: "GET",
+                      // Tell the server we're sending JSON.
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                    };
+              
+                    // Send the form data to our forms API on Vercel and get a response.
+                    const response = await fetch(endpoint, options);
+              
+                    // Get the response data from server as JSON.
+                    const result = await response.json();
+            
+                    this.setState({ historicalSiteData: result.data.sites });
+                    
+                    let yearsArr = [];
+                    let monthArr = [];
+            
+                    for(let i = 0; i < result.data.sites.length; i++){
+                        let datetime = result.data.sites[i][0];
+                        let [date, time] = datetime.toString().split(" ");
+                        let [day, month, year] = date.split('/');
+                        if(i === 0){
+                            yearsArr.push(year);
+                            monthArr.push(month);
+                        }
+                        if(i > 0){
+                            for(let x = 0; x < yearsArr.length; x++){
+                                if(year === yearsArr[x]){
+                                    for(let z = 0; z < monthArr.length; z++){
+                                        if(month !== monthArr[z]){
+                                            monthArr.push(month);
+                                        }
+                                    }
+                                }
+                                else if(year !== yearsArr[x]){
+                                    yearsArr.push(year);
+                                }
+                            }
+                        }
+                    }
+            
+                    this.setState({historicalYears: yearsArr});
+                    this.setState({historicalMonths: monthArr});
+            
+                }catch(e){
+                    console.log("error");
+                }
+            }
+            fetchData();
+        }, []);*/
+
     }
 
+    // Function to initialise years which are available from the database.
     initialiseOptions = async (event) => {
         if(!this.state.loadedYears){
-            for(let year in this.state.datesOnRecord.years){
+            for(let year in this.state.historicalYears){
                 let newOption = document.createElement("option");
-                newOption.setAttribute('value', this.state.datesOnRecord.years[year]);
+                newOption.setAttribute('value', this.state.historicalYears[year]);
 
-                let optionText = document.createTextNode(this.state.datesOnRecord.years[year]);
+                let optionText = document.createTextNode(this.state.historicalYears[year]);
                 newOption.appendChild(optionText);
 
                 document.getElementById("yearStuff").appendChild(newOption);
             }
             this.setState({loadedYears: true});
+        }
+    }
+
+    initialiseData = async (event) => {
+        try {
+            console.log("API started");
+
+            // API endpoint where we send form data.
+            const endpoint = "/api/returnAllHistoricalSiteDataApi";
+      
+            // Form the request for sending data to the server.
+            const options = {
+              // The method is POST because we are sending data.
+              method: "GET",
+              // Tell the server we're sending JSON.
+              headers: {
+                "Content-Type": "application/json",
+              },
+            };
+      
+            // Send the form data to our forms API on Vercel and get a response.
+            const response = await fetch(endpoint, options);
+      
+            // Get the response data from server as JSON.
+            const result = await response.json();
+            console.log("Result: " + result.data.sites[0].time_stamp);
+
+            this.setState({ historicalSiteData: result.data.sites });
+
+            let firstYear = result.data.sites[0].time_stamp[0]+result.data.sites[0].time_stamp[1]+result.data.sites[0].time_stamp[2]+result.data.sites[0].time_stamp[3];
+            let firstMonth = result.data.sites[0].time_stamp[5]+result.data.sites[0].time_stamp[6];
+
+            let lastYear = result.data.sites[result.data.sites.length - 1].time_stamp[0]+result.data.sites[result.data.sites.length - 1].time_stamp[1]+result.data.sites[result.data.sites.length - 1].time_stamp[2]+result.data.sites[result.data.sites.length - 1].time_stamp[3];
+            let lastMonth = result.data.sites[result.data.sites.length - 1].time_stamp[5]+result.data.sites[result.data.sites.length - 1].time_stamp[6];
+
+            console.log("FLAG");
+            console.log("First year: " + firstYear);
+            console.log("First month: " + firstMonth);
+            console.log("Last year: " + lastYear);
+            console.log("Last month: " + lastMonth);
+
+            this.setState({historicalFirstMonth: firstMonth});
+            this.setState({historicalFirstYear: firstYear}); 
+            this.setState({historicalLastMonth: lastMonth}); 
+            this.setState({historicalLastYear: lastYear});
+            console.log("FLAG2");
+
+            /*for(let i = 0; i < 2000; i++){
+                console.log(i);
+                let currentYear = result.data.sites[i].time_stamp[0]+result.data.sites[i].time_stamp[1]+result.data.sites[i].time_stamp[2]+result.data.sites[i].time_stamp[3];
+                let currentMonth = result.data.sites[i].time_stamp[5]+result.data.sites[i].time_stamp[6];
+                if(i === 0){
+                    yearsArr.push(currentYear);
+                    monthArr.push(currentMonth);
+                }
+                if(i > 0){
+                    for(let x = 0; x < yearsArr.length; x++){
+                        if(currentYear === yearsArr[x]){
+                            for(let z = 0; z < monthArr.length; z++){
+                                if(currentMonth !== monthArr[z]){
+                                    monthArr.push(currentMonth);
+                                }
+                            }
+                        }
+                        else if(currentYear !== yearsArr[x]){
+                            yearsArr.push(currentYear);
+                        }
+                    }
+                }
+            }
+    
+            this.setState({historicalYears: yearsArr});
+            this.setState({historicalMonths: monthArr});*/
+
+            // Initialise the number of years on record
+            let numberofYears = 0;
+            numberofYears = lastYear-firstYear;
+            console.log("FLAG3");
+
+            // Check if there is only only 1 partial year on record (e.g., 7 months in 2018),
+            // And check that there is data associated with the year
+            if(numberofYears === 0 && this.state.historicalFirstMonth !== ""){
+                console.log("FLAG4");
+
+                let newOption = document.createElement("option");
+                newOption.setAttribute('value', firstYear);
+
+                let optionText = document.createTextNode(firstYear);
+                newOption.appendChild(optionText);
+
+                document.getElementById("yearStuff").appendChild(newOption);
+            }else if(numberofYears >= 1){
+                console.log("FLAG5");
+                for(let i = 0; i <= numberofYears; i++){
+                    console.log("loop");
+                    console.log("first year: " + firstYear);
+                    console.log("i: " + i);
+                    let floatYear = parseFloat(firstYear);
+                    let floatI = parseFloat(i);
+                    let localTotal = (floatYear/1) + (floatI/1);
+                    
+                    console.log("Calc test: " + localTotal);
+
+                    let newOption = document.createElement("option");
+                    console.log("Parse test: " + localTotal);
+                    newOption.setAttribute('value', localTotal);
+                    console.log("FLAG6");
+
+                    let optionText = document.createTextNode(localTotal);
+                    newOption.appendChild(optionText);
+                    console.log("FLAG7");
+    
+                    document.getElementById("yearStuff").appendChild(newOption);
+                    console.log("Flag8");
+                }
+            }
+        }catch(e){
+            console.log("error");
         }
     }
 
@@ -108,6 +292,13 @@ class BillValidation extends React.Component {
                 }  
             }
 
+          //for(let i = 0; i < result.data.sites.length; i++){
+          
+          /* find the index of currently chosen month
+             calculate it by what is first year and month in history,
+             find the current year and month, 
+             2020 3, 2022 12, for(i < 2022-20;): 
+          */
           for(let i = 0; i < result.data.sites.length; i++){
             localCostTally = localCostTally + result.data.sites[i].energy_hour_cost;
           }
@@ -186,7 +377,7 @@ class BillValidation extends React.Component {
         // No action
         }
 
-        await this.initialiseOptions();
+        //await this.initialiseOptions();
     };
     
     render() {
@@ -202,6 +393,7 @@ class BillValidation extends React.Component {
                     <hr/>
                     <h3>Upload your energy invoices for validation</h3>
                 </div>
+                <button onClick={this.initialiseData}>Get Started</button>
                 <div aria-label="Invoice data section">
                     <div>
                         <h3>SELECT THE START DATE FOR THE INVOICE</h3>
