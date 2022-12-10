@@ -1,23 +1,18 @@
 import site from "../../db/site";
 
 export default async function handler(req, res) {
-    console.log("Arriving at handler");
     try {
-        console.log("Retrieving request");
         //gets user ID that matches email entered
         let siteData = req.body;
 
-        console.log("Checking length of data");
         //if no user is found with that email
         if(siteData.length === 0){
             //returns unsuccessfulLogin
             return res.status(200).json({data: {message:"no data"}});
         }
-
-        console.log("Initialising date given");
         
         let handledArray = [];
-        for(let i = 1000; i < 1001; i++){
+        for(let i = 0; i < 6000; i++){
 
             let datetime = siteData[i][0];
             let [date, time] = datetime.toString().split(" ");
@@ -54,16 +49,20 @@ export default async function handler(req, res) {
             console.log("10: "+ siteData[0][7]);
             console.log("11: "+ (siteData[0][8]*0.193));
             console.log("12: "+ newDate);*/
-           
+            let testArr = [];
+            testArr.push(localHandledArray2);
+            site.insertHistoricalTest(testArr);
+
             handledArray.push(localHandledArray2);
         }
 
         //console.log("Handled: " + handledArray);
         try{
-            site.insertHistoricalTest(handledArray);
+            //site.insertHistoricalTest(handledArray);
             return res.status(200).json({data: { message:"great success"}});
         }catch(e){
             console.log("no insert");
+            return res.status(500).json({data: { message:"great shame"}});
         }
    
         //6000 is capcity limit
