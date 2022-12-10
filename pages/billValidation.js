@@ -49,6 +49,8 @@ class BillValidation extends React.Component {
     // Function to initialise years which are available from the database.
     initialiseOptions = async (event) => {
         if(!this.state.loadedYears){
+            this.setState({loadedYears: true});
+
             for(let year in this.state.historicalYears){
                 let newOption = document.createElement("option");
                 newOption.setAttribute('value', this.state.historicalYears[year]);
@@ -58,13 +60,14 @@ class BillValidation extends React.Component {
 
                 document.getElementById("yearStuff").appendChild(newOption);
             }
-            this.setState({loadedYears: true});
         }
     }
 
     /// IN USE
     initialiseData = async (event) => {
         try {
+            this.setState({pageLoaded: true});
+
             console.log("API started");
 
             // API endpoint where we send form data.
@@ -165,7 +168,7 @@ class BillValidation extends React.Component {
                     document.getElementById("yearStuff").appendChild(newOption);
                 }
             }
-            this.setState({pageLoaded: true});
+            
         }catch(e){
             console.log("error");
         }
@@ -403,23 +406,25 @@ class BillValidation extends React.Component {
             pageName={this.state.pageName}
             ></MainLayout>
             <div className="billValidationPageContent" aria-label="bill validation page content">
-                <div aria-label="Page header section">
+                <div aria-label="Page header section" className="billValidationHeaderContent">
                     <h1>Bill Validation</h1>
                     <hr/>
                     <h3>Upload your energy invoices for validation</h3>
                 </div>
                 {!this.state.pageLoaded &&(
-                    <button onClick={this.initialiseData}>Get Started</button>
+                    <button onClick={this.initialiseData} className="billStart">Get Started</button>
                 )}
-                <div aria-label="Invoice data section">
+
+                {this.state.pageLoaded &&(
+                    <div aria-label="Invoice data section" classname="invoiceData">
                     <div>
-                        <h3>SELECT THE START DATE FOR THE INVOICE</h3>
+                        <h3 className="invoiceData">SELECT THE START DATE FOR THE INVOICE</h3>
                         
                         {/*Make dyanmic so that it auto updates in later years */}
-                        <select id="yearStuff" onChange={this.updateValue} aria-label="select which year to validate dropdown">
+                        <select className="invoiceData" id="yearStuff" onChange={this.updateValue} aria-label="select which year to validate dropdown">
                         </select>
                         
-                        <select id="monthStuff" onChange={this.updateValue} aria-label="select which month to validate dropdown">
+                        <select className="invoiceData" id="monthStuff" onChange={this.updateValue} aria-label="select which month to validate dropdown">
                             <option monthValue="january">JANUARY</option>
                             <option monthValue="february">FEBRUARY</option>
                             <option monthValue="march">MARCH</option>
@@ -436,16 +441,19 @@ class BillValidation extends React.Component {
 
                         {/*Initially we will check only for 31 days*/}
                         <br/>
-                        <label>Enter the amount you have been invoiced for your chosen month (£)</label>
-                        <input id="amountInvoiced" onInput={this.updateValue} aria-label="input invoice total box"></input>
+                        <label className="invoiceData">Enter the amount you have been invoiced for your chosen month (£)</label>
+                        <input className="invoiceData" id="amountInvoiced" onInput={this.updateValue} aria-label="input invoice total box"></input>
 
                         {/*Error messages for errors */}
                         <div aria-label="invoice amount error section">
                             {!this.state.invoiceIsNum &&(
-                                <p>ERROR, you can only submit numbers!</p>
+                                <p className="invoiceData">ERROR, you can only submit numbers!</p>
                             )}
                             {this.state.invoiceIsNum === true &&(
-                                <button onClick={this.submitDate} aria-label="submit all data button">Submit</button>
+                                <div>
+                                    <button onClick={this.submitDate} aria-label="submit all data button">Submit</button>
+                                    <hr/>
+                                </div>    
                             )}
                         </div>
                         <br/><br/>
@@ -464,7 +472,7 @@ class BillValidation extends React.Component {
                                             <p>VALIDATING....</p>
                                         )}
                                         {!this.state.currentlyCalculating &&(
-                                            <div>
+                                            <div className="billValidationSummaryData">
                                                 <h3>{this.state.selectedMonth} {this.state.selectedYear}</h3>
                                                 <h3>Invoice Amount: £{this.state.invoiceTotal}</h3>
                                                 <h3>Calculated Amount: £{parseFloat(this.state.calculatedInvoiceTotal).toFixed(2)}</h3>
@@ -490,7 +498,10 @@ class BillValidation extends React.Component {
                     <div>
                         <h3></h3>
                     </div>
-                </div>
+                    </div>
+                )}  
+
+                
             </div>
         </div>
         );

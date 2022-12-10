@@ -4,5 +4,21 @@
     background-color: #f2f2f2;
     margin-left: 10%;
     padding-left: 10%;
+    padding-right: 10%;
     flex-direction: column;
+    height: 200vh;
 }
+
+.billValidationHeaderContent{
+    margin-top: 2%;
+    margin-bottom: 10%;
+}
+
+.billValidationSummaryData{
+    margin-top: 10%;
+}
+
+.billStart{
+    width: 100px;
+}
+
