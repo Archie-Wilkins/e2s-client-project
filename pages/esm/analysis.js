@@ -8,7 +8,8 @@ import ToggleStackChart from "../../public/components/graphs/toggleStackChart.js
 import ForecastingInfoBox from "../../public/components/dataDisplayBox/forecastingInfoBox.js";
 import React from "react";
 import BottomFooter from "../../public/components/layouts/bottomFooter.js";
-import { getSiteDataEvery6Hours } from "../../public/services/HistoricalSiteData.js";
+import { getSiteDataEveryDay, getSiteDataEvery6Hours, getSiteDataEveryMonth } from "../../public/services/HistoricalSiteData.js";
+
 
 class Analysis extends React.Component {
   constructor(props) {
@@ -125,10 +126,10 @@ class Analysis extends React.Component {
     let weeklyData2 = await getSiteDataEvery6Hours("3", "2018-12-22", "2018-12-31")
 
     console.log("Month")
-    let monthlyData2 = await getSiteDataEvery6Hours("3", "2018-12-01", "2018-12-31")
+    let monthlyData2 = await getSiteDataEveryDay("3", "2018-12-01", "2018-12-31")
 
     console.log("Year")
-    let yearlyData2 = await getSiteDataEvery6Hours("3", "2018-01-01", "2018-12-31")
+    let yearlyData2 = await getSiteDataEveryMonth("3", "2018-01-01", "2018-12-31")
 
     //Come back to inorder to convert timestamp into nicer format
     // for (let i = 0; i <= weeklyData2.length; i++) {
@@ -311,13 +312,13 @@ class Analysis extends React.Component {
               toggle1={"Week"}
               toggle2={"Month"}
               toggle3={"Year"}
-              dataSet1={this.state.weeklyData}
-              dataSet2={this.state.monthlyData}
-              dataSet3={this.state.yearlyData}
-              xAxis={"Date"}
+              dataSet1={this.state.graphDataWeekly}
+              dataSet2={this.state.graphDataMonthly}
+              dataSet3={this.state.graphDataYearly}
+              xAxis={"date"}
               yAxis={"C02 Emissions (Kg)"}
               xAxisDataKey={"date"}
-              yAxisDataKey={"c02"}
+              yAxisDataKey={"carbon_emitted"}
             />
           </div>
           {/* End of C02 Emissions */}

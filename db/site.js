@@ -87,8 +87,20 @@ export const getSiteDataDayRange6Hourly = async (siteID, dateStart, dateEnd) => 
 
 export const getSiteDataDayRangeDaily = async (siteID, dateStart, dateEnd) => {
     return new Promise((resolve, reject) => {
-        db.query("SELECT site_id, energy_demand, heat_demand, energy_cost, energy_output, energy_imported, energy_exported, feels_like, wind_speed, carbon_emitted, DATE_FORMAT(time_stamp, '%d/%m/%y %H:%i') as date" +
-            " FROM sites_historic WHERE site_id = " + siteID + " AND time_stamp > convert( '" + dateStart + " 00:00:00', datetime) AND time_stamp < convert('" + dateEnd + " 23:00:00', datetime) GROUP BY DAY(date);", (err, results) => {
+        db.query("SELECT site_id, energy_demand, heat_demand, energy_cost, energy_output, energy_imported, energy_exported, feels_like, wind_speed, carbon_emitted, time_stamp as date" +
+            " FROM sites_historic WHERE site_id = " + siteID + " AND time_stamp > convert( '" + dateStart + " 00:00:00', datetime) AND time_stamp < convert('" + dateEnd + " 23:00:00', datetime) GROUP BY MONTH(date),DAY(date);", (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(results);
+            });
+    });
+}
+
+export const getSiteDataDayRangeMonthly = async (siteID, dateStart, dateEnd) => {
+    return new Promise((resolve, reject) => {
+        db.query("SELECT site_id, energy_demand, heat_demand, energy_cost, energy_output, energy_imported, energy_exported, feels_like, wind_speed, carbon_emitted, time_stamp as date" +
+            " FROM sites_historic WHERE site_id = " + siteID + " AND time_stamp > convert( '" + dateStart + " 00:00:00', datetime) AND time_stamp < convert('" + dateEnd + " 23:00:00', datetime) GROUP BY MONTH(date);", (err, results) => {
                 if (err) {
                     return reject(err);
                 }
@@ -119,7 +131,8 @@ export default {
     getSiteIDFromEmail,
     getSiteDataByDay,
     getSiteWeekData,
+    getSiteDataDayRangeDaily,
     getSiteWeekHistoricalAverage,
     getSiteDataDayRange6Hourly,
-    getSiteDataDayRangeDaily
+    getSiteDataDayRangeMonthly
 }

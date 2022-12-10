@@ -32,3 +32,22 @@ export async function getSiteDataEveryDay(siteID, startDate, endDate) {
     return response;
 }
 
+export async function getSiteDataEveryMonth(siteID, startDate, endDate) {
+    let response = null;
+    await axios.post(`/api/getSiteDataTimeRangeMonthly`, {
+        siteID: siteID,
+        dateStart: startDate,
+        dateEnd: endDate
+    })
+        .then(res => {
+            response = res.data;
+        })
+        .catch((err) => {
+            throw new Error('Historical Site Data Failed to retrieve data')
+        });
+    return response;
+}
+
+
+
+
