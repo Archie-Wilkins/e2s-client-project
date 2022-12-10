@@ -1,7 +1,7 @@
-import Link from "next/link"
+import Link from "next/link";
 import React from "react";
-import NavBar from '../public/components/layouts/publicTopNav'
-
+import NavBar from '../public/components/layouts/publicTopNav';
+// import downloadCsv from 'download-csv';
 
 class ViewReportsPage extends React.Component {
     constructor(props) {
@@ -129,7 +129,7 @@ class ViewReportsPage extends React.Component {
                             '<td class="reportListRowText">' + site_filter[record].site_name + '</td>' +
                             '<td class="reportListRowText">' + site_filter[record].county + '</td>' +
                             '<td class="reportListRowText">' + Monday + ' - ' + date + '</td>' +
-                            '<td class="reportButtonHolder"><div id="data'+ id +'" style="display: none">' + site_filter[record].site_id + ' ' + Monday + '|' + date +'</div><button class="reportDownloadButton" id="btn' + id + '">download</button></td></tr>'
+                            '<td class="reportButtonHolder"><div id="data'+ id +'" style="display: none">' + site_filter[record].site_id + ' ' + Monday + '|' + date + ' ' + site_filter[record].site_name +'</div><button class="reportDownloadButton" id="btn' + id + '">download</button></td></tr>'
                     }
                 }
             }
@@ -155,7 +155,7 @@ class ViewReportsPage extends React.Component {
         }
 
         async function clickDetect(id) {
-            const [siteID, week] = document.getElementById("data" + id).innerText.split(" ");
+            const [siteID, week, siteName] = document.getElementById("data" + id).innerText.split(" ");
             const [weekStart, weekEnd] = week.split("|");
 
             alert(siteID + " " + weekStart + " " + weekEnd);
@@ -163,10 +163,10 @@ class ViewReportsPage extends React.Component {
             const data = {
                 siteID: siteID,
                 dateStart: weekStart,
-                weekEnd: weekEnd
+                dateEnd: weekEnd
             }
             let JSONdata = JSON.stringify(data);
-            let endpoint = '/api/getSiteWeekData';
+            let endpoint = '/api/getSiteTimeframeData';
             let options = {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json',},
@@ -175,11 +175,37 @@ class ViewReportsPage extends React.Component {
             let response = await fetch(endpoint, options)
             let result = await response.json();
 
-            console.log(result);
+
+
+            //JSON to csv download ripped from
+
+            // Get keys from the JSON data
+            const keys = Object.keys(result[0]);
+
+            // Create the CSV string, including the keys as the first row
+            let csv = keys.join(',') + '\n';
+            result.forEach(data => {
+                csv += Object.values(data).join(',') + '\n';
+            });
+
+            // Create a hidden link element and click it to trigger the download
+            const link = document.createElement('a');
+            link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv));
+            link.setAttribute('download', siteName + '.csv');
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            try{
+                this.downloadCSV(csv);
+            } catch (e) {}
+
 
 
         }
     }
+
 
     render() {
         return <div aria-label="view reports page">
