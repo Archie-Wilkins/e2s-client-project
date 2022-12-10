@@ -102,7 +102,6 @@ class CsvUploadComponent extends React.Component {
     try {
       // API endpoint where we send form data.
       const endpoint = "/api/uploadAllHistoricalSiteDataApi";
-      console.log("EVAL: " + this.state.csvData[0][0]);
 
       // Get data from the form.
       /*const data = {
@@ -123,34 +122,40 @@ class CsvUploadComponent extends React.Component {
 
       let data = [];
 
-      // 1mb data limit reached at 6000 rows
-      for(let i = 0; i < 6000; i++){
-        data.push(this.state.csvData[i]);
+      // 1mb POST limit is reached at around 6,000 rows of data in the current format.
+      if(this.state.csvData.length > 6000){
+        console.log("Too many rows of data, please upload 6000 rows (125 days) or less at a time.");
       }
-      //const data = this.state.csvData;
 
-      // Send the data to the server in JSON format.
-      const JSONdata = JSON.stringify(data);
+      // If the user has entered a valid amount of data...
+      else if(this.state.csvData.length <= 6000){
+        for(let i = 0; i < this.state.csvData.length; i++){
+          data.push(this.state.csvData[i]);
+        }
 
-      // Form the request for sending data to the server.
-      const options = {
-        // The method is POST because we are sending data.
-        method: "POST",
-        // Tell the server we're sending JSON.
-        headers: {
-          "Content-Type": "application/json",
-        },
+        // Send the data to the server in JSON format.
+        const JSONdata = JSON.stringify(data);
 
-        body: JSONdata,
-      };
+        // Form the request for sending data to the server.
+        const options = {
+          // The method is POST because we are sending data.
+          method: "POST",
+          // Tell the server we're sending JSON.
+          headers: {
+            "Content-Type": "application/json",
+          },
 
-      // Send the form data to our forms API on Vercel and get a response.
-      const response = await fetch(endpoint, options);
+          body: JSONdata,
+        };
 
-      // Get the response data from server as JSON.
-      const result = await response.json();
+        // Send the form data to our forms API on Vercel and get a response.
+        const response = await fetch(endpoint, options);
 
-      console.log(result.data.message);
+        // Get the response data from server as JSON.
+        const result = await response.json();
+
+        console.log(result.data.message);
+      }
 
     } catch (e) {
       // No action

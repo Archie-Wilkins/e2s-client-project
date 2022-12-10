@@ -8,11 +8,12 @@ export default async function handler(req, res) {
         //if no user is found with that email
         if(siteData.length === 0){
             //returns unsuccessfulLogin
-            return res.status(200).json({data: {message:"no data"}});
+            return res.status(500).json({data: {message:"no data"}});
         }
         
         let handledArray = [];
-        for(let i = 0; i < 6000; i++){
+        
+        for(let i = 0; i < siteData.length; i++){
 
             let datetime = siteData[i][0];
             let [date, time] = datetime.toString().split(" ");
@@ -52,7 +53,6 @@ export default async function handler(req, res) {
             let testArr = [];
             testArr.push(localHandledArray2);
             site.insertHistoricalTest(testArr);
-
             handledArray.push(localHandledArray2);
         }
 
@@ -65,8 +65,6 @@ export default async function handler(req, res) {
             return res.status(500).json({data: { message:"great shame"}});
         }
    
-        //6000 is capcity limit
-        //only 1500 added
         /*try{
             for (let i = 0; i < 1500; i++){
                 //console.log("Mystery: " + siteData[i][0]);
@@ -82,8 +80,6 @@ export default async function handler(req, res) {
             console.log("Fail");
         }*/
         
-        //if password doesn't match return unsuccessfulLogin
-
     } catch(e){
         //catches error
         console.log("Error");
