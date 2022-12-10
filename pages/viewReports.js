@@ -40,9 +40,6 @@ class ViewReportsPage extends React.Component {
             }
 
 
-
-
-
             //API request to get site details
             endpoint = '/api/getReportListData';
             options = {
@@ -88,7 +85,6 @@ class ViewReportsPage extends React.Component {
 
         if (orgFilter !== ""){
             this.state.filteredList = this.state.list.filter( element => element.name.includes(orgFilter));
-            console.log(this.state.filteredList);
         }
         if (nameFilter !== ""){
             this.state.filteredList = this.state.filteredList.filter( element => element.site_name.includes(nameFilter));
@@ -133,7 +129,7 @@ class ViewReportsPage extends React.Component {
                             '<td class="reportListRowText">' + site_filter[record].site_name + '</td>' +
                             '<td class="reportListRowText">' + site_filter[record].county + '</td>' +
                             '<td class="reportListRowText">' + Monday + ' - ' + date + '</td>' +
-                            '<td class="reportButtonHolder"><button class="reportDownloadButton" id="btn' + id + '">download</button></td></tr>'
+                            '<td class="reportButtonHolder"><div id="data'+ id +'" style="display: none">' + site_filter[record].site_id + ' ' + Monday + '|' + date +'</div><button class="reportDownloadButton" id="btn' + id + '">download</button></td></tr>'
                     }
                 }
             }
@@ -145,20 +141,43 @@ class ViewReportsPage extends React.Component {
         // let [year, month, day] = date.split('/');
         // let newDate = year + "-" + month + "-" + day;
 
-
+        document.getElementById("resultsNumber").innerText = id;
 
         list.innerHTML = listHtml;
 
         for (let i = 1; i < id+1; i++){
-            console.log("btn"+i);
-            let btn = document.getElementById("btn"+i);
-            btn.addEventListener('click', function (){
-                clickDetect(i);
-            });
+            try{
+                let btn = document.getElementById("btn"+i);
+                btn.addEventListener('click', function (){
+                    clickDetect(i);
+                });
+            } catch (e) {}
         }
 
-        function clickDetect(event){
-            alert(event);
+        async function clickDetect(id) {
+            const [siteID, week] = document.getElementById("data" + id).innerText.split(" ");
+            const [weekStart, weekEnd] = week.split("|");
+
+            alert(siteID + " " + weekStart + " " + weekEnd);
+
+            const data = {
+                siteID: siteID,
+                dateStart: weekStart,
+                weekEnd: weekEnd
+            }
+            let JSONdata = JSON.stringify(data);
+            let endpoint = '/api/getSiteWeekData';
+            let options = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json',},
+                body: JSONdata,
+            }
+            let response = await fetch(endpoint, options)
+            let result = await response.json();
+
+            console.log(result);
+
+
         }
     }
 
