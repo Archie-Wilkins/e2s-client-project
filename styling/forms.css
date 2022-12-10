@@ -1,0 +1,23 @@
+.noListStyle {
+  list-style: none;
+}
+
+.invisibleInput {
+  visibility: hidden;
+  margin: 0;
+  padding: 0;
+  width: 0;
+}
+
+.selectableLabel {
+  cursor: pointer;
+}
+
+.selectableLabel:hover {
+  background-color: #9aaae8;
+}
+
+input:checked + label {
+  background: #111d4a !important;
+  color: white;
+}
