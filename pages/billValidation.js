@@ -151,7 +151,7 @@ class BillValidation extends React.Component {
 
                 document.getElementById("yearStuff").appendChild(newOption);
             }else if(numberofYears >= 1){
-                for(let i = 0; i <= numberofYears; i++){
+                for(let i = 0; i <= numberofYears-1; i++){
                     let floatYear = parseFloat(firstYear);
                     let floatI = parseFloat(i);
                     let localTotal = (floatYear/1) + (floatI/1);
@@ -295,12 +295,30 @@ class BillValidation extends React.Component {
             let indexStartpoint = ((365 * 48) * yearDifference) + (monthDifference * (31*48));
             console.log("Start: " + indexStartpoint);
 
-            for(let i = indexStartpoint; i < (indexStartpoint/1 + (31*48)); i++){
-                localCostTally = localCostTally + result.data.sites[i].energy_cost/1;
-                console.log("Value " + result.data.sites[i].energy_cost);
+            if(localMonthNum === 2){
+                for(let i = indexStartpoint; i < (indexStartpoint/1 + (28*48)); i++){
+                    localCostTally = localCostTally + result.data.sites[i].energy_cost/1;
+                    console.log("Value " + result.data.sites[i].energy_cost);
+                }
+      
+                this.setState({calculatedInvoiceTotal: localCostTally});
             }
-  
-            this.setState({calculatedInvoiceTotal: localCostTally});
+            else if(localMonthNum === 4 || localMonthNum === 6 || localMonthNum === 9 || localMonthNum === 11){
+                for(let i = indexStartpoint; i < (indexStartpoint/1 + (30*48)); i++){
+                    localCostTally = localCostTally + result.data.sites[i].energy_cost/1;
+                    console.log("Value " + result.data.sites[i].energy_cost);
+                }
+      
+                this.setState({calculatedInvoiceTotal: localCostTally});
+            }
+            else{
+                for(let i = indexStartpoint; i < (indexStartpoint/1 + (31*48)); i++){
+                    localCostTally = localCostTally + result.data.sites[i].energy_cost/1;
+                    console.log("Value " + result.data.sites[i].energy_cost);
+                }
+      
+                this.setState({calculatedInvoiceTotal: localCostTally});
+            }
             
           } catch (e) {
             // No action
