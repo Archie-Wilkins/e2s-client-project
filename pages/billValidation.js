@@ -64,7 +64,6 @@ class BillValidation extends React.Component {
 
     /// IN USE
     initialiseData = async (event) => {
-        this.setState({pageLoaded: true});
         try {
             console.log("API started");
 
@@ -96,11 +95,12 @@ class BillValidation extends React.Component {
             let lastYear = result.data.sites[result.data.sites.length - 1].time_stamp[0]+result.data.sites[result.data.sites.length - 1].time_stamp[1]+result.data.sites[result.data.sites.length - 1].time_stamp[2]+result.data.sites[result.data.sites.length - 1].time_stamp[3];
             let lastMonth = result.data.sites[result.data.sites.length - 1].time_stamp[5]+result.data.sites[result.data.sites.length - 1].time_stamp[6];
 
-            /*console.log("First year: " + firstYear);
+            console.log("First year: " + firstYear);
             console.log("First month: " + firstMonth);
             console.log("Last year: " + lastYear);
-            console.log("Last month: " + lastMonth);*/
+            console.log("Last month: " + lastMonth);
 
+            console.log("Initialisation data.")
             this.setState({historicalFirstMonth: firstMonth});
             this.setState({historicalFirstYear: firstYear}); 
             this.setState({historicalLastMonth: lastMonth}); 
@@ -135,8 +135,10 @@ class BillValidation extends React.Component {
 
             // Initialise the number of years on record
             let numberofYears = 0;
-            numberofYears = lastYear-firstYear;
+            numberofYears = (lastYear/1-firstYear/1)+1;
 
+
+            console.log("Year num: " + numberofYears);
             // Check if there is only only 1 partial year on record (e.g., 7 months in 2018),
             // And check that there is data associated with the year
             if(numberofYears === 0 && this.state.historicalFirstMonth !== ""){
@@ -163,6 +165,7 @@ class BillValidation extends React.Component {
                     document.getElementById("yearStuff").appendChild(newOption);
                 }
             }
+            this.setState({pageLoaded: true});
         }catch(e){
             console.log("error");
         }
@@ -264,7 +267,6 @@ class BillValidation extends React.Component {
             // Set the state array for users to the data returned from calling the API (users from the database).
             let localCostTally = 0;
   
-            let startingIndex = 0;
             let firstYear = result.data.sites[0].time_stamp[0]+result.data.sites[0].time_stamp[1]+result.data.sites[0].time_stamp[2]+result.data.sites[0].time_stamp[3];
             let firstMonth = result.data.sites[0].time_stamp[5]+result.data.sites[0].time_stamp[6];
 
@@ -286,7 +288,9 @@ class BillValidation extends React.Component {
 
 
             let yearDifference = localYear/1 - firstYear/1;
+            console.log("Y diff: " + yearDifference);
             let monthDifference = localMonthNum - firstMonth/1;
+            console.log("M Diff: "+ monthDifference);
 
             let indexStartpoint = ((365 * 48) * yearDifference) + (monthDifference * (31*48));
             console.log("Start: " + indexStartpoint);
@@ -413,6 +417,7 @@ class BillValidation extends React.Component {
                         </select>
 
                         {/*Initially we will check only for 31 days*/}
+                        <br/>
                         <label>Enter the amount you have been invoiced for your chosen month (£)</label>
                         <input id="amountInvoiced" onInput={this.updateValue} aria-label="input invoice total box"></input>
 
