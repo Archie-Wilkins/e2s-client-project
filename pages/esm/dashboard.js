@@ -1,14 +1,13 @@
 import Link from "next/link";
 import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
-import EnergyCostForecastGraph from "../../public/components/graphs/toggleTimeChart";
-import StackGraph from "../../public/components/graphs/stackGraph";
-
+// import EnergyCostForecastGraph from "../../public/components/graphs/toggleTimeChart";
+// import StackGraph from "../../public/components/graphs/stackGraph";
 import ToggleStackChart from "../../public/components/graphs/toggleStackChart.js";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-
 import ForecastingInfoBox from "../../public/components/dataDisplayBox/forecastingInfoBox.js";
 import React from "react";
 import BottomFooter from "../../public/components/layouts/bottomFooter.js";
+import Cookies from "js-cookie";
 
 class EsmDashboard extends React.Component {
   constructor(props) {
@@ -115,38 +114,68 @@ class EsmDashboard extends React.Component {
     };
   }
 
+  async componentDidMount() {
+    //will check user is allowed on this page first
+    // Attempt to parse a user cookie
+    try {
+      //Get the user cookie
+      let userCookieEncypted = Cookies.get().user;
+
+      //import CryptoJS
+      var CryptoJS = require("crypto-js");
+
+      //decrypt the cookie
+      var bytes = CryptoJS.AES.decrypt(userCookieEncypted, 'team4');
+      //store decrypted cookie in userCookie
+      var userCookie = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+      // If the user has the incorrect credentials for the page, remove them
+      if (userCookie.role != 3) {
+        Cookies.remove("user");
+        window.location = "/login";
+      }
+      //catch errors
+    } catch (e) {
+      // No cookie found
+      //return to login
+      window.location = "/login";
+    }
+  }
+
   render() {
     return (
       <div>
         <MainLayout
           isDirector={this.state.isDirector}
           pageName={this.state.pageName}
-        >
-          {/* Energy Cost */}
-          <div className="container d-flex flex-column align-items-center w-100">
-            <div className="row mt-5 w-75">
-              <div className="col-lg rounded text-center">
-                <h1>Dashboard</h1>
-              </div>
-            </div>
+        />
+        {/*  /!* Energy Cost *!/*/}
+        {/*  <div className="container d-flex flex-column align-items-center w-100">*/}
+        {/*    <div className="row mt-5 w-75">*/}
+        {/*      <div className="col-lg rounded text-center">*/}
+        {/*        <h1>Dashboard</h1>*/}
+        {/*      </div>*/}
+        {/*    </div>*/}
 
-            <EnergyCostForecastGraph
-              toggle1={"Week"}
-              toggle2={"Month"}
-              toggle3={"Year"}
-              dataSet1={this.state.weeklyData}
-              dataSet2={this.state.monthlyData}
-              dataSet3={this.state.yearlyData}
-              xAxis={"Date"}
-              yAxis={"Cost (£)"}
-              xAxisDataKey={"date"}
-              yAxisDataKey={"cost"}
-            />
-          </div>
-          {/* End of Energy Cost */}
 
-          <BottomFooter className="mt-3" />
-        </MainLayout>
+
+        {/*    /!*<EnergyCostForecastGraph*!/*/}
+        {/*    /!*  toggle1={"Week"}*!/*/}
+        {/*    /!*  toggle2={"Month"}*!/*/}
+        {/*    /!*  toggle3={"Year"}*!/*/}
+        {/*    /!*  dataSet1={this.state.weeklyData}*!/*/}
+        {/*    /!*  dataSet2={this.state.monthlyData}*!/*/}
+        {/*    /!*  dataSet3={this.state.yearlyData}*!/*/}
+        {/*    /!*  xAxis={"Date"}*!/*/}
+        {/*    /!*  yAxis={"Cost (£)"}*!/*/}
+        {/*    /!*  xAxisDataKey={"date"}*!/*/}
+        {/*    /!*  yAxisDataKey={"cost"}*!/*/}
+            {/*/>*/}
+        {/*  </div>*/}
+        {/*  /!* End of Energy Cost *!/*/}
+
+        {/*  <BottomFooter className="mt-3" />*/}
+        {/*</MainLayout>*/}
       </div>
     );
   }
