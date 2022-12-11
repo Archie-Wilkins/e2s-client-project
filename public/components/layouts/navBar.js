@@ -110,41 +110,41 @@ class NavBar extends React.Component {
         <div className="navbarContainer blueBackground fixed-top">
             <div className="navbarContent" aria-label="navigational bar">
 
-                <Link className="w-100 navbarLink d-flex justify-content-center" href="/" aria-label="go home link">
+                <Link className="w-100 navbarLink d-flex justify-content-center" href="/esm/dashboard" aria-label="go home link">
                     <h1 data-testid="logo" className='whiteText'>E<span className='accentText'>2</span>S</h1>
                 </Link>
 
                 <hr className="navbarLineBreak"></hr>
 
-                <Link className="navbarLink d-flex align-items-center " href="/" aria-label="go to dashboard link">
+                <Link className="navbarLink d-flex align-items-center " href="/esm/dashboard" aria-label="go to dashboard link">
                     <FaTachometerAlt />
                     <p>Dashboard</p>
                 </Link>
 
-                <Link className=" navbarLink d-flex align-items-center" href="/siteForecasting" aria-label="go to site forecasting link">
+                <Link className=" navbarLink d-flex align-items-center" href="/esm/forecasting" aria-label="go to site forecasting link">
                     <FaCloud />
                     <p>Forecastings</p>
                 </Link>
 
-                <Link className=" navbarLink d-flex align-items-center" href="/sitePerformance" aria-label="go to analysis page link">
+                <Link className=" navbarLink d-flex align-items-center" href="/esm/analysis" aria-label="go to analysis page link">
                     <FaChartLine />
                     <p>Analysis</p>
                 </Link>
 
-                <Link className=" navbarLink d-flex align-items-center" href="/siteAssets" aria-label="view site assets link">
+                {/* <Link className=" navbarLink d-flex align-items-center" href="/esm/assets" aria-label="view site assets link">
                     <FaListAlt />
                     <p>Assets</p>
-                </Link>
+                </Link> */}
 
-                <Link className=" navbarLink d-flex align-items-center" href="/viewReports" aria-label="go to view reports page link">
+                {/* <Link className=" navbarLink d-flex align-items-center" href="/esm/" aria-label="go to view reports page link">
                     <FaBook />
                     <p>Reports</p>
-                </Link>
+                </Link> */}
 
-                <Link className=" navbarLink d-flex align-items-center" href="/siteCompare" aria-label="go to site comparison page link">
+                {/* <Link className=" navbarLink d-flex align-items-center" href="/siteCompare" aria-label="go to site comparison page link">
                     <FaBalanceScale />
                     <p>Compare</p>
-                </Link>
+                </Link> */}
 
                 <Link className=" navbarLink d-flex align-items-center" href="/billValidation" aria-label="go to bill validaiton page link">
                     <FaDollarSign />
