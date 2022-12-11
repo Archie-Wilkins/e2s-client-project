@@ -124,6 +124,19 @@ export const getSiteWeekHistoricalAverage = async (siteID) => {
     });
 }
 
+export const getSitePastWeekAverage = async (siteID) => {
+    return new Promise((resolve, reject) => {
+        db.query("SELECT site_id, AVG(energy_demand) * 7 * 48 as energy_avg_week_demand, AVG(heat_demand) * 7 * 48 as heat_avg_week_demand, AVG(energy_cost) * 7 * 48 as energy_avg_week_cost, AVG(energy_output) * 7 * 48 as energy_avg_week_output, AVG(energy_imported) * 7 * 48 as energy_avg_week_imported, AVG(energy_exported) * 7 * 48 as energy_avg_week_exported, AVG(feels_like) * 7 * 48 as week_avg_temp, AVG(wind_speed) * 7 * 48 as week_avg_wind, avg(carbon_emitted) as carbon_avg_week_emitted" +
+            " FROM sites_historic WHERE site_id = " + siteID +
+            " GROUP BY site_id ORDER by entry_id DESC LIMIT 336;", (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(results);
+            });
+    });
+}
+
 export default {
     all,
     getSiteIDFromUserID,
@@ -134,5 +147,6 @@ export default {
     getSiteDataDayRangeDaily,
     getSiteWeekHistoricalAverage,
     getSiteDataDayRange6Hourly,
-    getSiteDataDayRangeMonthly
+    getSiteDataDayRangeMonthly,
+    getSitePastWeekAverage
 }
