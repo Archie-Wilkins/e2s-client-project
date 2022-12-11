@@ -11,33 +11,68 @@ class BillValidation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+
+            // Passing whether or not a user is an admin to the page.
             isAdmin: true,
+
+            // Passing whether or not a user is a director to the page.
             isDirector: false,
+            
+            // The local name of the page being accessed.
             pageName: "Bill Validation",
+
+            // Variable to track which year a user has selected to evaluate.
             selectedYear: "2012",
+
+            // Variable to track which year a user has selected to evaluate.
             selectedMonth: "january",
+            
+            // Variable for tracking whether or not the invoice comparison is being calculated.
             currentlyCalculating: false,
+            
+            // Variable to track the date submitted by a user.
             dateSubmitted: false,
+
+            // Variable to track whether or not an inputted date is valid.
             dateIsValid: "nothing",
+
+            // Variable to track the invoice amount input.
             invoiceTotal: 0,
+            
+            // Variable to track whether or not an inputted invoice total is valid.
             invoiceIsNum: false,
+            
+            // Variable to track whether or not the available years of data have loaded.
             loadedYears:false,
+            
+            // Variable to track whether or not the page has loaded.
             pageLoaded: false,
             
+            // Mock data set.
             datesOnRecord: {
                 years: ["2018","2019","2020","2021","2022"],
             },
 
+            // Mock data set.
             currentLimit: ["2022", "10"],
 
+            // Array to track all years in the database.
             historicalYears: [],
+
+            // Array to track all months in the database.
             historicalMonths: [],
 
+            // Array to keep track of months in a year..
             months: ["january", "february", "march", "april", "may", 
                      "june", "july", "august", "september", "october", "november", "december"],
 
+            // An array of all database data on sites.         
             historicalSiteData: [],
+            
+            // Variable to track the calculated estimate for how much a user's invoice should be.
             calculatedInvoiceTotal: 0,
+            
+            // Variables used to determine the first and last available dates in the dataset.
             historicalFirstMonth: "",
             historicalFirstYear: "",
             historicalLastMonth: "",
@@ -46,29 +81,15 @@ class BillValidation extends React.Component {
 
     }
 
-    // Function to initialise years which are available from the database.
-    initialiseOptions = async (event) => {
-        if(!this.state.loadedYears){
-            this.setState({loadedYears: true});
-
-            for(let year in this.state.historicalYears){
-                let newOption = document.createElement("option");
-                newOption.setAttribute('value', this.state.historicalYears[year]);
-
-                let optionText = document.createTextNode(this.state.historicalYears[year]);
-                newOption.appendChild(optionText);
-
-                document.getElementById("yearStuff").appendChild(newOption);
-            }
-        }
-    }
-
-    /// IN USE
+    // Function to initialise values on the page from the database.
     initialiseData = async (event) => {
-        try {
-            this.setState({pageLoaded: true});
 
-            console.log("API started");
+        // Try to access the database API.
+        try {
+
+            // Set pageLoaded variable to true so that the page content updates to allow the user to 
+            // input their data.
+            this.setState({pageLoaded: true});
 
             // API endpoint where we send form data.
             const endpoint = "/api/returnAllHistoricalSiteDataApi";
@@ -88,77 +109,66 @@ class BillValidation extends React.Component {
       
             // Get the response data from server as JSON.
             const result = await response.json();
-            console.log("Result: " + result.data.sites[0].time_stamp);
 
+            // Pass the database call response values to the page state for later access.
             this.setState({ historicalSiteData: result.data.sites });
 
+            // As we know that data is always given in the same format, we access the year and month first 
+            // uploaded by accessing the timestamp of the first and chosen row at specific indexes.
             let firstYear = result.data.sites[0].time_stamp[0]+result.data.sites[0].time_stamp[1]+result.data.sites[0].time_stamp[2]+result.data.sites[0].time_stamp[3];
             let firstMonth = result.data.sites[0].time_stamp[5]+result.data.sites[0].time_stamp[6];
 
+            // These variables reflect the latest row inputted.
             let lastYear = result.data.sites[result.data.sites.length - 1].time_stamp[0]+result.data.sites[result.data.sites.length - 1].time_stamp[1]+result.data.sites[result.data.sites.length - 1].time_stamp[2]+result.data.sites[result.data.sites.length - 1].time_stamp[3];
             let lastMonth = result.data.sites[result.data.sites.length - 1].time_stamp[5]+result.data.sites[result.data.sites.length - 1].time_stamp[6];
 
-            console.log("First year: " + firstYear);
-            console.log("First month: " + firstMonth);
-            console.log("Last year: " + lastYear);
-            console.log("Last month: " + lastMonth);
-
-            console.log("Initialisation data.")
+            // Pass the values of the earliest and latest data available in the database to the page state for
+            // later access.
             this.setState({historicalFirstMonth: firstMonth});
             this.setState({historicalFirstYear: firstYear}); 
             this.setState({historicalLastMonth: lastMonth}); 
             this.setState({historicalLastYear: lastYear});
 
-            /*for(let i = 0; i < 2000; i++){
-                console.log(i);
-                let currentYear = result.data.sites[i].time_stamp[0]+result.data.sites[i].time_stamp[1]+result.data.sites[i].time_stamp[2]+result.data.sites[i].time_stamp[3];
-                let currentMonth = result.data.sites[i].time_stamp[5]+result.data.sites[i].time_stamp[6];
-                if(i === 0){
-                    yearsArr.push(currentYear);
-                    monthArr.push(currentMonth);
-                }
-                if(i > 0){
-                    for(let x = 0; x < yearsArr.length; x++){
-                        if(currentYear === yearsArr[x]){
-                            for(let z = 0; z < monthArr.length; z++){
-                                if(currentMonth !== monthArr[z]){
-                                    monthArr.push(currentMonth);
-                                }
-                            }
-                        }
-                        else if(currentYear !== yearsArr[x]){
-                            yearsArr.push(currentYear);
-                        }
-                    }
-                }
-            }
-    
-            this.setState({historicalYears: yearsArr});
-            this.setState({historicalMonths: monthArr});*/
-
             // Initialise the number of years on record
             let numberofYears = 0;
+
+            // Set the number of years to the latest year minus the earliest, adding 1 so that the year in
+            // progress is included.
             numberofYears = (lastYear/1-firstYear/1)+1;
 
-
-            console.log("Year num: " + numberofYears);
             // Check if there is only only 1 partial year on record (e.g., 7 months in 2018),
             // And check that there is data associated with the year
-            if(numberofYears === 0 && this.state.historicalFirstMonth !== ""){
+            if(numberofYears === 1){
 
+                // Define a new year option to be appended to a select object.
                 let newOption = document.createElement("option");
-                newOption.setAttribute('value', firstYear);
+                
+                // Set the option's value to the only available year of data.
+                newOption.setAttribute('value', firstYear/1);
 
-                let optionText = document.createTextNode(firstYear);
+                // Create a Text object to be put into the option.
+                let optionText = document.createTextNode(firstYear/1);
+                
+                // Add the text to the option.
                 newOption.appendChild(optionText);
 
+                // Add the option to the select.
                 document.getElementById("yearStuff").appendChild(newOption);
-            }else if(numberofYears >= 1){
+
+            }
+
+            // Check if there is more than one year of data available.
+            else if(numberofYears > 1){
+
+                // Iterate through every available year of data. 
                 for(let i = 0; i <= numberofYears-1; i++){
+                    
+                    // Explicitly define each value as a float so that addition will be performed.
                     let floatYear = parseFloat(firstYear);
                     let floatI = parseFloat(i);
                     let localTotal = (floatYear/1) + (floatI/1);
                     
+                    // ...
                     let newOption = document.createElement("option");
                     newOption.setAttribute('value', localTotal);
 
@@ -168,84 +178,13 @@ class BillValidation extends React.Component {
                     document.getElementById("yearStuff").appendChild(newOption);
                 }
             }
-            
+        // Catch any errors returned from trying to call the API.    
         }catch(e){
             console.log("error");
         }
     }
 
-    // TO BE UPDATED TO ONLY RETURN 
-    returnAllSitesFromDatabaseApi = async (event) => {
-        try {
-          // API endpoint where we send form data.
-          const endpoint = "/api/returnAllHistoricalSiteDataApi";
-    
-          // Form the request for sending data to the server.
-          const options = {
-            // The method is POST because we are sending data.
-            method: "POST",
-            // Tell the server we're sending JSON.
-            headers: {
-              "Content-Type": "application/json",
-            },
-          };
-    
-          // Send the form data to our forms API on Vercel and get a response.
-          const response = await fetch(endpoint, options);
-    
-          // Get the response data from server as JSON.
-          const result = await response.json();
-    
-          // Set the state array for users to the data returned from calling the API (users from the database).
-          this.setState({ historicalSiteData: result.data.sites });
-          let localCostTally = 0;
-
-          let localDateTimeStr = "";
-          let localDateTimeStrEnd = "";
-
-            for(let g = 0; g < 7; g++){
-                //console.log("g: " + g);
-                if(g < 4){
-                    localDateTimeStr = localDateTimeStr + result.data.sites[0].time_stamp[g];
-                    localDateTimeStrEnd = localDateTimeStrEnd + result.data.sites[result.data.sites.length-1].time_stamp[g];
-                }
-                if(g == 4){
-                    this.setState({historicalFirstYear: localDateTimeStr});
-                    this.setState({historicalLastYear: localDateTimeStrEnd});
-                    localDateTimeStr = "";
-                    localDateTimeStrEnd = "";
-                }
-                if(g > 4 && g < 7){
-                    localDateTimeStr = localDateTimeStr + result.data.sites[0].time_stamp[g];
-                    localDateTimeStrEnd = localDateTimeStrEnd + result.data.sites[result.data.sites.length-1].time_stamp[g];
-                    if(g == 6){
-                        this.setState({historicalFirstMonth: localDateTimeStr});
-                        this.setState({historicalLastMonth: localDateTimeStrEnd});
-                        localDateTimeStr = "";
-                        localDateTimeStrEnd = "";
-                    }
-                }  
-            }
-
-          //for(let i = 0; i < result.data.sites.length; i++){
-          
-          /* find the index of currently chosen month
-             calculate it by what is first year and month in history,
-             find the current year and month, 
-             2020 3, 2022 12, for(i < 2022-20;): 
-          */
-          for(let i = 0; i < result.data.sites.length; i++){
-            localCostTally = localCostTally + result.data.sites[i].energy_hour_cost;
-          }
-
-          this.setState({calculatedInvoiceTotal: localCostTally});
-          
-        } catch (e) {
-          // No action
-          console.log("Error"); 
-        }
-    };
-
+    // Function to calculate the expected invoice total for a given month of energy use. 
     claculateExpectedInvoiceApi = async (event) => {
         try {
             // API endpoint where we send form data.
@@ -270,58 +209,79 @@ class BillValidation extends React.Component {
             // Set the state array for users to the data returned from calling the API (users from the database).
             let localCostTally = 0;
   
+            // Set the first year and month of data to the first year and month in the database.
             let firstYear = result.data.sites[0].time_stamp[0]+result.data.sites[0].time_stamp[1]+result.data.sites[0].time_stamp[2]+result.data.sites[0].time_stamp[3];
             let firstMonth = result.data.sites[0].time_stamp[5]+result.data.sites[0].time_stamp[6];
 
+            // Set a local instance of the month selected by the user.
             let localMonth = this.state.selectedMonth;
             
+            // Set a numerical representation of the chosen month for evaluation.
             let localMonthNum = 0;
             for(let i = 0; i < this.state.months.length; i++){
                 if(localMonth.toLowerCase() === this.state.months[i]){
                     localMonthNum = i + 1;
+                    break;
                 }
             }
 
+            // Set a local instance of the year selected by the user.
             let localYear = this.state.selectedYear;
-            
-            console.log("First year:" + firstYear);
-            console.log("First month:" + firstMonth);
-            console.log("Last year:" + localYear);
-            console.log("Last month:" + localMonthNum);
 
-
+            // Set the year difference (total number of years of data) by taking away the latest year from the first.
             let yearDifference = localYear/1 - firstYear/1;
-            console.log("Y diff: " + yearDifference);
+
+            // Set the month difference (total number of months of data) by taking away the latest month from the first.
             let monthDifference = localMonthNum - firstMonth/1;
-            console.log("M Diff: "+ monthDifference);
 
+            // Formula for finding the index which represents the first day of the user's chosen month.
             let indexStartpoint = ((365 * 48) * yearDifference) + (monthDifference * (31*48));
-            console.log("Start: " + indexStartpoint);
 
+            // Tell the page that the invoice is being calculated.
+            this.setState({currentlyCalculating: true});
+
+            // Check if the user's month is February (2).
             if(localMonthNum === 2){
+
+                // Only count 28 days (48 rows of data per day) of energy spending.
                 for(let i = indexStartpoint; i < (indexStartpoint/1 + (28*48)); i++){
-                    localCostTally = localCostTally + result.data.sites[i].energy_cost/1;
-                    console.log("Value " + result.data.sites[i].energy_cost);
+                    
+                    // Add the energy spent at each half hour time interval to the tally. 
+                    if(i < result.data.sites.length){
+                        localCostTally = localCostTally + result.data.sites[i].energy_cost/1;
+                    }                
                 }
       
+                // Pass the total calculated invoice to the page state.
                 this.setState({calculatedInvoiceTotal: localCostTally});
             }
+
+            // Check if the user's month is April (4), June (6), September (9), or November (11) - months with 30 days.
             else if(localMonthNum === 4 || localMonthNum === 6 || localMonthNum === 9 || localMonthNum === 11){
+                
+                // Only count 30 days (48 rows of data per day) of energy spending.
                 for(let i = indexStartpoint; i < (indexStartpoint/1 + (30*48)); i++){
-                    localCostTally = localCostTally + result.data.sites[i].energy_cost/1;
-                    console.log("Value " + result.data.sites[i].energy_cost);
+
+                    // We ensure that no out of bounds indexes are being accessed.
+                    if(i < result.data.sites.length){
+                        localCostTally = localCostTally + result.data.sites[i].energy_cost/1;
+                    }                
                 }
-      
                 this.setState({calculatedInvoiceTotal: localCostTally});
             }
+
+            // Check if the user has selected a month with 31 days.
             else{
                 for(let i = indexStartpoint; i < (indexStartpoint/1 + (31*48)); i++){
-                    localCostTally = localCostTally + result.data.sites[i].energy_cost/1;
-                    console.log("Value " + result.data.sites[i].energy_cost);
+                    if(i < result.data.sites.length){
+                        localCostTally = localCostTally + result.data.sites[i].energy_cost/1;
+                    }
                 }
-      
                 this.setState({calculatedInvoiceTotal: localCostTally});
             }
+
+            // Tell the page that the invoice has stopped calculating
+            this.setState({currentlyCalculating: false});
             
           } catch (e) {
             // No action
@@ -329,8 +289,10 @@ class BillValidation extends React.Component {
           }
     }
 
+    // Function to handle the user submitting their invoice date.
     submitDate = async (event) => {
         
+        // Check which month the user has selcted by numerical representation.
         let monthNum = 0; // January default
 
         //await this.returnAllSitesFromDatabaseApi(); !!!
@@ -341,28 +303,55 @@ class BillValidation extends React.Component {
             }
         }
 
+        // Check the user's selected year.
+        // Check if the user has selected the last year of data available.
         if(this.state.selectedYear === this.state.historicalLastYear){  
-              if(monthNum < parseFloat(this.state.historicalLastMonth)){  
-                console.log("Flag 1");
+            
+            // Check if the user's chosen month is lower than the last month of data available. 
+            if(monthNum < parseFloat(this.state.historicalLastMonth)){
+                
+                console.log("Valid month");
+                
+                // Tell the page the date is valid.  
                 this.setState({dateIsValid: "true"});
+                
+                // Tell the page that the user has submitted a date.
                 this.setState({dateSubmitted: true});
-                this.setState({currentlyCalculating: true});
-                this.setState({currentlyCalculating: false});
+                
             }else{
-                console.log("Flag 1X");
+                
+                console.log("Invalid month");
+                
+                // The user has selected a date out of bounds.
                 this.setState({dateIsValid: "false"});
+
+                // Tell the page that the user has submitted a date.
+                this.setState({dateSubmitted: true});
             }
         }else{
-            console.log("Flag 2");
-            this.setState({dateIsValid: "true"});
-            this.setState({dateSubmitted: true});
-            this.setState({currentlyCalculating: true});
-            this.setState({currentlyCalculating: false});
-        }
-        
-        console.log(this.state.calculatedInvoiceTotal);
+
+            // If the user has selected an early year of data, validate that they have a chosen a month 
+            // with existing data.
+            if(monthNum > parseFloat(this.state.historicalFirstMonth)){
+                
+                // The date is valid.
+                this.setState({dateIsValid: "true"});
+
+                // The user has attempted to submit a date.
+                this.setState({dateSubmitted: true});
+            }else{
+
+                // The date is not valid.
+                this.setState({dateIsValid: "false"});
+
+                // The user has attempted to submit a date.
+                this.setState({dateSubmitted: true});
+            } 
+            
+        }        
     }
 
+    // Function to handle the user selecting a new year/month option.
     updateValue = async (event) => {
         this.setState({dateIsValid: "unin"});
         console.log("Selected month: " + document.getElementById("monthStuff").value);
@@ -379,7 +368,7 @@ class BillValidation extends React.Component {
         }
     } 
 
-     // Funtion used to validate user priveleges from the login page and remove cookies. It is also used to initialise data on the page.
+    // Funtion used to validate user priveleges from the login page and remove cookies. It is also used to initialise data on the page.
     checkUser = async (event) => {
         // Attempt to parse a user cookie
         try {
