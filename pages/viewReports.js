@@ -32,6 +32,7 @@ class ViewReportsPage extends React.Component {
             let response = await fetch(endpoint, options)
 
             this.state.sites = await response.json();
+            console.log(this.state.sites);
 
 
             //if response returned no data
@@ -73,29 +74,29 @@ class ViewReportsPage extends React.Component {
         list.innerHTML = "";
 
         //fetches each filter textbox value
-        const orgFilter = document.getElementById("org").value;
-        const nameFilter = document.getElementById("name").value;
-        const countyFilter = document.getElementById("county").value;
-        const dateFilter = document.getElementById("date").value;
+        const orgFilter = document.getElementById("org").value.toLowerCase();
+        const nameFilter = document.getElementById("name").value.toLowerCase();
+        const countyFilter = document.getElementById("county").value.toLowerCase();
+        const dateFilter = document.getElementById("date").value.toLowerCase();
 
         //filtered list will store a filtered down version of the original data set
         this.state.filteredList = this.state.list;
 
         //if organisation filter isn't empty
         if (orgFilter !== ""){
-            this.state.filteredList = this.state.list.filter( element => element.name.includes(orgFilter));
+            this.state.filteredList = this.state.list.filter(element => element.name.toLowerCase().includes(orgFilter));
         }
         //if name filter isn't empty
         if (nameFilter !== ""){
-            this.state.filteredList = this.state.filteredList.filter( element => element.site_name.includes(nameFilter));
+            this.state.filteredList = this.state.filteredList.filter(element => element.site_name.toLowerCase().includes(nameFilter));
         }
         //if county filter isn't empty
         if (countyFilter !== ""){
-            this.state.filteredList = this.state.filteredList.filter( element => element.county.includes(countyFilter));
+            this.state.filteredList = this.state.filteredList.filter(element => element.county.toLowerCase().includes(countyFilter));
         }
         //if date filter isn't empty
         if (dateFilter !== ""){
-            this.state.filteredList = this.state.filteredList.filter( element => element.time_stamp.includes(dateFilter));
+            this.state.filteredList = this.state.filteredList.filter(element => element.time_stamp.toLowerCase().includes(dateFilter));
         }
 
         //initialise variable for sorting the list and assigning id's
@@ -113,6 +114,10 @@ class ViewReportsPage extends React.Component {
             //loops through list of site data
             for (var record in await site_filter) {
                 //splits the time_stamp into date and time
+
+                if (site_filter[record].time_stamp === null) {
+                    alert(JSON.stringify(site_filter[record]));
+                }
                 let [date, time] = site_filter[record].time_stamp.split("T");
                 //converts string "date" into Date object
                 let days = new Date(date);
