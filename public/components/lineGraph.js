@@ -76,11 +76,6 @@ class LineGraph extends React.Component {
         );
 
 
-
-
-
-
-
         return<Line options={options} data={data} />;
     }
 }

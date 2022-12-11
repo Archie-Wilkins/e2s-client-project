@@ -13,6 +13,7 @@ import '../styling/sizes.css';
 import '../styling/styles.css';
 import '../styling/email.css';
 import '../styling/account.css';
+import '../styling/esmDashbord.css';
 
 export default function App({ Component, pageProps }) {
   return <Component {...pageProps} />;

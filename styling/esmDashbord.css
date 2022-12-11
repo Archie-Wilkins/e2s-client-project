@@ -1,0 +1,107 @@
+.esmDashboardGridContainer {
+    display: grid;
+    column-gap: 15px;
+    row-gap: 15px;
+    grid-template-columns: auto auto auto 300px 300px;
+    padding: 10px;
+    width: 86%;
+    height: 520px;
+    float: right;
+    min-height: 0;
+    min-width: 0;
+}
+
+.esmDashboardPanel {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    width:100%;
+}
+
+.esmPanelHeader {
+    text-align: center;
+    width: 100%;
+    float: left;
+}
+
+.esmPanelListContainer {
+    overflow: auto;
+    width: 100%;
+    height: 85%;
+    float: left;
+}
+
+.esmDashboardGraphPanel {
+    background-color: white;
+    border-radius: 10px;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    overflow: hidden;
+}
+
+.esmBottomPanel {
+    background-color: white;
+    border-radius: 10px;
+    grid-column-start: 1;
+    grid-column-end: 6;
+    overflow: hidden;
+    min-height: 130px;
+    column-gap: 15px;
+    row-gap: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.esmBottomPanelInfo {
+    height: 80px;
+    width: 200px;
+    background-color: white;
+    margin: 20px;
+}
+
+.esmInsightCard {
+    padding: 10px;
+    border-top-style: solid;
+}
+
+.esmReportCard {
+    border-top-style: solid;
+    padding: 10px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.esmReportText {
+    margin-top: 3px;
+}
+
+.esmGraphCard{
+    float: left;
+    background-color: white;
+    height: 300px;
+    width: 90%;
+}
+
+.esmDashboardBackground {
+    width: 100%;
+    height: 100vh;
+    background-color: grey;
+}
+
+.esmRecordDownloadBtn {
+    height: 30px;
+    width: 70px;
+    border-style: none;
+    border-radius: 10px;
+    background-color: darkblue;
+    color: white;
+    font-size: 12px;
+}
+
+.esmRecordDownloadBtn:hover {
+    background-color: yellow;
+    color: black;
+}
+
