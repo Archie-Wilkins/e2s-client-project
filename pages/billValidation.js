@@ -353,16 +353,27 @@ class BillValidation extends React.Component {
 
     // Function to handle the user selecting a new year/month option.
     updateValue = async (event) => {
-        this.setState({dateIsValid: "unin"});
-        console.log("Selected month: " + document.getElementById("monthStuff").value);
-        console.log("Selected year: " + document.getElementById("yearStuff").value);
 
+        // Data is neither valid nor invalid during state changes.
+        this.setState({dateIsValid: "unin"});
+
+        // Set the user's selected month to the current value of the month selection option.
         this.setState({selectedMonth: document.getElementById("monthStuff").value});
+        
+        // Set the user's selected month to the current value of the year selection option.
         this.setState({selectedYear: document.getElementById("yearStuff").value});
+        
+        // Set the user[s invoice total to the value in the invoice box.
         const localInvoiceTextVar = parseFloat(document.getElementById("amountInvoiced").value);
+        
+        // Check that the value entered by the user is numerical.
         if(localInvoiceTextVar * 0 != 0 || localInvoiceTextVar <= 0){
             this.setState({invoiceIsNum: false});
-        }else{
+        }
+        
+        // If the user has entered a number into the invoice, 
+        else{
+            // Set the invoice total in the page state to a 2 decimal version of the value entered by the user.
             this.setState({invoiceTotal: parseFloat(document.getElementById("amountInvoiced").value).toFixed(2)});
             this.setState({invoiceIsNum: true});
         }
@@ -387,6 +398,7 @@ class BillValidation extends React.Component {
 
     };
     
+    // Redner the page.
     render() {
         return ( <div onLoad={this.checkUser} onMouseEnter={this.checkUser} aria-label="Bill validation page">
             <MainLayout
@@ -401,7 +413,12 @@ class BillValidation extends React.Component {
                     <h2>Upload your energy invoices for validation</h2>
                 </div>
                 {!this.state.pageLoaded &&(
-                    <button onClick={this.initialiseData} className="billStart">Get Started</button>
+                    <div>
+                        <p>Welcome to validation. Here , you can check out your invoices against our records
+                            and we'll tell you if you are overpaying! Please note that our system is an approximation.
+                        </p>
+                        <button onClick={this.initialiseData} className="billStart">Get Started</button>
+                    </div>    
                 )}
 
                 {this.state.pageLoaded &&(
