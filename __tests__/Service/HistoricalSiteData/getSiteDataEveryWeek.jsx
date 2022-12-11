@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const {assert } = require('chai');
 const should = require('chai').should();
 
-import { getSitePastWeekData, getSiteDataEveryWeek, getSiteDataEveryDay, getSiteDataEvery6Hours, getSiteDataEveryMonth } from "../../public/services/HistoricalSiteData.js";
+import { getSitePastWeekData, getSiteDataEveryWeek, getSiteDataEveryDay, getSiteDataEvery6Hours, getSiteDataEveryMonth } from "../../../public/services/HistoricalSiteData.js";
 
 // Sample test for api services
 // Throughout the project we've had issues with code testing our api functions that are being called for
