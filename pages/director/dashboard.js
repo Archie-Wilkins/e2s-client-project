@@ -176,6 +176,7 @@ class Dashboard extends React.Component {
         electrictyTally = electrictyTally + result.data.sites[i].energy_demand;
         heatTally = heatTally + result.data.sites[i].heat_demand;
         energyExportTally = energyExportTally + result.data.sites[i].energy_exported;
+
         cumulativeSpending = cumulativeSpending + result.data.sites[i].energy_cost;
 
         try{
@@ -190,19 +191,20 @@ class Dashboard extends React.Component {
                 // Evaluate which time period the time falls between.
                 if(dateTime.getHours() >= 16 && dateTime.getHours() <= 19){
                     // Increment counters to track how many periods of time were using which tariff of cost.
-                    redZonePeriodTally = redZonePeriodTally + (result.data.sites[i].energy_demand-result.data.sites[i].energy_exported);
+                    console.log("Net: " +String(result.data.sites[i].energy_demand-result.data.sites[i].energy_exported));
+                    redZonePeriodTally = redZonePeriodTally + result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
                 }
                 if((dateTime.getHours() >= 7 && dateTime.getHours() < 16) || (dateTime.getHours() > 19 && dateTime.getHours() <= 23)){
-                  amberZonePeriodTally = amberZonePeriodTally + (result.data.sites[i].energy_demand-result.data.sites[i].energy_exported);
+                  amberZonePeriodTally = amberZonePeriodTally + result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
                 }if(dateTime.getHours() > 23 || dateTime.getHours() < 7 || dateTime.getHours() === 0){
-                  greenZonePeriodTally = greenZonePeriodTally + (result.data.sites[i].energy_demand-result.data.sites[i].energy_exported);
+                  greenZonePeriodTally = greenZonePeriodTally +result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
                 }
             }
 
             else if(dayTracker === 6 || dayTracker === 7){
 
                 // If it is Saturday or Sunday, there price will only ever be green zone. 
-                greenZonePeriodTally = greenZonePeriodTally + (result.data.sites[i].energy_demand-result.data.sites[i].energy_exported);
+                greenZonePeriodTally = greenZonePeriodTally + result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
             }
 
 
@@ -252,11 +254,8 @@ class Dashboard extends React.Component {
       greenZonePeriodTally =  greenZonePeriodTally;
 
       const redZ = parseFloat(redZonePeriodTally).toFixed(2);
-      console.log("Red not an issue: " + redZ);
       const ambZ = parseFloat(amberZonePeriodTally).toFixed(2);
-      console.log("Amber not an issue: " + ambZ);
       const greZ = parseFloat(greenZonePeriodTally).toFixed(2);
-      console.log("Green not an issue: " + greZ);
 
       let localZonesArray = [
         {"name": "redzone", "value": parseFloat(redZ), fill: "#FF0000"},
