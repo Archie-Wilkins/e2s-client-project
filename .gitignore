@@ -9,3 +9,4 @@ package-lock.json
 *.pack
 node_modules
 .next/server/pages-manifest.json
+.next/trace
