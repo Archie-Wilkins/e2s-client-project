@@ -86,6 +86,34 @@ export const getSiteWeekHistoricalAverage = async (siteID) => {
     });
 }
 
+export const getSiteTimeFrameData = async (siteID, dateStart, dateEnd) => {
+    return new Promise((resolve, reject) =>  {
+        db.query("SELECT energy_demand, heat_demand, energy_cost, energy_output, energy_imported, energy_exported, feels_like, wind_speed, carbon_emitted, time_stamp" +
+            " FROM sites_historic WHERE site_id = " + siteID + " AND time_stamp > convert( '" + dateStart + " 00:00:00', datetime) AND time_stamp < convert('" + dateEnd + " 23:59:00', datetime);", (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+    });
+}
+
+export const getSiteReportListData = async () => {
+    return new Promise((resolve, reject) =>  {
+        db.query('SELECT sites.site_id, sites.site_name, sites.county, organisations.name, sites_historic.time_stamp FROM ((sites' +
+            ' INNER JOIN organisations ON sites.org_id = organisations.org_id)' +
+            ' INNER JOIN sites_historic ON sites.site_id = sites_historic.site_id)' +
+            ' GROUP BY DATE(time_stamp), site_name;', (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+
+    });
+}
+
+
 export default {
     all,
     getSiteIDFromUserID,
@@ -93,5 +121,7 @@ export default {
     getSiteIDFromEmail,
     getSiteDataByDay,
     getSiteWeekData,
-    getSiteWeekHistoricalAverage
+    getSiteWeekHistoricalAverage,
+    getSiteTimeFrameData,
+    getSiteReportListData
 }
