@@ -165,9 +165,9 @@ class Dashboard extends React.Component {
       let heatTally = 0;
       let energyExportTally = 0;
       let cumulativeSpending = 0;
-      let redZonePeriodTally = 0;
-      let amberZonePeriodTally = 0;
-      let greenZonePeriodTally = 0;
+      let redZonePeriodTally = 0.0;
+      let amberZonePeriodTally = 0.0;
+      let greenZonePeriodTally = 0.0;
 
       let dayTracker = 1;
       let timeSlotsChecked = 0;
@@ -190,19 +190,19 @@ class Dashboard extends React.Component {
                 // Evaluate which time period the time falls between.
                 if(dateTime.getHours() >= 16 && dateTime.getHours() <= 19){
                     // Increment counters to track how many periods of time were using which tariff of cost.
-                    redZonePeriodTally = redZonePeriodTally + 1;
+                    redZonePeriodTally = redZonePeriodTally + (result.data.sites[i].energy_demand-result.data.sites[i].energy_exported);
                 }
                 if((dateTime.getHours() >= 7 && dateTime.getHours() < 16) || (dateTime.getHours() > 19 && dateTime.getHours() <= 23)){
-                  amberZonePeriodTally = amberZonePeriodTally + 1;
+                  amberZonePeriodTally = amberZonePeriodTally + (result.data.sites[i].energy_demand-result.data.sites[i].energy_exported);
                 }if(dateTime.getHours() > 23 || dateTime.getHours() < 7 || dateTime.getHours() === 0){
-                  greenZonePeriodTally = greenZonePeriodTally + 1;
+                  greenZonePeriodTally = greenZonePeriodTally + (result.data.sites[i].energy_demand-result.data.sites[i].energy_exported);
                 }
             }
 
             else if(dayTracker === 6 || dayTracker === 7){
 
                 // If it is Saturday or Sunday, there price will only ever be green zone. 
-                greenZonePeriodTally = greenZonePeriodTally + 1;
+                greenZonePeriodTally = greenZonePeriodTally + (result.data.sites[i].energy_demand-result.data.sites[i].energy_exported);
             }
 
 
@@ -247,10 +247,21 @@ class Dashboard extends React.Component {
       this.setState({amberZoneUsage: amberZonePeriodTally});
       this.setState({greenZoneUsage: greenZonePeriodTally});
 
+      redZonePeriodTally = redZonePeriodTally;
+      amberZonePeriodTally = amberZonePeriodTally;
+      greenZonePeriodTally =  greenZonePeriodTally;
+
+      const redZ = parseFloat(redZonePeriodTally).toFixed(2);
+      console.log("Red not an issue: " + redZ);
+      const ambZ = parseFloat(amberZonePeriodTally).toFixed(2);
+      console.log("Amber not an issue: " + ambZ);
+      const greZ = parseFloat(greenZonePeriodTally).toFixed(2);
+      console.log("Green not an issue: " + greZ);
+
       let localZonesArray = [
-        {"name": "redzone", "value": redZonePeriodTally, fill: "#FF0000"},
-        {"name": "amberzone", "value": amberZonePeriodTally, fill: "#FFA500"},
-        {"name": "greenzone", "value": greenZonePeriodTally, fill: "#00FF00"},
+        {"name": "redzone", "value": parseFloat(redZ), fill: "#FF0000"},
+        {"name": "amberzone", "value": parseFloat(ambZ), fill: "#FFA500"},
+        {"name": "greenzone", "value": parseFloat(greZ), fill: "#00FF00"},
       ];
 
       this.setState({zonesArray: localZonesArray});
@@ -391,11 +402,11 @@ class Dashboard extends React.Component {
                 <div>
                   <h3>Insights</h3>
                   <div className="flexContainer">
-                    Start date: {this.state.dataStartDate}
-                    Energy Distribution Network: {this.state.distributionNetwork}
+                    <p>Start date: {this.state.dataStartDate}</p>
+                    <p>Energy Distribution Network: {this.state.distributionNetwork}</p>
 
-                    <div className="flexBox w-50 h-100">
-                      <PieChart width={150} height={150}>
+                    <div className="flexBox w-125 h-100">
+                      <PieChart width={400} height={200}>
                         <Pie data={this.state.zonesArray} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#fff" label>
                         </Pie>  
                       </PieChart>
