@@ -3,7 +3,7 @@ import Link from "next/link";
 import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
 import React, { useLayoutEffect } from "react";
 import Cookies from "js-cookie";
-import { PieChart, Pie } from "recharts";
+import { PieChart, Pie, Slice } from "recharts";
 
 // This is the dashboard component for admins
 class Dashboard extends React.Component {
@@ -39,6 +39,8 @@ class Dashboard extends React.Component {
       insightFourData: "",
       insightFiveData: "",
       insightSixData: "",
+
+      months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
 
       // String used to record the first given date in uploaded CSV data.
       dataStartDate: "",
@@ -156,7 +158,8 @@ class Dashboard extends React.Component {
       // Get the response data from server as JSON.
       const result = await response.json();
       this.setState({siteDataArray: result.data.sites});
-      this.setState({dataStartDate: result.data.sites[0].time_stamp});
+      const localDate = new Date(result.data.sites[0].time_stamp);
+      this.setState({dataStartDate: localDate.getFullYear() + " " + this.state.months[localDate.getMonth()]});
       
       let electrictyTally = 0;
       let heatTally = 0;
@@ -184,19 +187,14 @@ class Dashboard extends React.Component {
                 // If it is, create a substring from the date handed in the csv.
                 let dateTime = new Date(result.data.sites[i].time_stamp);
 
-                console.log(dateTime.getHours());
-
                 // Evaluate which time period the time falls between.
                 if(dateTime.getHours() >= 16 && dateTime.getHours() <= 19){
-                    console.log("Red flag");
                     // Increment counters to track how many periods of time were using which tariff of cost.
                     redZonePeriodTally = redZonePeriodTally + 1;
                 }
                 if((dateTime.getHours() >= 7 && dateTime.getHours() < 16) || (dateTime.getHours() > 19 && dateTime.getHours() <= 23)){
-                  console.log("Amber flag");  
                   amberZonePeriodTally = amberZonePeriodTally + 1;
                 }if(dateTime.getHours() > 23 || dateTime.getHours() < 7 || dateTime.getHours() === 0){
-                  console.log("Green flag");  
                   greenZonePeriodTally = greenZonePeriodTally + 1;
                 }
             }
@@ -250,13 +248,12 @@ class Dashboard extends React.Component {
       this.setState({greenZoneUsage: greenZonePeriodTally});
 
       let localZonesArray = [
-        {"name": "redzone", "value": redZonePeriodTally},
-        {"name": "amberzone", "value": amberZonePeriodTally},
-        {"name": "greenzone", "value": greenZonePeriodTally},
+        {"name": "redzone", "value": redZonePeriodTally, fill: "#FF0000"},
+        {"name": "amberzone", "value": amberZonePeriodTally, fill: "#FFA500"},
+        {"name": "greenzone", "value": greenZonePeriodTally, fill: "#00FF00"},
       ];
 
       this.setState({zonesArray: localZonesArray});
-      console.log("Huh");
     } catch (e) {
       // No action
     }
@@ -366,8 +363,6 @@ class Dashboard extends React.Component {
       window.location = "/login";
     }
 
-    console.log(this.state.dataStartDate);
-
   };
 
   // Return the contents of the Admin Dashboard page.
@@ -399,11 +394,38 @@ class Dashboard extends React.Component {
                     Start date: {this.state.dataStartDate}
                     Energy Distribution Network: {this.state.distributionNetwork}
 
-                    <div className="flexBox w-100 h-100">
-                      <h3>Test</h3>
-                      <PieChart width={100} height={100}>
-                        <Pie data={this.state.zonesArray} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#8884d8" />
+                    <div className="flexBox w-50 h-100">
+                      <PieChart width={150} height={150}>
+                        <Pie data={this.state.zonesArray} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#fff" label>
+                        </Pie>  
                       </PieChart>
+                      {this.state.redZoneUsage > this.state.greenZoneUsage &&(
+                        <div>
+                          {this.state.redZoneUsage > this.state.amberZoneUsage &&(
+                            <p> Most of your energy use was during red-zone periods.  Consider changing your energy usage times
+                            and find out <Link href="/about"> more </Link> about zone pricing to see how you could save
+                            money.</p>
+                          )}
+                          {this.state.amberZoneUsage > this.state.redZoneUsage &&(
+                            <p> Most of your energy use was during amber-zone periods.  Consider changing your energy usage times
+                            and find out <Link href="/about"> more </Link> about zone pricing to see how you could save
+                            money.</p>
+                          )}
+                        </div>  
+                      )}
+                      {this.state.greenZoneUsage > this.state.redZoneUsage &&(
+                        <div>
+                          {this.state.greenZoneUsage > this.state.amberZoneUsage &&(
+                            <p> Well done! Most of your energy has been during green-zone periods. Find out <Link href="/about"> 
+                            more </Link> about zone pricing to see how you could save money.</p>
+                          )}
+                          {this.state.amberZoneUsage > this.state.greenZoneUsage &&(
+                            <p> Most of your energy use was during amber-zone periods.  Consider changing your energy usage times
+                            and find out <Link href="/about"> more </Link> about zone pricing to see how you could save
+                            money.</p>
+                          )}
+                        </div>  
+                      )}
                     </div>
 
                     <div className="flexBox"><p>Energy Demand</p> 
