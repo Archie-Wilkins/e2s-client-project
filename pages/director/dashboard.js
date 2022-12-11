@@ -3,23 +3,19 @@ import Link from "next/link";
 import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
 import React, { useLayoutEffect } from "react";
 import Cookies from "js-cookie";
+import { PieChart, Pie } from "recharts";
 
 // This is the dashboard component for admins
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // This is a variable used to decide whether to render all businesses, or jsut one
-      businessRequested: false,
 
-      // This variable tracks which business has been selected by the Admin to be viewed
-      chosenBusinessId: 0,
-
-      // Variable to track whether data pulled from database is ready to be rendered
-      displayDBData: false,
-
-      // Array to store all users registered to the site
-      siteUserArray: [],
+      sampleData: [
+        {"name": "red", "value": 100},
+        {"name": "amber", "value": 200},
+        {"name": "green", "value": 300},
+      ],
 
       // Array to store all sites registered to the site
       siteDataArray: [],
@@ -34,17 +30,236 @@ class Dashboard extends React.Component {
       isDirector: true,
 
       userName: "",
+
+      userSite: "",
+
+      insightOneData: "",
+      insightTwoData: "",
+      insightThreeData: "",
+      insightFourData: "",
+      insightFiveData: "",
+      insightSixData: "",
+
+      // String used to record the first given date in uploaded CSV data.
+      dataStartDate: "",
+
+      // DATA BY ALL TIME
+      // Variable for all time electricty used in uploaded CSV data.
+      electrictyUsed: 0,
+      
+      // Variable for all time heat used in uploaded CSV data.
+      heatUsed: 0,
+      
+      // Variable for all time energy exported in uploaded CSV data.
+      energyExported: 0,
+      
+      // Variable for all time net energy used in uploaded CSV data (calculated by comparing site demand versus export).
+      netEnergy: 0,
+      
+      // Variable for all time spending in uploaded CSV data.
+      totalSpent: 0,
+
+      // Variable to track energy usage of asset one over all uploaded time.   
+      chpOneGeneration: 0,
+
+      // Variable to track energy usage of asset two over all uploaded time.
+      chpTwoGeneration: 0,
+      
+      // Variable for the number of days of data in uploaded CSV data.
+      daysTracked: 0,
+
+      // DATA BY DAY 
+      // Variable for electricty used in the last day in uploaded CSV data.   
+      electrictyUsedDay: 0,
+      
+      // Variable for heat used in the last day in uploaded CSV data.
+      heatUsedDay: 0,
+      
+      // Variable for energy exported in the last day in uploaded CSV data.
+      energyExportedDay: 0,
+      
+      // Variable for net energy use in the last day in uploaded CSV data.
+      netEnergyDay: 0,
+      
+      // Variable for spending in the last day in uploaded CSV data.
+      totalSpentDay: 0,
+
+      // Variable to track energy usage of asset two over the last day.
+      asset1UsageDay: 0,
+
+      // Variable to track energy usage of asset two over the last day.
+      asset2UsageDay: 0,
+
+      // Boolean to assess whether the User has submitted a valid CSV file.
+      isValidCsv: false,
+      
+      // Boolean to assess whether or not to return an error to the User when they try to upload their CSV.
+      errorReturn: false,
+
+      // Mock data to test cases wherein data for specified dates has already been uploaded.
+      dates:{
+        // The first selection reflects dates which will not have been uploaded yet by users for the purpose of testing.
+        val: ["31/12/2020 23:32", "01/01/2020 00:02"],
+
+        // The second selection reflects dates which will have been uploaded yet by users for the purpose of testing.
+        val2: ["31/12/2020 23:30"],
+      },
+
+      // Variable to track which energy zone the energy site resides in.
+      distributionNetwork: "EPN",
+
+      // Variable to track the amount of energy usage time spent in red-zone periods.
+      redZoneUsage: 0,
+
+      // Variable to track the amount of energy usage time spent in red-zone periods.
+      amberZoneUsage: 0,
+
+      // Variable to track the amount of energy usage time spent in red-zone periods.
+      greenZoneUsage: 0,
+
+      // Variable to count how many rows of data are being accessed.
+      numberOfDataRows:0,
+
+      zonesArray: [],
       
     };
   }
 
-  // This function handles rendering the business data associated with a selected row in the table dataset.
-  handleBusinessRender(businessId) {
-    // Update the boolean variable state used to determine whether to render a specific business to true.
-    this.setState({ businessRequested: true });
+  returnSiteInsightsApi = async (userId) => {
+    try {
+      // API endpoint where we send form data.
+      const endpoint = "../api/getAllHistoricalSiteData";
 
-    // Update the state of the variable tracking which business has been selected by the Admin for viewing.
-    this.setState({ chosenBusinessId: businessId });
+      const currentUserId = userId;
+
+      const data = {
+        userID: userId,
+      }
+
+      const JSONdata = JSON.stringify(data);
+
+      // Form the request for sending data to the server.
+      const options = {
+        // The method is POST because we are sending data.
+        method: "POST",
+        // Tell the server we're sending JSON.
+        headers: {
+          "Content-Type": "application/json",
+        },
+      
+        body: JSONdata,
+      }
+
+      // Send the form data to our forms API on Vercel and get a response.
+      const response = await fetch(endpoint, options);
+
+      // Get the response data from server as JSON.
+      const result = await response.json();
+      this.setState({siteDataArray: result.data.sites});
+      this.setState({dataStartDate: result.data.sites[0].time_stamp});
+      
+      let electrictyTally = 0;
+      let heatTally = 0;
+      let energyExportTally = 0;
+      let cumulativeSpending = 0;
+      let redZonePeriodTally = 0;
+      let amberZonePeriodTally = 0;
+      let greenZonePeriodTally = 0;
+
+      let dayTracker = 1;
+      let timeSlotsChecked = 0;
+
+      for(let i = 0; i < result.data.sites.length; i++){
+        electrictyTally = electrictyTally + result.data.sites[i].energy_demand;
+        heatTally = heatTally + result.data.sites[i].heat_demand;
+        energyExportTally = energyExportTally + result.data.sites[i].energy_exported;
+        cumulativeSpending = cumulativeSpending + result.data.sites[i].energy_cost;
+
+        try{
+          if(this.state.distributionNetwork === "EPN"){
+
+            // Check if the day is Monday through Friday.
+            if(dayTracker < 6){
+
+                // If it is, create a substring from the date handed in the csv.
+                let dateTime = new Date(result.data.sites[i].time_stamp);
+
+                console.log(dateTime.getHours());
+
+                // Evaluate which time period the time falls between.
+                if(dateTime.getHours() >= 16 && dateTime.getHours() <= 19){
+                    console.log("Red flag");
+                    // Increment counters to track how many periods of time were using which tariff of cost.
+                    redZonePeriodTally = redZonePeriodTally + 1;
+                }
+                if((dateTime.getHours() >= 7 && dateTime.getHours() < 16) || (dateTime.getHours() > 19 && dateTime.getHours() <= 23)){
+                  console.log("Amber flag");  
+                  amberZonePeriodTally = amberZonePeriodTally + 1;
+                }if(dateTime.getHours() > 23 || dateTime.getHours() < 7 || dateTime.getHours() === 0){
+                  console.log("Green flag");  
+                  greenZonePeriodTally = greenZonePeriodTally + 1;
+                }
+            }
+
+            else if(dayTracker === 6 || dayTracker === 7){
+
+                // If it is Saturday or Sunday, there price will only ever be green zone. 
+                greenZonePeriodTally = greenZonePeriodTally + 1;
+            }
+
+
+            // If 48 time slots have been checked, an entire day of data has been passed.
+            if(timeSlotsChecked == 48){
+                
+                // Check if it is Sunday (Monday - 1, Tuesday - 2, ..., Sunday - 7).
+                if(dayTracker < 7){
+
+                    // Move the day tracker forward a day.
+                    dayTracker = dayTracker + 1;
+                }
+
+                if(dayTracker === 7){
+
+                    // If the day is Sunday, reset it to Monday after all slots have been checked.
+                    dayTracker = 1;
+                }
+
+                // Reset the number of slots checked for a day.
+                timeSlotsChecked = 0;
+            }
+
+            else if(timeSlotsChecked < 48){
+                // Increment the number of slots checked for the day.
+                timeSlotsChecked = timeSlotsChecked + 1;
+            }
+            
+          }
+        }catch(e){
+          console.log("error");
+        }
+
+      }
+
+      this.setState({electrictyUsed: electrictyTally});
+      this.setState({heatUsed: heatTally});
+      this.setState({energyExported: energyExportTally});
+      this.setState({netEnergy: electrictyTally - energyExportTally});
+      this.setState({totalSpent: cumulativeSpending});
+      this.setState({redZoneUsage: redZonePeriodTally});
+      this.setState({amberZoneUsage: amberZonePeriodTally});
+      this.setState({greenZoneUsage: greenZonePeriodTally});
+
+      let localZonesArray = [
+        {"name": "redzone", "value": redZonePeriodTally},
+        {"name": "amberzone", "value": amberZonePeriodTally},
+        {"name": "greenzone", "value": greenZonePeriodTally},
+      ];
+
+      this.setState({zonesArray: localZonesArray});
+      console.log("Huh");
+    } catch (e) {
+      // No action
+    }
   }
 
   returnUserDetailsApi = async (userId) => {
@@ -86,11 +301,44 @@ class Dashboard extends React.Component {
     }
   }
 
-  // This fucntion handles returning back to the default view of all businesses from the currently viewed business
-  handleReturn() {
-    // Update the boolean variable state used to determine whether to render a specific business to false,
-    // by default rendering all businesses.
-    this.setState({ businessRequested: false });
+  returnSiteDetailsApi = async (userId) => {
+    try {
+
+      // API endpoint where we send form data.
+      const endpoint = "../api/getUserSite";
+
+      const data = {
+        userID: userId,
+      }
+
+      const JSONdata = JSON.stringify(data);
+
+      // Form the request for sending data to the server.
+      const options = {
+        // The method is POST because we are sending data.
+        method: "POST",
+        // Tell the server we're sending JSON.
+        headers: {
+          "Content-Type": "application/json",
+        },
+      
+        body: JSONdata,
+      }
+
+      // Send the form data to our forms API on Vercel and get a response.
+      const response = await fetch(endpoint, options);
+
+      // Get the response data from server as JSON.
+      const result = await response.json();
+
+      console.log(result.data);
+
+      // Set the state array for users to the data returned from calling the API (users from the database).
+      this.setState({ userSite: result.data.site });
+
+    } catch (e) {
+      // No action
+    }
   }
 
   // Funtion used to validate user priveleges from the login page and remove cookies. It is also used to initialise data on the page.
@@ -108,14 +356,17 @@ class Dashboard extends React.Component {
       }
 
       await this.returnUserDetailsApi(userCookie.user);
+      await this.returnSiteDetailsApi(userCookie.user);
+      await this.returnSiteInsightsApi();
 
-      //catch erros
+      //catch errors
     } catch (e) {
       // No cookie found
       //return to login
       window.location = "/login";
     }
 
+    console.log(this.state.dataStartDate);
 
   };
 
@@ -138,16 +389,46 @@ class Dashboard extends React.Component {
               
             </div>
             <div className={"directorContent"} aria-label="director dashboard section container">
-              <h2>Your site's performance</h2>
+              <h2>{this.state.userSite}</h2>
               <hr/>
 
               <div>
                 <div>
                   <h3>Insights</h3>
-                  <div>
-                    <div>Insight 1</div>
-                    <div>Insight 2</div>
-                    <div>Insight 3</div>
+                  <div className="flexContainer">
+                    Start date: {this.state.dataStartDate}
+                    Energy Distribution Network: {this.state.distributionNetwork}
+
+                    <div className="flexBox w-100 h-100">
+                      <h3>Test</h3>
+                      <PieChart width={100} height={100}>
+                        <Pie data={this.state.zonesArray} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#8884d8" />
+                      </PieChart>
+                    </div>
+
+                    <div className="flexBox"><p>Energy Demand</p> 
+                    {parseFloat(this.state.electrictyUsed).toFixed(0)} KwH
+                    {this.state.insightOneData}
+                    </div>
+                    <div className="flexBox"><p>Heat Demand</p> 
+                    {parseFloat(this.state.heatUsed).toFixed(0)} KwH
+                    {this.state.insightTwoData}
+                    </div>
+                    <div className="flexBox"><p>Energy Exported</p> 
+                    {parseFloat(this.state.energyExported).toFixed(0)} KwH
+                    {this.state.insightThreeData}
+                    </div>
+                    <div className="flexBox"><p>Net Energy Use</p> 
+                    {parseFloat(this.state.netEnergy).toFixed(0)} KwH
+                    {this.state.insightFourData}
+                    </div>
+                    <div className="flexBox"><p>Spending</p> 
+                    £{parseFloat(this.state.totalSpent).toFixed(2)}
+                    {this.state.insightFiveData}
+                    </div>
+                    <div className="flexBox"><p>Insight 6</p> 
+                    {this.state.insightSixData}
+                    </div>
                   </div>
                 </div>
 

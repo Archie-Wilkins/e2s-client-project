@@ -12,6 +12,18 @@ export const all = async () => {
     });
 }
 
+export const allHistoric = async () => {
+    return new Promise((resolve, reject) =>  {
+        db.query('SELECT * from sites_historic', (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+
+    });
+}
+
 export const getSiteIDFromUserID = async (userID) => {
     return new Promise((resolve, reject) =>  {
         db.query("SELECT site_id FROM user_esm WHERE user_id = " + userID, (err, results) => {
@@ -88,6 +100,7 @@ export const getSiteWeekHistoricalAverage = async (siteID) => {
 
 export default {
     all,
+    allHistoric,
     getSiteIDFromUserID,
     getSiteDetails,
     getSiteIDFromEmail,
