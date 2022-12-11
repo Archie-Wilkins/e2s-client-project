@@ -123,219 +123,39 @@ class Dashboard extends React.Component {
   render() {
     return (
       // On laoding the main div, call the function to validate user priveleges and initialise data to be rendered
-      <div onLoad={this.checkUser} aria-label="admin dashboard content">
+      <div aria-label="admin dashboard content">
         {/*Utilise a navbar with values based on the role of the current user*/}
         <MainLayout
           isAdmin={this.state.isAdmin}
           isDirector={this.state.isDirector}
           pageName={this.state.pageName}
         >
-          <div className={"admin-content-container"} aria-label="admin dashboard body">
-            <h1 className="dashboard-header">Director Dashboard</h1>
-            <hr className={"h1-underline"} />
-            <p className={"dashboard-sub-header"}>Welcome to E2S, Director {this.state.userName}.</p>
-            <br />
-            <div className={"admin-content"} aria-label="admin dashboard section container">
-              <div className="row">
-                <div className="col-sm">
-                  <div className={"business-section"} aria-label="view registered data section">
-                    {/*Section to display all registered users */}
-                    <h1>View All Users</h1>
-                    <br />
-                    {/*If the data is not ready to be rendered, show the user a laoding message */}
-                    {this.state.displayDBData === false && (
-                      <div aria-label="fetching data section">
-                        <h1>FETCHING DATA...</h1>
-                        <br />
-                      </div>
-                    )}
+          <div className={"director-content-container"} aria-label="director dashboard body">
+            <div>
+              <h1 className="dashboard-header">Director Dashboard</h1>
+              <hr className={"h1-underline"} />
+              <p className={"dashboard-sub-header"}>Welcome to your dashboard {this.state.userName}.</p>
+              
+            </div>
+            <div className={"directorContent"} aria-label="director dashboard section container">
+              <h2>Your site's performance</h2>
+              <hr/>
 
-                    {/*Once the data is ready to be rendered, load it in */}
-                    {this.state.displayDBData === true && (
-                      <div aria-label="registered users section">
-                        {/*Table for user details */}
-                        <table className="table table-hover" name="userTable" aria-label="users table">
-                          {/*Column headers for the table. NOTE: only a small amount of data from
-                               each business is siplayed here.*/}
-                          <thead aria-label="users table headers">
-                            <tr>
-                              <th scope="col" aria-label="user ID column">User ID</th>
-                              <th scope="col" aria-label="user email column">Email</th>
-                              <th scope="col" aria-label="user firstname column">Firstname</th>
-                              <th scope="col" aria-label="user surname column">Surname</th>
-                              <th scope="col" aria-label="user phone number column">Phone Number</th>
-                              <th scope="col" aria-label="user role column">Role</th>
-                            </tr>
-                          </thead>
-                          {/*Map out the data from the atabase state to be rendered in the table.*/}
-                          {this.state.siteUserArray.map((employee, index) => {
-                            return (
-                              <tbody key={index} aria-label="user table body">
-                                {/*Render each row using data from the given business index.*/}
-                                <tr aria-label="user table row">
-                                  <th scope="row" aria-label="user id data">{employee.user_id}</th>
-                                  <td aria-label="user id data">{employee.email}</td>
-                                  <td aria-label="user firstname data">{employee.first_name}</td>
-                                  <td aria-label="user surname data">{employee.last_name}</td>
-                                  <td aria-label="user phone number data">{employee.phone_number}</td>
-                                  <td aria-label="user role data">{employee.role_id}</td>
-                                </tr>
-                              </tbody>
-                            );
-                          })}
-                        </table>
-
-                        {/*If the user has not requested to see a specific business, show them all businesses with limited information */}
-                        {this.state.businessRequested === false && (
-                          <div aria-label="registered energy sites section">
-                            <br />
-                            <h1>View All Businesses</h1>
-                            <table
-                              className="table table-hover"
-                              name="siteTable"
-                              data-testid="businessTable"
-                              aria-label="site table"
-                            >
-                              {/*Column headers for the table. NOTE: a reduced amount of data from
-                                    each business is displayed here.*/}
-                              <thead aria-label="energy site table headers">
-                                <tr>
-                                  <th scope="col" aria-label="site ID column">Site ID</th>
-                                  <th scope="col" aria-label="site name column">Site Name</th>
-                                  <th scope="col" aria-label="site postcode column">Postcode</th>
-                                  <th scope="col" aria-label="site county column">County</th>
-                                  <th scope="col" aria-label="site size column">Site Size </th>
-                                  <th scope="col" aria-label="view more site details column">View</th>
-                                </tr>
-                              </thead>
-                              {/*Map out the data from the mock database state to be rendered in the table.*/}
-                              {this.state.siteDataArray.map(
-                                (employee, index) => {
-                                  return (
-                                    <tbody key={index} aria-label="site table body">
-                                      {/*Render each row using data from the given business index.*/}
-                                      <tr aria-label="site table row">
-                                        <th scope="row" aria-label="site ID data">{employee.site_id}</th>
-                                        <td aria-label="site name data">{employee.site_name}</td>
-                                        <td aria-label="site postcode data">{employee.post_code}</td>
-                                        <td aria-label="site county data">{employee.county}</td>
-                                        <td aria-label="site size data">
-                                          {employee.site_size_x *
-                                            employee.site_size_y}{" "}
-                                          sq. ft
-                                        </td>
-                                        {/*A button to show more information about a site based on the site row clicked */}
-                                        <td>
-                                          <button aria-label="expand business details button"
-                                            onClick={() =>
-                                              this.handleBusinessRender(
-                                                employee.site_id
-                                              )
-                                            }
-                                          >
-                                            Here
-                                          </button>
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  );
-                                }
-                              )}
-                            </table>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    <br />
-
-                    {/*Check if the Admin has requested to view a specific business. If true...*/}
-                    {this.state.businessRequested === true && (
-                      <div className="businessSummaryBox" aria-label="registered sites section">
-                        {/*Display data from the given index of the mock database in the sections below.*/}
-                        <div aria-label="site ID">
-                          <p>
-                            ID:{" "}
-                            {
-                              this.state.siteDataArray[
-                                this.state.chosenBusinessId - 1
-                              ].site_id
-                            }
-                          </p>
-                        </div>
-                        <div aria-label="site name">
-                          <h1>
-                            {
-                              this.state.siteDataArray[
-                                this.state.chosenBusinessId - 1
-                              ].site_name
-                            }
-                          </h1>
-                        </div>
-                        <div aria-label="site post code">
-                          <p>
-                            Postcode:{" "}
-                            {
-                              this.state.siteDataArray[
-                                this.state.chosenBusinessId - 1
-                              ].post_code
-                            }
-                          </p>
-                        </div>
-                        <div aria-label="site address first line">
-                          <p>
-                            Address:{" "}
-                            {
-                              this.state.siteDataArray[
-                                this.state.chosenBusinessId - 1
-                              ].address_l1
-                            }
-                            ,{" "}
-                            {
-                              this.state.siteDataArray[
-                                this.state.chosenBusinessId - 1
-                              ].address_l2
-                            }
-                          </p>
-                        </div>
-                        <div aria-label="site address second line">
-                          <p>
-                            County:{" "}
-                            {
-                              this.state.siteDataArray[
-                                this.state.chosenBusinessId - 1
-                              ].county
-                            }
-                          </p>
-                        </div>
-                        <div aria-label="site size in square feet">
-                          <p>
-                            Site Size:{" "}
-                            {
-                              this.state.siteDataArray[
-                                this.state.chosenBusinessId - 1
-                              ].site_size_x
-                            }
-                            ,{" "}
-                            {
-                              this.state.siteDataArray[
-                                this.state.chosenBusinessId - 1
-                              ].site_size_y
-                            }
-                          </p>
-                        </div>
-                        <br />
-                        <br />
-                        {/*Call the function to handle returning the Admin's view back to the default of all businesses*/}
-                        <button onClick={() => this.handleReturn()} aria-label="return to all sites view">
-                          Back
-                        </button>
-                      </div>
-                    )}
+              <div>
+                <div>
+                  <h3>Insights</h3>
+                  <div>
+                    <div>Insight 1</div>
+                    <div>Insight 2</div>
+                    <div>Insight 3</div>
                   </div>
                 </div>
+
+                <div>
+                  <h3>Graph Performance</h3>
+                  GRAPH
+                </div>
               </div>
-              <br />
-              <br />
             </div>
           </div>
         </MainLayout>
