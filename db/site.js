@@ -85,6 +85,18 @@ export const getSiteWeekHistoricalAverage = async (siteID) => {
         });
     });
 }
+export const getSiteDataDayRangeDaily = async (siteID, dateStart, dateEnd) => {
+    return new Promise((resolve, reject) => {
+        db.query("SELECT site_id, energy_demand, heat_demand, energy_cost, energy_output, energy_imported, energy_exported, feels_like, wind_speed, carbon_emitted, time_stamp as date" +
+            " FROM sites_historic WHERE site_id = " + siteID + " AND time_stamp > convert( '" + dateStart + " 00:00:00', datetime) AND time_stamp < convert('" + dateEnd + " 23:00:00', datetime) GROUP BY MONTH(date),DAY(date);", (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+    });
+}
+
 
 export default {
     all,
@@ -93,5 +105,6 @@ export default {
     getSiteIDFromEmail,
     getSiteDataByDay,
     getSiteWeekData,
-    getSiteWeekHistoricalAverage
+    getSiteWeekHistoricalAverage,
+    getSiteDataDayRangeDaily
 }

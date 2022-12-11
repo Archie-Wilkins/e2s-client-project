@@ -19,15 +19,8 @@ class EsmDashboard extends React.Component {
     this.state = {
       isDirector: false,
       pageName: "dashboard",
-      data: [
-        { date: "Mon 5th", demand: 153 },
-        { date: "Tue 6th", demand: 145 },
-        { date: "Wed 7th", demand: 131 },
-        { date: "Thu 8th", demand: 115 },
-        { date: "Fri 9th", demand: 165 },
-        { date: "Sat 10th", demand: 135 },
-        { date: "Sun 11th", demand: 135 },
-      ],
+      data: [],
+      dataUpdated: false,
       siteID: ""
     };
   }
@@ -61,15 +54,15 @@ class EsmDashboard extends React.Component {
     }
 
     //fetch site historical data
-    const data = {
-      userID: userCookie.user
+    let data = {
+      userID: userCookie.user.toString()
     }
 
-    const JSONdata = JSON.stringify(data);
-    const endpoint = '/api/getUserSite';
-    const options = {method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSONdata,}
-    const response = await fetch(endpoint, options)
-    const result = await response.json();
+    let JSONdata = JSON.stringify(data);
+    let endpoint = '/api/getUserSite';
+    let options = {method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSONdata,}
+    let response = await fetch(endpoint, options)
+    let result = await response.json();
 
     console.log(result.data.site);
 
@@ -78,21 +71,64 @@ class EsmDashboard extends React.Component {
       return;
     }
 
+    //save siteID to state
     this.state.siteID = result.data.site;
 
 
+    //fetch site data between 2021-01-09 - 2021-01-16
+    data = {
+      siteID: this.state.siteID,
+      dateStart: "2021-01-09",
+      dateEnd: "2021-01-15"
+    }
+    JSONdata = JSON.stringify(data);
+    //API will get site data for the timeframe submitted (this week)
+    endpoint = '/api/getSiteDataTimeRangeDaily';
+    options = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json',},
+      body: JSONdata,
+    }
+    response = await fetch(endpoint, options)
+    result = await response.json();
+    //DB returns JSON wrapped in [] which javascript doesn't like
+    //so we stringify it, remove [], then parse back to JSON
 
+    console.log(result);
+
+    for(var day in result){
+      console.log(result[day].date.split("T")[0]);
+    }
+
+    data = [
+      { date: result[0].date.split("T")[0], demand: result[0].energy_demand },
+      { date: result[1].date.split("T")[0], demand: result[1].energy_demand },
+      { date: result[2].date.split("T")[0], demand: result[2].energy_demand },
+      { date: result[3].date.split("T")[0], demand: result[3].energy_demand },
+      { date: result[4].date.split("T")[0], demand: result[4].energy_demand },
+      { date: result[5].date.split("T")[0], demand: result[5].energy_demand },
+      { date: result[6].date.split("T")[0], demand: result[6].energy_demand },
+    ]
+
+    this.state.data = data;
+    this.setState({ data: data });
+
+    this.state.dataUpdated = true;
+
+    // console.log(data);
+    this.render();
 
 
     //fetch site reports and add to reports field
-
-
-
   }
 
 
 
   render() {
+    if(!this.state.dataUpdated){
+      return(<div></div>);
+    }
+
     return (
       <div className="esmDashboardBackground">
         <MainLayout
@@ -101,7 +137,7 @@ class EsmDashboard extends React.Component {
         />
         <div className="esmDashboardGridContainer">
           <div className="esmDashboardGraphPanel">
-            <h3 className="esmPanelHeader">Graph</h3>
+            <h3 className="esmPanelHeader">Energy Demand</h3>
             <div className="esmGraphCard">
               <LineGraph
                   toggle1={"Week"}
@@ -109,7 +145,7 @@ class EsmDashboard extends React.Component {
                   toggle3={"Year"}
                   dataSet={this.state.data}
                   xAxis={"Date"}
-                  yAxis={"Energy Usage kW"}
+                  yAxis={"kW"}
                   xAxisDataKey={"date"}
                   yAxisDataKey={"demand"}
               />
