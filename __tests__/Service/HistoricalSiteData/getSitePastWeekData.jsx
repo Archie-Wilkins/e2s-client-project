@@ -1,7 +1,6 @@
 const axios = require('axios');
 const sinon = require('sinon');
-const {assert } = require('chai');
-const should = require('chai').should();
+const {assert} = require('chai');
 
 import { getSitePastWeekData, getSiteDataEveryWeek, getSiteDataEveryDay, getSiteDataEvery6Hours, getSiteDataEveryMonth } from "../../../public/services/HistoricalSiteData.js";
 
