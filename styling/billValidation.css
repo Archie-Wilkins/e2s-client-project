@@ -9,6 +9,15 @@
     height: 200vh;
 }
 
+.errorText p{
+    color: red !important;
+}
+
+.invoiceSelect{
+    display: flex;
+    flex-direction: row;
+}
+
 .billValidationHeaderContent{
     margin-top: 2%;
     margin-bottom: 10%;

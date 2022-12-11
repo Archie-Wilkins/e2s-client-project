@@ -409,81 +409,83 @@ class BillValidation extends React.Component {
                 <div aria-label="Page header section" className="billValidationHeaderContent">
                     <h1>Bill Validation</h1>
                     <hr/>
-                    <h3>Upload your energy invoices for validation</h3>
+                    <h2>Upload your energy invoices for validation</h2>
                 </div>
                 {!this.state.pageLoaded &&(
                     <button onClick={this.initialiseData} className="billStart">Get Started</button>
                 )}
 
                 {this.state.pageLoaded &&(
-                    <div aria-label="Invoice data section" classname="invoiceData">
-                    <div>
-                        <h3 className="invoiceData">SELECT THE START DATE FOR THE INVOICE</h3>
-                        
-                        {/*Make dyanmic so that it auto updates in later years */}
-                        <select className="invoiceData" id="yearStuff" onChange={this.updateValue} aria-label="select which year to validate dropdown">
-                        </select>
-                        
-                        <select className="invoiceData" id="monthStuff" onChange={this.updateValue} aria-label="select which month to validate dropdown">
-                            <option monthValue="january">JANUARY</option>
-                            <option monthValue="february">FEBRUARY</option>
-                            <option monthValue="march">MARCH</option>
-                            <option monthValue="april">APRIL</option>
-                            <option monthValue="may">MAY</option>
-                            <option monthValue="june">JUNE</option>
-                            <option monthValue="july">JULY</option>
-                            <option monthValue="august">AUGUST</option>
-                            <option monthValue="septmeber">SEPTEMBER</option>
-                            <option monthValue="october">OCTOBER</option>
-                            <option monthValue="november">NOVEMBER</option>
-                            <option monthValue="december">DECEMBER</option>
-                        </select>
+                    <div aria-label="Invoice data section">
+                        <div>
+                            <label>Select your invoice date</label>
+                            <br/>
+                            {/*Make dyanmic so that it auto updates in later years */}
+                            <select id="yearStuff" onChange={this.updateValue} aria-label="select which year to validate dropdown">
+                            </select>
+                            
+                            <select id="monthStuff" onChange={this.updateValue} aria-label="select which month to validate dropdown">
+                                <option monthValue="january">JANUARY</option>
+                                <option monthValue="february">FEBRUARY</option>
+                                <option monthValue="march">MARCH</option>
+                                <option monthValue="april">APRIL</option>
+                                <option monthValue="may">MAY</option>
+                                <option monthValue="june">JUNE</option>
+                                <option monthValue="july">JULY</option>
+                                <option monthValue="august">AUGUST</option>
+                                <option monthValue="septmeber">SEPTEMBER</option>
+                                <option monthValue="october">OCTOBER</option>
+                                <option monthValue="november">NOVEMBER</option>
+                                <option monthValue="december">DECEMBER</option>
+                            </select><br/><br/>
 
-                        {/*Initially we will check only for 31 days*/}
-                        <br/>
-                        <label className="invoiceData">Enter the amount you have been invoiced for your chosen month (£)</label>
-                        <input className="invoiceData" id="amountInvoiced" onInput={this.updateValue} aria-label="input invoice total box"></input>
+                            {/*Initially we will check only for 31 days*/}
+                            <label>Enter your invoice total for the month (£)</label><br/>
+                            <input id="amountInvoiced" onInput={this.updateValue} aria-label="input invoice total box"></input>
 
-                        {/*Error messages for errors */}
-                        <div aria-label="invoice amount error section">
-                            {!this.state.invoiceIsNum &&(
-                                <p className="invoiceData">ERROR, you can only submit numbers!</p>
-                            )}
-                            {this.state.invoiceIsNum === true &&(
-                                <div>
-                                    <button onClick={this.submitDate} aria-label="submit all data button">Submit</button>
-                                    <hr/>
-                                </div>    
-                            )}
+                            {/*Error messages for errors */}
+                            <div aria-label="invoice amount error section">
+                                {!this.state.invoiceIsNum &&(
+                                    <p classname="errorText">ERROR, you can only submit numbers!</p>
+                                )}
+                                {this.state.invoiceIsNum === true &&(
+                                    <div>
+                                        <button onClick={this.submitDate} aria-label="submit all data button">Submit</button>
+                                        <hr/>
+                                    </div>    
+                                )}
+                            </div>
+                            <br/><br/>
                         </div>
-                        <br/><br/>
-                    </div>
 
-                    <div aria-label="validation data summary">
+                        <div aria-label="validation data summary">
                         {this.state.dateSubmitted &&(
                             <div>
                                 {this.state.dateIsValid === "false" &&(
-                                    <p>ERROR: for {this.state.selectedYear} you only have data until {this.state.historicalLastMonth}</p>
+                                    <div>
+                                        <p>ERROR: for {this.state.selectedYear} you only have data until {this.state.months[this.state.historicalLastMonth-1]}.</p>
+                                        <Link href="/csvUpload"><p>Upload new data</p></Link>
+                                    </div>    
                                 )}
                                 {this.state.dateIsValid === "true" &&(
                                     <div>
-                                        <p>SUMMARY</p>
+                                        <h3>SUMMARY</h3>
                                         {this.state.currentlyCalculating &&(
                                             <p>VALIDATING....</p>
                                         )}
                                         {!this.state.currentlyCalculating &&(
                                             <div className="billValidationSummaryData">
-                                                <h3>{this.state.selectedMonth} {this.state.selectedYear}</h3>
-                                                <h3>Invoice Amount: £{this.state.invoiceTotal}</h3>
-                                                <h3>Calculated Amount: £{parseFloat(this.state.calculatedInvoiceTotal).toFixed(2)}</h3>
+                                                <p>{this.state.selectedMonth} {this.state.selectedYear}</p>
+                                                <p>Invoice Amount: £{this.state.invoiceTotal}</p>
+                                                <p>Calculated Amount: £{parseFloat(this.state.calculatedInvoiceTotal).toFixed(2)}</p>
                                                 
                                                 {this.state.invoiceTotal > this.state.calculatedInvoiceTotal &&(
-                                                    <h3>Invoice is too much!</h3>
+                                                    <p>Invoice is too much!</p>
                                                 )}
                                                 {this.state.invoiceTotal == this.state.calculatedInvoiceTotal &&(
-                                                    <h3>Invoice is correct.</h3>
+                                                    <p>Invoice is correct.</p>
                                                 )}{this.state.invoiceTotal < this.state.calculatedInvoiceTotal &&(
-                                                    <h3>Invoice is too low.</h3>
+                                                    <p>Invoice is too low.</p>
                                                 )}
                                             </div>
                                         )}
@@ -492,16 +494,9 @@ class BillValidation extends React.Component {
                                 
                             </div>
                         )}
-                    </div>
-
-
-                    <div>
-                        <h3></h3>
-                    </div>
+                        </div>
                     </div>
                 )}  
-
-                
             </div>
         </div>
         );
