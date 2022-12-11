@@ -25,20 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/esm/analysis": [
+    "/login": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/esm/analysis.js"
-    ],
-    "/esm/dashboard": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/esm/dashboard.js"
-    ],
-    "/weeklyEmail": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/weeklyEmail.js"
+      "static/chunks/pages/login.js"
     ]
   },
   "ampFirstPages": []
