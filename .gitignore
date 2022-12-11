@@ -10,3 +10,5 @@ yarn.lock
 package-lock.json
 *.pack
 node_modules
+.next/cache/webpack/server-development/index.pack
+.next/cache/webpack/server-development/index.pack.old
