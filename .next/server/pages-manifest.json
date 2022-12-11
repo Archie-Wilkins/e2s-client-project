@@ -2,5 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/billValidation": "pages/billValidation.js"
+  "/csvUpload": "pages/csvUpload.js",
+  "/api/uploadAllHistoricalSiteDataApi": "pages/api/uploadAllHistoricalSiteDataApi.js"
 }
