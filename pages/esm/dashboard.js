@@ -94,12 +94,6 @@ class EsmDashboard extends React.Component {
     //DB returns JSON wrapped in [] which javascript doesn't like
     //so we stringify it, remove [], then parse back to JSON
 
-    console.log(result);
-
-    for(var day in result){
-      console.log(result[day].date.split("T")[0]);
-    }
-
     data = [
       { date: result[0].date.split("T")[0], demand: result[0].energy_demand },
       { date: result[1].date.split("T")[0], demand: result[1].energy_demand },
@@ -115,9 +109,30 @@ class EsmDashboard extends React.Component {
 
     this.state.dataUpdated = true;
 
-    // console.log(data);
     this.render();
 
+
+
+    data = {
+      siteID: this.state.siteID
+    }
+    JSONdata = JSON.stringify(data);
+    //API will get site data for the timeframe submitted (this week)
+    endpoint = '/api/getSiteDetails';
+    options = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json',},
+      body: JSONdata,
+    }
+    response = await fetch(endpoint, options)
+    result = await response.json();
+
+    console.log(result);
+    
+    document.getElementById("siteName").innerText = result[0].site_name;
+
+    document.getElementById("county").innerText = result[0].county;
+    // document.getElementById("orgName")
 
     //fetch site reports and add to reports field
   }
@@ -158,29 +173,20 @@ class EsmDashboard extends React.Component {
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
               </div>
               <div className="esmInsightCard">
-                insight
+                Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old
               </div>
               <div className="esmInsightCard">
-                insight
+                Latin words, consectetur, from a Lorem Ipsum passage, and going through
               </div>
               <div className="esmInsightCard">
-                insight
+                Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero
               </div>
               <div className="esmInsightCard">
-                insight
-              </div>
-              <div className="esmInsightCard">
-                insight
-              </div>
-              <div className="esmInsightCard">
-                insight
-              </div>
-              <div className="esmInsightCard">
-                insight
+                Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero
               </div>
             </div>
           </div>
-          <div className="esmDashboardPanel">
+          <div className="esmDashboardPanel esmSpecificGrid">
             <h3 className="esmPanelHeader">Reports</h3>
             <div className="esmPanelListContainer">
               <div className="esmReportCard">
@@ -203,15 +209,11 @@ class EsmDashboard extends React.Component {
           <div className="esmBottomPanel">
             <div className="esmBottomPanelInfo">
               <div>Site:</div>
-              <p>McDonalds</p>
+              <p id="siteName"></p>
             </div>
             <div className="esmBottomPanelInfo">
               <div>County:</div>
-              <p>Surrey</p>
-            </div>
-            <div className="esmBottomPanelInfo">
-              <div>Organisation:</div>
-              <p>Man With A Hammer</p>
+              <p id="county"></p>
             </div>
           </div>
         </div>
