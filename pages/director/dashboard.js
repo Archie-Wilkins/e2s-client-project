@@ -123,6 +123,24 @@ class Dashboard extends React.Component {
       numberOfDataRows:0,
 
       zonesArray: [],
+
+      carbonEmitted: 0,
+
+      carbonEmittedPreviousMonth: 0,
+
+      carbonEmittedCurrentMonth: 0,
+
+      previousMonth: null,
+
+      currentMonth: null,
+
+      allTimeDataSelected: "true",
+
+      lastMonthSelected: "false",
+
+      lastWeekSeleted: "false",
+
+      lastDaySelected: "false",
       
     };
   }
@@ -160,7 +178,14 @@ class Dashboard extends React.Component {
       this.setState({siteDataArray: result.data.sites});
       const localDate = new Date(result.data.sites[0].time_stamp);
       this.setState({dataStartDate: localDate.getFullYear() + " " + this.state.months[localDate.getMonth()]});
+      const historicalDataRows = result.data.sites.length;
+
+      let localPreviousMonth = new Date(result.data.sites[historicalDataRows - (1 + 32*48)].time_stamp).getMonth();
+      let localCurrentMonth = new Date(result.data.sites[historicalDataRows - 1].time_stamp).getMonth();
       
+      this.setState({previousMonth: this.state.months[localPreviousMonth]});
+      this.setState({currentMonth: this.state.months[localCurrentMonth]});
+
       let electrictyTally = 0;
       let heatTally = 0;
       let energyExportTally = 0;
@@ -172,82 +197,103 @@ class Dashboard extends React.Component {
       let dayTracker = 1;
       let timeSlotsChecked = 0;
 
-      for(let i = 0; i < result.data.sites.length; i++){
-        electrictyTally = electrictyTally + result.data.sites[i].energy_demand;
-        heatTally = heatTally + result.data.sites[i].heat_demand;
-        energyExportTally = energyExportTally + result.data.sites[i].energy_exported;
+      let previousMonthCarbon = 0;
+      let currentMonthCarbon = 0;
 
-        cumulativeSpending = cumulativeSpending + result.data.sites[i].energy_cost;
-
-        try{
-          if(this.state.distributionNetwork === "EPN"){
-
-            // Check if the day is Monday through Friday.
-            if(dayTracker < 6){
-
-                // If it is, create a substring from the date handed in the csv.
-                let dateTime = new Date(result.data.sites[i].time_stamp);
-
-                // Evaluate which time period the time falls between.
-                if(dateTime.getHours() >= 16 && dateTime.getHours() <= 19){
-                    // Increment counters to track how many periods of time were using which tariff of cost.
-                    console.log("Net: " +String(result.data.sites[i].energy_demand-result.data.sites[i].energy_exported));
-                    redZonePeriodTally = redZonePeriodTally + result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
-                }
-                if((dateTime.getHours() >= 7 && dateTime.getHours() < 16) || (dateTime.getHours() > 19 && dateTime.getHours() <= 23)){
-                  amberZonePeriodTally = amberZonePeriodTally + result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
-                }if(dateTime.getHours() > 23 || dateTime.getHours() < 7 || dateTime.getHours() === 0){
-                  greenZonePeriodTally = greenZonePeriodTally +result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
-                }
+      if(this.state.allTimeDataSelected === "true"){
+        for(let i = 0; i < historicalDataRows; i++){
+          electrictyTally = electrictyTally + result.data.sites[i].energy_demand;
+          heatTally = heatTally + result.data.sites[i].heat_demand;
+          energyExportTally = energyExportTally + result.data.sites[i].energy_exported;
+          cumulativeSpending = cumulativeSpending + result.data.sites[i].energy_cost;
+  
+          try{
+            if(this.state.distributionNetwork === "EPN"){
+  
+              // Check if the day is Monday through Friday.
+              if(dayTracker < 6){
+  
+                  // If it is, create a substring from the date handed in the csv.
+                  let dateTime = new Date(result.data.sites[i].time_stamp);
+  
+                  // Evaluate which time period the time falls between.
+                  if(dateTime.getHours() >= 16 && dateTime.getHours() <= 19){
+                      // Increment counters to track how many periods of time were using which tariff of cost.
+                      redZonePeriodTally = redZonePeriodTally + result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
+                  }
+                  if((dateTime.getHours() >= 7 && dateTime.getHours() < 16) || (dateTime.getHours() > 19 && dateTime.getHours() <= 23)){
+                    amberZonePeriodTally = amberZonePeriodTally + result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
+                  }if(dateTime.getHours() > 23 || dateTime.getHours() < 7 || dateTime.getHours() === 0){
+                    greenZonePeriodTally = greenZonePeriodTally +result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
+                  }
+              }
+  
+              else if(dayTracker === 6 || dayTracker === 7){
+  
+                  // If it is Saturday or Sunday, there price will only ever be green zone. 
+                  greenZonePeriodTally = greenZonePeriodTally + result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
+              }
+  
+  
+              // If 48 time slots have been checked, an entire day of data has been passed.
+              if(timeSlotsChecked == 48){
+                  
+                  // Check if it is Sunday (Monday - 1, Tuesday - 2, ..., Sunday - 7).
+                  if(dayTracker < 7){
+  
+                      // Move the day tracker forward a day.
+                      dayTracker = dayTracker + 1;
+                  }
+  
+                  if(dayTracker === 7){
+  
+                      // If the day is Sunday, reset it to Monday after all slots have been checked.
+                      dayTracker = 1;
+                  }
+  
+                  // Reset the number of slots checked for a day.
+                  timeSlotsChecked = 0;
+              }
+  
+              else if(timeSlotsChecked < 48){
+                  // Increment the number of slots checked for the day.
+                  timeSlotsChecked = timeSlotsChecked + 1;
+              }
+              
             }
-
-            else if(dayTracker === 6 || dayTracker === 7){
-
-                // If it is Saturday or Sunday, there price will only ever be green zone. 
-                greenZonePeriodTally = greenZonePeriodTally + result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
-            }
-
-
-            // If 48 time slots have been checked, an entire day of data has been passed.
-            if(timeSlotsChecked == 48){
-                
-                // Check if it is Sunday (Monday - 1, Tuesday - 2, ..., Sunday - 7).
-                if(dayTracker < 7){
-
-                    // Move the day tracker forward a day.
-                    dayTracker = dayTracker + 1;
-                }
-
-                if(dayTracker === 7){
-
-                    // If the day is Sunday, reset it to Monday after all slots have been checked.
-                    dayTracker = 1;
-                }
-
-                // Reset the number of slots checked for a day.
-                timeSlotsChecked = 0;
-            }
-
-            else if(timeSlotsChecked < 48){
-                // Increment the number of slots checked for the day.
-                timeSlotsChecked = timeSlotsChecked + 1;
-            }
-            
+          }catch(e){
+            console.log("error");
           }
-        }catch(e){
-          console.log("error");
+  
+          if(i >= historicalDataRows - (62*48) && i < historicalDataRows - (31*48)){
+            previousMonthCarbon = previousMonthCarbon + (0.193 * result.data.sites[i].energy_demand) + (0.183 * result.data.sites[i].heat_demand);
+          }else if(i > historicalDataRows - (31*48) && i < historicalDataRows){
+            currentMonthCarbon = currentMonthCarbon + 0.193 * result.data.sites[i].energy_demand + 0.183 * result.data.sites[i].heat_demand;
+          }
+  
         }
-
       }
+      
 
       this.setState({electrictyUsed: electrictyTally});
       this.setState({heatUsed: heatTally});
       this.setState({energyExported: energyExportTally});
       this.setState({netEnergy: electrictyTally - energyExportTally});
       this.setState({totalSpent: cumulativeSpending});
+
+
       this.setState({redZoneUsage: redZonePeriodTally});
       this.setState({amberZoneUsage: amberZonePeriodTally});
       this.setState({greenZoneUsage: greenZonePeriodTally});
+
+      this.setState({carbonEmittedPreviousMonth: previousMonthCarbon});
+      this.setState({carbonEmittedCurrentMonth: currentMonthCarbon});
+
+      // kg
+      let carbonSum = 0.193 * electrictyTally;
+      let carbonSum2 = 0.183 * heatTally;
+      carbonSum = carbonSum + carbonSum2;
+      this.setState({carbonEmitted: carbonSum});
 
       redZonePeriodTally = redZonePeriodTally;
       amberZonePeriodTally = amberZonePeriodTally;
@@ -387,7 +433,7 @@ class Dashboard extends React.Component {
           pageName={this.state.pageName}
         >
           <div className={"director-content-container"} aria-label="director dashboard body">
-            <div>
+            <div className="graphBox">
               <h1 className="dashboard-header">Director Dashboard</h1>
               <hr className={"h1-underline"} />
               <p className={"dashboard-sub-header"}>Welcome to your dashboard {this.state.userName}.</p>
@@ -399,13 +445,19 @@ class Dashboard extends React.Component {
 
               <div>
                 <div>
-                  <h3>Insights</h3>
+                  <h3 className="graphBox">Insights</h3>
                   <div className="flexContainer">
-                    <p>Start date: {this.state.dataStartDate}</p>
-                    <p>Energy Distribution Network: {this.state.distributionNetwork}</p>
+                    <div>
+                      <p>Your earliest data: {this.state.dataStartDate}</p>
+                      <p title="Eastern Power Networks">Energy Distribution Network: {this.state.distributionNetwork}</p>
+                    </div>
 
-                    <div className="flexBox w-125 h-100">
-                      <PieChart width={400} height={200}>
+                    <div className="flexBox w-100">
+                      <p>All Time Data</p>
+                    </div>
+
+                    <div className="flexBox w-50 h-100">
+                      <PieChart title="Energy Usage by Distribution Network Price Chart" width={400} height={200}>
                         <Pie data={this.state.zonesArray} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#fff" label>
                         </Pie>  
                       </PieChart>
@@ -438,11 +490,12 @@ class Dashboard extends React.Component {
                       )}
                     </div>
 
-                    <div className="flexBox"><p>Energy Demand</p> 
+
+                    <div className="flexBox h-50 "><p>Energy Demand</p> 
                     {parseFloat(this.state.electrictyUsed).toFixed(0)} KwH
                     {this.state.insightOneData}
                     </div>
-                    <div className="flexBox"><p>Heat Demand</p> 
+                    <div className="flexBox h-50"><p>Heat Demand</p> 
                     {parseFloat(this.state.heatUsed).toFixed(0)} KwH
                     {this.state.insightTwoData}
                     </div>
@@ -458,13 +511,19 @@ class Dashboard extends React.Component {
                     £{parseFloat(this.state.totalSpent).toFixed(2)}
                     {this.state.insightFiveData}
                     </div>
-                    <div className="flexBox"><p>Insight 6</p> 
+                    <div className="flexBox"><p>Carbon Emissions</p> 
+                    {parseFloat(this.state.carbonEmitted).toFixed(2)} Kg
                     {this.state.insightSixData}
+                    </div>
+                    <div className="flexBox w-100"><p>Carbon Emissions</p> 
+                    <p>Your site generated {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)} Kg of
+                       carbon in {this.state.currentMonth} compared to {parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)} Kg
+                       in {this.state.previousMonth}</p>
                     </div>
                   </div>
                 </div>
 
-                <div>
+                <div className="graphBox">
                   <h3>Graph Performance</h3>
                   GRAPH
                 </div>

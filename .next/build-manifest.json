@@ -25,15 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/csvUpload": [
+    "/zonePricingInformation": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/csvUpload.js"
-    ],
-    "/director/dashboard": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/director/dashboard.js"
+      "static/chunks/pages/zonePricingInformation.js"
     ]
   },
   "ampFirstPages": []
