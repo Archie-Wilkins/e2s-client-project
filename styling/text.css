@@ -1,9 +1,9 @@
 .whiteText {
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 .accentText {
-    color: #EDB116;
+    color: #edb116;
 }
 
 .darkLink {
@@ -25,6 +25,7 @@
     color: #EDB116;
     cursor: pointer;
 }
+
 .accentButton {
     color: black;
     background-color: #EDB116;

@@ -1,0 +1,39 @@
+.vh-60 {
+  height: 60vh;
+}
+
+.vh-70 {
+  height: 70vh;
+}
+
+.vh-30 {
+  height: 30vh;
+}
+
+.vh-55 {
+  height: 55vh;
+}
+
+.vh-90 {
+  height: 90vh;
+}
+
+.vh-100 {
+  height: 100vh;
+}
+
+.vw-70 {
+  width: 70vh;
+}
+
+.vw-100 {
+  width: 100vh;
+}
+
+.vw-90 {
+  width: 90vw;
+}
+
+.w-40 {
+  width: 40%;
+}

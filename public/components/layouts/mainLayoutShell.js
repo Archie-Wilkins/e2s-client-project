@@ -3,6 +3,7 @@ import React from 'react';
 import TopNavBar from './topNavBar.js';
 import MasterNavBar from "./masterNavBar";
 
+
 class MainLayoutShell extends React.Component {
     constructor(props) {
         super(props);
@@ -20,6 +21,7 @@ class MainLayoutShell extends React.Component {
             <div className="content greyBackground">
                 {this.props.children}
             </div>
+
         </div >
     }
 
