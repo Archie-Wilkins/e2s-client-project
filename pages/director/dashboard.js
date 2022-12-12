@@ -458,28 +458,29 @@ class Dashboard extends React.Component {
                     </div>
 
                     <div className="flexBox w-100">
-                      <p>All Time Data</p>
+                      <b>All Time Data</b>
                     </div>
 
                     <div className="flexBox w-50 h-100">
+                      <b>Zonal Energy Usage Breakdown</b>
                       <PieChart title="Energy Usage by Distribution Network Price Chart" width={400} height={200}>
                         <Pie data={this.state.zonesArray} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#fff" label>
                         </Pie>  
                       </PieChart>
                       <div>
-                        <p>You spent {parseFloat((this.state.redZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}% of your energy usage during red zone periods.</p>
-                        <p>You spent {parseFloat((this.state.amberZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}% of your energy usage during amber zone periods.</p>
-                        <p>You spent {parseFloat((this.state.greenZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}% of your energy usage during green zone periods.</p>
+                        <p>You spent <b>{parseFloat((this.state.redZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}%</b> of your energy usage during red zone periods.</p>
+                        <p>You spent <b>{parseFloat((this.state.amberZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}%</b> of your energy usage during amber zone periods.</p>
+                        <p>You spent <b>{parseFloat((this.state.greenZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}%</b> of your energy usage during green zone periods.</p>
                       </div>
                       {this.state.redZoneUsage > this.state.greenZoneUsage &&(
                         <div>
                           {this.state.redZoneUsage > this.state.amberZoneUsage &&(
-                            <p> Most of your energy use was during red-zone periods.  Consider changing your energy usage times
+                            <p> Most of your energy use was during <b>red-zone</b> periods.  Consider changing your energy usage times
                             and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
                             money.</p>
                           )}
                           {this.state.amberZoneUsage > this.state.redZoneUsage &&(
-                            <p> Most of your energy use was during amber-zone periods.  Consider changing your energy usage times
+                            <p> Most of your energy use was during <b>amber-zone</b> periods.  Consider changing your energy usage times
                             and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
                             money.</p>
                           )}
@@ -488,11 +489,11 @@ class Dashboard extends React.Component {
                       {this.state.greenZoneUsage > this.state.redZoneUsage &&(
                         <div>
                           {this.state.greenZoneUsage > this.state.amberZoneUsage &&(
-                            <p> Well done! Most of your energy has been during green-zone periods. Find out <Link href="/zonePricingInformation"> 
+                            <p> Well done! Most of your energy has been during <b>green-zone</b> periods. Find out <Link href="/zonePricingInformation"> 
                             more </Link> about zone pricing to see how you could save money.</p>
                           )}
                           {this.state.amberZoneUsage > this.state.greenZoneUsage &&(
-                            <p> Most of your energy use was during amber-zone periods.  Consider changing your energy usage times
+                            <p> Most of your energy use was during <b>amber-zone</b> periods.  Consider changing your energy usage times
                             and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
                             money.</p>
                           )}
@@ -501,31 +502,25 @@ class Dashboard extends React.Component {
                     </div>
 
 
-                    <div className="flexBox h-50 "><p>Energy Demand</p> 
+                    <div className="flexBox h-50 "><p><b>Energy Demand</b></p> 
                     {parseFloat(this.state.electrictyUsed).toFixed(0)} KwH
-                    {this.state.insightOneData}
                     </div>
-                    <div className="flexBox h-50"><p>Heat Demand</p> 
+                    <div className="flexBox h-50"><p><b>Heat Demand</b></p> 
                     {parseFloat(this.state.heatUsed).toFixed(0)} KwH
-                    {this.state.insightTwoData}
                     </div>
-                    <div className="flexBox"><p>Energy Exported</p> 
+                    <div className="flexBox"><p><b>Energy Exported</b></p> 
                     {parseFloat(this.state.energyExported).toFixed(0)} KwH
-                    {this.state.insightThreeData}
                     </div>
-                    <div className="flexBox"><p>Net Energy Use</p> 
+                    <div className="flexBox"><p><b>Net Energy Use</b></p> 
                     {parseFloat(this.state.netEnergy).toFixed(0)} KwH
-                    {this.state.insightFourData}
                     </div>
-                    <div className="flexBox"><p>Spending</p> 
+                    <div className="flexBox"><p><b>Spending</b></p> 
                     £{parseFloat(this.state.totalSpent).toFixed(2)}
-                    {this.state.insightFiveData}
                     </div>
-                    <div className="flexBox"><p>Carbon Emissions</p> 
+                    <div className="flexBox"><p><b>Carbon Emissions</b></p> 
                     {parseFloat(this.state.carbonEmitted).toFixed(2)} Kg
-                    {this.state.insightSixData}
                     </div>
-                    <div className="flexBox w-100"><p>Carbon Emissions</p> 
+                    <div className="flexBox w-100"><p><b>Carbon Emissions</b></p> 
                       <p>Your site generated {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)} Kg of
                         carbon in {this.state.currentMonth} compared to {parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)} Kg
                         in {this.state.previousMonth}.</p>
@@ -580,5 +575,5 @@ export default Dashboard;
 ////      ///////////////////////////////  ///////////////   ////////////////    ///////////////////////// *TOMORROW
 ///                   ///////////////////////////////    //////////////////                     /////////TOMORROW *
 //       /////////////////////////////////////       ////////  ///////////////////////////    //////////TODAY *    *
-//                   ///////////////////                      /////////                      //////////   * TOMORROW
+//                   ///////////////////                      /////////                       /////////   * TOMORROW
 //////////////////////////////////////////////////////////////////////////////////////////////////////DAY    TOMORROW
