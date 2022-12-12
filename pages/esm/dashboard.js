@@ -1,155 +1,496 @@
 import Link from "next/link";
 import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
-import EnergyCostForecastGraph from "../../public/components/graphs/toggleTimeChart";
-import StackGraph from "../../public/components/graphs/stackGraph";
-
+// import EnergyCostForecastGraph from "../../public/components/graphs/toggleTimeChart";
+// import StackGraph from "../../public/components/graphs/stackGraph";
+import LineGraph from "../../public/components/graphs/lineGraph";
 import ToggleStackChart from "../../public/components/graphs/toggleStackChart.js";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-
 import ForecastingInfoBox from "../../public/components/dataDisplayBox/forecastingInfoBox.js";
 import React from "react";
 import BottomFooter from "../../public/components/layouts/bottomFooter.js";
+import Cookies from "js-cookie";
+
+
 
 class EsmDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pageName: "Dashboard",
-      //Need to change this to get this
-      //infomation from API
-
-      //Would be ideal to store these in some sort of cookie or global variable
-      //if these are not present then the nav bar will default to standard ESM nav bar
-
       isDirector: false,
-
-      weeklyData: [
-        { date: "Mon 5th", c02: 153, cost: 400, energyUsage: 150, energyIn: 120 },
-        { date: "Tue 6th", c02: 145, cost: 415, energyUsage: 150, energyIn: 120 },
-        { date: "Wed 7th", c02: 131, cost: 460, energyUsage: 150, energyIn: 120 },
-        { date: "Thu 8th", c02: 115, cost: 501, energyUsage: 150, energyIn: 120 },
-        { date: "Fri 9th", c02: 165, cost: 446, energyUsage: 150, energyIn: 120 },
-        { date: "Sat 10th", c02: 135, cost: 608, energyUsage: 150, energyIn: 120 },
-        { date: "Sun 11th", c02: 135, cost: 608, energyUsage: 150, energyIn: 120 },
-      ],
-
-      monthlyData: [
-        { date: "14/11/2022", cost: 2000, c02: 153, energyUsage: 180, energyIn: 120 },
-        { date: "15/11/2022", cost: 415, c02: 145, energyUsage: 150, energyIn: 120 },
-        { date: "16/11/2022", cost: 460, c02: 131, energyUsage: 150, energyIn: 120 },
-        { date: "17/11/2022", cost: 501, c02: 115, energyUsage: 150, energyIn: 120 },
-        { date: "18/11/2022", cost: 446, c02: 165, energyUsage: 150, energyIn: 120 },
-        { date: "19/11/2022", cost: 608, c02: 135, energyUsage: 150, energyIn: 120 },
-        { date: "20/11/2022", cost: 562, c02: 115, energyUsage: 150, energyIn: 120 },
-        { date: "21/11/2022", cost: 531, c02: 112, energyUsage: 150, energyIn: 120 },
-        { date: "22/11/2022", cost: 558, c02: 113, energyUsage: 150, energyIn: 120 },
-        { date: "23/11/2022", cost: 515, c02: 109, energyUsage: 150, energyIn: 120 },
-        { date: "24/11/2022", cost: 589, c02: 106, energyUsage: 150, energyIn: 120 },
-        { date: "25/11/2022", cost: 605, c02: 105, energyUsage: 150, energyIn: 120 },
-        { date: "26/11/2022", cost: 601, c02: 103, energyUsage: 150, energyIn: 120 },
-        { date: "27/11/2022", cost: 561, c02: 101, energyUsage: 150, energyIn: 120 },
-        { date: "28/11/2022", cost: 410, c02: 103, energyUsage: 150, energyIn: 120 },
-        { date: "29/11/2022", cost: 440, c02: 111, energyUsage: 150, energyIn: 120 },
-        { date: "30/11/2022", cost: 495, c02: 121, energyUsage: 150, energyIn: 120 },
-        { date: "1/12/2022", cost: 411, c02: 136, energyUsage: 150, energyIn: 120 },
-        { date: "2/12/2022", cost: 452, c02: 141, energyUsage: 150, energyIn: 120 },
-        { date: "3/12/2022", cost: 431, c02: 145, energyUsage: 150, energyIn: 120 },
-        { date: "4/12/2022", cost: 459, c02: 131, energyUsage: 150, energyIn: 120 },
-        { date: "5/12/2022", cost: 473, c02: 113, energyUsage: 150, energyIn: 120 },
-        { date: "6/12/2022", cost: 413, c02: 121, energyUsage: 150, energyIn: 120 },
-        { date: "7/12/2022", cost: 519, c02: 117, energyUsage: 150, energyIn: 120 },
-        { date: "8/12/2022", cost: 511, c02: 113, energyUsage: 150, energyIn: 120 },
-        { date: "9/12/2022", cost: 506, c02: 121, energyUsage: 150, energyIn: 120 },
-        { date: "10/12/2022", cost: 520, c02: 119, energyUsage: 150, energyIn: 120 },
-        { date: "11/12/2022", cost: 549, c02: 131, energyUsage: 150, energyIn: 120 },
-        { date: "12/12/2022", cost: 560, c02: 136, energyUsage: 150, energyIn: 120 },
-        { date: "13/12/2022", cost: 580, c02: 145, energyUsage: 150, energyIn: 120 },
-        { date: "14/12/2022", cost: 600, c02: 145, energyUsage: 150, energyIn: 120 },
-      ],
-
-      yearlyData: [
-        { date: "Dec", cost: 400, c02: 153, energyUsage: 150, energyIn: 40 },
-        { date: "Jan", cost: 415, c02: 145, energyUsage: 150, energyIn: 120 },
-        { date: "Feb", cost: 460, c02: 131, energyUsage: 150, energyIn: 120 },
-        { date: "Mar", cost: 501, c02: 115, energyUsage: 150, energyIn: 120 },
-        { date: "Apr", cost: 446, c02: 165, energyUsage: 150, energyIn: 120 },
-        { date: "May", cost: 608, c02: 135, energyUsage: 150, energyIn: 120 },
-        { date: "Jun", cost: 608, c02: 138, energyUsage: 150, energyIn: 120 },
-        { date: "Jul", cost: 620, c02: 165, energyUsage: 150, energyIn: 120 },
-        { date: "Aug", cost: 630, c02: 175, energyUsage: 150, energyIn: 120 },
-        { date: "Sep", cost: 640, c02: 185, energyUsage: 150, energyIn: 120 },
-        { date: "Oct", cost: 645, c02: 175, energyUsage: 150, energyIn: 120 },
-        { date: "Nov", cost: 633, c02: 165, energyUsage: 150, energyIn: 120 },
-        { date: "Dec", cost: 640, c02: 165, energyUsage: 150, energyIn: 120 },
-      ],
-
-      // Energy Cost
-      energyCostThisWeek: 435,
-      energyCostLastWeek: 250,
-
-      energyCostThisMonth: 435,
-      energyCostLastMonth: 250,
-
-      energyCostThisYear: 435,
-      energyCostLastYear: 250,
-
-      // Energy Usage
-      energyUsageThisWeek: 435,
-      energyUsageLastWeek: 256,
-
-      energyUsageThisMonth: 435,
-      energyUsageLastMonth: 250,
-
-      energyUsageThisYear: 435,
-      energyUsageLastYear: 250,
-
-      // C02 Emissions
-      c02EmissionsThisWeek: 435,
-      c02EmissionsLastWeek: 250,
-
-      c02EmissionsThisMonth: 435,
-      c02EmissionsLastMonth: 250,
-
-      c02EmissionsThisYear: 435,
-      c02EmissionsLastYear: 250,
+      pageName: "Dashboard",
+      data: [],
+      dataUpdated: false,
+      siteID: ""
     };
   }
 
+
+  async componentDidMount() {
+    //will check user is allowed on this page first
+    //attempt to get user cookie
+    try {
+      //Get the user cookie
+      let userCookieEncypted = Cookies.get().user;
+
+      //import CryptoJS
+      var CryptoJS = require("crypto-js");
+
+      //decrypt the cookie
+      var bytes = CryptoJS.AES.decrypt(userCookieEncypted, 'team4');
+      //store decrypted cookie in userCookie
+      var userCookie = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+      // If the user has the incorrect credentials for the page, remove them
+      if (userCookie.role != 3) {
+        Cookies.remove("user");
+        window.location = "/login";
+      }
+      //catch errors
+    } catch (e) {
+      // No cookie found
+      //return to login
+      window.location = "/login";
+    }
+
+    //fetch site historical data via userID
+    let data = {
+      userID: userCookie.user.toString()
+    }
+    //sets options for API
+    let JSONdata = JSON.stringify(data);
+    let endpoint = '/api/user/getUserSite';
+    let options = {method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSONdata,}
+    //fetches API to get user siteID
+    let response = await fetch(endpoint, options)
+    let result = await response.json();
+
+    //if no site has been returned
+    if(result.data.message === "no site"){
+      alert("server error, no site found related to user")
+      return;
+    }
+
+    //save siteID to state
+    this.state.siteID = result.data.site;
+
+
+    //fetch site data between 2021-01-09 - 2021-01-16, this is hard coded because we arent currently recieving live data
+    data = {
+      siteID: this.state.siteID,
+      dateStart: "2018-01-25",
+      dateEnd: "2018-02-01"
+    }
+    JSONdata = JSON.stringify(data);
+    //API will get site data for the timeframe submitted (this week)
+    endpoint = '/api/site/getSiteDataTimeRangeDaily';
+    options = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json',},
+      body: JSONdata,
+    }
+    response = await fetch(endpoint, options)
+    result = await response.json();
+    //DB returns JSON wrapped in [] which javascript doesn't like
+    //so we stringify it, remove [], then parse back to JSON
+
+    //formats the data to be inserted into graph
+
+    data = [
+      { date: result[0].date.split("T")[0], demand: result[0].energy_demand },
+      { date: result[1].date.split("T")[0], demand: result[1].energy_demand },
+      { date: result[2].date.split("T")[0], demand: result[2].energy_demand },
+      { date: result[3].date.split("T")[0], demand: result[3].energy_demand },
+      { date: result[4].date.split("T")[0], demand: result[4].energy_demand },
+      { date: result[5].date.split("T")[0], demand: result[5].energy_demand },
+      { date: result[6].date.split("T")[0], demand: result[6].energy_demand },
+    ]
+
+    //sets State to refresh page with new data
+    this.state.data = data;
+    this.setState({ data: data });
+    //updates value to make the page render the graph
+    this.state.dataUpdated = true;
+
+    //creates data object with siteID to be sent off to retrieve site details
+    data = {siteID: this.state.siteID}
+    JSONdata = JSON.stringify(data);
+    endpoint = '/api/site/getSiteDetails';
+    options = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json',},
+      body: JSONdata,
+    }
+    response = await fetch(endpoint, options)
+    result = await response.json();
+
+    //sets information boxes to have site details
+    document.getElementById("siteName").innerText = result[0].site_name;
+    document.getElementById("county").innerText = result[0].county;
+
+
+    //API request to get reports for the site
+    endpoint = '/api/report/getReportListData';
+    options = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json',},
+      body: JSONdata,
+    }
+    response = await fetch(endpoint, options)
+    result = await response.json();
+
+
+    //initialise variables
+    let Monday;
+    let listHtml = "";
+    let currentSite = "";
+    let id = 0;
+
+    //filter JSON to only contain curren site (via site_id)
+    var site_filter = result.filter( element => element.site_id === parseInt(this.state.siteID));
+    //loops through list of site data
+    for (var record in await site_filter) {
+
+      //splits the time_stamp into date and time
+      let [date, time] = site_filter[record].time_stamp.split("T");
+      //converts string "date" into Date object
+      let days = new Date(date);
+
+      //if day is a monday
+      if (days.getDay() === 1) {
+        //store monday's date
+        Monday = date;
+      }
+
+      //if day is a sunday
+      if (days.getDay() === 0) {
+        //end week and add new HTML record
+        //increment id for new record
+        id++;
+        if (days.getDay() + new Date(Monday).getDay() === 1) {
+          //listHtml gets a new row added to it
+          listHtml = listHtml + '<div class="esmReportCard">' +
+              '<p class="esmReportText">' + Monday + ' - ' + date + '</p>' +
+              '<div id="data'+ id +'" style="display: none">' + Monday + '|' + date + "|" + this.state.siteID + '</div>' +
+              '<button class="esmRecordDownloadBtn" id="btn'+ id +'">compare</button></div>'
+
+          //data relating to record is hidden in this <div> above
+        }
+      }
+    }
+
+    //get reportsList html
+    const list = document.getElementById("reportsList");
+
+    //set innerHTML to list
+    list.innerHTML = listHtml
+
+    //function for buttons
+    async function clickDetect(id) {
+      //when button clicked hide dashboard and show card
+      document.getElementById("compareCard").style.display = "flex";
+      document.getElementById("page").style.display = "none";
+
+      //get data from record
+      const weekData = document.getElementById("data" + id).innerText;
+
+      //split record data into start of week and end of week
+      const [weekStart, weekEnd, siteID] = weekData.split("|");
+
+      //set title of comparison
+      document.getElementById("compareTitle").innerText = "Week " + weekStart + " compared to " + weekEnd;
+
+      //creates object to convert to json
+      let data = {
+        siteID: siteID,
+        dateStart: weekStart,
+        dateEnd: weekEnd
+      }
+      let JSONdata = JSON.stringify(data);
+      //API will get site data for the timeframe submitted (this week)
+      let endpoint = '/api/getSiteWeekData';
+      let options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json',},
+        body: JSONdata,
+      }
+      let response = await fetch(endpoint, options)
+      let result = await response.json();
+
+      //DB returns JSON wrapped in [] which javascript doesn't like
+      //so we stringify it, remove [], then parse back to JSON
+      let stringResult = JSON.stringify(result);
+      stringResult = stringResult.replace("[", "");
+      stringResult = stringResult.replace("]", "");
+      result = JSON.parse(stringResult);
+
+      //energy this week
+      const thisEnergyUsage = result.energy_week_demand;
+
+      //carbon this week
+      const thisCarbonEmission = result.carbon_week_emitted;
+
+      //expenditure this week
+      const thisExpenditure = result.energy_week_cost;
+
+      //once average data has been fetched change text in html
+      document.getElementById("thisExpense").innerText = "£" + result.energy_week_cost;
+      document.getElementById("thisEnergy").innerText = result.energy_week_demand + "Kw";
+      document.getElementById("thisCarbon").innerText = result.carbon_week_emitted + "Kg";
+
+
+      //got all current week data, begins to fetch previous week data
+
+      //calculates the previous week's beginning
+      const previousWeekStart = Date.parse(weekStart) - (7 * 24 * 60 * 60 * 1000);
+
+      //calculates the previous week's end
+      const previousWeekEnd = Date.parse(weekEnd) - (7 * 24 * 60 * 60 * 1000);
+
+      //get previous week date and format it
+      //format date function from: https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
+      function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + (d.getDate()),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+          month = '0' + month;
+        if (day.length < 2)
+          day = '0' + day;
+
+        return [year, month, day].join('-');
+      }
+
+
+      //make api get previous siteweek data (uses function for correct format)
+      data = {
+        siteID: siteID,
+        dateStart: formatDate(previousWeekStart),
+        dateEnd: formatDate(previousWeekEnd)
+      }
+      JSONdata = JSON.stringify(data);
+      endpoint = '/api/getSiteWeekData';
+      options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json',},
+        body: JSONdata,
+      }
+      response = await fetch(endpoint, options)
+      result = await response.json();
+
+      //result is JSON response of API
+      //JSON holds previous weeks site data
+
+      //once average data has been fetched change text in html
+      document.getElementById("prevExpense").innerText = "£" + result[0].energy_week_cost;
+      document.getElementById("prevEnergy").innerText = result[0].energy_week_demand + "Kw";
+      document.getElementById("prevCarbon").innerText = result[0].carbon_week_emitted + "Kg";
+
+      //calculate changes between this weke and previous week
+      const thisEnergyChange = thisEnergyUsage - result[0].energy_week_demand;
+      const thisCarbonEmissionChange = thisCarbonEmission - result[0].carbon_week_emitted;
+      const thisExpenditureChange = thisExpenditure - result[0].energy_week_cost;
+
+      //formats the text based on whether site has used/spent/emitted more or less of each metric
+      //for energy usage change
+      if (thisEnergyChange < 0){
+        document.getElementById("energyChange").innerText = -thisEnergyChange + "Kw";
+        document.getElementById("energyText").innerText = "less than previous week";
+      } else {
+        document.getElementById("energyChange").innerText = thisEnergyChange + "Kw";
+        document.getElementById("energyText").innerText = "more than previous week";
+      }
+      //for carbon emission change
+      if (thisCarbonEmissionChange < 0){
+        document.getElementById("carbonChange").innerText = -thisCarbonEmissionChange + "Kg";
+        document.getElementById("carbonText").innerText = "less than previous week";
+      } else {
+        document.getElementById("carbonChange").innerText = thisCarbonEmissionChange + "Kg";
+        document.getElementById("carbonText").innerText = "more than previous week";
+      }
+      //for expenditure change
+      if (thisExpenditureChange < 0){
+        document.getElementById("spentChange").innerText = "£" + -thisExpenditureChange;
+        document.getElementById("spentText").innerText = "less than previous week";
+      } else {
+        document.getElementById("spentChange").innerText = "£" + thisExpenditureChange;
+        document.getElementById("spentText").innerText = "more than previous week";
+      }
+
+
+      //API request to get site weekly averages
+      data = {siteID: siteID}
+      JSONdata = JSON.stringify(data);
+      endpoint = '/api/getSiteHistoricalData';
+      options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json',},
+        body: JSONdata,
+      }
+      response = await fetch(endpoint, options)
+      result = await response.json();
+      stringResult = JSON.stringify(result);
+      stringResult = stringResult.replace("[", "");
+      stringResult = stringResult.replace("]", "");
+      result = JSON.parse(stringResult);
+
+      //once average data has been fetched change text in html
+      document.getElementById("avgExpense").innerText = "£" + result.energy_avg_week_cost;
+      document.getElementById("avgEnergy").innerText = result.energy_avg_week_demand + "Kw";
+      document.getElementById("avgCarbon").innerText = result.carbon_avg_week_emitted + "Kg";
+
+    }
+
+
+    //loops up to id/record count
+    for (let i = 1; i < id+1; i++){
+      try{
+        //fetches button and add's onClick function to them
+        let btn = document.getElementById("btn"+i);
+        btn.addEventListener('click', function (){
+          clickDetect(i);
+        });
+      } catch (e) {}
+    }
+
+
+  }
+
+  //close button on compare card
+  closeCompare = async () => {
+    document.getElementById("compareCard").style.display = "none";
+    document.getElementById("page").style.display = "block";
+  }
+
+
   render() {
+    //will return loading data... while react/nextjs fetches data in "componentDidMount()"
+    if(!this.state.dataUpdated){
+      return(<div>loading data...</div>);
+    }
+
     return (
-      <div>
+      <div className="esmDashboardBackground">
         <MainLayout
-          isDirector={this.state.isDirector}
-          pageName={this.state.pageName}
-        >
-          {/* Energy Cost */}
-          <div className="container d-flex flex-column align-items-center w-100">
-            <div className="row mt-5 w-75">
-              <div className="col-lg rounded text-center">
-                <h1>Dashboard</h1>
+            isDirector={this.state.isDirector}
+            pageName={this.state.pageName}
+            id="gridContainer"
+        />
+        <div className="esmSiteCardHolder" id="compareCard" aria-label="report card">
+          <div className="esmCompareWeeks">
+              <div className="esmCompareBanner">
+                <p aria-label="report card title" id="compareTitle"></p>
+                <div aria-label="close report card button" className="esmBannerExit" onClick={this.closeCompare}>X</div>
+              </div>
+            <p/>
+            <table aria-label="comparison table">
+              <thead>
+              <tr className="reportsListHeader">
+                <th className="esmTableHeader">ThisWeek</th>
+                <th className="esmTableHeader">PrevWeek</th>
+                <th className="esmTableHeader">SiteAvgWeek</th>
+              </tr>
+              </thead>
+              <tbody id="list">
+                <tr className="esmTableRow">
+                  <td className="esmTableData" aria-label="energy used this selected week" id="thisEnergy"></td>
+                  <td className="esmTableData" aria-label="energy used previous week" id="prevEnergy"></td>
+                  <td className="esmTableData" aria-label="average energy used weekly" id="avgEnergy"></td>
+                </tr>
+                <tr className="esmTableRow">
+                  <td className="esmTableData" aria-label="carbon emitted this selected week" id="thisCarbon"></td>
+                  <td className="esmTableData" aria-label="carbon emitted previous week" id="prevCarbon"></td>
+                  <td className="esmTableData" aria-label="average energy used weekly" id="avgCarbon"></td>
+                </tr>
+                <tr className="esmTableRow">
+                  <td className="esmTableData" aria-label="expenditure this selected week" id="thisExpense"></td>
+                  <td className="esmTableData" aria-label="expenditure previous week" id="prevExpense"></td>
+                  <td className="esmTableData" aria-label="average weekly expenditure" id="avgExpense"></td>
+                </tr>
+              </tbody>
+            </table>
+            <div className="esmCompareContainer">
+              <div className="esmCompareInfo" aria-label="energy comparison">
+                <div className="esmCompareTitle">You have used</div>
+                <div className="esmCompareText" id="energyChange">42134</div>
+                <div className="esmCompareTitle" id="energyText">more than last week</div>
+              </div>
+              <div className="esmCompareInfo" aria-label="carbon comparison">
+                <div className="esmCompareTitle">You have emitted</div>
+                <div className="esmCompareText" id="carbonChange">42134</div>
+                <div className="esmCompareTitle" id="carbonText">more than last week</div>
+              </div>
+              <div className="esmCompareInfo" aria-label="expenditure comparison">
+                <div className="esmCompareTitle">You have spent</div>
+                <div className="esmCompareText" id="spentChange">42134</div>
+                <div className="esmCompareTitle" id="spentText">more than last week</div>
               </div>
             </div>
-
-            <EnergyCostForecastGraph
-              toggle1={"Week"}
-              toggle2={"Month"}
-              toggle3={"Year"}
-              dataSet1={this.state.weeklyData}
-              dataSet2={this.state.monthlyData}
-              dataSet3={this.state.yearlyData}
-              xAxis={"Date"}
-              yAxis={"Cost (£)"}
-              xAxisDataKey={"date"}
-              yAxisDataKey={"cost"}
-            />
           </div>
-          {/* End of Energy Cost */}
+        </div>
 
-          <BottomFooter className="mt-3" />
-        </MainLayout>
+        <div id="page">
+          <div className="esmDashboardGridContainer" id="gridContainer">
+            <div className="esmDashboardGraphPanel" aria-label="graph panel">
+              <h3 className="esmPanelHeader"  aria-label="Energy demand">Energy Demand</h3>
+              <div className="esmGraphCard">
+                <LineGraph
+                    toggle1={"Week"}
+                    toggle2={"Month"}
+                    toggle3={"Year"}
+                    dataSet={this.state.data}
+                    xAxis={"Date"}
+                    yAxis={"kW"}
+                    xAxisDataKey={"date"}
+                    yAxisDataKey={"demand"}
+                    aria-label="This week energy graph"
+                />
+              </div>
+            </div>
+            <div className="esmDashboardPanel">
+              <h3 className="esmPanelHeader" aria-label="insights card">Insights</h3>
+              <div className="esmPanelListContainer">
+                <div className="esmInsightCard">
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                </div>
+                <div className="esmInsightCard">
+                  Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old
+                </div>
+                <div className="esmInsightCard">
+                  Latin words, consectetur, from a Lorem Ipsum passage, and going through
+                </div>
+                <div className="esmInsightCard">
+                  Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero
+                </div>
+                <div className="esmInsightCard">
+                  Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero
+                </div>
+              </div>
+            </div>
+            <div className="esmDashboardPanel esmSpecificGrid" aria-label="weekly reports card">
+              <h3 className="esmPanelHeader">Reports</h3>
+              <div className="esmPanelListContainer" id="reportsList">
+              {/*  reports are inputted here*/}
+              </div>
+            </div>
+            <div className="esmBottomPanel" aria-label="site information card">
+              <div className="esmBottomPanelInfo" aria-label="site name">
+                <div>Site:</div>
+                <p id="siteName"></p>
+              </div>
+              <div className="esmBottomPanelInfo" aria-label="site county">
+                <div>County:</div>
+                <p id="county"></p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 }
+
+
 
 export default EsmDashboard;

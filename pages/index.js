@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import CarouselComponent from "../public/components/carouselComponent"
+import CarouselComponent from "../public/components/landing/carouselComponent"
 import BottomFooter from "../public/components/layouts/bottomFooter.js"
 import PublicTopNav from '../public/components/layouts/publicTopNav.js';
 
@@ -48,7 +48,7 @@ class landingPage extends React.Component {
         const JSONdata = JSON.stringify(data);
 
         // API endpoint where we send form data.
-        const endpoint = '/api/enquiryForm';
+        const endpoint = '/api/onboarding/enquiryForm';
 
         // Form the request for sending data to the server.
         const options = {
