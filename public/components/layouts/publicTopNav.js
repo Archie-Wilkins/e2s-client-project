@@ -18,7 +18,7 @@ class publicTopNav extends React.Component {
                     <Link className="lightLink m-0" href="/"><h4 className="m-0">E<span className='accentText'>2</span>S</h4></Link>
                 </div>
                 <div className="w-25 d-flex justify-content-around align-items-center">
-                    <Link className="lightLink m-0 mr-1" href="/requestData"><p className="m-0">Request Data</p></Link>
+                    <Link className="lightLink m-0 mr-1" href="/viewReports"><p className="m-0">Request Data</p></Link>
                     <Link className="lightLink m-0 mr-1" href="/login"><p className="m-0">Login</p></Link>
                     <Link className="accentButton px-2 m-0" href="/#enquiryForm"><p className="m-0">Join Us</p></Link>
                 </div>

@@ -2,7 +2,7 @@ import {fireEvent, render, screen, waitFor} from '@testing-library/react'
 import '@testing-library/jest-dom'
 import '@babel/preset-react'
 import React from 'react'
-import CsvUploadComponent from '../../../public/components/csvUploadComponent'
+import CsvUploadComponent from "../../../public/components/csv/csvUploadComponent";
 
 const apiRequest = jest.fn();
 

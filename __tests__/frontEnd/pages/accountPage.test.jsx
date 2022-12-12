@@ -1,8 +1,8 @@
 import {fireEvent, render, screen} from '@testing-library/react'
-import Account from '../../../pages/account'
 import '@testing-library/jest-dom'
 import '@babel/preset-react'
 import React from 'react'
+import Account from "../../../pages/esm/account";
 
 describe('account', () => {
 

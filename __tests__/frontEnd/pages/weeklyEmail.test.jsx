@@ -1,8 +1,8 @@
 import {fireEvent, render, screen} from '@testing-library/react'
-import WeeklyEmail from '../../../pages/weeklyEmail'
 import '@testing-library/jest-dom'
 import '@babel/preset-react'
 import React from 'react'
+import WeeklyEmail from "../../../pages/email/weeklyEmail";
 
 describe('weeklyEmail', () => {
 

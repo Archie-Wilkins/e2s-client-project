@@ -2,5 +2,9 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/esm/help": "pages/esm/help.js"
+  "/api/user/getUserRole": "pages/api/user/getUserRole.js",
+  "/esm/dashboard": "pages/esm/dashboard.js",
+  "/login": "pages/login.js",
+  "/api/authentication/login": "pages/api/authentication/login.js",
+  "/esm/account": "pages/esm/account.js"
 }

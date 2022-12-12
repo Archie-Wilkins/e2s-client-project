@@ -1,5 +1,5 @@
 import Link from "next/link";
-import CsvUploadComponent from "../public/components/csvUploadComponent.js";
+import CsvUploadComponent from "../../public/components/csv/csvUploadComponent.js";
 
 // As this is just for demonstration it is not a problem
 // it doesnt follow the standard componenet based structure we've followed

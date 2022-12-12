@@ -1,5 +1,5 @@
 import Link from "next/link";
-import InsightsComponent from "../public/components/insightsComponent";
+import InsightsComponent from "../../public/components/insights/insightsComponent";
 
 // As this is just for demonstration it is not a problem
 // it doesnt follow the standard componenet based structure we've followed

@@ -1,11 +1,9 @@
 import Link from "next/link"
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 import React from "react";
 import Cookies from "js-cookie";
-import profilePic from "../public/resources/profilePic.png"
-import NavBar from "../../public/components/layouts/navBar";
-
+import MainLayoutShell from "../../public/components/layouts/mainLayoutShell";
 
 class AccountPage extends React.Component {
     constructor(props) {
@@ -38,7 +36,7 @@ class AccountPage extends React.Component {
             }
             let JSONdata = JSON.stringify(data);
             let endpoint = '/api/user/getUserRole';
-            let options = { method: 'POST', headers: { 'Content-Type': 'application/json', }, body: JSONdata, }
+            let options = {method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSONdata,}
             let response = await fetch(endpoint, options)
             let result = await response.json();
             //if API request failes
@@ -68,7 +66,7 @@ class AccountPage extends React.Component {
 
             //fetch user name from ID
             endpoint = '/api/user/getUserDetails';
-            options = { method: 'POST', headers: { 'Content-Type': 'application/json', }, body: JSONdata, }
+            options = {method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSONdata,}
             response = await fetch(endpoint, options)
             result = await response.json();
             let stringResult = JSON.stringify(result);
@@ -92,16 +90,17 @@ class AccountPage extends React.Component {
 
     render() {
         return <div className="loginBackground" aria-label="account page">
-            <div className="account-container" aria-label="account page content">
-                <h2>Account</h2>
-                <div className="line"></div>
-                <div className="account-profile-picture-container" aria-label="account profile picture"></div>
-                {/*<img>sample profile picture</img>*/}
-                <h3 id="name" aria-label="user's name"></h3>
-                <p id="role" aria-label="user's role"></p>
-                <button onClick={this.logout} aria-label="logout button">logout</button>
-            </div>
-            <NavBar></NavBar>
+            <MainLayoutShell>
+                <div className="account-container" aria-label="account page content">
+                    <h2>Account</h2>
+                    <div className="line"></div>
+                    <div className="account-profile-picture-container" aria-label="account profile picture"></div>
+                    {/*<img>sample profile picture</img>*/}
+                    <h3 id="name" aria-label="user's name"></h3>
+                    <p id="role" aria-label="user's role"></p>
+                    <button onClick={this.logout} aria-label="logout button">logout</button>
+                </div>
+            </MainLayoutShell>
         </div>
     }
 }
