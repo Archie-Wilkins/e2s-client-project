@@ -45,7 +45,7 @@ class LandingComponent extends React.Component {
         const JSONdata = JSON.stringify(data);
 
         // API endpoint where we send form data.
-        const endpoint = '/api/enquiryForm';
+        const endpoint = '/api/onboarding/enquiryForm';
 
         // Form the request for sending data to the server.
         const options = {

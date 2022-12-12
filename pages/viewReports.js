@@ -23,7 +23,7 @@ class ViewReportsPage extends React.Component {
             const JSONdata = JSON.stringify(data);
 
             //API request to get all sites
-            let endpoint = '/api/getAllSites';
+            let endpoint = '/api/site/getAllSites';
             let options = {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json',},
@@ -43,7 +43,7 @@ class ViewReportsPage extends React.Component {
 
 
             //API request to get site details
-            endpoint = '/api/getReportListData';
+            endpoint = '/api/reports/getReportListData';
             options = {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json',},
@@ -176,7 +176,7 @@ class ViewReportsPage extends React.Component {
                 dateEnd: weekEnd
             }
             let JSONdata = JSON.stringify(data);
-            let endpoint = '/api/getSiteTimeframeData';
+            let endpoint = '/api/site/getSiteTimeframeData';
             let options = {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json',},

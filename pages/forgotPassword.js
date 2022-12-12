@@ -47,7 +47,7 @@ class ForgotPassword extends React.Component {
         const JSONdata = JSON.stringify(data);
 
         // API endpoint where we send form data.
-        const endpoint = '/api/checkUserExistsFromEmail';
+        const endpoint = '/api/authentication/checkUserExistsFromEmail';
 
         // Form the request for sending data to the server.
         const options = {
@@ -87,7 +87,7 @@ class ForgotPassword extends React.Component {
                 }
                 // Send the data to the server in JSON format.
                 const JSONdata = JSON.stringify(data);
-                const endpoint = '/api/generateResetCode';
+                const endpoint = '/api/authentication/generateResetCode';
                 const options = {
                     method: 'POST',
                     headers: {
@@ -162,7 +162,7 @@ class ForgotPassword extends React.Component {
         try {
             // Send the data to the server in JSON format.
             const JSONdata = JSON.stringify(data);
-            const endpoint = '/api/checkResetCode';
+            const endpoint = '/api/authentication/checkResetCode';
             const options = {
                 method: 'POST',
                 headers: {
@@ -224,7 +224,7 @@ class ForgotPassword extends React.Component {
             }
             // Send the data to the server in JSON format.
             const JSONdata = JSON.stringify(data);
-            const endpoint = '/api/updateUserPassword';
+            const endpoint = '/api/authentication/updateUserPassword';
             const options = {
                 method: 'POST',
                 headers: {
@@ -262,7 +262,7 @@ class ForgotPassword extends React.Component {
         }
         // Send the data to the server in JSON format.
         const JSONdata = JSON.stringify(data);
-        const endpoint = '/api/generateResetCode';
+        const endpoint = '/api/authentication/generateResetCode';
         const options = {
             method: 'POST',
             headers: {

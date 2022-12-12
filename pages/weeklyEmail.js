@@ -37,7 +37,7 @@ class WeeklyEmailPage extends React.Component {
         let data = {email: formEmail};
         // Send the data to the server in JSON format.
         let JSONdata = JSON.stringify(data);
-        let endpoint = '/api/getUserSiteFromEmail';
+        let endpoint = '/api/user/getUserSiteFromEmail';
         let options = {
             method: 'POST',
             headers: {'Content-Type': 'application/json',},
@@ -62,7 +62,7 @@ class WeeklyEmailPage extends React.Component {
 
 
         //API request to get site details
-        endpoint = '/api/getSiteDetails';
+        endpoint = '/api/site/getSiteDetails';
         options = {
             method: 'POST',
             headers: {'Content-Type': 'application/json',},
@@ -92,7 +92,7 @@ class WeeklyEmailPage extends React.Component {
         //fetch site historical data (returned in days)
         data = {siteID: this.state.siteID}
         JSONdata = JSON.stringify(data);
-        endpoint = '/api/getSiteDailyData';
+        endpoint = '/api/site/getSiteDailyData';
         options = {
             method: 'POST',
             headers: {'Content-Type': 'application/json',},
@@ -176,7 +176,7 @@ class WeeklyEmailPage extends React.Component {
         }
         let JSONdata = JSON.stringify(data);
         //API will get site data for the timeframe submitted (this week)
-        let endpoint = '/api/getSiteWeekData';
+        let endpoint = '/api/site/getSiteWeekData';
         let options = {
             method: 'POST',
             headers: {'Content-Type': 'application/json',},
@@ -260,7 +260,7 @@ class WeeklyEmailPage extends React.Component {
         //API request to get site averages
         data = {siteID: this.state.siteID}
         JSONdata = JSON.stringify(data);
-        endpoint = '/api/getSiteHistoricalData';
+        endpoint = '/api/site/getSiteHistoricalData';
         options = {
             method: 'POST',
             headers: {'Content-Type': 'application/json',},

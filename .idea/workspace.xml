@@ -5,7 +5,66 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/build-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/.next/build-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/client-development/0.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/client-development/0.pack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/client-development/1.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/client-development/1.pack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/client-development/index.pack.old" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/client-development/index.pack.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/2.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/2.pack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/index.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/index.pack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/index.pack.old" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/index.pack.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/server/middleware-build-manifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/middleware-build-manifest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/server/pages-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/pages-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/server/webpack-runtime.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/webpack-runtime.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/chunks/webpack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/static/development/_buildManifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/development/_buildManifest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/accountPage.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/frontEnd/pages/accountPage.test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/adminDashboard.text.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/frontEnd/pages/adminDashboard.test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/adminNavbar.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/frontEnd/components/adminNavbar.test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/bottomFooter.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/frontEnd/components/bottomFooter.test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/csvUploadFrontEnd.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/frontEnd/components/csvUploadFrontEnd.test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/forgotPassword.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/frontEnd/pages/forgotPassword.test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/landingPageTest.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/frontEnd/pages/indexPage.test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/login.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/frontEnd/pages/login.test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/mainLayoutShell.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/frontEnd/components/mainLayoutShell.test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/masterNavbar.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/frontEnd/components/masterNavbar.test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/navbar.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/frontEnd/components/navbar.test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/publicTopNav.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/frontEnd/components/publicTopNav.test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/reports.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/frontEnd/pages/viewReports.test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/weeklyEmail.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/frontEnd/pages/weeklyEmail.test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/account.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/account.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/admin/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/admin/dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/checkResetCode.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/authentication/checkResetCode.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/checkUserExistsFromEmail.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/authentication/checkUserExistsFromEmail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/csvUpload.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/csv/csvUpload.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/csvWrite.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/csv/csvWrite.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/demoApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/demoApi.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/displayData.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/dashboard/displayData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/enquiryForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/onboarding/enquiryForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/generateResetCode.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/authentication/generateResetCode.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/getAllSites.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/site/getAllSites.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/getReportListData.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/reports/getReportListData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/getSiteDailyData.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/site/getSiteDailyData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/getSiteDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/site/getSiteDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/getSiteHistoricalData.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/site/getSiteHistoricalData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/getSiteTimeframeData.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/site/getSiteTimeframeData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/getSiteWeekData.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/site/getSiteWeekData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/getUserDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/user/getUserDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/getUserRole.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/user/getUserRole.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/getUserSite.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/user/getUserSite.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/getUserSiteFromEmail.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/user/getUserSiteFromEmail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/authentication/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/resetPassword.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/returnSiteData.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/dashboard/returnSiteData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/updateUserPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/authentication/updateUserPassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/csvUpload.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/csvUpload.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/forgotPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/forgotPassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/viewReports.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/viewReports.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/weeklyEmail.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/weeklyEmail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/components/landingComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/components/landingComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/components/layouts/navBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/components/layouts/navBar.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,23 +96,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Git.Branch.Popup.ShowAllRemotes": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/c2064724/IdeaProjects/e2s-team-4/styling",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "C:/Users/c2064724/IdeaProjects/e2s-team-4/node_modules/jest",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Git.Branch.Popup.ShowAllRemotes&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/c2064724/IdeaProjects/e2s-team-4/styling&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;C:/Users/c2064724/IdeaProjects/e2s-team-4/node_modules/jest&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\styling" />
@@ -61,7 +120,11 @@
       <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\pages\api" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\pages" />
+      <recent name="C:\Users\archi\OneDrive\Documents\Uni Year 3\Commercial Frameworks\e2s-team-4-v2\pages\api\dashboard" />
+      <recent name="C:\Users\archi\OneDrive\Documents\Uni Year 3\Commercial Frameworks\e2s-team-4-v2\pages\api\site" />
+      <recent name="C:\Users\archi\OneDrive\Documents\Uni Year 3\Commercial Frameworks\e2s-team-4-v2\pages\api\authentication" />
+      <recent name="C:\Users\archi\OneDrive\Documents\Uni Year 3\Commercial Frameworks\e2s-team-4-v2\pages\api\onboarding" />
+      <recent name="C:\Users\archi\OneDrive\Documents\Uni Year 3\Commercial Frameworks\e2s-team-4-v2\pages\api\reports" />
     </key>
   </component>
   <component name="RunManager" selected="Jest.Account">
@@ -343,7 +406,7 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/pages/api/login.js</url>
+          <url>file://$PROJECT_DIR$/pages/api/authentication/login.js</url>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

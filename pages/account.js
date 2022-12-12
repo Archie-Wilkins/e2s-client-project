@@ -37,7 +37,7 @@ class AccountPage extends React.Component {
                 userID: userID
             }
             let JSONdata = JSON.stringify(data);
-            let endpoint = '/api/getUserRole';
+            let endpoint = '/api/user/getUserRole';
             let options = {method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSONdata,}
             let response = await fetch(endpoint, options)
             let result = await response.json();
@@ -67,7 +67,7 @@ class AccountPage extends React.Component {
             }
 
             //fetch user name from ID
-            endpoint = '/api/getUserDetails';
+            endpoint = '/api/user/getUserDetails';
             options = {method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSONdata,}
             response = await fetch(endpoint, options)
             result = await response.json();

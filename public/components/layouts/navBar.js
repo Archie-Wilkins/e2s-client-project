@@ -74,7 +74,7 @@ class NavBar extends React.Component {
             //store in data
             const data = {userID: userCookie.user}
             let JSONdata = JSON.stringify(data);
-            const endpoint = '/api/getUserDetails';
+            const endpoint = '/api/user/getUserDetails';
             const options = {method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSONdata,}
             const response = await fetch(endpoint, options)
             let result = await response.json();
