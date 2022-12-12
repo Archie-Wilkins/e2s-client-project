@@ -128,14 +128,109 @@ class EsmDashboard extends React.Component {
     result = await response.json();
 
     console.log(result);
-    
+
     document.getElementById("siteName").innerText = result[0].site_name;
 
     document.getElementById("county").innerText = result[0].county;
     // document.getElementById("orgName")
 
+
+
+    //REPORTS HERE
+
+    //generate data to be sent off (required for API fetch even if not needed)
+    //API request to get site details
+    endpoint = '/api/getReportListData';
+    options = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json',},
+      body: JSONdata,
+    }
+    response = await fetch(endpoint, options)
+    result = await response.json();
+
+    var site_filter = result.filter( element => element.site_id === parseInt(this.state.siteID));
+    //loops through list of site data
+    for (var record in await site_filter) {
+      //splits the time_stamp into date and time
+
+      if (site_filter[record].time_stamp === null) {
+        alert(JSON.stringify(site_filter[record]));
+      }
+      let [date, time] = site_filter[record].time_stamp.split("T");
+      //converts string "date" into Date object
+      let days = new Date(date);
+
+      //if day is a monday
+      if (days.getDay() === 1) {
+        //store monday's date
+        Monday = date;
+      }
+
+      //if day is a sunday
+      if (days.getDay() === 0) {
+        //end week and add new HTML record
+        //increment id for new record
+        id++;
+        if (days.getDay() + new Date(Monday).getDay() === 1) {
+          //listHtml gets a new row added to it
+          listHtml = listHtml + ''
+          //data relating to record is hidden in this <div> above
+        }
+      }
+    }
+    '<tr class="reportListRow"><td class="reportListRowText">' + site_filter[record].name + '</td>' +
+    '<td class="reportListRowText">' + site_filter[record].site_name + '</td>' +
+    '<td class="reportListRowText">' + site_filter[record].county + '</td>' +
+    '<td class="reportListRowText">' + Monday + ' - ' + date + '</td>' +
+    '</td></tr>'
+
+    //<td class="reportButtonHolder"><div id="data'+ id +'" style="display: none">' + site_filter[record].site_id + ' ' + Monday + '|' + date + ' ' + site_filter[record].site_name +'</div><button class="reportDownloadButton" id="btn' + id + '">download</button>
+
+
+    // <div className="esmReportCard">
+    //   <p className="esmReportText">11/12/2022-18/12/2022</p>
+    //   <button className="esmRecordDownloadBtn">compare</button>
+    // </div>
+
     //fetch site reports and add to reports field
+
+    //stream reports into elements in listHTML
+
+    //add click listeners to function
+
+
+
+    //button function
+
+    async function clickDetect(id) {
+
+
+      const weekData = document.getElementById("data" + id).innerText;
+
+      //split record data into start of week and end of week
+      const [weekStart, weekEnd] = weekData.split("|");
+
+      //stored the data in an object to be sent to API
+      const data = {
+        siteID: siteID,
+        dateStart: weekStart,
+        dateEnd: weekEnd
+      }
+      let JSONdata = JSON.stringify(data);
+      let endpoint = '/api/getSiteTimeframeData';
+      let options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json',},
+        body: JSONdata,
+      }
+      let response = await fetch(endpoint, options)
+      let result = await response.json();
+
+    }
+
   }
+
 
 
 
@@ -151,8 +246,8 @@ class EsmDashboard extends React.Component {
           pageName={this.state.pageName}
         />
         <div className="esmDashboardGridContainer">
-          <div className="esmDashboardGraphPanel">
-            <h3 className="esmPanelHeader">Energy Demand</h3>
+          <div className="esmDashboardGraphPanel" aria-label="graph panel">
+            <h3 className="esmPanelHeader"  aria-label="Energy demand">Energy Demand</h3>
             <div className="esmGraphCard">
               <LineGraph
                   toggle1={"Week"}
@@ -163,6 +258,7 @@ class EsmDashboard extends React.Component {
                   yAxis={"kW"}
                   xAxisDataKey={"date"}
                   yAxisDataKey={"demand"}
+                  aria-label="This week energy graph"
               />
             </div>
           </div>
@@ -191,7 +287,7 @@ class EsmDashboard extends React.Component {
             <div className="esmPanelListContainer">
               <div className="esmReportCard">
                 <p className="esmReportText">11/12/2022-18/12/2022</p>
-                <button className="esmRecordDownloadBtn">send</button>
+                <button className="esmRecordDownloadBtn">compare</button>
               </div>
 
               <div className="esmReportCard">

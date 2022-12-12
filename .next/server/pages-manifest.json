@@ -2,6 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/esm/dashboard": "pages/esm/dashboard.js",
-  "/api/getUserDetails": "pages/api/getUserDetails.js"
+  "/api/getAllSites": "pages/api/getAllSites.js",
+  "/viewReports": "pages/viewReports.js",
+  "/api/getReportListData": "pages/api/getReportListData.js"
 }
