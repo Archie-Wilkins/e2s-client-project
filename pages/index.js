@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import CarouselComponent from "../public/components/carouselComponent"
+import CarouselComponent from "../public/components/landing/carouselComponent"
 import BottomFooter from "../public/components/layouts/bottomFooter.js"
 import PublicTopNav from '../public/components/layouts/publicTopNav.js';
 

@@ -134,20 +134,20 @@ class NavBar extends React.Component {
                     <p>Compare</p>
                 </Link> */}
 
-                <Link className=" navbarLink d-flex align-items-center" href="/billValidation" aria-label="go to bill validaiton page link">
+                <Link className=" navbarLink d-flex align-items-center" href="/esm/billValidation" aria-label="go to bill validaiton page link">
                     <FaDollarSign />
                     <p>Validate Bills</p>
                 </Link>
 
                 <hr className="navbarLineBreak"></hr>
 
-                <Link className=" navbarLink d-flex align-items-center" href="/help" aria-label="go to help page link">
+                <Link className=" navbarLink d-flex align-items-center" href="/esm/help" aria-label="go to help page link">
 
                     <FaRegQuestionCircle />
                     <p>Help</p>
                 </Link>
 
-                <Link className=" navbarLink d-flex align-items-center" href="/account" aria-label="go to account page link">
+                <Link className=" navbarLink d-flex align-items-center" href="/esm/account" aria-label="go to account page link">
                     <FaUserCog />
                     <p>Account</p>
                 </Link>
