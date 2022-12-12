@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/pages/viewReports.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/viewReports.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="67-logout" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2HcvFOj3JRJjX6GXZvj4NzewihS" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Git.Branch.Popup.ShowAllRemotes": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/c2064724/IdeaProjects/e2s-team-4/styling",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "C:/Users/c2064724/IdeaProjects/e2s-team-4/node_modules/jest",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\styling" />
+      <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\__tests__" />
+      <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\pages\api" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\pages" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Jest.Account">
+    <configuration name="Account" type="JavaScriptTestRunnerJest">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST_FILE" />
+      <test-file value="$PROJECT_DIR$/__tests__/accountPage.test.jsx" />
+      <method v="2" />
+    </configuration>
+    <configuration name="forgor password" type="JavaScriptTestRunnerJest">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST_FILE" />
+      <test-file value="$PROJECT_DIR$/__tests__/forgotPassword.test.jsx" />
+      <method v="2" />
+    </configuration>
+    <configuration name="login" type="JavaScriptTestRunnerJest">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST_FILE" />
+      <test-file value="$PROJECT_DIR$/__tests__/login.test.jsx" />
+      <method v="2" />
+    </configuration>
+    <configuration name="weeklyEmail" type="JavaScriptTestRunnerJest">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST_FILE" />
+      <test-file value="$PROJECT_DIR$/__tests__/weeklyEmail.test.jsx" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Jest.login" />
+      <item itemvalue="Jest.weeklyEmail" />
+      <item itemvalue="Jest.Account" />
+      <item itemvalue="Jest.forgor password" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="" />
+      <created>1668597082849</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1668597082849</updated>
+      <workItem from="1668597087432" duration="9361000" />
+      <workItem from="1669564178596" duration="299000" />
+      <workItem from="1670340237808" duration="57000" />
+      <workItem from="1670340317603" duration="38155000" />
+      <workItem from="1670515466783" duration="1817000" />
+    </task>
+    <task id="LOCAL-00001" summary="forgot password works with new db changes, login can redirect user to forgot password">
+      <created>1669817857237</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1669817857237</updated>
+    </task>
+    <task id="LOCAL-00002" summary="converted pages to ES6, fixed css naming conventions">
+      <created>1669820804149</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1669820804150</updated>
+    </task>
+    <task id="LOCAL-00003" summary="login will deliver user to respective page after logging in">
+      <created>1669909220441</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1669909220441</updated>
+    </task>
+    <task id="LOCAL-00004" summary="update to cookie system, now uses JSON. admin dashboard will check user role">
+      <created>1669917807014</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1669917807014</updated>
+    </task>
+    <task id="LOCAL-00005" summary="removed file">
+      <created>1669918454687</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1669918454687</updated>
+    </task>
+    <task id="LOCAL-00006" summary="removes any User session cookie">
+      <created>1669984809674</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1669984809674</updated>
+    </task>
+    <task id="LOCAL-00007" summary="added sample users to SQL file">
+      <created>1669987160359</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1669987160359</updated>
+    </task>
+    <task id="LOCAL-00008" summary="created form to send email to user">
+      <created>1670158906105</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1670158906105</updated>
+    </task>
+    <task id="LOCAL-00009" summary="fixed render issues, can now generate pdf, got single static graph">
+      <created>1670171358661</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1670171358661</updated>
+    </task>
+    <task id="LOCAL-00010" summary="will update report title according to form information.">
+      <created>1670248024469</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1670248024469</updated>
+    </task>
+    <task id="LOCAL-00011" summary="commit before merge main into branch">
+      <created>1670334861453</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1670334861453</updated>
+    </task>
+    <task id="LOCAL-00012" summary="merge">
+      <created>1670335174516</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1670335174516</updated>
+    </task>
+    <task id="LOCAL-00013" summary="splits database data into weeks">
+      <created>1670349424596</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1670349424596</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fetches site data and console logs it">
+      <created>1670426128818</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1670426128818</updated>
+    </task>
+    <task id="LOCAL-00015" summary="will send email report to email and generate performance overview text">
+      <created>1670433990349</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1670433990349</updated>
+    </task>
+    <task id="LOCAL-00016" summary="added image and details to account, fixed cookie check, fixed login redirect">
+      <created>1670509693679</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1670509693679</updated>
+    </task>
+    <task id="LOCAL-00017" summary="account will now load current user's data">
+      <created>1670512888253</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1670512888254</updated>
+    </task>
+    <task id="LOCAL-00018" summary="created render test for account page">
+      <created>1670513491395</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1670513491395</updated>
+    </task>
+    <task id="LOCAL-00019" summary="updated check cookie events to use componentDidMount(), added User's first name to NavBar">
+      <created>1670516559005</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1670516559005</updated>
+    </task>
+    <task id="LOCAL-00020" summary="added front-end, will fetch all site data upon loading">
+      <created>1670610863436</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1670610863436</updated>
+    </task>
+    <task id="LOCAL-00021" summary="will filter JSON into approptiate sites and weeks">
+      <created>1670619550173</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1670619550173</updated>
+    </task>
+    <task id="LOCAL-00022" summary="filters now work, now fetches data upon loading page">
+      <created>1670625715024</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1670625715024</updated>
+    </task>
+    <task id="LOCAL-00023" summary="small front end changes">
+      <created>1670676969067</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1670676969067</updated>
+    </task>
+    <task id="LOCAL-00024" summary="removed redundant code, buttons now correspond to their record">
+      <created>1670683801822</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1670683801822</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="now uses new database access" />
+    <MESSAGE value="forgot password works with new db changes, login can redirect user to forgot password" />
+    <MESSAGE value="converted pages to ES6, fixed css naming conventions" />
+    <MESSAGE value="login will deliver user to respective page after logging in" />
+    <MESSAGE value="update to cookie system, now uses JSON. admin dashboard will check user role" />
+    <MESSAGE value="removed file" />
+    <MESSAGE value="removes any User session cookie" />
+    <MESSAGE value="added sample users to SQL file" />
+    <MESSAGE value="created form to send email to user" />
+    <MESSAGE value="fixed render issues, can now generate pdf, got single static graph" />
+    <MESSAGE value="will update report title according to form information." />
+    <MESSAGE value="commit before merge main into branch" />
+    <MESSAGE value="merge" />
+    <MESSAGE value="splits database data into weeks" />
+    <MESSAGE value="fetches site data and console logs it" />
+    <MESSAGE value="will send email report to email and generate performance overview text" />
+    <MESSAGE value="added image and details to account, fixed cookie check, fixed login redirect" />
+    <MESSAGE value="account will now load current user's data" />
+    <MESSAGE value="created render test for account page" />
+    <MESSAGE value="updated check cookie events to use componentDidMount(), added User's first name to NavBar" />
+    <MESSAGE value="added front-end, will fetch all site data upon loading" />
+    <MESSAGE value="will filter JSON into approptiate sites and weeks" />
+    <MESSAGE value="filters now work, now fetches data upon loading page" />
+    <MESSAGE value="small front end changes" />
+    <MESSAGE value="removed redundant code, buttons now correspond to their record" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed redundant code, buttons now correspond to their record" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/pages/api/login.js</url>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

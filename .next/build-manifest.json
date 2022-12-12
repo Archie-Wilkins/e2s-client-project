@@ -25,10 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/director/dashboard": [
+    "/esm/dashboard": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/director/dashboard.js"
+      "static/chunks/pages/esm/dashboard.js"
     ]
   },
   "ampFirstPages": []
