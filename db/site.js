@@ -1,8 +1,9 @@
+
 var db = require('./DatabaseCore.js');
 
 export const all = async () => {
     return new Promise((resolve, reject) =>  {
-        db.query('SELECT * from sites', (err, results) => {
+        db.query('SELECT * from sites_historic', (err, results) => {
             if(err) {
                 return reject(err);
             }
@@ -31,6 +32,41 @@ export const getSiteDataFromMonth = async (month) =>{
                 return reject(err);
             }
             resolve(results);
+        })
+    })
+}
+
+
+export const insertHistoricalTest = async (dataArray) => {
+    return new Promise((resolve, reject) =>  {
+        let query = "INSERT into sites_historic(site_id, supplier_id, energy_demand, heat_demand, energy_cost, energy_output, energy_imported, energy_exported, feels_like, wind_speed, carbon_emitted, time_stamp) values (?)";
+        db.query(query, dataArray,(err, results) => {
+            if(err) {
+                console.log("Error");
+                return reject(err);
+            }else{
+                console.log("Inserted.");
+                resolve(results);
+            }
+        });
+    });
+}
+
+export const insertHistoricalData = async (a,b,c,d,e,f,g,h,i,j,k,l) => {
+
+    return new Promise((resolve, reject) =>  {
+        let query = "Insert into sites_historic(site_id, supplier_id, energy_demand, heat_demand, energy_cost, energy_output, energy_imported, energy_exported, feels_like, wind_speed, carbon_emitted, time_stamp) VALUES (" + "'" + a + "'," + "'" + b + "'," + "'"+ c + "',"+ "'"+ d + "'," + "'"+ e + "'," + "'"+ f + "'," + "'"+ g + "'," + "'"+ h + "'," + "'"+ i + "',"+ "'"+ j + "',"+ "'"+ k + "',"+ "'"+ newDateTime + "'"+")";
+        //console.log(query);
+        //query = "Insert into user_esm(esm_id, user_id, site_id) Values (696921, 74445, 90000)";
+        db.query(query, (err, results) => {
+        //db.query("INSERT into sites_historic(site_id, supplier_id, energy_demand, heat_demand, energy_cost, energy_output, energy_imported, energy_exported, feels_like, wind_speed, carbon_emitted, time_stamp) Values (" +"'" + a + "',"+"'" + b + "',"+"'" + c + "',"+"'" + d + "',"+"'" + e + "',"+"'" + f + "',"+"'" + g + "',"+"'" + h + "',"+"'" + i + "',"+"'" + j + "')", (err, results) => {
+            if(err) {
+                console.log("Error");
+                return reject(err);
+            }else{
+                console.log("Inserted.");
+                resolve(results);
+            }
         });
     });
 }
@@ -39,6 +75,18 @@ export const getSiteIDFromUserID = async (userID) => {
     return new Promise((resolve, reject) =>  {
         db.query("SELECT site_id FROM user_esm WHERE user_id = " + userID, (err, results) => {
             if(err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+    });
+}
+
+export const getHistoricalSiteDataFromUserID = async (user_id) => {
+    return new Promise((resolve, reject) =>  {
+        db.query("SELECT * FROM (sites_historic INNER JOIN user_esm ON sites_historic.site_id = user_esm.site_id) WHERE user_esm.user_id = (?)",user_id.userID, (err, results) => {
+            if(err) {
+                console.log("Error in query.");
                 return reject(err);
             }
             resolve(results);
@@ -160,6 +208,8 @@ export default {
     getSiteWeekData,
     getSiteWeekHistoricalAverage,
     getSiteDataFromMonth,
+    insertHistoricalTest,
+    getHistoricalSiteDataFromUserID,
     getSiteDataDayRangeDaily,
     getSiteTimeFrameData,
     getSiteReportListData
