@@ -466,6 +466,11 @@ class Dashboard extends React.Component {
                         <Pie data={this.state.zonesArray} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#fff" label>
                         </Pie>  
                       </PieChart>
+                      <div>
+                        <p>You spent {parseFloat((this.state.redZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}% of your energy usage during red zone periods.</p>
+                        <p>You spent {parseFloat((this.state.amberZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}% of your energy usage during amber zone periods.</p>
+                        <p>You spent {parseFloat((this.state.greenZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}% of your energy usage during green zone periods.</p>
+                      </div>
                       {this.state.redZoneUsage > this.state.greenZoneUsage &&(
                         <div>
                           {this.state.redZoneUsage > this.state.amberZoneUsage &&(
@@ -547,11 +552,13 @@ class Dashboard extends React.Component {
                             <p className="postiveFeedbackText">That is {parseFloat(this.state.carbonEmittedCurrentMonth - this.state.carbonEmittedPreviousMonth).toFixed(2)} Kg 
                                more, reflecting a {parseFloat(1-parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)/parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)).toFixed(4) * 100}%
                                increase in carbon emissions. Consider your operating hours and equipment. Check the <Link href="/insights">insights </Link> page for more detail.</p>
+                               <p>Average monthly emissions: {parseFloat(this.state.carbonEmitted / this.state.monthsOnRecord).toFixed(2)} Kg</p>
                           </div>
                         )}
                         {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) === parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2) &&(
                           <div>
                             <p className="postiveFeedbackText">There has been no change in your carbon emissions.</p>
+                            <p>Average monthly emissions: {parseFloat(this.state.carbonEmitted / this.state.monthsOnRecord).toFixed(2)} Kg</p>
                           </div>
                         )}
                     </div>

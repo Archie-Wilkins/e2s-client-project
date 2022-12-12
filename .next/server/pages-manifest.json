@@ -3,8 +3,8 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/api/getUserDetails": "pages/api/getUserDetails.js",
-  "/director/dashboard": "pages/director/dashboard.js",
-  "/api/getUserSite": "pages/api/getUserSite.js",
   "/api/getAllHistoricalSiteData": "pages/api/getAllHistoricalSiteData.js",
-  "/": "pages/index.js"
+  "/": "pages/index.js",
+  "/api/getUserSite": "pages/api/getUserSite.js",
+  "/director/dashboard": "pages/director/dashboard.js"
 }
