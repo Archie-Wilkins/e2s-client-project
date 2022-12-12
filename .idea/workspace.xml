@@ -5,7 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/pages/viewReports.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/viewReports.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/build-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/.next/build-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/client-development/0.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/client-development/0.pack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/client-development/1.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/client-development/1.pack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/client-development/index.pack.old" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/client-development/index.pack.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/0.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/0.pack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/1.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/1.pack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/2.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/2.pack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/index.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/index.pack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/index.pack.old" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/index.pack.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/server/middleware-build-manifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/middleware-build-manifest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/server/pages-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/pages-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/server/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/pages/_app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/server/webpack-runtime.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/webpack-runtime.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/static/chunks/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/chunks/pages/_app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/chunks/webpack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.next/static/development/_buildManifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/development/_buildManifest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/frontEnd/components/publicTopNav.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/frontEnd/components/publicTopNav.test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/frontEnd/pages/weeklyEmail.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/frontEnd/pages/weeklyEmail.test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/csvUpload.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/esm/account.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/esm/account.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/insights.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/requestData.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/weeklyEmail.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/email/weeklyEmail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/components/layouts/publicTopNav.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/components/layouts/publicTopNav.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +73,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "C:/Users/c2064724/IdeaProjects/e2s-team-4/node_modules/jest",
+    "nodejs.jest.jest_package": "C:/Users/archi/OneDrive/Documents/Uni Year 3/Commercial Frameworks/e2s-team-4-v2/node_modules/jest",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -61,10 +85,14 @@
       <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\pages\api" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\pages" />
+      <recent name="C:\Users\archi\OneDrive\Documents\Uni Year 3\Commercial Frameworks\e2s-team-4-v2\pages\email" />
+      <recent name="C:\Users\archi\OneDrive\Documents\Uni Year 3\Commercial Frameworks\e2s-team-4-v2\pages\api\dashboard" />
+      <recent name="C:\Users\archi\OneDrive\Documents\Uni Year 3\Commercial Frameworks\e2s-team-4-v2\pages\api\site" />
+      <recent name="C:\Users\archi\OneDrive\Documents\Uni Year 3\Commercial Frameworks\e2s-team-4-v2\pages\api\authentication" />
+      <recent name="C:\Users\archi\OneDrive\Documents\Uni Year 3\Commercial Frameworks\e2s-team-4-v2\pages\api\onboarding" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.Account">
+  <component name="RunManager" selected="Jest.publicTopNavBar">
     <configuration name="Account" type="JavaScriptTestRunnerJest">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -95,6 +123,33 @@
       <test-file value="$PROJECT_DIR$/__tests__/login.test.jsx" />
       <method v="2" />
     </configuration>
+    <configuration name="publicTopNavBar" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/__tests__/frontEnd/components/publicTopNav.test.jsx" />
+      <test-names>
+        <test-name value="publicTopNavBar" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="publicTopNavBar.hasLogo" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/__tests__/frontEnd/components/publicTopNav.test.jsx" />
+      <test-names>
+        <test-name value="publicTopNavBar" />
+        <test-name value="hasLogo" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <configuration name="weeklyEmail" type="JavaScriptTestRunnerJest">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -110,7 +165,15 @@
       <item itemvalue="Jest.weeklyEmail" />
       <item itemvalue="Jest.Account" />
       <item itemvalue="Jest.forgor password" />
+      <item itemvalue="Jest.publicTopNavBar" />
+      <item itemvalue="Jest.publicTopNavBar.hasLogo" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Jest.publicTopNavBar" />
+        <item itemvalue="Jest.publicTopNavBar.hasLogo" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -343,7 +406,7 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/pages/api/login.js</url>
+          <url>file://$PROJECT_DIR$/pages/api/authentication/login.js</url>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

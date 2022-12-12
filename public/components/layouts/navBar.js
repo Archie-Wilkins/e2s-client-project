@@ -83,8 +83,7 @@ class NavBar extends React.Component {
             const data = {userID: userCookie.user}
             //JSONify it for api
             let JSONdata = JSON.stringify(data);
-            //fetch user details from userID
-            const endpoint = '/api/getUserDetails';
+            const endpoint = '/api/user/getUserDetails';
             const options = {method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSONdata,}
             const response = await fetch(endpoint, options)
             let result = await response.json();
@@ -146,20 +145,20 @@ class NavBar extends React.Component {
                     <p>Compare</p>
                 </Link> */}
 
-                <Link className=" navbarLink d-flex align-items-center" href="/billValidation" aria-label="go to bill validaiton page link">
+                <Link className=" navbarLink d-flex align-items-center" href="/esm/billValidation" aria-label="go to bill validaiton page link">
                     <FaDollarSign />
                     <p>Validate Bills</p>
                 </Link>
 
                 <hr className="navbarLineBreak"></hr>
 
-                <Link className=" navbarLink d-flex align-items-center" href="/help" aria-label="go to help page link">
+                <Link className=" navbarLink d-flex align-items-center" href="/esm/help" aria-label="go to help page link">
 
                     <FaRegQuestionCircle />
                     <p>Help</p>
                 </Link>
 
-                <Link className=" navbarLink d-flex align-items-center" href="/account" aria-label="go to account page link">
+                <Link className=" navbarLink d-flex align-items-center" href="/esm/account" aria-label="go to account page link">
                     <FaUserCog />
                     <p>Account</p>
                 </Link>

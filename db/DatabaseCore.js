@@ -8,7 +8,7 @@ const pool = mysql.createPool({
     connectionLimit: 600,
     host: 'localhost',
     user: 'root',
-    password: 'comsc',
+    password: '',
     database: 'e2s_db'
 })
 
