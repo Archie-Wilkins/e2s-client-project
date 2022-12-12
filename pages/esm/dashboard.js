@@ -23,7 +23,7 @@ class EsmDashboard extends React.Component {
       siteID: "",
       siteDataArray: [],
       dataStartDate: "",
-      monthsOnRecords: [],
+      monthsOnRecord: [],
       previousMonth: "",
       currentMonth: "",
       electricityUsed: 0,
@@ -668,6 +668,77 @@ class EsmDashboard extends React.Component {
               <h3 className="esmPanelHeader" aria-label="insights card">Insights</h3>
               <div className="esmPanelListContainer">
                 <div className="esmInsightCard">
+                      <p><b>Carbon Emissions</b></p> 
+                      <p>Your site generated {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)}Kg of
+                        carbon in {this.state.currentMonth} compared to {parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)}Kg
+                        in {this.state.previousMonth}.</p>
+                        {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) < parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2) &&(
+                          <div>
+                            <p className="postiveFeedbackText">That is {parseFloat(this.state.carbonEmittedPreviousMonth - this.state.carbonEmittedCurrentMonth).toFixed(2)} Kg 
+                               less and reflects a {parseFloat(1-parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)/parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)).toFixed(4) * 100}% 
+                               reduction. Go you!</p>
+                               {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) < (this.state.carbonEmitted / this.state.monthsOnRecord)&&(
+                                <div>
+                                  <p>You are also below your average monthly emission of {parseFloat(this.state.carbonEmitted / this.state.monthsOnRecord).toFixed(2)} Kg!</p>
+                                </div>
+                               )}
+                              {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) >= (this.state.carbonEmitted / this.state.monthsOnRecord)&&(
+                                <div>
+                              <p>Average monthly emissions: {parseFloat(this.state.carbonEmitted / this.state.monthsOnRecord).toFixed(2)}Kg</p>
+                                </div>  
+                              )}   
+
+                          </div>
+                        )}
+                        {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) > parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2) &&(
+                          <div>
+                            <p className="postiveFeedbackText">That is {parseFloat(this.state.carbonEmittedCurrentMonth - this.state.carbonEmittedPreviousMonth).toFixed(2)} Kg 
+                               more, reflecting a {parseFloat(1-parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)/parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)).toFixed(2) * 100}%
+                               increase in carbon emissions. Consider your operating hours and equipment. Check the <Link href="/insights">insights </Link> page for more detail.</p>
+                               <p>Average monthly emissions: {parseFloat(this.state.carbonEmitted / this.state.monthsOnRecord).toFixed(2)} Kg</p>
+                          </div>
+                        )}
+                        {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) === parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2) &&(
+                          <div>
+                            <p className="postiveFeedbackText">There has been no change in your carbon emissions.</p>
+                            <p>Average monthly emissions: {parseFloat(this.state.carbonEmitted / this.state.monthsOnRecord).toFixed(2)} Kg</p>
+                          </div>
+                        )}
+                </div>
+                <div className="esmInsightCard">
+                <p><b>Your Spending</b></p> 
+                      <p>You spent £{parseFloat(this.state.moneySpentCurrentMonth).toFixed(2)} in {this.state.currentMonth} compared to £{parseFloat(this.state.moneySpentPreviousMonth).toFixed(2)} in {this.state.previousMonth}.</p>
+                        {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) < parseFloat(this.state.moneySpentPreviousMonth).toFixed(2) &&(
+                          <div>
+                          <p className="postiveFeedbackText">That is £{parseFloat(this.state.moneySpentPreviousMonth - this.state.moneySpentCurrentMonth).toFixed(2)}  less and reflects a {parseFloat(1 - parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) / parseFloat(this.state.moneySpentPreviousMonth).toFixed(2)).toFixed(3) * 100}%  reduction. Go you!</p>
+                               {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) < (this.state.totalSpent / this.state.monthsOnRecord)&&(
+                                <div>
+                                  <p>You are also below your average monthly spending of £{parseFloat(this.state.totalSpent / this.state.monthsOnRecord).toFixed(2)}</p>
+                                </div>
+                               )}
+                              {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) >= (this.state.totalSpent / this.state.monthsOnRecord)&&(
+                                <div>
+                                  <p>Average monthly spending: £{parseFloat(this.state.totalSpent / this.state.monthsOnRecord).toFixed(2)}</p>
+                                </div>  
+                              )}   
+
+                          </div>
+                        )}
+                        {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) > parseFloat(this.state.moneySpentPreviousMonth).toFixed(2) &&(
+                          <div>
+                          <p className="negativeFeedbackText">That is £{parseFloat(this.state.moneySpentCurrentMonth - this.state.moneySpentPreviousMonth).toFixed(2)}  more, reflecting a {parseFloat((1 - (this.state.moneySpentPreviousMonth) / (this.state.moneySpentCurrentMonth)) * 100).toFixed(2)}%
+                               increase in spending. Consider your operating hours and equipment. Check the <Link href="/insights">insights </Link> page for more detail.</p>
+                               <p>Average monthly spending: £{parseFloat(this.state.totalSpent / this.state.monthsOnRecord).toFixed(2)}</p>
+                          </div>
+                        )}
+                        {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) === parseFloat(this.state.moneySpentPreviousMonth).toFixed(2) &&(
+                          <div>
+                            <p className="neutralFeedbackText">There has been no change in your spending.</p>
+                            <p>Average monthly spending: £{parseFloat(this.state.totalSpent / this.state.monthsOnRecord).toFixed(2)}</p>
+                          </div>
+                        )}
+                </div>
+                <div className="esmInsightCard">
                 <p><b>All Time Energy Demand</b></p> 
                       {parseFloat(this.state.electricityUsed).toFixed(0)}KwH
                 </div>
@@ -691,7 +762,6 @@ class EsmDashboard extends React.Component {
                 <p><b>Carbon Emissions</b></p> 
                     {parseFloat(this.state.carbonEmitted).toFixed(2)}Kg
                 </div>
-
                 <hr/>
               </div>
             </div>
