@@ -10,7 +10,6 @@ import React from "react";
 import BottomFooter from "../../public/components/layouts/bottomFooter.js";
 import Cookies from "js-cookie";
 
-//https://codesandbox.io/s/github/reactchartjs/react-chartjs-2/tree/master/sandboxes/line/default?from-embed=&file=/App.tsx:1134-1173
 
 
 class EsmDashboard extends React.Component {
@@ -28,7 +27,7 @@ class EsmDashboard extends React.Component {
 
   async componentDidMount() {
     //will check user is allowed on this page first
-    // Attempt to parse a user cookie
+    //attempt to get user cookie
     try {
       //Get the user cookie
       let userCookieEncypted = Cookies.get().user;
@@ -53,19 +52,19 @@ class EsmDashboard extends React.Component {
       window.location = "/login";
     }
 
-    //fetch site historical data
+    //fetch site historical data via userID
     let data = {
       userID: userCookie.user.toString()
     }
-
+    //sets options for API
     let JSONdata = JSON.stringify(data);
     let endpoint = '/api/getUserSite';
     let options = {method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSONdata,}
+    //fetches API to get user siteID
     let response = await fetch(endpoint, options)
     let result = await response.json();
 
-    console.log(result.data.site);
-
+    //if no site has been returned
     if(result.data.message === "no site"){
       alert("server error, no site found related to user")
       return;
@@ -75,7 +74,7 @@ class EsmDashboard extends React.Component {
     this.state.siteID = result.data.site;
 
 
-    //fetch site data between 2021-01-09 - 2021-01-16
+    //fetch site data between 2021-01-09 - 2021-01-16, this is hard coded because we arent currently recieving live data
     data = {
       siteID: this.state.siteID,
       dateStart: "2021-01-09",
@@ -94,6 +93,7 @@ class EsmDashboard extends React.Component {
     //DB returns JSON wrapped in [] which javascript doesn't like
     //so we stringify it, remove [], then parse back to JSON
 
+    //formats the data to be inserted into graph
     data = [
       { date: result[0].date.split("T")[0], demand: result[0].energy_demand },
       { date: result[1].date.split("T")[0], demand: result[1].energy_demand },
@@ -104,20 +104,15 @@ class EsmDashboard extends React.Component {
       { date: result[6].date.split("T")[0], demand: result[6].energy_demand },
     ]
 
+    //sets State to refresh page with new data
     this.state.data = data;
     this.setState({ data: data });
-
+    //updates value to make the page render the graph
     this.state.dataUpdated = true;
 
-    //this.render();
-
-
-
-    data = {
-      siteID: this.state.siteID
-    }
+    //creates data object with siteID to be sent off to retrieve site details
+    data = {siteID: this.state.siteID}
     JSONdata = JSON.stringify(data);
-    //API will get site data for the timeframe submitted (this week)
     endpoint = '/api/getSiteDetails';
     options = {
       method: 'POST',
@@ -127,19 +122,12 @@ class EsmDashboard extends React.Component {
     response = await fetch(endpoint, options)
     result = await response.json();
 
-    console.log(result);
-
+    //sets information boxes to have site details
     document.getElementById("siteName").innerText = result[0].site_name;
-
     document.getElementById("county").innerText = result[0].county;
-    // document.getElementById("orgName")
 
 
-
-    //REPORTS HERE
-
-    //generate data to be sent off (required for API fetch even if not needed)
-    //API request to get site details
+    //API request to get reports for the site
     endpoint = '/api/getReportListData';
     options = {
       method: 'POST',
@@ -150,19 +138,18 @@ class EsmDashboard extends React.Component {
     result = await response.json();
 
 
+    //initialise variables
     let Monday;
     let listHtml = "";
     let currentSite = "";
     let id = 0;
 
+    //filter JSON to only contain curren site (via site_id)
     var site_filter = result.filter( element => element.site_id === parseInt(this.state.siteID));
     //loops through list of site data
     for (var record in await site_filter) {
-      //splits the time_stamp into date and time
 
-      if (site_filter[record].time_stamp === null) {
-        alert(JSON.stringify(site_filter[record]));
-      }
+      //splits the time_stamp into date and time
       let [date, time] = site_filter[record].time_stamp.split("T");
       //converts string "date" into Date object
       let days = new Date(date);
@@ -190,34 +177,26 @@ class EsmDashboard extends React.Component {
       }
     }
 
-
-
-
-
+    //get reportsList html
     const list = document.getElementById("reportsList");
 
+    //set innerHTML to list
     list.innerHTML = listHtml
 
-    //fetch site reports and add to reports field
-
-    //stream reports into elements in listHTML
-
-    //add click listeners to function
-
-
-
-    //button function
-
+    //function for buttons
     async function clickDetect(id) {
+      //when button clicked hide dashboard and show card
       document.getElementById("compareCard").style.display = "flex";
       document.getElementById("page").style.display = "none";
 
+      //get data from record
       const weekData = document.getElementById("data" + id).innerText;
 
       //split record data into start of week and end of week
       const [weekStart, weekEnd, siteID] = weekData.split("|");
 
-      document.getElementById("compareTitle").innerText = weekStart + " compared to " + weekEnd;
+      //set title of comparison
+      document.getElementById("compareTitle").innerText = "Week " + weekStart + " compared to " + weekEnd;
 
       //creates object to convert to json
       let data = {
@@ -235,7 +214,7 @@ class EsmDashboard extends React.Component {
       }
       let response = await fetch(endpoint, options)
       let result = await response.json();
-      console.log(result);
+
       //DB returns JSON wrapped in [] which javascript doesn't like
       //so we stringify it, remove [], then parse back to JSON
       let stringResult = JSON.stringify(result);
@@ -298,7 +277,7 @@ class EsmDashboard extends React.Component {
       }
       response = await fetch(endpoint, options)
       result = await response.json();
-      console.log(result);
+
       //result is JSON response of API
       //JSON holds previous weeks site data
 
@@ -307,10 +286,13 @@ class EsmDashboard extends React.Component {
       document.getElementById("prevEnergy").innerText = result[0].energy_week_demand + "Kw";
       document.getElementById("prevCarbon").innerText = result[0].carbon_week_emitted + "Kg";
 
+      //calculate changes between this weke and previous week
       const thisEnergyChange = thisEnergyUsage - result[0].energy_week_demand;
       const thisCarbonEmissionChange = thisCarbonEmission - result[0].carbon_week_emitted;
       const thisExpenditureChange = thisExpenditure - result[0].energy_week_cost;
 
+      //formats the text based on whether site has used/spent/emitted more or less of each metric
+      //for energy usage change
       if (thisEnergyChange < 0){
         document.getElementById("energyChange").innerText = -thisEnergyChange + "Kw";
         document.getElementById("energyText").innerText = "less than previous week";
@@ -318,7 +300,7 @@ class EsmDashboard extends React.Component {
         document.getElementById("energyChange").innerText = thisEnergyChange + "Kw";
         document.getElementById("energyText").innerText = "more than previous week";
       }
-
+      //for carbon emission change
       if (thisCarbonEmissionChange < 0){
         document.getElementById("carbonChange").innerText = -thisCarbonEmissionChange + "Kg";
         document.getElementById("carbonText").innerText = "less than previous week";
@@ -326,7 +308,7 @@ class EsmDashboard extends React.Component {
         document.getElementById("carbonChange").innerText = thisCarbonEmissionChange + "Kg";
         document.getElementById("carbonText").innerText = "more than previous week";
       }
-
+      //for expenditure change
       if (thisExpenditureChange < 0){
         document.getElementById("spentChange").innerText = "£" + -thisExpenditureChange;
         document.getElementById("spentText").innerText = "less than previous week";
@@ -351,7 +333,6 @@ class EsmDashboard extends React.Component {
       stringResult = stringResult.replace("[", "");
       stringResult = stringResult.replace("]", "");
       result = JSON.parse(stringResult);
-      console.log(result);
 
       //once average data has been fetched change text in html
       document.getElementById("avgExpense").innerText = "£" + result.energy_avg_week_cost;
@@ -375,15 +356,15 @@ class EsmDashboard extends React.Component {
 
   }
 
+  //close button on compare card
   closeCompare = async () => {
     document.getElementById("compareCard").style.display = "none";
     document.getElementById("page").style.display = "block";
   }
 
 
-
-
   render() {
+    //will return loading data... while react/nextjs fetches data in "componentDidMount()"
     if(!this.state.dataUpdated){
       return(<div>loading data...</div>);
     }
@@ -395,14 +376,14 @@ class EsmDashboard extends React.Component {
             pageName={this.state.pageName}
             id="gridContainer"
         />
-        <div className="esmSiteCardHolder" id="compareCard">
+        <div className="esmSiteCardHolder" id="compareCard" aria-label="report card">
           <div className="esmCompareWeeks">
               <div className="esmCompareBanner">
-                <p id="compareTitle"> 12/12/2022 compared to 05/12/2022</p>
-                <div className="esmBannerExit" onClick={this.closeCompare}>X</div>
+                <p aria-label="report card title" id="compareTitle"></p>
+                <div aria-label="close report card button" className="esmBannerExit" onClick={this.closeCompare}>X</div>
               </div>
             <p/>
-            <table>
+            <table aria-label="comparison table">
               <thead>
               <tr className="reportsListHeader">
                 <th className="esmTableHeader">ThisWeek</th>
@@ -412,34 +393,34 @@ class EsmDashboard extends React.Component {
               </thead>
               <tbody id="list">
                 <tr className="esmTableRow">
-                  <td className="esmTableData" id="thisEnergy"></td>
-                  <td className="esmTableData" id="prevEnergy"></td>
-                  <td className="esmTableData" id="avgEnergy"></td>
+                  <td className="esmTableData" aria-label="energy used this selected week" id="thisEnergy"></td>
+                  <td className="esmTableData" aria-label="energy used previous week" id="prevEnergy"></td>
+                  <td className="esmTableData" aria-label="average energy used weekly" id="avgEnergy"></td>
                 </tr>
                 <tr className="esmTableRow">
-                  <td className="esmTableData" id="thisCarbon"></td>
-                  <td className="esmTableData" id="prevCarbon"></td>
-                  <td className="esmTableData" id="avgCarbon"></td>
+                  <td className="esmTableData" aria-label="carbon emitted this selected week" id="thisCarbon"></td>
+                  <td className="esmTableData" aria-label="carbon emitted previous week" id="prevCarbon"></td>
+                  <td className="esmTableData" aria-label="average energy used weekly" id="avgCarbon"></td>
                 </tr>
                 <tr className="esmTableRow">
-                  <td className="esmTableData" id="thisExpense"></td>
-                  <td className="esmTableData" id="prevExpense"></td>
-                  <td className="esmTableData" id="avgExpense"></td>
+                  <td className="esmTableData" aria-label="expenditure this selected week" id="thisExpense"></td>
+                  <td className="esmTableData" aria-label="expenditure previous week" id="prevExpense"></td>
+                  <td className="esmTableData" aria-label="average weekly expenditure" id="avgExpense"></td>
                 </tr>
               </tbody>
             </table>
             <div className="esmCompareContainer">
-              <div className="esmCompareInfo">
+              <div className="esmCompareInfo" aria-label="energy comparison">
                 <div className="esmCompareTitle">You have used</div>
                 <div className="esmCompareText" id="energyChange">42134</div>
                 <div className="esmCompareTitle" id="energyText">more than last week</div>
               </div>
-              <div className="esmCompareInfo">
+              <div className="esmCompareInfo" aria-label="carbon comparison">
                 <div className="esmCompareTitle">You have emitted</div>
                 <div className="esmCompareText" id="carbonChange">42134</div>
                 <div className="esmCompareTitle" id="carbonText">more than last week</div>
               </div>
-              <div className="esmCompareInfo">
+              <div className="esmCompareInfo" aria-label="expenditure comparison">
                 <div className="esmCompareTitle">You have spent</div>
                 <div className="esmCompareText" id="spentChange">42134</div>
                 <div className="esmCompareTitle" id="spentText">more than last week</div>
@@ -467,7 +448,7 @@ class EsmDashboard extends React.Component {
               </div>
             </div>
             <div className="esmDashboardPanel">
-              <h3 className="esmPanelHeader">Insights</h3>
+              <h3 className="esmPanelHeader" aria-label="insights card">Insights</h3>
               <div className="esmPanelListContainer">
                 <div className="esmInsightCard">
                   Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
@@ -486,21 +467,18 @@ class EsmDashboard extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="esmDashboardPanel esmSpecificGrid">
+            <div className="esmDashboardPanel esmSpecificGrid" aria-label="weekly reports card">
               <h3 className="esmPanelHeader">Reports</h3>
               <div className="esmPanelListContainer" id="reportsList">
-                <div className="esmReportCard">
-                  <p className="esmReportText">11/12/2022-18/12/2022</p>
-                  <button className="esmRecordDownloadBtn">compare</button>
-                </div>
+              {/*  reports are inputted here*/}
               </div>
             </div>
-            <div className="esmBottomPanel">
-              <div className="esmBottomPanelInfo">
+            <div className="esmBottomPanel" aria-label="site information card">
+              <div className="esmBottomPanelInfo" aria-label="site name">
                 <div>Site:</div>
                 <p id="siteName"></p>
               </div>
-              <div className="esmBottomPanelInfo">
+              <div className="esmBottomPanelInfo" aria-label="site county">
                 <div>County:</div>
                 <p id="county"></p>
               </div>
