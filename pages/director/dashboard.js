@@ -141,6 +141,8 @@ class Dashboard extends React.Component {
       lastWeekSeleted: "false",
 
       lastDaySelected: "false",
+
+      monthsOnRecord: 0,
       
     };
   }
@@ -180,6 +182,8 @@ class Dashboard extends React.Component {
       this.setState({dataStartDate: localDate.getFullYear() + " " + this.state.months[localDate.getMonth()]});
       const historicalDataRows = result.data.sites.length;
 
+      this.setState({monthsOnRecord: Math.ceil((historicalDataRows / (31*48)))});
+
       let localPreviousMonth = new Date(result.data.sites[historicalDataRows - (1 + 32*48)].time_stamp).getMonth();
       let localCurrentMonth = new Date(result.data.sites[historicalDataRows - 1].time_stamp).getMonth();
       
@@ -202,6 +206,7 @@ class Dashboard extends React.Component {
 
       if(this.state.allTimeDataSelected === "true"){
         for(let i = 0; i < historicalDataRows; i++){
+
           electrictyTally = electrictyTally + result.data.sites[i].energy_demand;
           heatTally = heatTally + result.data.sites[i].heat_demand;
           energyExportTally = energyExportTally + result.data.sites[i].energy_exported;
@@ -465,12 +470,12 @@ class Dashboard extends React.Component {
                         <div>
                           {this.state.redZoneUsage > this.state.amberZoneUsage &&(
                             <p> Most of your energy use was during red-zone periods.  Consider changing your energy usage times
-                            and find out <Link href="/about"> more </Link> about zone pricing to see how you could save
+                            and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
                             money.</p>
                           )}
                           {this.state.amberZoneUsage > this.state.redZoneUsage &&(
                             <p> Most of your energy use was during amber-zone periods.  Consider changing your energy usage times
-                            and find out <Link href="/about"> more </Link> about zone pricing to see how you could save
+                            and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
                             money.</p>
                           )}
                         </div>  
@@ -478,12 +483,12 @@ class Dashboard extends React.Component {
                       {this.state.greenZoneUsage > this.state.redZoneUsage &&(
                         <div>
                           {this.state.greenZoneUsage > this.state.amberZoneUsage &&(
-                            <p> Well done! Most of your energy has been during green-zone periods. Find out <Link href="/about"> 
+                            <p> Well done! Most of your energy has been during green-zone periods. Find out <Link href="/zonePricingInformation"> 
                             more </Link> about zone pricing to see how you could save money.</p>
                           )}
                           {this.state.amberZoneUsage > this.state.greenZoneUsage &&(
                             <p> Most of your energy use was during amber-zone periods.  Consider changing your energy usage times
-                            and find out <Link href="/about"> more </Link> about zone pricing to see how you could save
+                            and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
                             money.</p>
                           )}
                         </div>  
@@ -516,16 +521,41 @@ class Dashboard extends React.Component {
                     {this.state.insightSixData}
                     </div>
                     <div className="flexBox w-100"><p>Carbon Emissions</p> 
-                    <p>Your site generated {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)} Kg of
-                       carbon in {this.state.currentMonth} compared to {parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)} Kg
-                       in {this.state.previousMonth}</p>
+                      <p>Your site generated {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)} Kg of
+                        carbon in {this.state.currentMonth} compared to {parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)} Kg
+                        in {this.state.previousMonth}.</p>
+                        {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) < parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2) &&(
+                          <div>
+                            <p className="postiveFeedbackText">That is {parseFloat(this.state.carbonEmittedPreviousMonth - this.state.carbonEmittedCurrentMonth).toFixed(2)} Kg 
+                               less and reflects a {parseFloat(1-parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)/parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)).toFixed(4) * 100}% 
+                               reduction. Go you!</p>
+                               {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) < (this.state.carbonEmitted / this.state.monthsOnRecord)&&(
+                                <div>
+                                  <p>You are also below your average monthly emission of {parseFloat(this.state.carbonEmitted / this.state.monthsOnRecord).toFixed(2)} Kg!</p>
+                                </div>
+                               )}
+                              {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) >= (this.state.carbonEmitted / this.state.monthsOnRecord)&&(
+                                <div>
+                                  <p>Average monthly emissions: {parseFloat(this.state.carbonEmitted / this.state.monthsOnRecord).toFixed(2)} Kg</p>
+                                </div>  
+                              )}   
+
+                          </div>
+                        )}
+                        {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) > parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2) &&(
+                          <div>
+                            <p className="postiveFeedbackText">That is {parseFloat(this.state.carbonEmittedCurrentMonth - this.state.carbonEmittedPreviousMonth).toFixed(2)} Kg 
+                               more, reflecting a {parseFloat(1-parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)/parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)).toFixed(4) * 100}%
+                               increase in carbon emissions. Consider your operating hours and equipment. Check the <Link href="/insights">insights </Link> page for more detail.</p>
+                          </div>
+                        )}
+                        {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) === parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2) &&(
+                          <div>
+                            <p className="postiveFeedbackText">There has been no change in your carbon emissions.</p>
+                          </div>
+                        )}
                     </div>
                   </div>
-                </div>
-
-                <div className="graphBox">
-                  <h3>Graph Performance</h3>
-                  GRAPH
                 </div>
               </div>
             </div>
