@@ -387,7 +387,7 @@ class BillValidation extends React.Component {
         let userCookie = JSON.parse(Cookies.get().user);
 
         // If the user has the incorrect credentials for the page, remove them
-        if (userCookie.role != 3) {
+        if (userCookie.role === 4 || userCookie.role === 1) {
             Cookies.remove("user");
             window.location = "/login";
         }
