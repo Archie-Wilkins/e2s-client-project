@@ -40,6 +40,10 @@ class EsmDashboard extends React.Component {
       moneySpentCurrentMonth: 0,
       carbonEmitted: 0,
       zonesArray: [],
+      allTimeDataSelected: "true",
+      months: ["January", "February", "March", "April", "May", "June", "July",
+               "August", "September", "October", "November", "December"],
+      distributionNetwork: "EPN",         
     };
   }
 
@@ -47,9 +51,7 @@ class EsmDashboard extends React.Component {
   returnSiteInsightsApi = async (userId) => {
     try {
       // API endpoint where we send form data.
-      const endpoint = "../api/getAllHistoricalSiteData";
-
-      const currentUserId = userId;
+      const endpoint = "../api/returnHistoricalSiteDataFromUserId";
 
       const data = {
         userID: userId,
@@ -74,9 +76,16 @@ class EsmDashboard extends React.Component {
 
       // Get the response data from server as JSON.
       const result = await response.json();
+      console.log(result.data.sites);
       this.setState({siteDataArray: result.data.sites});
       const localDate = new Date(result.data.sites[0].time_stamp);
-      this.setState({dataStartDate: localDate.getFullYear() + " " + this.state.months[localDate.getMonth()]});
+      console.log(localDate);
+      console.log(result.data.sites.length);
+      console.log(localDate.getFullYear());
+      console.log(localDate.getMonth().toString());
+
+      console.log(this.state.months[parseInt(localDate.getMonth())]);
+      this.setState({dataStartDate: localDate.getFullYear() + " " + this.state.months[parseInt(localDate.getMonth())]});
       const historicalDataRows = result.data.sites.length;
 
       this.setState({monthsOnRecord: Math.ceil((historicalDataRows / (31*48)))});
@@ -106,7 +115,6 @@ class EsmDashboard extends React.Component {
 
       if(this.state.allTimeDataSelected === "true"){
         for(let i = 0; i < historicalDataRows; i++){
-
           electrictyTally = electrictyTally + result.data.sites[i].energy_demand;
           heatTally = heatTally + result.data.sites[i].heat_demand;
           energyExportTally = energyExportTally + result.data.sites[i].energy_exported;
@@ -181,8 +189,8 @@ class EsmDashboard extends React.Component {
         }
       }
       
-
-      this.setState({electrictyUsed: electrictyTally});
+      console.log(electrictyTally);
+      this.setState({electricityUsed: electrictyTally});
       this.setState({heatUsed: heatTally});
       this.setState({energyExported: energyExportTally});
       this.setState({netEnergy: electrictyTally - energyExportTally});
@@ -246,7 +254,7 @@ class EsmDashboard extends React.Component {
         window.location = "/login";
       }
 
-      await this.returnSiteInsightsApi();
+      await this.returnSiteInsightsApi(userCookie.user);
 
       //catch errors
     } catch (e) {
@@ -660,20 +668,31 @@ class EsmDashboard extends React.Component {
               <h3 className="esmPanelHeader" aria-label="insights card">Insights</h3>
               <div className="esmPanelListContainer">
                 <div className="esmInsightCard">
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                <p><b>All Time Energy Demand</b></p> 
+                      {parseFloat(this.state.electricityUsed).toFixed(0)}KwH
                 </div>
                 <div className="esmInsightCard">
-                  Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old
+                <p><b>Heat Demand</b></p> 
+                      {parseFloat(this.state.heatUsed).toFixed(0)}KwH
                 </div>
                 <div className="esmInsightCard">
-                  Latin words, consectetur, from a Lorem Ipsum passage, and going through
+                <p><b>All Time Energy Exported</b></p> 
+                      {parseFloat(this.state.energyExported).toFixed(0)}KwH
                 </div>
                 <div className="esmInsightCard">
-                  Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero
+                <p><b>Net Energy Use</b></p> 
+                      {parseFloat(this.state.netEnergy).toFixed(0)}KwH
                 </div>
                 <div className="esmInsightCard">
-                  Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero
+                <p><b>Spending</b></p> 
+                    £{parseFloat(this.state.totalSpent).toFixed(2)}
                 </div>
+                <div className="esmInsightCard">
+                <p><b>Carbon Emissions</b></p> 
+                    {parseFloat(this.state.carbonEmitted).toFixed(2)}Kg
+                </div>
+
+                <hr/>
               </div>
             </div>
             <div className="esmDashboardPanel esmSpecificGrid" aria-label="weekly reports card">
