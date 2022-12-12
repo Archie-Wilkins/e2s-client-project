@@ -27,7 +27,7 @@ export default async function handler(req, res) {
     } catch(e){
         //catches error
         console.log(e);
-        return res.status(500);
+        return res.status(500)
     }
     // Found the name.
     // Sends a HTTP success code

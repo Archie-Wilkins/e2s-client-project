@@ -1,0 +1,227 @@
+.esmDashboardGridContainer {
+    display: grid;
+    column-gap: 15px;
+    row-gap: 15px;
+    grid-template-columns: auto auto 300px 300px;
+    padding: 10px;
+    width: 86%;
+    height: 520px;
+    float: right;
+    min-height: 0;
+    min-width: 0;
+}
+
+.esmDashboardPanel {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    width:100%;
+    grid-column: 3;
+    grid-row: 1 / 3;
+}
+
+.esmSpecificGrid {
+    grid-column: 4;
+    grid-row: 1 / 3;
+}
+
+.esmPanelHeader {
+    text-align: center;
+    width: 100%;
+    float: left;
+}
+
+.esmPanelListContainer {
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    float: left;
+}
+
+.esmDashboardGraphPanel {
+    background-color: white;
+    border-radius: 10px;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    overflow: hidden;
+    min-height: 360px;
+}
+
+.esmBottomPanel {
+    background-color: white;
+    border-radius: 10px;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    overflow: hidden;
+    min-height: 130px;
+    column-gap: 15px;
+    row-gap: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.esmBottomPanelInfo {
+    height: 80px;
+    width: 200px;
+    background-color: white;
+    margin: 20px;
+}
+
+.esmInsightCard {
+    padding: 10px;
+    border-top-style: solid;
+    border-top-width: 2px;
+    border-color: #f2f2f2;
+}
+
+.esmReportCard {
+    border-top-style: solid;
+    border-top-width: 2px;
+    border-color: #f2f2f2;
+    padding: 10px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.esmReportText {
+    margin-top: 3px;
+}
+
+.esmGraphCard{
+    float: left;
+    background-color: white;
+    height: 300px;
+    width: 90%;
+}
+
+.esmDashboardBackground {
+    width: 100%;
+    height: 100vh;
+    background-color: #f2f2f2;
+}
+
+.esmRecordDownloadBtn {
+    height: 30px;
+    width: 70px;
+    border-style: none;
+    border-radius: 10px;
+    background-color: darkblue;
+    color: white;
+    font-size: 12px;
+}
+
+.esmRecordDownloadBtn:hover {
+    background-color: #EDB116;
+    color: black;
+    opacity: 0.5;
+}
+
+.esmSiteCardHolder {
+    width: 100%;
+    height: 91vh;
+    background-color: grey;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.esmCompareWeeks {
+    height: 400px;
+    width: 600px;
+    background-color: white;
+    margin-left: 150px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.esmCompareBanner {
+    height: 60px;
+    width: 600px;
+    background-color: #111D4A;
+    text-align: center;
+    justify-content: center;
+    border-radius: 18px 18px 0px 0px;
+    color: white;
+    font-size: 20px;
+}
+
+.esmCompareBanner p {
+    line-height: 1.5;
+    display: inline-block;
+    vertical-align: middle;
+    color: white;
+    font-size: 20px;
+    margin: 15px 0 30px 35px;
+}
+
+.esmBannerExit {
+    float: right;
+    color: white;
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+    border-radius: 10px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.esmBannerExit:hover {
+    background-color: red;
+}
+
+.esmTableRow {
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+
+
+.esmTableHeader {
+    font-weight: bold;
+    font-size: 13px;
+    text-align: center;
+    border-style: none;
+    width: 33.3%
+}
+
+.esmTableData {
+    text-align: center;
+}
+
+tr.esmTableRow>td {
+    padding-top: 0.7em;
+    padding-bottom: 0.7em;
+}
+
+.esmCompareContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.esmCompareInfo {
+    height: 100px;
+    width: 100px;
+    background-color: #f6f6f6;
+    border-radius: 15px;
+    margin: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.esmCompareTitle {
+    font-weight: bold;
+    text-align: center;
+    font-size: 10px;
+}
+
+.esmCompareText {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
