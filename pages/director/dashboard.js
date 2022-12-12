@@ -130,6 +130,10 @@ class Dashboard extends React.Component {
 
       carbonEmittedCurrentMonth: 0,
 
+      moneySpentPreviousMonth: 0,
+
+      moneySpentCurrentMonth: 0,
+
       previousMonth: null,
 
       currentMonth: null,
@@ -204,6 +208,9 @@ class Dashboard extends React.Component {
       let previousMonthCarbon = 0;
       let currentMonthCarbon = 0;
 
+      let previousMonthSpending = 0;
+      let currentMonthSpending = 0;
+
       if(this.state.allTimeDataSelected === "true"){
         for(let i = 0; i < historicalDataRows; i++){
 
@@ -272,8 +279,10 @@ class Dashboard extends React.Component {
   
           if(i >= historicalDataRows - (62*48) && i < historicalDataRows - (31*48)){
             previousMonthCarbon = previousMonthCarbon + (0.193 * result.data.sites[i].energy_demand) + (0.183 * result.data.sites[i].heat_demand);
+            previousMonthSpending = previousMonthSpending + result.data.sites[i].energy_cost;
           }else if(i > historicalDataRows - (31*48) && i < historicalDataRows){
             currentMonthCarbon = currentMonthCarbon + 0.193 * result.data.sites[i].energy_demand + 0.183 * result.data.sites[i].heat_demand;
+            currentMonthSpending = currentMonthSpending + result.data.sites[i].energy_cost;;
           }
   
         }
@@ -293,6 +302,9 @@ class Dashboard extends React.Component {
 
       this.setState({carbonEmittedPreviousMonth: previousMonthCarbon});
       this.setState({carbonEmittedCurrentMonth: currentMonthCarbon});
+
+      this.setState({moneySpentPreviousMonth: previousMonthSpending});
+      this.setState({moneySpentCurrentMonth: currentMonthSpending});
 
       // kg
       let carbonSum = 0.193 * electrictyTally;
@@ -554,6 +566,44 @@ class Dashboard extends React.Component {
                           <div>
                             <p className="postiveFeedbackText">There has been no change in your carbon emissions.</p>
                             <p>Average monthly emissions: {parseFloat(this.state.carbonEmitted / this.state.monthsOnRecord).toFixed(2)} Kg</p>
+                          </div>
+                        )}
+                    </div>
+
+                    <div className="flexBox w-100"><p><b>Your Spending</b></p> 
+                      <p>You spent £{parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) } 
+                         in {this.state.currentMonth} compared to £{parseFloat(this.state.moneySpentPreviousMonth).toFixed(2) } 
+                         in {this.state.previousMonth}.</p>
+                        {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) < parseFloat(this.state.moneySpentPreviousMonth).toFixed(2) &&(
+                          <div>
+                            <p className="postiveFeedbackText">That is £{parseFloat(this.state.moneySpentPreviousMonth - this.state.moneySpentCurrentMonth).toFixed(2)} 
+                               less and reflects a {parseFloat(1-parseFloat(this.state.moneySpentCurrentMonth).toFixed(2)/parseFloat(this.state.moneySpentPreviousMonth).toFixed(2)).toFixed(4) * 100}% 
+                               reduction. Go you!</p>
+                               {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) < (this.state.totalSpent / this.state.monthsOnRecord)&&(
+                                <div>
+                                  <p>You are also below your average monthly spending of £{parseFloat(this.state.totalSpent / this.state.monthsOnRecord).toFixed(2)}</p>
+                                </div>
+                               )}
+                              {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) >= (this.state.totalSpent / this.state.monthsOnRecord)&&(
+                                <div>
+                                  <p>Average monthly spending: £{parseFloat(this.state.totalSpent / this.state.monthsOnRecord).toFixed(2)}</p>
+                                </div>  
+                              )}   
+
+                          </div>
+                        )}
+                        {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) > parseFloat(this.state.moneySpentPreviousMonth).toFixed(2) &&(
+                          <div>
+                            <p className="negativeFeedbackText">That is £{parseFloat(this.state.moneySpentCurrentMonth - this.state.moneySpentPreviousMonth).toFixed(2)} 
+                               more, reflecting a {parseFloat(1-parseFloat(this.state.moneySpentPreviousMonth).toFixed(2)/parseFloat(this.state.moneySpentCurrentMonth).toFixed(2)).toFixed(4) * 100}%
+                               increase in spending. Consider your operating hours and equipment. Check the <Link href="/insights">insights </Link> page for more detail.</p>
+                               <p>Average monthly spending: £{parseFloat(this.state.totalSpent / this.state.monthsOnRecord).toFixed(2)}</p>
+                          </div>
+                        )}
+                        {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) === parseFloat(this.state.moneySpentPreviousMonth).toFixed(2) &&(
+                          <div>
+                            <p className="neutralFeedbackText">There has been no change in your spending.</p>
+                            <p>Average monthly spending: £{parseFloat(this.state.totalSpent / this.state.monthsOnRecord).toFixed(2)}</p>
                           </div>
                         )}
                     </div>

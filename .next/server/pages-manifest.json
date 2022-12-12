@@ -2,9 +2,9 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
+  "/director/dashboard": "pages/director/dashboard.js",
   "/api/getUserSite": "pages/api/getUserSite.js",
   "/api/getUserDetails": "pages/api/getUserDetails.js",
-  "/director/dashboard": "pages/director/dashboard.js",
+  "/": "pages/index.js",
   "/api/getAllHistoricalSiteData": "pages/api/getAllHistoricalSiteData.js"
 }
