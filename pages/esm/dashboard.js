@@ -77,8 +77,8 @@ class EsmDashboard extends React.Component {
     //fetch site data between 2021-01-09 - 2021-01-16, this is hard coded because we arent currently recieving live data
     data = {
       siteID: this.state.siteID,
-      dateStart: "2021-01-09",
-      dateEnd: "2021-01-15"
+      dateStart: "2020-09-13",
+      dateEnd: "2020-09-19"
     }
     JSONdata = JSON.stringify(data);
     //API will get site data for the timeframe submitted (this week)
@@ -94,6 +94,7 @@ class EsmDashboard extends React.Component {
     //so we stringify it, remove [], then parse back to JSON
 
     //formats the data to be inserted into graph
+
     data = [
       { date: result[0].date.split("T")[0], demand: result[0].energy_demand },
       { date: result[1].date.split("T")[0], demand: result[1].energy_demand },
