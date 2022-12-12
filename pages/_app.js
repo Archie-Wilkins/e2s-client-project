@@ -15,6 +15,9 @@ import '../styling/esmDashbord.css';
 import '../styling/reports.css';
 import '../styling/sizes.css';
 import '../styling/forms.css';
+import '../styling/landing.css';
+
+
 
 export default function App({ Component, pageProps }) {
     return (
