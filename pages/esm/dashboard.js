@@ -20,10 +20,210 @@ class EsmDashboard extends React.Component {
       pageName: "dashboard",
       data: [],
       dataUpdated: false,
-      siteID: ""
+      siteID: "",
+      siteDataArray: [],
+      dataStartDate: "",
+      monthsOnRecords: [],
+      previousMonth: "",
+      currentMonth: "",
+      electricityUsed: 0,
+      heatUsed: 0,
+      energyExported: 0,
+      netEnergy: 0,
+      totalSpent: 0,
+      redZoneUsage: 0,
+      amberZoneUsage: 0,
+      greenZoneUsage: 0,
+      carbonEmittedPreviousMonth: 0,
+      carbonEmittedCurrentMonth: 0,
+      moneySpentPreviousMonth: 0,
+      moneySpentCurrentMonth: 0,
+      carbonEmitted: 0,
+      zonesArray: [],
     };
   }
 
+
+  returnSiteInsightsApi = async (userId) => {
+    try {
+      // API endpoint where we send form data.
+      const endpoint = "../api/getAllHistoricalSiteData";
+
+      const currentUserId = userId;
+
+      const data = {
+        userID: userId,
+      }
+
+      const JSONdata = JSON.stringify(data);
+
+      // Form the request for sending data to the server.
+      const options = {
+        // The method is POST because we are sending data.
+        method: "POST",
+        // Tell the server we're sending JSON.
+        headers: {
+          "Content-Type": "application/json",
+        },
+      
+        body: JSONdata,
+      }
+
+      // Send the form data to our forms API on Vercel and get a response.
+      const response = await fetch(endpoint, options);
+
+      // Get the response data from server as JSON.
+      const result = await response.json();
+      this.setState({siteDataArray: result.data.sites});
+      const localDate = new Date(result.data.sites[0].time_stamp);
+      this.setState({dataStartDate: localDate.getFullYear() + " " + this.state.months[localDate.getMonth()]});
+      const historicalDataRows = result.data.sites.length;
+
+      this.setState({monthsOnRecord: Math.ceil((historicalDataRows / (31*48)))});
+
+      let localPreviousMonth = new Date(result.data.sites[historicalDataRows - (1 + 32*48)].time_stamp).getMonth();
+      let localCurrentMonth = new Date(result.data.sites[historicalDataRows - 1].time_stamp).getMonth();
+      
+      this.setState({previousMonth: this.state.months[localPreviousMonth]});
+      this.setState({currentMonth: this.state.months[localCurrentMonth]});
+
+      let electrictyTally = 0;
+      let heatTally = 0;
+      let energyExportTally = 0;
+      let cumulativeSpending = 0;
+      let redZonePeriodTally = 0.0;
+      let amberZonePeriodTally = 0.0;
+      let greenZonePeriodTally = 0.0;
+
+      let dayTracker = 1;
+      let timeSlotsChecked = 0;
+
+      let previousMonthCarbon = 0;
+      let currentMonthCarbon = 0;
+
+      let previousMonthSpending = 0;
+      let currentMonthSpending = 0;
+
+      if(this.state.allTimeDataSelected === "true"){
+        for(let i = 0; i < historicalDataRows; i++){
+
+          electrictyTally = electrictyTally + result.data.sites[i].energy_demand;
+          heatTally = heatTally + result.data.sites[i].heat_demand;
+          energyExportTally = energyExportTally + result.data.sites[i].energy_exported;
+          cumulativeSpending = cumulativeSpending + result.data.sites[i].energy_cost;
+  
+          try{
+            if(this.state.distributionNetwork === "EPN"){
+  
+              // Check if the day is Monday through Friday.
+              if(dayTracker < 6){
+  
+                  // If it is, create a substring from the date handed in the csv.
+                  let dateTime = new Date(result.data.sites[i].time_stamp);
+  
+                  // Evaluate which time period the time falls between.
+                  if(dateTime.getHours() >= 16 && dateTime.getHours() <= 19){
+                      // Increment counters to track how many periods of time were using which tariff of cost.
+                      redZonePeriodTally = redZonePeriodTally + result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
+                  }
+                  if((dateTime.getHours() >= 7 && dateTime.getHours() < 16) || (dateTime.getHours() > 19 && dateTime.getHours() <= 23)){
+                    amberZonePeriodTally = amberZonePeriodTally + result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
+                  }if(dateTime.getHours() > 23 || dateTime.getHours() < 7 || dateTime.getHours() === 0){
+                    greenZonePeriodTally = greenZonePeriodTally +result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
+                  }
+              }
+  
+              else if(dayTracker === 6 || dayTracker === 7){
+  
+                  // If it is Saturday or Sunday, there price will only ever be green zone. 
+                  greenZonePeriodTally = greenZonePeriodTally + result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
+              }
+  
+  
+              // If 48 time slots have been checked, an entire day of data has been passed.
+              if(timeSlotsChecked == 48){
+                  
+                  // Check if it is Sunday (Monday - 1, Tuesday - 2, ..., Sunday - 7).
+                  if(dayTracker < 7){
+  
+                      // Move the day tracker forward a day.
+                      dayTracker = dayTracker + 1;
+                  }
+  
+                  if(dayTracker === 7){
+  
+                      // If the day is Sunday, reset it to Monday after all slots have been checked.
+                      dayTracker = 1;
+                  }
+  
+                  // Reset the number of slots checked for a day.
+                  timeSlotsChecked = 0;
+              }
+  
+              else if(timeSlotsChecked < 48){
+                  // Increment the number of slots checked for the day.
+                  timeSlotsChecked = timeSlotsChecked + 1;
+              }
+              
+            }
+          }catch(e){
+            console.log("error");
+          }
+  
+          if(i >= historicalDataRows - (62*48) && i < historicalDataRows - (31*48)){
+            previousMonthCarbon = previousMonthCarbon + (0.193 * result.data.sites[i].energy_demand) + (0.183 * result.data.sites[i].heat_demand);
+            previousMonthSpending = previousMonthSpending + result.data.sites[i].energy_cost;
+          }else if(i > historicalDataRows - (31*48) && i < historicalDataRows){
+            currentMonthCarbon = currentMonthCarbon + 0.193 * result.data.sites[i].energy_demand + 0.183 * result.data.sites[i].heat_demand;
+            currentMonthSpending = currentMonthSpending + result.data.sites[i].energy_cost;;
+          }
+  
+        }
+      }
+      
+
+      this.setState({electrictyUsed: electrictyTally});
+      this.setState({heatUsed: heatTally});
+      this.setState({energyExported: energyExportTally});
+      this.setState({netEnergy: electrictyTally - energyExportTally});
+      this.setState({totalSpent: cumulativeSpending});
+
+
+      this.setState({redZoneUsage: redZonePeriodTally});
+      this.setState({amberZoneUsage: amberZonePeriodTally});
+      this.setState({greenZoneUsage: greenZonePeriodTally});
+
+      this.setState({carbonEmittedPreviousMonth: previousMonthCarbon});
+      this.setState({carbonEmittedCurrentMonth: currentMonthCarbon});
+
+      this.setState({moneySpentPreviousMonth: previousMonthSpending});
+      this.setState({moneySpentCurrentMonth: currentMonthSpending});
+
+      // kg
+      let carbonSum = 0.193 * electrictyTally;
+      let carbonSum2 = 0.183 * heatTally;
+      carbonSum = carbonSum + carbonSum2;
+      this.setState({carbonEmitted: carbonSum});
+
+      redZonePeriodTally = redZonePeriodTally;
+      amberZonePeriodTally = amberZonePeriodTally;
+      greenZonePeriodTally =  greenZonePeriodTally;
+
+      const redZ = parseFloat(redZonePeriodTally).toFixed(2);
+      const ambZ = parseFloat(amberZonePeriodTally).toFixed(2);
+      const greZ = parseFloat(greenZonePeriodTally).toFixed(2);
+
+      let localZonesArray = [
+        {"name": "redzone", "value": parseFloat(redZ), fill: "#FF0000"},
+        {"name": "amberzone", "value": parseFloat(ambZ), fill: "#FFA500"},
+        {"name": "greenzone", "value": parseFloat(greZ), fill: "#00FF00"},
+      ];
+
+      this.setState({zonesArray: localZonesArray});
+    } catch (e) {
+      // No action
+    }
+  }
 
   async componentDidMount() {
     //will check user is allowed on this page first
@@ -45,6 +245,9 @@ class EsmDashboard extends React.Component {
         Cookies.remove("user");
         window.location = "/login";
       }
+
+      await this.returnSiteInsightsApi();
+
       //catch errors
     } catch (e) {
       // No cookie found
@@ -77,9 +280,10 @@ class EsmDashboard extends React.Component {
     //fetch site data between 2021-01-09 - 2021-01-16, this is hard coded because we arent currently recieving live data
     data = {
       siteID: this.state.siteID,
-      dateStart: "2018-01-25",
-      dateEnd: "2018-02-01"
+      dateStart: "2020-09-13",
+      dateEnd: "2020-10-24"
     }
+
     JSONdata = JSON.stringify(data);
     //API will get site data for the timeframe submitted (this week)
     endpoint = '/api/getSiteDataTimeRangeDaily';
@@ -94,16 +298,20 @@ class EsmDashboard extends React.Component {
     //so we stringify it, remove [], then parse back to JSON
 
     //formats the data to be inserted into graph
-
-    data = [
-      { date: result[0].date.split("T")[0], demand: result[0].energy_demand },
-      { date: result[1].date.split("T")[0], demand: result[1].energy_demand },
-      { date: result[2].date.split("T")[0], demand: result[2].energy_demand },
-      { date: result[3].date.split("T")[0], demand: result[3].energy_demand },
-      { date: result[4].date.split("T")[0], demand: result[4].energy_demand },
-      { date: result[5].date.split("T")[0], demand: result[5].energy_demand },
-      { date: result[6].date.split("T")[0], demand: result[6].energy_demand },
-    ]
+    try{
+      data = [
+        { date: result[0].date.split("T")[0], demand: result[0].energy_demand },
+        { date: result[1].date.split("T")[0], demand: result[1].energy_demand },
+        { date: result[2].date.split("T")[0], demand: result[2].energy_demand },
+        { date: result[3].date.split("T")[0], demand: result[3].energy_demand },
+        { date: result[4].date.split("T")[0], demand: result[4].energy_demand },
+        { date: result[5].date.split("T")[0], demand: result[5].energy_demand },
+        { date: result[6].date.split("T")[0], demand: result[6].energy_demand },
+      ]
+    }catch{
+      console.log("Please update starting date and ending date.")
+    }
+    
 
     //sets State to refresh page with new data
     this.state.data = data;
