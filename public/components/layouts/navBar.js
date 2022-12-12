@@ -69,10 +69,19 @@ class NavBar extends React.Component {
 
     async componentDidMount() {
         try {
-            //get JSON being stored in user cookie
-            const userCookie = JSON.parse(Cookies.get().user);
-            //store in data
+            //Get the user cookie
+            let userCookieEncypted = Cookies.get().user;
+
+            //import CryptoJS
+            var CryptoJS = require("crypto-js");
+
+            //decrypt the cookie
+            var bytes = CryptoJS.AES.decrypt(userCookieEncypted, 'team4');
+            //store decrypted cookie in userCookie
+            var userCookie = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+            //get userID from cookie
             const data = {userID: userCookie.user}
+            //JSONify it for api
             let JSONdata = JSON.stringify(data);
             const endpoint = '/api/user/getUserDetails';
             const options = {method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSONdata,}
@@ -82,7 +91,9 @@ class NavBar extends React.Component {
             stringResult = stringResult.replace("[", "");
             stringResult = stringResult.replace("]", "");
             result = JSON.parse(stringResult);
+            //sets name in state to user records first_name
             this.state.name = result.first_name;
+            //set text in nav bar to name
             document.getElementById("navName").innerText = this.state.name;
         } catch (e){
             alert("API failed " + e);

@@ -120,6 +120,7 @@ class LoginPage extends React.Component {
                 //get CryptoJS
                 var CryptoJS = require("crypto-js");
                 //encrypt cookieData with CryptoJS and salt "team4"
+                //encryption code sourced from: https://www.code-sample.com/2019/12/react-encryption-decryption-data-text.html
                 const encryptedJSON = CryptoJS.AES.encrypt(JSON.stringify(cookieData), 'team4').toString();
                 //if API successfully returned user role, set cookie
                 if(result.data.role){
