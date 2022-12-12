@@ -81,7 +81,7 @@ class LoginPage extends React.Component {
             const JSONdata = JSON.stringify(data);
 
             // API endpoint where we send form data.
-            const endpoint = '/api/login';
+            const endpoint = '/api/authentication/login';
 
             // Form the request for sending data to the server.
             const options = {
@@ -138,7 +138,7 @@ class LoginPage extends React.Component {
                 //login was successful
                 //creates API request to find user's role ID
                 const JSONdata = JSON.stringify(userIdData);
-                const endpoint = '/api/getUserRole';
+                const endpoint = '/api/user/getUserRole';
                 const options = {method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSONdata,}
                 const response = await fetch(endpoint, options)
                 const result = await response.json();

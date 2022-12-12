@@ -1,12 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import CarouselComponent from "../public/components/landing/carouselComponent"
-import BottomFooter from "../public/components/layouts/bottomFooter.js"
-import PublicTopNav from '../public/components/layouts/publicTopNav.js';
+import CarouselComponent from "./carouselComponent.js"
 
-
-class landingPage extends React.Component {
+class LandingComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -94,28 +91,36 @@ class landingPage extends React.Component {
         window.scrollTo(0, 1200);
     }
 
-    displayWelcomeMessage = async (event) => {
-        console.log(
-'/////////////////////////////////////////////////////////////////////////////////////////////////////////////TOMORROW\n' +
-'//////                  ///////////////////                   /////////////////                      ///////TODAY   *\n' + 
-'/////      ///////////////////////////////  ///////////////   ////////////////    ///////////////////////// *TOMORROW \n' +
-'////                   ///////////////////////////////    //////////////////                     /////////TOMORROW *\n'+
-'///       /////////////////////////////////////       ////////  ///////////////////////////    //////////TODAY *    *\n'+
-'///                   ///////////////////                      /////////                      //////////   * TOMORROW\n'+
-'///////////////////////////////////////////////////////////////////////////////////////////////////////DAY    TOMORROW');
-    }
-
     render() {
-        return <div>
-            <PublicTopNav />
+        return <div className="landing-page" aria-label="landing page">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="navigation bar">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/" aria-label="e2s home button link">E2S</a>
 
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-label="about us link" aria-current="page" href="/about">About Us</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" aria-label="request industry energy usage data link" href="#">Energy Data</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" aria-label="sign up link" href="#" onClick={this.handleFormScroll}>Sign Up</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
             <CarouselComponent />
-            <div className="landingBody" aria-label="body of the page">
+            <div className={"landingBody"} aria-label="body of the page">
 
                 {/* About Us information */}
-                <h1 className='mx-5 mt-3' id='aboutUsSection'>About Us</h1>
+                <h1 className='mx-5 mt-3'>About Us</h1>
                 <hr className="underline-style" />
-                {/*<button onClick={this.displayWelcomeMessage}>Logo</button>*/}
+
                 <div>
                     <h3 className="mx-5">Who are we?</h3>
                     <p className="mx-5"><strong>We are E2S</strong>, a service as a platform to offer you a variety of tools to manage your energy usage. We support work sites in tracking all of their usage metrics, their spending, and their CO2 emissions. Our bespoke solution offers Directors and Site Managers in-depth reports on where their money is going. We offer forecasting data and predictions about where your energy usage is taking you and where you could be heading. You can set targets and we will offer you the best advice and planning to meet them. We offer new technology and feedback based on what will work best for you site!
@@ -130,7 +135,7 @@ class landingPage extends React.Component {
 
                 {/* End of About Us Information  */}
                 <div aria-label="sign up enquiry section heading">
-                    <h1 className='mx-5 mt-5'>Enquire</h1>
+                    <h1 className='mx-5'>Enquire</h1>
                     <hr className="underline-style" />
                     <p className='mx-5'>If you would like to request more information on how to get started, please fill
                         out the form below and a member of the team will get back to you.</p>
@@ -142,23 +147,23 @@ class landingPage extends React.Component {
                             <h1>REQUEST FORM</h1>
                         </div>
                         <div className={"enquiry-form-content"} aria-label="enquiry form summary content">
-
+                            <br />
                             {/*Ignored on text, switch for div tag sections */}
                             <div aria-label="personal details summary section">
                                 <h2>Your request summary:</h2>
-
+                                <br />
                                 <label>Industry: {this.state.userIndustry}</label>
-
+                                <br />
                                 <label>Business: {this.state.userBusiness}</label>
-
+                                <br />
                                 <label>Email: {this.state.userEmail}</label>
-
+                                <br />
                                 <label>Comments: {this.state.userComments}</label>
-
+                                <br />
                             </div>
 
                             <h2 aria-label="goals section">Goals</h2>
-
+                            <br />
                             {this.state.userCo2 === "true" && (
                                 <label>CO2</label>
                             )}
@@ -175,54 +180,54 @@ class landingPage extends React.Component {
                         <button onClick={this.handleReset} className={"enquiry-form-submit-button"} aria-label="return home">BACK</button>
                     </div>
                 )}
-
                 {!this.state.formSubmitted && (
-                    <div className='w-100 d-flex justify-content-center'>
-                        <form onSubmit={this.enquirySubmitApi} aria-label="enquiry form" className="my-2 enquiry-form rounded" method="post" id={"enquiryForm"} data-testid="form">
-                            <div className={"enquiry-form-header"} aria-label="enquiry form header">
-                                <h1>REQUEST FORM</h1>
+                    <form onSubmit={this.enquirySubmitApi} aria-label="enquiry form" className={"enquiry-form"} method="post" id={"enquiryForm"} data-testid="form">
+                        <div className={"enquiry-form-header"} aria-label="enquiry form header">
+                            <h1>REQUEST FORM</h1>
+                        </div>
+                        <div className={"enquiry-form-content"} aria-label="enquiry form questions section">
+                            <label htmlFor="industry">Which industry are you in? (Required)</label>
+                            <br />
+                            <input type="text" id="industry" name="industry" required minLength={"1"} maxLength={"50"} data-testid="industry" />
+                            <br /><br />
+                            <label htmlFor="business">What is your business name? (Required)</label>
+                            <br />
+                            <input type="text" id="business" name="business" required minLength={"1"} maxLength={"50"} data-testid="business" />
+                            <br /><br />
+                            <label htmlFor="email">What is your email address? (Required)</label>
+                            <br />
+                            <input type="email" id="email" name="email" required minLength={"1"} maxLength={"50"} data-testid="email" />
+
+                            <br /><br />
+                            <div className="form-check" aria-label="co2 target checkbox">
+                                <input className="form-check-input" type="checkbox" value="" id="co2" />
+                                <label className="form-check-label" htmlFor="flexCheckDefault">CO2 Emissions</label>
                             </div>
-                            <div className="enquiry-form-content d-flex flex-column justify-content-around" aria-label="enquiry form questions section">
-                                <label className="mt-2" htmlFor="industry">Which industry are you in? (Required)</label>
-                                <input type="text" id="industry" name="industry" required minLength={"1"} maxLength={"50"} data-testid="industry" />
-
-                                <label className="mt-2" htmlFor="business">What is your business name? (Required)</label>
-                                <input type="text" id="business" name="business" required minLength={"1"} maxLength={"50"} data-testid="business" />
-
-                                <label className="mt-2" htmlFor="email">What is your email address? (Required)</label>
-                                <input type="email" id="email" name="email" required minLength={"1"} maxLength={"50"} data-testid="email" />
-
-                                <div className="form-check mt-2" aria-label="co2 target checkbox">
-                                    <input className="form-check-input" type="checkbox" value="" id="co2" />
-                                    <label className="form-check-label" htmlFor="flexCheckDefault">CO2 Emissions</label>
-                                </div>
-                                <div className="form-check" aria-label="spending target chechbox">
-                                    <input className="form-check-input" type="checkbox" value="" id="spending" />
-                                    <label className="form-check-label" htmlFor="flexCheckDefault">Spending</label>
-                                </div>
-                                <div className="form-check" aria-label="energy target checkbox">
-                                    <input className="form-check-input" type="checkbox" value="" id="energy" />
-                                    <label className="form-check-label" htmlFor="flexCheckDefault">Energy Use</label>
-                                </div>
-                                <div className="form-check" aria-label="technology checkbox">
-                                    <input className="form-check-input" type="checkbox" value="" id="technology" />
-                                    <label className="form-check-label" htmlFor="flexCheckDefault">Technology Insights</label>
-                                </div>
+                            <div className="form-check" aria-label="spending target chechbox">
+                                <input className="form-check-input" type="checkbox" value="" id="spending" />
+                                <label className="form-check-label" htmlFor="flexCheckDefault">Spending</label>
                             </div>
-
-                            <label htmlFor={"enquiryCommentSection"} className="enquiry-form-comment-section-label mt-3">Would you like to ask any questions? (Optional)</label>
-                            <input type={"text"} className={"enquiry-form-comment-section"} id={"enquiryCommentSection"}></input>
-                            <div className="w-100 d-flex justify-content-center">
-                                <button type="submit" role="button" className={"btn btn-primary my-3"} aria-label="submit enquiry form button">Submit</button>
+                            <div className="form-check" aria-label="energy target checkbox">
+                                <input className="form-check-input" type="checkbox" value="" id="energy" />
+                                <label className="form-check-label" htmlFor="flexCheckDefault">Energy Use</label>
                             </div>
-                        </form>
-                    </div>
+                            <div className="form-check" aria-label="technology checkbox">
+                                <input className="form-check-input" type="checkbox" value="" id="technology" />
+                                <label className="form-check-label" htmlFor="flexCheckDefault">Technology Insights</label>
+                            </div>
+                            <br />
+                        </div>
+
+                        <label htmlFor={"enquiryCommentSection"} className={"enquiry-form-comment-section-label"}>Would you like to asky any questions? (Optional)</label>
+                        <input type={"text"} className={"enquiry-form-comment-section"} id={"enquiryCommentSection"}></input>
+                        <br />
+                        <button type="submit" className={"enquiry-form-submit-button"} aria-label="submit enquiry form button">Submit</button>
+                    </form>
                 )}
             </div>
-            <BottomFooter />
-    </div>
+        </div>
     }
 
 }
 
-export default landingPage;
+export default LandingComponent;

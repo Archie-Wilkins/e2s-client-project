@@ -18,7 +18,7 @@ class EsmDashboard extends React.Component {
     super(props);
     this.state = {
       isDirector: false,
-      pageName: "dashboard",
+      pageName: "Dashboard",
       data: [],
       dataUpdated: false,
       siteID: "",
@@ -271,7 +271,7 @@ class EsmDashboard extends React.Component {
     }
     //sets options for API
     let JSONdata = JSON.stringify(data);
-    let endpoint = '/api/getUserSite';
+    let endpoint = '/api/user/getUserSite';
     let options = {method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSONdata,}
     //fetches API to get user siteID
     let response = await fetch(endpoint, options)
@@ -296,7 +296,7 @@ class EsmDashboard extends React.Component {
 
     JSONdata = JSON.stringify(data);
     //API will get site data for the timeframe submitted (this week)
-    endpoint = '/api/getSiteDataTimeRangeDaily';
+    endpoint = '/api/site/getSiteDataTimeRangeDaily';
     options = {
       method: 'POST',
       headers: {'Content-Type': 'application/json',},
@@ -332,7 +332,7 @@ class EsmDashboard extends React.Component {
     //creates data object with siteID to be sent off to retrieve site details
     data = {siteID: this.state.siteID}
     JSONdata = JSON.stringify(data);
-    endpoint = '/api/getSiteDetails';
+    endpoint = '/api/site/getSiteDetails';
     options = {
       method: 'POST',
       headers: {'Content-Type': 'application/json',},
@@ -346,7 +346,7 @@ class EsmDashboard extends React.Component {
     this.setState({pageName: result[0].site_name + " - " + result[0].county});
 
     //API request to get reports for the site
-    endpoint = '/api/getReportListData';
+    endpoint = '/api/report/getReportListData';
     options = {
       method: 'POST',
       headers: {'Content-Type': 'application/json',},

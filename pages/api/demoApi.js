@@ -3,8 +3,6 @@
 var db = require('../../db/DatabaseCore.js');
 
 
-// AI Wanted to do promises here, may be an alternative to callbacks
-
 // Function is default for demoApi.js, this is the only function that is called. The other functions are called
 // from here, this is determined by the field 'task' in req.header (Although may be useful to build req.method into
 // it in future).
@@ -16,7 +14,7 @@ var db = require('../../db/DatabaseCore.js');
 // See if functions can be more cleanly injected into the request handler (i.e dont have them found via header data)
 
 
-async function getAllUsers(req, res) {
+async function demoApi(req, res) {
     const user_query = "SELECT * FROM user_data";
     db.query(user_query, function (error, result, fields)
     {
@@ -27,4 +25,4 @@ async function getAllUsers(req, res) {
 }
 
 
-export default getAllUsers
+export default demoApi
