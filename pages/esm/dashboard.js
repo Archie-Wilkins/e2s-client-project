@@ -109,7 +109,7 @@ class EsmDashboard extends React.Component {
 
     this.state.dataUpdated = true;
 
-    this.render();
+    //this.render();
 
 
 
@@ -149,6 +149,12 @@ class EsmDashboard extends React.Component {
     response = await fetch(endpoint, options)
     result = await response.json();
 
+
+    let Monday;
+    let listHtml = "";
+    let currentSite = "";
+    let id = 0;
+
     var site_filter = result.filter( element => element.site_id === parseInt(this.state.siteID));
     //loops through list of site data
     for (var record in await site_filter) {
@@ -174,16 +180,25 @@ class EsmDashboard extends React.Component {
         id++;
         if (days.getDay() + new Date(Monday).getDay() === 1) {
           //listHtml gets a new row added to it
-          listHtml = listHtml + ''
+          listHtml = listHtml + '<div class="esmReportCard">' +
+              '<p class="esmReportText">' + Monday + ' - ' + date + '</p>' +
+              '<div id="data'+ id +'" style="display: none"></div>' +
+              '<button class="esmRecordDownloadBtn" id="btn'+ id +'">compare</button></div>'
+
           //data relating to record is hidden in this <div> above
         }
       }
     }
-    '<tr class="reportListRow"><td class="reportListRowText">' + site_filter[record].name + '</td>' +
-    '<td class="reportListRowText">' + site_filter[record].site_name + '</td>' +
-    '<td class="reportListRowText">' + site_filter[record].county + '</td>' +
-    '<td class="reportListRowText">' + Monday + ' - ' + date + '</td>' +
-    '</td></tr>'
+
+    const list = document.getElementById("reportsList");
+
+    list.innerHTML = listHtml
+
+    // '<tr class="reportListRow"><td class="reportListRowText">' + site_filter[record].name + '</td>' +
+    // '<td class="reportListRowText">' + site_filter[record].site_name + '</td>' +
+    // '<td class="reportListRowText">' + site_filter[record].county + '</td>' +
+    // '<td class="reportListRowText">' + Monday + ' - ' + date + '</td>' +
+    // '</td></tr>'
 
     //<td class="reportButtonHolder"><div id="data'+ id +'" style="display: none">' + site_filter[record].site_id + ' ' + Monday + '|' + date + ' ' + site_filter[record].site_name +'</div><button class="reportDownloadButton" id="btn' + id + '">download</button>
 
@@ -236,7 +251,7 @@ class EsmDashboard extends React.Component {
 
   render() {
     if(!this.state.dataUpdated){
-      return(<div></div>);
+      return(<div>loading data...</div>);
     }
 
     return (
@@ -284,22 +299,11 @@ class EsmDashboard extends React.Component {
           </div>
           <div className="esmDashboardPanel esmSpecificGrid">
             <h3 className="esmPanelHeader">Reports</h3>
-            <div className="esmPanelListContainer">
+            <div className="esmPanelListContainer" id="reportsList">
               <div className="esmReportCard">
                 <p className="esmReportText">11/12/2022-18/12/2022</p>
                 <button className="esmRecordDownloadBtn">compare</button>
               </div>
-
-              <div className="esmReportCard">
-                <p className="esmReportText">11/12/2022-18/12/2022</p>
-                <button className="esmRecordDownloadBtn">send</button>
-              </div>
-
-              <div className="esmReportCard">
-                <p className="esmReportText">11/12/2022-18/12/2022</p>
-                <button className="esmRecordDownloadBtn">send</button>
-              </div>
-
             </div>
           </div>
           <div className="esmBottomPanel">
@@ -313,35 +317,6 @@ class EsmDashboard extends React.Component {
             </div>
           </div>
         </div>
-
-
-        {/*  /!* Energy Cost *!/*/}
-        {/*  <div className="container d-flex flex-column align-items-center w-100">*/}
-        {/*    <div className="row mt-5 w-75">*/}
-        {/*      <div className="col-lg rounded text-center">*/}
-        {/*        <h1>Dashboard</h1>*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-
-
-
-        {/*    /!*<EnergyCostForecastGraph*!/*/}
-        {/*    /!*  toggle1={"Week"}*!/*/}
-        {/*    /!*  toggle2={"Month"}*!/*/}
-        {/*    /!*  toggle3={"Year"}*!/*/}
-        {/*    /!*  dataSet1={this.state.weeklyData}*!/*/}
-        {/*    /!*  dataSet2={this.state.monthlyData}*!/*/}
-        {/*    /!*  dataSet3={this.state.yearlyData}*!/*/}
-        {/*    /!*  xAxis={"Date"}*!/*/}
-        {/*    /!*  yAxis={"Cost (£)"}*!/*/}
-        {/*    /!*  xAxisDataKey={"date"}*!/*/}
-        {/*    /!*  yAxisDataKey={"cost"}*!/*/}
-            {/*/>*/}
-        {/*  </div>*/}
-        {/*  /!* End of Energy Cost *!/*/}
-
-        {/*  <BottomFooter className="mt-3" />*/}
-        {/*</MainLayout>*/}
       </div>
     );
   }
