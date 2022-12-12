@@ -1,4 +1,4 @@
-import site from "../../db/site";
+import site from "../../../db/site";
 
 
 // Database query handler used for returning all site data associated with a user
@@ -14,8 +14,8 @@ export default async function handler(req, res) {
         console.log("siteData initialised");
 
         // If no errors are caught, return a success message.
-        return res.status(200).json({data: {sites: siteData, message:"great success"}});
-    } catch(e){
+        return res.status(200).json({ data: { sites: siteData, message: "great success" } });
+    } catch (e) {
         // Any errors are caught and an error message is returned to the API.
         console.log(e);
         console.log("API error finding data from user ID");

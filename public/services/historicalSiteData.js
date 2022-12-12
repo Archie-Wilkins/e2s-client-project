@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export async function getSiteDataEvery6Hours(siteID, startDate, endDate) {
     let response = null;
-    await axios.post(`/api/getSiteDataTimeRange6Hourly`, {
+    await axios.post(`/../api/site/getSiteDataTimeRange6Hourly`, {
         siteID: siteID,
         dateStart: startDate,
         dateEnd: endDate
@@ -18,7 +18,7 @@ export async function getSiteDataEvery6Hours(siteID, startDate, endDate) {
 
 export async function getSiteDataEveryDay(siteID, startDate, endDate) {
     let response = null;
-    await axios.post(`/api/getSiteDataTimeRangeDaily`, {
+    await axios.post(`/../../api/site/getSiteDataTimeRangeDaily`, {
         siteID: siteID,
         dateStart: startDate,
         dateEnd: endDate
@@ -34,7 +34,7 @@ export async function getSiteDataEveryDay(siteID, startDate, endDate) {
 
 export async function getSiteDataEveryMonth(siteID, startDate, endDate) {
     let response = null;
-    await axios.post(`/api/getSiteDataTimeRangeMonthly`, {
+    await axios.post(`/../../api/site/getSiteDataTimeRangeMonthly`, {
         siteID: siteID,
         dateStart: startDate,
         dateEnd: endDate
@@ -51,7 +51,7 @@ export async function getSiteDataEveryMonth(siteID, startDate, endDate) {
 
 export async function getSiteDataEveryWeek(siteID, startDate, endDate) {
     let response = null;
-    await axios.post(`/api/site/getSiteHistoricalData`, {
+    await axios.post(`/../../api/site/getSiteHistoricalData`, {
         siteID: siteID,
         dateStart: startDate,
         dateEnd: endDate
@@ -66,7 +66,7 @@ export async function getSiteDataEveryWeek(siteID, startDate, endDate) {
 }
 
 export async function getSitePastWeekData(siteID, startDate, endDate) {
-    const { data } = await axios.post(`/api/getSitePastWeekData`, {
+    const { data } = await axios.post(`/../../api/site/getSitePastWeekData`, {
         siteID: siteID,
         dateStart: startDate,
         dateEnd: endDate

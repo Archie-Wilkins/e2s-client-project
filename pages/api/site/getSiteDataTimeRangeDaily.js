@@ -1,4 +1,4 @@
-import site from "../../db/site";
+import site from "../../../db/site";
 
 export default async function handler(req, res) {
     // Get data submitted in request's body.

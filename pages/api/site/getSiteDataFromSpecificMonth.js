@@ -1,4 +1,4 @@
-import site from "../../db/site";
+import site from "../../../db/site";
 
 export default async function handler(req, res) {
     // Get data submitted in request's body.
@@ -9,15 +9,15 @@ export default async function handler(req, res) {
         //gets siteID that matches userID entered
         let queryResult = await site.getSiteDataFromMonth(body.chosenMonth);
         //if no user or site is found related to the email
-        if(queryResult.toString() === ""){
+        if (queryResult.toString() === "") {
             //returns 'no data'
-            return res.status(200).json({data:{message:"no site"}});
+            return res.status(200).json({ data: { message: "no site" } });
         } else {
             //returns 'site found' and queryResult
             return res.status(200).json(queryResult);
         }
 
-    } catch(e){
+    } catch (e) {
         //catches error
         console.log(e);
         return res.status(500);
