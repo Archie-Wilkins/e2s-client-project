@@ -26,6 +26,7 @@ class LineGraph extends React.Component {
               dataKey={this.props.yAxisDataKey}
               stroke="#8884d8"
             />
+
             <XAxis dataKey={this.props.xAxisDataKey}>
               <Label
                 value={this.props.xAxis}

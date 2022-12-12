@@ -69,11 +69,21 @@ class NavBar extends React.Component {
 
     async componentDidMount() {
         try {
-            //get JSON being stored in user cookie
-            const userCookie = JSON.parse(Cookies.get().user);
-            //store in data
+            //Get the user cookie
+            let userCookieEncypted = Cookies.get().user;
+
+            //import CryptoJS
+            var CryptoJS = require("crypto-js");
+
+            //decrypt the cookie
+            var bytes = CryptoJS.AES.decrypt(userCookieEncypted, 'team4');
+            //store decrypted cookie in userCookie
+            var userCookie = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+            //get userID from cookie
             const data = {userID: userCookie.user}
+            //JSONify it for api
             let JSONdata = JSON.stringify(data);
+            //fetch user details from userID
             const endpoint = '/api/getUserDetails';
             const options = {method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSONdata,}
             const response = await fetch(endpoint, options)
@@ -82,7 +92,9 @@ class NavBar extends React.Component {
             stringResult = stringResult.replace("[", "");
             stringResult = stringResult.replace("]", "");
             result = JSON.parse(stringResult);
+            //sets name in state to user records first_name
             this.state.name = result.first_name;
+            //set text in nav bar to name
             document.getElementById("navName").innerText = this.state.name;
         } catch (e){
             alert("API failed " + e);
@@ -98,41 +110,41 @@ class NavBar extends React.Component {
         <div className="navbarContainer blueBackground fixed-top">
             <div className="navbarContent" aria-label="navigational bar">
 
-                <Link className="w-100 navbarLink d-flex justify-content-center" href="/" aria-label="go home link">
+                <Link className="w-100 navbarLink d-flex justify-content-center" href="/esm/dashboard" aria-label="go home link">
                     <h1 data-testid="logo" className='whiteText'>E<span className='accentText'>2</span>S</h1>
                 </Link>
 
                 <hr className="navbarLineBreak"></hr>
 
-                <Link className="navbarLink d-flex align-items-center " href="/" aria-label="go to dashboard link">
+                <Link className="navbarLink d-flex align-items-center " href="/esm/dashboard" aria-label="go to dashboard link">
                     <FaTachometerAlt />
                     <p>Dashboard</p>
                 </Link>
 
-                <Link className=" navbarLink d-flex align-items-center" href="/siteForecasting" aria-label="go to site forecasting link">
+                <Link className=" navbarLink d-flex align-items-center" href="/esm/forecasting" aria-label="go to site forecasting link">
                     <FaCloud />
                     <p>Forecastings</p>
                 </Link>
 
-                <Link className=" navbarLink d-flex align-items-center" href="/sitePerformance" aria-label="go to analysis page link">
+                <Link className=" navbarLink d-flex align-items-center" href="/esm/analysis" aria-label="go to analysis page link">
                     <FaChartLine />
                     <p>Analysis</p>
                 </Link>
 
-                <Link className=" navbarLink d-flex align-items-center" href="/siteAssets" aria-label="view site assets link">
+                {/* <Link className=" navbarLink d-flex align-items-center" href="/esm/assets" aria-label="view site assets link">
                     <FaListAlt />
                     <p>Assets</p>
-                </Link>
+                </Link> */}
 
-                <Link className=" navbarLink d-flex align-items-center" href="/viewReports" aria-label="go to view reports page link">
+                {/* <Link className=" navbarLink d-flex align-items-center" href="/esm/" aria-label="go to view reports page link">
                     <FaBook />
                     <p>Reports</p>
-                </Link>
+                </Link> */}
 
-                <Link className=" navbarLink d-flex align-items-center" href="/siteCompare" aria-label="go to site comparison page link">
+                {/* <Link className=" navbarLink d-flex align-items-center" href="/siteCompare" aria-label="go to site comparison page link">
                     <FaBalanceScale />
                     <p>Compare</p>
-                </Link>
+                </Link> */}
 
                 <Link className=" navbarLink d-flex align-items-center" href="/billValidation" aria-label="go to bill validaiton page link">
                     <FaDollarSign />
