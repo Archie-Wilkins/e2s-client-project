@@ -64,7 +64,7 @@ class CarouselComponent extends React.Component {
                     <h1>Take control over your energy today.</h1>
                     <button className={"carousel-button"} onClick={this.handleScroll}>ENQUIRE</button>
                 </div>
-                <div className={"landing-carousel-1"}/>
+                <div className={"landing-carousel-1"} alt="A picture of an 'E2S' themed orange juice."/>
             </div>
             </div>
 
@@ -85,7 +85,7 @@ class CarouselComponent extends React.Component {
                     <h1>Need help reducing your CO2 emissions?</h1>
                     <button className={"carousel-button"} onClick={this.handleScroll}>ENQUIRE</button>
                 </div>
-                <div className={"landing-carousel-2"}/>
+                <div className={"landing-carousel-2"} alt="A picture of an 'E2S' themed cranberry juice."/>
             </div>
             </div>
             )}
@@ -105,7 +105,7 @@ class CarouselComponent extends React.Component {
                     <h1>Want your energy usage insights? </h1>
                     <button className={"carousel-button"} onClick={this.handleScroll}>ENQUIRE</button>
                 </div>
-                <div className={"landing-carousel-3"}/>
+                <div className={"landing-carousel-3"} alt="A picture of a hanging light bulb switched on in a dark environment."/>
             </div>
             </div>
             )}
