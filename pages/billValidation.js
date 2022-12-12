@@ -190,7 +190,7 @@ class BillValidation extends React.Component {
         try {
             // API endpoint where we send form data.
             //const endpoint = "/api/returnAllHistoricalSiteDataApi";
-            const endpoint = "/api/returnHistoricalSiteDataFromUSerId";
+            const endpoint = "/api/returnHistoricalSiteDataFromUserId";
 
             const data= {
                 userID: this.state.loggedInUserID,
@@ -214,7 +214,7 @@ class BillValidation extends React.Component {
       
             // Get the response data from server as JSON.
             const result = await response.json();
-      
+            console.log("Done");
             // Set the state array for users to the data returned from calling the API (users from the database).
             let localCostTally = 0;
   
@@ -388,7 +388,8 @@ class BillValidation extends React.Component {
         }
     } 
 
-    // Funtion used to validate user priveleges from the login page and remove cookies. It is also used to initialise data on the page.
+    // Funtion used to validate user priveleges from the login page and remove cookies. 
+    // It is ran before the page loads.
     async componentDidMount() {
         // Attempt to parse a user cookie
         try {
@@ -401,6 +402,7 @@ class BillValidation extends React.Component {
             window.location = "/login";
         }
 
+        // Pass the user id of the logged in user to the page to be used in API calls
         this.setState({loggedInUserID: userCookie.user});
         //catch erros
         } catch (e) {

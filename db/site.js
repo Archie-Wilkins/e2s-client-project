@@ -58,9 +58,9 @@ export const getSiteIDFromUserID = async (userID) => {
     });
 }
 
-export const getHistoricalSiteDataFromUserID = async (userID) => {
+export const getHistoricalSiteDataFromUserID = async (user_id) => {
     return new Promise((resolve, reject) =>  {
-        db.query("SELECT * FROM (sites_historic INNER JOIN user_esm ON sites_historic.site_id = user_esm.site_id) WHERE user_esm.user_id = " + userID, (err, results) => {
+        db.query("SELECT * FROM (sites_historic INNER JOIN user_esm ON sites_historic.site_id = user_esm.site_id) WHERE user_esm.user_id = (?)",user_id.userID, (err, results) => {
             if(err) {
                 return reject(err);
             }
