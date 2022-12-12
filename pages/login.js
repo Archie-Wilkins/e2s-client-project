@@ -108,24 +108,23 @@ class LoginPage extends React.Component {
             if(result.data.user){
                 //puts user ID into a data structure to be sent to retreive their roleID later
                 userIdData = await {userID: result.data.user.toString()}
-
-                //creates session via cookie which holds user ID in 'result.data'
-                //const cookies = new Cookies();
-                //cookies.set('user', result.data.user.toString(), { path: '/' });
-
-
+                //converts to JSON to be sent off to API
                 const JSONdata = JSON.stringify(userIdData);
 
+                //stores cookie data in object
                 const cookieData = {
                     user: result.data.user.toString(),
                     role: result.data.role.toString(),
                 }
 
-                const JSONcookie = JSON.stringify(cookieData);
-
+                //get CryptoJS
+                var CryptoJS = require("crypto-js");
+                //encrypt cookieData with CryptoJS and salt "team4"
+                const encryptedJSON = CryptoJS.AES.encrypt(JSON.stringify(cookieData), 'team4').toString();
+                //if API successfully returned user role, set cookie
                 if(result.data.role){
                     Cookies.remove('user');
-                    Cookies.set('user', JSONcookie, { expires: 1 });
+                    Cookies.set('user', encryptedJSON, { expires: 1 });
                 }
             }
 

@@ -2,7 +2,5 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/esm/billValidation": "pages/esm/billValidation.js",
-  "/api/returnHistoricalSiteDataFromUserId": "pages/api/returnHistoricalSiteDataFromUserId.js",
-  "/api/returnAllHistoricalSiteDataApi": "pages/api/returnAllHistoricalSiteDataApi.js"
+  "/esm/dashboard": "pages/esm/dashboard.js"
 }

@@ -133,11 +133,10 @@ export const getSiteWeekHistoricalAverage = async (siteID) => {
     });
 }
 
-export const getSiteDataFromId = async (siteID) => {
+export const getSiteTimeFrameData = async (siteID, dateStart, dateEnd) => {
     return new Promise((resolve, reject) =>  {
-        db.query("SELECT site_id, AVG(energy_demand) * 7 * 48 as energy_avg_week_demand, AVG(heat_demand) * 7 * 48 as heat_avg_week_demand, AVG(energy_cost) * 7 * 48 as energy_avg_week_cost, AVG(energy_output) * 7 * 48 as energy_avg_week_output, AVG(energy_imported) * 7 * 48 as energy_avg_week_imported, AVG(energy_exported) * 7 * 48 as energy_avg_week_exported, AVG(feels_like) * 7 * 48 as week_avg_temp, AVG(wind_speed) * 7 * 48 as week_avg_wind, avg(carbon_emitted) as carbon_avg_week_emitted" +
-        " FROM sites_historic WHERE site_id = " + siteID +
-        " GROUP BY site_id;", (err, results) => {
+        db.query("SELECT energy_demand, heat_demand, energy_cost, energy_output, energy_imported, energy_exported, feels_like, wind_speed, carbon_emitted, time_stamp" +
+            " FROM sites_historic WHERE site_id = " + siteID + " AND time_stamp > convert( '" + dateStart + " 00:00:00', datetime) AND time_stamp < convert('" + dateEnd + " 23:59:00', datetime);", (err, results) => {
             if(err) {
                 return reject(err);
             }
@@ -145,6 +144,22 @@ export const getSiteDataFromId = async (siteID) => {
         });
     });
 }
+
+export const getSiteReportListData = async () => {
+    return new Promise((resolve, reject) =>  {
+        db.query('SELECT sites.site_id, sites.site_name, sites.county, organisations.name, sites_historic.time_stamp FROM ((sites' +
+            ' INNER JOIN organisations ON sites.org_id = organisations.org_id)' +
+            ' INNER JOIN sites_historic ON sites.site_id = sites_historic.site_id)' +
+            ' GROUP BY DATE(time_stamp), site_name;', (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+
+    });
+}
+
 
 export default {
     all,
@@ -156,4 +171,6 @@ export default {
     getSiteWeekHistoricalAverage,
     insertHistoricalTest,
     getHistoricalSiteDataFromUserID,
+    getSiteTimeFrameData,
+    getSiteReportListData
 }
