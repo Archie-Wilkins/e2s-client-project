@@ -25,8 +25,16 @@ class AccountPage extends React.Component {
     async componentDidMount() {
         //fetch user data from user id from cookie
         try {
-            //get JSON being stored in user cookie
-            let userCookie = JSON.parse(Cookies.get().user);
+            //Get the user cookie
+            let userCookieEncypted = Cookies.get().user;
+
+            //import CryptoJS
+            var CryptoJS = require("crypto-js");
+
+            //decrypt the cookie
+            var bytes = CryptoJS.AES.decrypt(userCookieEncypted, 'team4');
+            //store decrypted cookie in userCookie
+            var userCookie = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
             //store in variable
             const userID = userCookie.user;
 
