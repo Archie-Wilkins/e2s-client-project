@@ -96,7 +96,7 @@ class ViewReportsPage extends React.Component {
         }
         //if date filter isn't empty
         if (dateFilter !== ""){
-            this.state.filteredList = this.state.filteredList.filter(element => element.time_stamp.toLowerCase().includes(dateFilter));
+            this.state.filteredList = this.state.filteredList.filter(element => element.time_stamp.toLowerCase().includes(dateFilter.toString()));
         }
 
         //initialise variable for sorting the list and assigning id's
@@ -219,7 +219,7 @@ class ViewReportsPage extends React.Component {
         return <div aria-label="view reports page">
             <NavBar></NavBar>
             <div className="reportBackground greyBackground">
-                <div aria-label="view reports container" className="reportsContainer">
+                <div aria-label="view reports container" className="reportsContainer reportListOverflow">
                     <h4 className="m-3 fw-bold">Site Data</h4>
                     <p className="m-2 m-lg-3 fw-bold">Filters</p>
                     <div className="reportFilterContainer">

@@ -29,11 +29,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/esm/dashboard.js"
-    ],
-    "/viewReports": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/viewReports.js"
     ]
   },
   "ampFirstPages": []

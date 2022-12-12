@@ -9,6 +9,9 @@ import '../styling/mainLayout.css';
 import '../styling/text.css';
 import '../styling/login.css';
 import '../styling/styles.css';
+import '../styling/email.css';
+import '../styling/account.css';
+import '../styling/esmDashbord.css';
 import '../styling/reports.css';
 
 
