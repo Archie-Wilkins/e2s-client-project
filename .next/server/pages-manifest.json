@@ -2,11 +2,12 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/api/getUserDetails": "pages/api/getUserDetails.js",
-  "/api/getUserSite": "pages/api/getUserSite.js",
-  "/api/getReportListData": "pages/api/getReportListData.js",
   "/esm/dashboard": "pages/esm/dashboard.js",
-  "/api/getSiteTimeframeData": "pages/api/getSiteTimeframeData.js",
+  "/api/getUserDetails": "pages/api/getUserDetails.js",
+  "/api/getSiteDataTimeRangeDaily": "pages/api/getSiteDataTimeRangeDaily.js",
+  "/api/getUserSite": "pages/api/getUserSite.js",
+  "/api/getSiteWeekData": "pages/api/getSiteWeekData.js",
+  "/api/getReportListData": "pages/api/getReportListData.js",
   "/api/getSiteDetails": "pages/api/getSiteDetails.js",
-  "/api/getSiteDataTimeRangeDaily": "pages/api/getSiteDataTimeRangeDaily.js"
+  "/api/getSiteHistoricalData": "pages/api/getSiteHistoricalData.js"
 }

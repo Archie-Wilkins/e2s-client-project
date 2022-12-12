@@ -217,14 +217,17 @@ class EsmDashboard extends React.Component {
       //split record data into start of week and end of week
       const [weekStart, weekEnd, siteID] = weekData.split("|");
 
-      //stored the data in an object to be sent to API
-      const data = {
+      document.getElementById("compareTitle").innerText = weekStart + " compared to " + weekEnd;
+
+      //creates object to convert to json
+      let data = {
         siteID: siteID,
         dateStart: weekStart,
         dateEnd: weekEnd
       }
       let JSONdata = JSON.stringify(data);
-      let endpoint = '/api/getSiteTimeframeData';
+      //API will get site data for the timeframe submitted (this week)
+      let endpoint = '/api/getSiteWeekData';
       let options = {
         method: 'POST',
         headers: {'Content-Type': 'application/json',},
@@ -232,8 +235,128 @@ class EsmDashboard extends React.Component {
       }
       let response = await fetch(endpoint, options)
       let result = await response.json();
+      console.log(result);
+      //DB returns JSON wrapped in [] which javascript doesn't like
+      //so we stringify it, remove [], then parse back to JSON
+      let stringResult = JSON.stringify(result);
+      stringResult = stringResult.replace("[", "");
+      stringResult = stringResult.replace("]", "");
+      result = JSON.parse(stringResult);
 
-      alert(result);
+      //energy this week
+      const thisEnergyUsage = result.energy_week_demand;
+
+      //carbon this week
+      const thisCarbonEmission = result.carbon_week_emitted;
+
+      //expenditure this week
+      const thisExpenditure = result.energy_week_cost;
+
+      //once average data has been fetched change text in html
+      document.getElementById("thisExpense").innerText = "£" + result.energy_week_cost;
+      document.getElementById("thisEnergy").innerText = result.energy_week_demand + "Kw";
+      document.getElementById("thisCarbon").innerText = result.carbon_week_emitted + "Kg";
+
+
+      //got all current week data, begins to fetch previous week data
+
+      //calculates the previous week's beginning
+      const previousWeekStart = Date.parse(weekStart) - (7 * 24 * 60 * 60 * 1000);
+
+      //calculates the previous week's end
+      const previousWeekEnd = Date.parse(weekEnd) - (7 * 24 * 60 * 60 * 1000);
+
+      //get previous week date and format it
+      //format date function from: https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
+      function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + (d.getDate()),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+          month = '0' + month;
+        if (day.length < 2)
+          day = '0' + day;
+
+        return [year, month, day].join('-');
+      }
+
+
+      //make api get previous siteweek data (uses function for correct format)
+      data = {
+        siteID: siteID,
+        dateStart: formatDate(previousWeekStart),
+        dateEnd: formatDate(previousWeekEnd)
+      }
+      JSONdata = JSON.stringify(data);
+      endpoint = '/api/getSiteWeekData';
+      options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json',},
+        body: JSONdata,
+      }
+      response = await fetch(endpoint, options)
+      result = await response.json();
+      console.log(result);
+      //result is JSON response of API
+      //JSON holds previous weeks site data
+
+      //once average data has been fetched change text in html
+      document.getElementById("prevExpense").innerText = "£" + result[0].energy_week_cost;
+      document.getElementById("prevEnergy").innerText = result[0].energy_week_demand + "Kw";
+      document.getElementById("prevCarbon").innerText = result[0].carbon_week_emitted + "Kg";
+
+      const thisEnergyChange = thisEnergyUsage - result[0].energy_week_demand;
+      const thisCarbonEmissionChange = thisCarbonEmission - result[0].carbon_week_emitted;
+      const thisExpenditureChange = thisExpenditure - result[0].energy_week_cost;
+
+      if (thisEnergyChange < 0){
+        document.getElementById("energyChange").innerText = -thisEnergyChange + "Kw";
+        document.getElementById("energyText").innerText = "less than previous week";
+      } else {
+        document.getElementById("energyChange").innerText = thisEnergyChange + "Kw";
+        document.getElementById("energyText").innerText = "more than previous week";
+      }
+
+      if (thisCarbonEmissionChange < 0){
+        document.getElementById("carbonChange").innerText = -thisCarbonEmissionChange + "Kg";
+        document.getElementById("carbonText").innerText = "less than previous week";
+      } else {
+        document.getElementById("carbonChange").innerText = thisCarbonEmissionChange + "Kg";
+        document.getElementById("carbonText").innerText = "more than previous week";
+      }
+
+      if (thisExpenditureChange < 0){
+        document.getElementById("spentChange").innerText = "£" + -thisExpenditureChange;
+        document.getElementById("spentText").innerText = "less than previous week";
+      } else {
+        document.getElementById("spentChange").innerText = "£" + thisExpenditureChange;
+        document.getElementById("spentText").innerText = "more than previous week";
+      }
+
+
+      //API request to get site weekly averages
+      data = {siteID: siteID}
+      JSONdata = JSON.stringify(data);
+      endpoint = '/api/getSiteHistoricalData';
+      options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json',},
+        body: JSONdata,
+      }
+      response = await fetch(endpoint, options)
+      result = await response.json();
+      stringResult = JSON.stringify(result);
+      stringResult = stringResult.replace("[", "");
+      stringResult = stringResult.replace("]", "");
+      result = JSON.parse(stringResult);
+      console.log(result);
+
+      //once average data has been fetched change text in html
+      document.getElementById("avgExpense").innerText = "£" + result.energy_avg_week_cost;
+      document.getElementById("avgEnergy").innerText = result.energy_avg_week_demand + "Kw";
+      document.getElementById("avgCarbon").innerText = result.carbon_avg_week_emitted + "Kg";
 
     }
 
@@ -275,7 +398,7 @@ class EsmDashboard extends React.Component {
         <div className="esmSiteCardHolder" id="compareCard">
           <div className="esmCompareWeeks">
               <div className="esmCompareBanner">
-                <p> 12/12/2022 compared to 05/12/2022</p>
+                <p id="compareTitle"> 12/12/2022 compared to 05/12/2022</p>
                 <div className="esmBannerExit" onClick={this.closeCompare}>X</div>
               </div>
             <p/>
@@ -289,34 +412,37 @@ class EsmDashboard extends React.Component {
               </thead>
               <tbody id="list">
                 <tr className="esmTableRow">
-                  <td className="esmTableData">2631kW</td>
-                  <td className="esmTableData">2653kW</td>
-                  <td className="esmTableData">2623kW</td>
+                  <td className="esmTableData" id="thisEnergy"></td>
+                  <td className="esmTableData" id="prevEnergy"></td>
+                  <td className="esmTableData" id="avgEnergy"></td>
                 </tr>
                 <tr className="esmTableRow">
-                  <td className="esmTableData">2321Kg</td>
-                  <td className="esmTableData">2441Kg</td>
-                  <td className="esmTableData">5322Kg</td>
+                  <td className="esmTableData" id="thisCarbon"></td>
+                  <td className="esmTableData" id="prevCarbon"></td>
+                  <td className="esmTableData" id="avgCarbon"></td>
                 </tr>
                 <tr className="esmTableRow">
-                  <td className="esmTableData">£23123</td>
-                  <td className="esmTableData">£21313</td>
-                  <td className="esmTableData">£21123</td>
+                  <td className="esmTableData" id="thisExpense"></td>
+                  <td className="esmTableData" id="prevExpense"></td>
+                  <td className="esmTableData" id="avgExpense"></td>
                 </tr>
               </tbody>
             </table>
             <div className="esmCompareContainer">
               <div className="esmCompareInfo">
-                <div className="esmCompareTitle">Energy Demand Change</div>
-                <div className="esmCompareText">+42134</div>
+                <div className="esmCompareTitle">You have used</div>
+                <div className="esmCompareText" id="energyChange">42134</div>
+                <div className="esmCompareTitle" id="energyText">more than last week</div>
               </div>
               <div className="esmCompareInfo">
-                <div className="esmCompareTitle">Carbon Emission Change</div>
-                <div className="esmCompareText">+42134</div>
+                <div className="esmCompareTitle">You have emitted</div>
+                <div className="esmCompareText" id="carbonChange">42134</div>
+                <div className="esmCompareTitle" id="carbonText">more than last week</div>
               </div>
               <div className="esmCompareInfo">
-                <div className="esmCompareTitle">Energy Expenditure Change</div>
-                <div className="esmCompareText">+42134</div>
+                <div className="esmCompareTitle">You have spent</div>
+                <div className="esmCompareText" id="spentChange">42134</div>
+                <div className="esmCompareTitle" id="spentText">more than last week</div>
               </div>
             </div>
           </div>
