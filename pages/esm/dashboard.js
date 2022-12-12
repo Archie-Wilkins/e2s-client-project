@@ -182,7 +182,7 @@ class EsmDashboard extends React.Component {
           //listHtml gets a new row added to it
           listHtml = listHtml + '<div class="esmReportCard">' +
               '<p class="esmReportText">' + Monday + ' - ' + date + '</p>' +
-              '<div id="data'+ id +'" style="display: none"></div>' +
+              '<div id="data'+ id +'" style="display: none">' + Monday + '|' + date + "|" + this.state.siteID + '</div>' +
               '<button class="esmRecordDownloadBtn" id="btn'+ id +'">compare</button></div>'
 
           //data relating to record is hidden in this <div> above
@@ -190,23 +190,13 @@ class EsmDashboard extends React.Component {
       }
     }
 
+
+
+
+
     const list = document.getElementById("reportsList");
 
     list.innerHTML = listHtml
-
-    // '<tr class="reportListRow"><td class="reportListRowText">' + site_filter[record].name + '</td>' +
-    // '<td class="reportListRowText">' + site_filter[record].site_name + '</td>' +
-    // '<td class="reportListRowText">' + site_filter[record].county + '</td>' +
-    // '<td class="reportListRowText">' + Monday + ' - ' + date + '</td>' +
-    // '</td></tr>'
-
-    //<td class="reportButtonHolder"><div id="data'+ id +'" style="display: none">' + site_filter[record].site_id + ' ' + Monday + '|' + date + ' ' + site_filter[record].site_name +'</div><button class="reportDownloadButton" id="btn' + id + '">download</button>
-
-
-    // <div className="esmReportCard">
-    //   <p className="esmReportText">11/12/2022-18/12/2022</p>
-    //   <button className="esmRecordDownloadBtn">compare</button>
-    // </div>
 
     //fetch site reports and add to reports field
 
@@ -219,12 +209,13 @@ class EsmDashboard extends React.Component {
     //button function
 
     async function clickDetect(id) {
-
+      document.getElementById("compareCard").style.display = "flex";
+      document.getElementById("page").style.display = "none";
 
       const weekData = document.getElementById("data" + id).innerText;
 
       //split record data into start of week and end of week
-      const [weekStart, weekEnd] = weekData.split("|");
+      const [weekStart, weekEnd, siteID] = weekData.split("|");
 
       //stored the data in an object to be sent to API
       const data = {
@@ -242,8 +233,28 @@ class EsmDashboard extends React.Component {
       let response = await fetch(endpoint, options)
       let result = await response.json();
 
+      alert(result);
+
     }
 
+
+    //loops up to id/record count
+    for (let i = 1; i < id+1; i++){
+      try{
+        //fetches button and add's onClick function to them
+        let btn = document.getElementById("btn"+i);
+        btn.addEventListener('click', function (){
+          clickDetect(i);
+        });
+      } catch (e) {}
+    }
+
+
+  }
+
+  closeCompare = async () => {
+    document.getElementById("compareCard").style.display = "none";
+    document.getElementById("page").style.display = "block";
   }
 
 
@@ -257,63 +268,116 @@ class EsmDashboard extends React.Component {
     return (
       <div className="esmDashboardBackground">
         <MainLayout
-          isDirector={this.state.isDirector}
-          pageName={this.state.pageName}
+            isDirector={this.state.isDirector}
+            pageName={this.state.pageName}
+            id="gridContainer"
         />
-        <div className="esmDashboardGridContainer">
-          <div className="esmDashboardGraphPanel" aria-label="graph panel">
-            <h3 className="esmPanelHeader"  aria-label="Energy demand">Energy Demand</h3>
-            <div className="esmGraphCard">
-              <LineGraph
-                  toggle1={"Week"}
-                  toggle2={"Month"}
-                  toggle3={"Year"}
-                  dataSet={this.state.data}
-                  xAxis={"Date"}
-                  yAxis={"kW"}
-                  xAxisDataKey={"date"}
-                  yAxisDataKey={"demand"}
-                  aria-label="This week energy graph"
-              />
+        <div className="esmSiteCardHolder" id="compareCard">
+          <div className="esmCompareWeeks">
+              <div className="esmCompareBanner">
+                <p> 12/12/2022 compared to 05/12/2022</p>
+                <div className="esmBannerExit" onClick={this.closeCompare}>X</div>
+              </div>
+            <p/>
+            <table>
+              <thead>
+              <tr className="reportsListHeader">
+                <th className="esmTableHeader">ThisWeek</th>
+                <th className="esmTableHeader">PrevWeek</th>
+                <th className="esmTableHeader">SiteAvgWeek</th>
+              </tr>
+              </thead>
+              <tbody id="list">
+                <tr className="esmTableRow">
+                  <td className="esmTableData">2631kW</td>
+                  <td className="esmTableData">2653kW</td>
+                  <td className="esmTableData">2623kW</td>
+                </tr>
+                <tr className="esmTableRow">
+                  <td className="esmTableData">2321Kg</td>
+                  <td className="esmTableData">2441Kg</td>
+                  <td className="esmTableData">5322Kg</td>
+                </tr>
+                <tr className="esmTableRow">
+                  <td className="esmTableData">£23123</td>
+                  <td className="esmTableData">£21313</td>
+                  <td className="esmTableData">£21123</td>
+                </tr>
+              </tbody>
+            </table>
+            <div className="esmCompareContainer">
+              <div className="esmCompareInfo">
+                <div className="esmCompareTitle">Energy Demand Change</div>
+                <div className="esmCompareText">+42134</div>
+              </div>
+              <div className="esmCompareInfo">
+                <div className="esmCompareTitle">Carbon Emission Change</div>
+                <div className="esmCompareText">+42134</div>
+              </div>
+              <div className="esmCompareInfo">
+                <div className="esmCompareTitle">Energy Expenditure Change</div>
+                <div className="esmCompareText">+42134</div>
+              </div>
             </div>
           </div>
-          <div className="esmDashboardPanel">
-            <h3 className="esmPanelHeader">Insights</h3>
-            <div className="esmPanelListContainer">
-              <div className="esmInsightCard">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-              </div>
-              <div className="esmInsightCard">
-                Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old
-              </div>
-              <div className="esmInsightCard">
-                Latin words, consectetur, from a Lorem Ipsum passage, and going through
-              </div>
-              <div className="esmInsightCard">
-                Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero
-              </div>
-              <div className="esmInsightCard">
-                Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero
-              </div>
-            </div>
-          </div>
-          <div className="esmDashboardPanel esmSpecificGrid">
-            <h3 className="esmPanelHeader">Reports</h3>
-            <div className="esmPanelListContainer" id="reportsList">
-              <div className="esmReportCard">
-                <p className="esmReportText">11/12/2022-18/12/2022</p>
-                <button className="esmRecordDownloadBtn">compare</button>
+        </div>
+
+        <div id="page">
+          <div className="esmDashboardGridContainer" id="gridContainer">
+            <div className="esmDashboardGraphPanel" aria-label="graph panel">
+              <h3 className="esmPanelHeader"  aria-label="Energy demand">Energy Demand</h3>
+              <div className="esmGraphCard">
+                <LineGraph
+                    toggle1={"Week"}
+                    toggle2={"Month"}
+                    toggle3={"Year"}
+                    dataSet={this.state.data}
+                    xAxis={"Date"}
+                    yAxis={"kW"}
+                    xAxisDataKey={"date"}
+                    yAxisDataKey={"demand"}
+                    aria-label="This week energy graph"
+                />
               </div>
             </div>
-          </div>
-          <div className="esmBottomPanel">
-            <div className="esmBottomPanelInfo">
-              <div>Site:</div>
-              <p id="siteName"></p>
+            <div className="esmDashboardPanel">
+              <h3 className="esmPanelHeader">Insights</h3>
+              <div className="esmPanelListContainer">
+                <div className="esmInsightCard">
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                </div>
+                <div className="esmInsightCard">
+                  Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old
+                </div>
+                <div className="esmInsightCard">
+                  Latin words, consectetur, from a Lorem Ipsum passage, and going through
+                </div>
+                <div className="esmInsightCard">
+                  Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero
+                </div>
+                <div className="esmInsightCard">
+                  Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero
+                </div>
+              </div>
             </div>
-            <div className="esmBottomPanelInfo">
-              <div>County:</div>
-              <p id="county"></p>
+            <div className="esmDashboardPanel esmSpecificGrid">
+              <h3 className="esmPanelHeader">Reports</h3>
+              <div className="esmPanelListContainer" id="reportsList">
+                <div className="esmReportCard">
+                  <p className="esmReportText">11/12/2022-18/12/2022</p>
+                  <button className="esmRecordDownloadBtn">compare</button>
+                </div>
+              </div>
+            </div>
+            <div className="esmBottomPanel">
+              <div className="esmBottomPanelInfo">
+                <div>Site:</div>
+                <p id="siteName"></p>
+              </div>
+              <div className="esmBottomPanelInfo">
+                <div>County:</div>
+                <p id="county"></p>
+              </div>
             </div>
           </div>
         </div>
