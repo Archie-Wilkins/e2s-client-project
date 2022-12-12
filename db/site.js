@@ -58,6 +58,17 @@ export const getSiteIDFromUserID = async (userID) => {
     });
 }
 
+export const getHistoricalSiteDataFromUserID = async (userID) => {
+    return new Promise((resolve, reject) =>  {
+        db.query("SELECT * FROM (sites_historic INNER JOIN user_esm ON sites_historic.site_id = user_esm.site_id) WHERE user_esm.user_id = " + userID, (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+    });
+}
+
 export const getSiteDetails = async (siteID) => {
     return new Promise((resolve, reject) =>  {
         db.query("SELECT * FROM sites WHERE site_id = " + siteID, (err, results) => {
@@ -121,6 +132,19 @@ export const getSiteWeekHistoricalAverage = async (siteID) => {
     });
 }
 
+export const getSiteDataFromId = async (siteID) => {
+    return new Promise((resolve, reject) =>  {
+        db.query("SELECT site_id, AVG(energy_demand) * 7 * 48 as energy_avg_week_demand, AVG(heat_demand) * 7 * 48 as heat_avg_week_demand, AVG(energy_cost) * 7 * 48 as energy_avg_week_cost, AVG(energy_output) * 7 * 48 as energy_avg_week_output, AVG(energy_imported) * 7 * 48 as energy_avg_week_imported, AVG(energy_exported) * 7 * 48 as energy_avg_week_exported, AVG(feels_like) * 7 * 48 as week_avg_temp, AVG(wind_speed) * 7 * 48 as week_avg_wind, avg(carbon_emitted) as carbon_avg_week_emitted" +
+        " FROM sites_historic WHERE site_id = " + siteID +
+        " GROUP BY site_id;", (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+    });
+}
+
 export default {
     all,
     getSiteIDFromUserID,
@@ -129,5 +153,6 @@ export default {
     getSiteDataByDay,
     getSiteWeekData,
     getSiteWeekHistoricalAverage,
-    insertHistoricalTest
+    insertHistoricalTest,
+    getHistoricalSiteDataFromUserID,
 }

@@ -29,11 +29,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/billValidation.js"
-    ],
-    "/csvUpload": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/csvUpload.js"
     ]
   },
   "ampFirstPages": []

@@ -76,7 +76,8 @@ class BillValidation extends React.Component {
             historicalFirstMonth: "",
             historicalFirstYear: "",
             historicalLastMonth: "",
-            historicalLastYear: "",         
+            historicalLastYear: "",
+            loggedInUserID: "",         
         };
 
     }
@@ -188,8 +189,14 @@ class BillValidation extends React.Component {
     claculateExpectedInvoiceApi = async (event) => {
         try {
             // API endpoint where we send form data.
-            const endpoint = "/api/returnAllHistoricalSiteDataApi";
-      
+            //const endpoint = "/api/returnAllHistoricalSiteDataApi";
+            const endpoint = "/api/returnHistoricalSiteDataFromUSerId";
+
+            const data= {
+                userID: this.state.loggedInUserID,
+            };
+
+            const jsonData = JSON.stringify(data);
             // Form the request for sending data to the server.
             const options = {
               // The method is POST because we are sending data.
@@ -198,6 +205,8 @@ class BillValidation extends React.Component {
               headers: {
                 "Content-Type": "application/json",
               },
+
+              body: jsonData,
             };
       
             // Send the form data to our forms API on Vercel and get a response.
@@ -380,7 +389,7 @@ class BillValidation extends React.Component {
     } 
 
     // Funtion used to validate user priveleges from the login page and remove cookies. It is also used to initialise data on the page.
-    checkUser = async (event) => {
+    async componentDidMount() {
         // Attempt to parse a user cookie
         try {
         // Initialise the user cookie
@@ -391,6 +400,8 @@ class BillValidation extends React.Component {
             Cookies.remove("user");
             window.location = "/login";
         }
+
+        this.setState({loggedInUserID: userCookie.user});
         //catch erros
         } catch (e) {
         // No action
