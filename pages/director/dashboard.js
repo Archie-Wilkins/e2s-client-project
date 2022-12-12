@@ -147,6 +147,10 @@ class Dashboard extends React.Component {
       lastDaySelected: "false",
 
       monthsOnRecord: 0,
+
+      firstSelectedMonth: "February",
+
+      secondSelectedMonth: "March",
       
     };
   }
@@ -411,6 +415,60 @@ class Dashboard extends React.Component {
     }
   }
 
+  updateChosenMonths = async () => {
+    this.setState({firstSelectedMonth: document.getElementById("firstMonth").value});
+    this.setState({secondSelectedMonth: document.getElementById("secondMonth").value});
+  }
+
+  returnChosenMonthsApi = async() => {
+    try {
+
+      // API endpoint where we send form data.
+      const endpoint = "../api/getSiteDataFromSpecificMonth";
+      
+      console.log("Check");
+      let data = {};
+
+      for(let i = 0; i < this.state.months.length; i++){
+        if(this.state.firstSelectedMonth === this.state.months[i]){
+          data = {
+            chosenMonth: i+1,
+          }
+        }
+      }
+
+      const JSONdata = JSON.stringify(data);
+
+      // Form the request for sending data to the server.
+      const options = {
+        // The method is POST because we are sending data.
+        method: "POST",
+        // Tell the server we're sending JSON.
+        headers: {
+          "Content-Type": "application/json",
+        },
+      
+        body: JSONdata,
+      }
+
+      // Send the form data to our forms API on Vercel and get a response.
+      const response = await fetch(endpoint, options);
+
+      // Get the response data from server as JSON.
+      const result = await response.json();
+
+      console.log(result.data);
+
+    } catch (e) {
+      // No action
+    }
+  }
+
+  compareMonths = async () => {
+    await this.returnChosenMonthsApi();
+  }
+
+
   // Funtion used to validate user priveleges from the login page and remove cookies. It is also used to initialise data on the page.
   async componentDidMount() {
     //will check user is allowed on this page first
@@ -471,6 +529,14 @@ class Dashboard extends React.Component {
 
                     <div className="flexBox w-100">
                       <b>All Time Data</b>
+                      <select id="firstMonth" onChange={this.updateChosenMonths}>
+                        <option monthValue="January">January</option>
+                      </select>
+                      <select id="secondMonth" onChange={this.updateChosenMonths}>
+                        <option monthValue="February">February</option>
+                        <option monthValue="March">March</option>
+                      </select>
+                      <button onSubmit={this.compareMonths}>Test</button>
                     </div>
 
                     <div className="flexBox w-50 h-100">

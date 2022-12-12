@@ -24,6 +24,17 @@ export const allHistoric = async () => {
     });
 }
 
+export const getSiteDataFromMonth = async (month) =>{
+    return new Promise((resolve, reject) =>  {
+        db.query("SELECT * FROM sites_historic WHERE SELECT MONTH(time_stamp) = ?", month,(err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+    });
+}
+
 export const getSiteIDFromUserID = async (userID) => {
     return new Promise((resolve, reject) =>  {
         db.query("SELECT site_id FROM user_esm WHERE user_id = " + userID, (err, results) => {
@@ -106,5 +117,6 @@ export default {
     getSiteIDFromEmail,
     getSiteDataByDay,
     getSiteWeekData,
-    getSiteWeekHistoricalAverage
+    getSiteWeekHistoricalAverage,
+    getSiteDataFromMonth,
 }
