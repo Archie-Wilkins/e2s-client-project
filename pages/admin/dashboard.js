@@ -78,7 +78,7 @@ class Dashboard extends React.Component {
     // Use try catch in case the API cannot be reached.
     try {
       // API endpoint where we send form data.
-      const endpoint = "../api/displayData";
+      const endpoint = "../api/dashboard/displayData";
 
       // Form the request for sending data to the server.
       const options = {
@@ -112,7 +112,7 @@ class Dashboard extends React.Component {
   returnAllSitesFromDatabaseApi = async (event) => {
     try {
       // API endpoint where we send form data.
-      const endpoint = "../api/returnSiteData";
+      const endpoint = "../api/dashboard/returnSiteData";
 
       // Form the request for sending data to the server.
       const options = {

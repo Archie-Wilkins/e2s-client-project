@@ -21,7 +21,7 @@ class Dashboard extends React.Component {
       siteDataArray: [],
 
       // The page name rendered in the top nav-bar
-      pageName: "Director Hub",
+      pageName: "Director Dashboard",
 
       // Variable to define the user on the page as an Admin for any dynamic components or permissions
       isAdmin: false,
@@ -160,7 +160,7 @@ class Dashboard extends React.Component {
   returnSiteInsightsApi = async (userId) => {
     try {
       // API endpoint where we send form data.
-      const endpoint = "../api/getAllHistoricalSiteData";
+      const endpoint = "/../../api/site/getAllHistoricalSiteData";
 
       const currentUserId = userId;
 
@@ -341,7 +341,7 @@ class Dashboard extends React.Component {
   returnUserDetailsApi = async (userId) => {
     try {
       // API endpoint where we send form data.
-      const endpoint = "../api/getUserDetails";
+      const endpoint = "../../api/user/getUserDetails";
 
       const currentUserId = userId;
 
@@ -381,7 +381,7 @@ class Dashboard extends React.Component {
     try {
 
       // API endpoint where we send form data.
-      const endpoint = "../api/getUserSite";
+      const endpoint = "../../api/user/getUserSite";
 
       const data = {
         userID: userId,
