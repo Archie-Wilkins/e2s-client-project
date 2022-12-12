@@ -80,19 +80,86 @@ class CsvUploadComponent extends React.Component {
       }
     }
 
-    const link = document.querySelector("a");
+    /*const link = document.querySelector("a");
     const textBlob = new Blob([tableArray], { type: "text/csv" });
     link.setAttribute("href", URL.createObjectURL(textBlob));
-    link.setAttribute("download", localStorage.getItem("userArrName"));
+    link.setAttribute("download", localStorage.getItem("userArrName"));*/
     this.setState({ csvData: tableArray });
     this.setState({ csvFileName: localStorage.getItem("userArrName") });
-    document.getElementsByClassName("downloadCsvDataButton")[0].style.display =
-      "block";
+    /*document.getElementsByClassName("downloadCsvDataButton")[0].style.display =
+      "block";*/
   };
 
   returnHome = async (event) => {
+    console.log("I AM BEING CLICKED!");
+    await this.pushAllSitesToDatabaseApi();
     this.setState({ csvUploaded: false });
   };
+
+  pushAllSitesToDatabaseApi = async (event) => {
+    try {
+      // API endpoint where we send form data.
+      const endpoint = "/api/uploadAllHistoricalSiteDataApi";
+
+      // Get data from the form.
+      /*const data = {
+        date: this.state.csvData[x][0],
+        chp1Egen: this.state.csvData[1],
+        chp2Egen: this.state.csvData[2],
+        chp1HeatGen: this.state.csvData[3],
+        chp2HeatGen: this.state.csvData[4],
+        boilerHeat: this.state.csvData[5],
+        feelsLike: this.state.csvData[6],
+        windSpeed : this.state.csvData[7],
+        siteElectrictyDemand: this.state.csvData[8],
+        day_ahead_price: this.state.csvData[9],
+        siteHeatDemand: this.state.csvData[10],
+        importElec: this.state.csvData[11],
+        exportElec: this.state.csvData[12],
+      }*/
+
+      let data = [];
+
+      // 1mb POST limit is reached at around 6,000 rows of data in the current format.
+      if(this.state.csvData.length > 6000){
+        console.log("Too many rows of data, please upload 6000 rows (125 days) or less at a time.");
+      }
+
+      // If the user has entered a valid amount of data...
+      else if(this.state.csvData.length <= 6000){
+        for(let i = 0; i < this.state.csvData.length; i++){
+          data.push(this.state.csvData[i]);
+        }
+
+        // Send the data to the server in JSON format.
+        const JSONdata = JSON.stringify(data);
+
+        // Form the request for sending data to the server.
+        const options = {
+          // The method is POST because we are sending data.
+          method: "POST",
+          // Tell the server we're sending JSON.
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSONdata,
+        };
+
+        // Send the form data to our forms API on Vercel and get a response.
+        const response = await fetch(endpoint, options);
+
+        // Get the response data from server as JSON.
+        const result = await response.json();
+
+        console.log(result.data.message);
+      }
+
+    } catch (e) {
+      // No action
+      console.log("Error"); 
+    }
+};
 
   render() {
     return (
@@ -133,8 +200,10 @@ class CsvUploadComponent extends React.Component {
           )}
           {this.state.csvUploaded === true && (
             <div aria-label="uploaded file summary page">
-              <h2>Yor Uploaded Data ({this.state.csvFileName})</h2>
               <button onClick={this.returnHome} aria-label="go back button">Back</button>
+
+              {/*
+              <h2>Yor Uploaded Data ({this.state.csvFileName})</h2>
               <ul>
                 {this.state.csvData.map((name) => (
                   <div aria-label="file data section">
@@ -152,9 +221,10 @@ class CsvUploadComponent extends React.Component {
                     <li>Site_Heat_Demand_kW: {name[10]}</li>
                     <li>Import_Electricity_kW: {name[11]}</li>
                     <li>Export_Electricity_kWL {name[12]}</li>
+
                   </div>
                 ))}
-              </ul>
+                </ul>*/}
             </div>
           )}
         </div>

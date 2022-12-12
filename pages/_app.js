@@ -11,6 +11,7 @@ import '../styling/login.css';
 import '../styling/styles.css';
 import '../styling/email.css';
 import '../styling/account.css';
+import '../styling/billValidation.css';
 import '../styling/esmDashbord.css';
 import '../styling/reports.css';
 
