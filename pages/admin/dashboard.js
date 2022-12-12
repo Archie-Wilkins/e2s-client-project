@@ -3,6 +3,7 @@ import Link from "next/link";
 import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
 import React, { useLayoutEffect } from "react";
 import Cookies from "js-cookie";
+import { AreaChart, Area, Label, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 // This is the dashboard component for admins
 class Dashboard extends React.Component {
@@ -151,15 +152,23 @@ class Dashboard extends React.Component {
     //will check user is allowed on this page first
     // Attempt to parse a user cookie
     try {
-      // Initialise the user cookie
-      let userCookie = JSON.parse(Cookies.get().user);
+      //Get the user cookie
+      let userCookieEncypted = Cookies.get().user;
+
+      //import CryptoJS
+      var CryptoJS = require("crypto-js");
+
+      //decrypt the cookie
+      var bytes = CryptoJS.AES.decrypt(userCookieEncypted, 'team4');
+      //store decrypted cookie in userCookie
+      var userCookie = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
       // If the user has the incorrect credentials for the page, remove them
       if (userCookie.role != 1) {
         Cookies.remove("user");
         window.location = "/login";
       }
-      //catch erros
+      //catch errors
     } catch (e) {
       // No cookie found
       //return to login
@@ -176,8 +185,8 @@ class Dashboard extends React.Component {
   // Return the contents of the Admin Dashboard page.
   render() {
     return (
-      // On laoding the main div, call the function to validate user priveleges and initialise data to be rendered
-      <div onLoad={this.checkUser} aria-label="admin dashboard content">
+      // On loading the main div, call the function to validate user priveleges and initialise data to be rendered
+      <div onLoad={this.checkUser} onMouseEnter={this.checkUser} aria-label="admin dashboard content">
         {/*Utilise a navbar with values based on the role of the current user*/}
         <MainLayout
           isAdmin={this.state.isAdmin}

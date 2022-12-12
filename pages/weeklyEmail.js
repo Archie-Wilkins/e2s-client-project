@@ -113,16 +113,16 @@ class WeeklyEmailPage extends React.Component {
             let days = new Date(date);
 
             //if day is a monday
-            if(days.getDay() === 0){
+            if(days.getDay() === 1){
                 //store monday's date
                 Monday = date;
             }
 
             //if day is a sunday
-            if(days.getDay() === 6){
+            if(days.getDay() === 0){
                 //end week
                 //and push the monday & sunday to array
-                if(days.getDay() + new Date(Monday).getDay() === 6){
+                if(days.getDay() + new Date(Monday).getDay() === 1){
                     weekArray.push(Monday + " - " + date);
                 }
             }
