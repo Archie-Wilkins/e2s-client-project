@@ -9,6 +9,7 @@ import ForecastingInfoBox from "../../public/components/dataDisplayBox/forecasti
 import React from "react";
 import BottomFooter from "../../public/components/layouts/bottomFooter.js";
 import Cookies from "js-cookie";
+import { PieChart, Pie } from "recharts";
 
 
 
@@ -43,7 +44,8 @@ class EsmDashboard extends React.Component {
       allTimeDataSelected: "true",
       months: ["January", "February", "March", "April", "May", "June", "July",
                "August", "September", "October", "November", "December"],
-      distributionNetwork: "EPN",         
+      distributionNetwork: "EPN",
+      viewRedZones: "false",         
     };
   }
 
@@ -340,9 +342,8 @@ class EsmDashboard extends React.Component {
     result = await response.json();
 
     //sets information boxes to have site details
-    document.getElementById("siteName").innerText = result[0].site_name;
-    document.getElementById("county").innerText = result[0].county;
 
+    this.setState({pageName: result[0].site_name + " - " + result[0].county});
 
     //API request to get reports for the site
     endpoint = '/api/getReportListData';
@@ -579,6 +580,13 @@ class EsmDashboard extends React.Component {
     document.getElementById("page").style.display = "block";
   }
 
+  switchPanel = async () => {
+    if(this.state.viewRedZones === "true"){
+      this.setState({viewRedZones: "false"});
+    }else if(this.state.viewRedZones === "false"){
+      this.setState({viewRedZones: "true"});
+    }
+  }
 
   render() {
     //will return loading data... while react/nextjs fetches data in "componentDidMount()"
@@ -648,21 +656,38 @@ class EsmDashboard extends React.Component {
 
         <div id="page">
           <div className="esmDashboardGridContainer" id="gridContainer">
-            <div className="esmDashboardGraphPanel" aria-label="graph panel">
-              <h3 className="esmPanelHeader"  aria-label="Energy demand">Energy Demand</h3>
-              <div className="esmGraphCard">
-                <LineGraph
-                    toggle1={"Week"}
-                    toggle2={"Month"}
-                    toggle3={"Year"}
-                    dataSet={this.state.data}
-                    xAxis={"Date"}
-                    yAxis={"kW"}
-                    xAxisDataKey={"date"}
-                    yAxisDataKey={"demand"}
-                    aria-label="This week energy graph"
-                />
-              </div>
+            <div>
+              {this.state.viewRedZones === "false" &&(
+                <div className="esmDashboardGraphPanel" aria-label="graph panel">
+                  <button onClick={this.switchPanel}>Switch</button>
+                  <h3 className="esmPanelHeader"  aria-label="Energy demand">Energy Demand</h3>
+                  <div className="esmGraphCard">
+                    <LineGraph
+                        toggle1={"Week"}
+                        toggle2={"Month"}
+                        toggle3={"Year"}
+                        dataSet={this.state.data}
+                        xAxis={"Date"}
+                        yAxis={"kW"}
+                        xAxisDataKey={"date"}
+                        yAxisDataKey={"demand"}
+                        aria-label="This week energy graph"
+                    />
+                  </div>
+                </div>
+              )}
+              {this.state.viewRedZones === "true" &&(
+                  <div className="esmDashboardGraphPanel" aria-label="graph panel">
+                    <button onClick={this.switchPanel}>Switch</button>
+                    <h3 className="esmPanelHeader"  aria-label="Energy demand">Zone Pricing Breakdown</h3>
+                    <div>
+                        <PieChart title="Energy Usage by Distribution Network Price Chart" width={400} height={200}>
+                          <Pie data={this.state.zonesArray} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#fff" label>
+                          </Pie>  
+                        </PieChart>
+                    </div>
+                  </div>
+              )}
             </div>
             <div className="esmDashboardPanel">
               <h3 className="esmPanelHeader" aria-label="insights card">Insights</h3>
@@ -772,14 +797,48 @@ class EsmDashboard extends React.Component {
               </div>
             </div>
             <div className="esmBottomPanel" aria-label="site information card">
-              <div className="esmBottomPanelInfo" aria-label="site name">
-                <div>Site:</div>
-                <p id="siteName"></p>
-              </div>
-              <div className="esmBottomPanelInfo" aria-label="site county">
-                <div>County:</div>
-                <p id="county"></p>
-              </div>
+              {/*<div className="esmBottomPanelInfo">*/}
+              <div className="esmPanelListContainer">
+                        <div>
+                          <div className="esmInsightCard">
+                            <p>You spent <b>{parseFloat((this.state.redZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}%</b> of your energy usage during red zone periods.</p>
+                          </div>
+                          <div className="esmInsightCard">  
+                            <p>You spent <b>{parseFloat((this.state.amberZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}%</b> of your energy usage during amber zone periods.</p>
+                          </div>
+                          <div className="esmInsightCard">  
+                            <p>You spent <b>{parseFloat((this.state.greenZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}%</b> of your energy usage during green zone periods.</p>
+                          </div>
+                        </div>
+                       
+              {this.state.redZoneUsage > this.state.greenZoneUsage &&(
+                          <div>
+                            {this.state.redZoneUsage > this.state.amberZoneUsage &&(
+                              <p> Most of your energy use was during <b>red-zone</b> periods.  Consider changing your energy usage times
+                              and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
+                              money.</p>
+                            )}
+                            {this.state.amberZoneUsage > this.state.redZoneUsage &&(
+                              <p> Most of your energy use was during <b>amber-zone</b> periods.  Consider changing your energy usage times
+                              and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
+                              money.</p>
+                            )}
+                          </div>  
+              )}
+              {this.state.greenZoneUsage > this.state.redZoneUsage &&(
+                          <div>
+                            {this.state.greenZoneUsage > this.state.amberZoneUsage &&(
+                              <p> Well done! Most of your energy has been during <b>green-zone</b> periods. Find out <Link href="/zonePricingInformation"> 
+                              more </Link> about zone pricing to see how you could save money.</p>
+                            )}
+                            {this.state.amberZoneUsage > this.state.greenZoneUsage &&(
+                              <p> Most of your energy use was during <b>amber-zone</b> periods.  Consider changing your energy usage times
+                              and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
+                              money.</p>
+                            )}
+                          </div>  
+              )}
+              </div> 
             </div>
           </div>
         </div>
