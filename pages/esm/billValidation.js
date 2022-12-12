@@ -349,7 +349,7 @@ class BillValidation extends React.Component {
         if(this.state.selectedYear === this.state.historicalLastYear){  
             
             // Check if the user's chosen month is lower than the last month of data available. 
-            if(monthNum < parseFloat(this.state.historicalLastMonth)){
+            if(monthNum <= parseFloat(this.state.historicalLastMonth-1) && monthNum >= parseFloat(this.state.historicalFirstMonth-1)){
                 
                 console.log("Valid month");
                 
