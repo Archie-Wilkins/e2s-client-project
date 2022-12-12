@@ -427,10 +427,18 @@ class Dashboard extends React.Component {
     //will check user is allowed on this page first
     // Attempt to parse a user cookie
     try {
-      // Initialise the user cookie
-      let userCookie = JSON.parse(Cookies.get().user);
+      //Get the user cookie
+      let userCookieEncypted = Cookies.get().user;
 
-      // If the user has the incorrect credentials for the page, remove them
+      //import CryptoJS
+      var CryptoJS = require("crypto-js");
+
+      //decrypt the cookie
+      var bytes = CryptoJS.AES.decrypt(userCookieEncypted, 'team4');
+      //store decrypted cookie in userCookie
+      var userCookie = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+  // If the user has the incorrect credentials for the page, remove them
       if (userCookie.role != 2) {
         Cookies.remove("user");
         window.location = "/login";
@@ -481,11 +489,11 @@ class Dashboard extends React.Component {
                     </div>
 
                     <div className="flexBox w-100">
-                      <b>All Time Data</b>
-                      <select id="chosenScale" onChange={this.updateChosenMonths}>
+                      <h3>All Time Data</h3>
+                      {/* <select id="chosenScale" onChange={this.updateChosenMonths}>
                         <option monthValue="All Time">All Time</option>
                         <option monthValue="Last Month">Last Month</option>
-                      </select>
+                      </select> */}
                     </div>
 
                     <div className="flexBox w-50 h-100">
@@ -530,26 +538,26 @@ class Dashboard extends React.Component {
 
 
                     <div className="flexBox h-50 "><p><b>Energy Demand</b></p> 
-                    {parseFloat(this.state.electrictyUsed).toFixed(0)} KwH
+                      {parseFloat(this.state.electrictyUsed).toFixed(0)}KwH
                     </div>
                     <div className="flexBox h-50"><p><b>Heat Demand</b></p> 
-                    {parseFloat(this.state.heatUsed).toFixed(0)} KwH
+                      {parseFloat(this.state.heatUsed).toFixed(0)}KwH
                     </div>
                     <div className="flexBox"><p><b>Energy Exported</b></p> 
-                    {parseFloat(this.state.energyExported).toFixed(0)} KwH
+                      {parseFloat(this.state.energyExported).toFixed(0)}KwH
                     </div>
                     <div className="flexBox"><p><b>Net Energy Use</b></p> 
-                    {parseFloat(this.state.netEnergy).toFixed(0)} KwH
+                      {parseFloat(this.state.netEnergy).toFixed(0)}KwH
                     </div>
                     <div className="flexBox"><p><b>Spending</b></p> 
                     £{parseFloat(this.state.totalSpent).toFixed(2)}
                     </div>
                     <div className="flexBox"><p><b>Carbon Emissions</b></p> 
-                    {parseFloat(this.state.carbonEmitted).toFixed(2)} Kg
+                      {parseFloat(this.state.carbonEmitted).toFixed(2)}Kg
                     </div>
                     <div className="flexBox w-100"><p><b>Carbon Emissions</b></p> 
-                      <p>Your site generated {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)} Kg of
-                        carbon in {this.state.currentMonth} compared to {parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)} Kg
+                      <p>Your site generated {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)}Kg of
+                        carbon in {this.state.currentMonth} compared to {parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)}Kg
                         in {this.state.previousMonth}.</p>
                         {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) < parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2) &&(
                           <div>
@@ -563,7 +571,7 @@ class Dashboard extends React.Component {
                                )}
                               {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) >= (this.state.carbonEmitted / this.state.monthsOnRecord)&&(
                                 <div>
-                                  <p>Average monthly emissions: {parseFloat(this.state.carbonEmitted / this.state.monthsOnRecord).toFixed(2)} Kg</p>
+                              <p>Average monthly emissions: {parseFloat(this.state.carbonEmitted / this.state.monthsOnRecord).toFixed(2)}Kg</p>
                                 </div>  
                               )}   
 
@@ -586,14 +594,10 @@ class Dashboard extends React.Component {
                     </div>
 
                     <div className="flexBox w-100"><p><b>Your Spending</b></p> 
-                      <p>You spent £{parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) } 
-                         in {this.state.currentMonth} compared to £{parseFloat(this.state.moneySpentPreviousMonth).toFixed(2) } 
-                         in {this.state.previousMonth}.</p>
+                      <p>You spent £{parseFloat(this.state.moneySpentCurrentMonth).toFixed(2)} in {this.state.currentMonth} compared to £{parseFloat(this.state.moneySpentPreviousMonth).toFixed(2)} in {this.state.previousMonth}.</p>
                         {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) < parseFloat(this.state.moneySpentPreviousMonth).toFixed(2) &&(
                           <div>
-                            <p className="postiveFeedbackText">That is £{parseFloat(this.state.moneySpentPreviousMonth - this.state.moneySpentCurrentMonth).toFixed(2)} 
-                               less and reflects a {parseFloat(1-parseFloat(this.state.moneySpentCurrentMonth).toFixed(2)/parseFloat(this.state.moneySpentPreviousMonth).toFixed(2)).toFixed(4) * 100}% 
-                               reduction. Go you!</p>
+                          <p className="postiveFeedbackText">That is £{parseFloat(this.state.moneySpentPreviousMonth - this.state.moneySpentCurrentMonth).toFixed(2)}  less and reflects a {parseFloat(1 - parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) / parseFloat(this.state.moneySpentPreviousMonth).toFixed(2)).toFixed(4) * 100}%  reduction. Go you!</p>
                                {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) < (this.state.totalSpent / this.state.monthsOnRecord)&&(
                                 <div>
                                   <p>You are also below your average monthly spending of £{parseFloat(this.state.totalSpent / this.state.monthsOnRecord).toFixed(2)}</p>
@@ -609,8 +613,7 @@ class Dashboard extends React.Component {
                         )}
                         {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) > parseFloat(this.state.moneySpentPreviousMonth).toFixed(2) &&(
                           <div>
-                            <p className="negativeFeedbackText">That is £{parseFloat(this.state.moneySpentCurrentMonth - this.state.moneySpentPreviousMonth).toFixed(2)} 
-                               more, reflecting a {parseFloat(1-parseFloat(this.state.moneySpentPreviousMonth).toFixed(2)/parseFloat(this.state.moneySpentCurrentMonth).toFixed(2)).toFixed(4) * 100}%
+                          <p className="negativeFeedbackText">That is £{parseFloat(this.state.moneySpentCurrentMonth - this.state.moneySpentPreviousMonth).toFixed(2)}  more, reflecting a {parseFloat((1 - (this.state.moneySpentPreviousMonth) / (this.state.moneySpentCurrentMonth)) * 100).toFixed(2)}%
                                increase in spending. Consider your operating hours and equipment. Check the <Link href="/insights">insights </Link> page for more detail.</p>
                                <p>Average monthly spending: £{parseFloat(this.state.totalSpent / this.state.monthsOnRecord).toFixed(2)}</p>
                           </div>

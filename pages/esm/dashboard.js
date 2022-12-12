@@ -77,8 +77,8 @@ class EsmDashboard extends React.Component {
     //fetch site data between 2021-01-09 - 2021-01-16, this is hard coded because we arent currently recieving live data
     data = {
       siteID: this.state.siteID,
-      dateStart: "2020-09-13",
-      dateEnd: "2020-09-19"
+      dateStart: "2018-01-25",
+      dateEnd: "2018-02-01"
     }
     JSONdata = JSON.stringify(data);
     //API will get site data for the timeframe submitted (this week)
