@@ -140,9 +140,6 @@
   justify-content: center;
 }
 
-.enquiry-form-header h1 {
-}
-
 .enquiry-form-comment-section {
   display: block;
   width: 60%;
@@ -182,4 +179,57 @@
 
 .errorText{
   color: red;
+}
+
+.flexContainer{
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.flexBox{
+  margin-right: 5%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  border-radius: 5px;
+  border-width: 2px;
+  border-style:groove;
+  padding: 10px;
+}
+
+.graphBox{
+  margin-left: 5%;
+}
+
+.articleHeader{
+  background-color: #06064b;
+  color: white;
+  padding: 5px;
+}
+
+.articleHeader button{
+  background-color: #06064b;
+  font-style: bold;
+  color:#06064b;
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: medium;
+  float: right;
+}
+
+.articleHeader button:hover{
+  background-color: #06064b;
+  font-style: bold;
+  color:#06064b;
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: large;
+  float: right;
+}
+
+.positiveFeedbackText p{
+  color: green !important;
 }

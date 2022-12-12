@@ -411,7 +411,6 @@ CREATE TABLE IF NOT EXISTS `sites_historic` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1502 DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table e2s_db.sites_historic: ~1,500 rows (approximately)
-/*!40000 ALTER TABLE `sites_historic` DISABLE KEYS */;
 INSERT INTO `sites_historic` (`entry_id`, `site_id`, `supplier_id`, `energy_demand`, `heat_demand`, `energy_cost`, `energy_output`, `energy_imported`, `energy_exported`, `feels_like`, `wind_speed`, `carbon_emitted`, `time_stamp`, `date_time`) VALUES
 	(2, 1, 1, 120, 14, 92, 0, 120, 0, 14, 3, 16, '2018-01-01 01:00:00', NULL),
 	(3, 1, 1, 173, 15, 48, 0, 173, 0, 17, 11, 15, '2018-01-01 01:30:00', NULL),
@@ -1913,7 +1912,6 @@ INSERT INTO `sites_historic` (`entry_id`, `site_id`, `supplier_id`, `energy_dema
 	(1499, 1, 1, 96, 19, 100, 0, 96, 0, 18, 11, 16, '2018-02-01 05:30:00', NULL),
 	(1500, 1, 1, 162, 18, 99, 0, 162, 0, 18, 5, 16, '2018-02-01 06:00:00', NULL),
 	(1501, 1, 1, 107, 19, 67, 0, 107, 0, 19, 10, 12, '2018-02-01 06:30:00', NULL);
-/*!40000 ALTER TABLE `sites_historic` ENABLE KEYS */;
 
 -- Dumping structure for table e2s_db.site_data_requests
 CREATE TABLE IF NOT EXISTS `site_data_requests` (

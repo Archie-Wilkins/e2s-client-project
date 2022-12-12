@@ -13,6 +13,30 @@ export const all = async () => {
     });
 }
 
+export const allHistoric = async () => {
+    return new Promise((resolve, reject) =>  {
+        db.query('SELECT * from sites_historic', (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+
+    });
+}
+
+export const getSiteDataFromMonth = async (month) =>{
+    return new Promise((resolve, reject) =>  {
+        db.query("SELECT * FROM sites_historic WHERE SELECT MONTH(time_stamp) = ?", month,(err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            resolve(results);
+        })
+    })
+}
+
+
 export const insertHistoricalTest = async (dataArray) => {
     return new Promise((resolve, reject) =>  {
         let query = "INSERT into sites_historic(site_id, supplier_id, energy_demand, heat_demand, energy_cost, energy_output, energy_imported, energy_exported, feels_like, wind_speed, carbon_emitted, time_stamp) values (?)";
@@ -176,12 +200,14 @@ export const getSiteReportListData = async () => {
 
 export default {
     all,
+    allHistoric,
     getSiteIDFromUserID,
     getSiteDetails,
     getSiteIDFromEmail,
     getSiteDataByDay,
     getSiteWeekData,
     getSiteWeekHistoricalAverage,
+    getSiteDataFromMonth,
     insertHistoricalTest,
     getHistoricalSiteDataFromUserID,
     getSiteDataDayRangeDaily,

@@ -1,4 +1,6 @@
 .next/
+-.next/
+.next\
 .node_modules/
 .idea/
 .npm/
@@ -8,6 +10,8 @@ yarn.lock
 package-lock.json
 *.pack
 node_modules
+.next/cache/webpack/server-development/index.pack
+.next/cache/webpack/server-development/index.pack.old
 .next/server/pages-manifest.json
 .next/trace
 .next/trace

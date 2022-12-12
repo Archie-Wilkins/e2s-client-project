@@ -1,9 +1,9 @@
 import user from "../../db/user";
 
 export default async function handler(req, res) {
+
     // Get data submitted in request's body.
     const body = req.body
-
     //checks userID exists in API request
     if (!body.userID) {
         // Sends a HTTP bad request error code
