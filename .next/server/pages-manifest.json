@@ -2,6 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/billValidation": "pages/billValidation.js",
-  "/api/returnHistoricalSiteDataFromUserId": "pages/api/returnHistoricalSiteDataFromUserId.js"
+  "/api/returnAllHistoricalSiteDataApi": "pages/api/returnAllHistoricalSiteDataApi.js",
+  "/api/returnHistoricalSiteDataFromUserId": "pages/api/returnHistoricalSiteDataFromUserId.js",
+  "/esm/billValidation": "pages/esm/billValidation.js"
 }

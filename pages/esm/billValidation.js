@@ -2,9 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Link from "next/link";
 import React, { useLayoutEffect, useEffect } from "react";
 import Cookies from "js-cookie";
-import MainLayout from "../public/components/layouts/mainLayoutShell.js";
-import { csvToJson } from "convert-csv-to-json/src/csvToJson.js";
-
+import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
 
 // This is the component for ESMs to validate their bills
 class BillValidation extends React.Component {
@@ -211,20 +209,19 @@ class BillValidation extends React.Component {
       
             // Send the form data to our forms API on Vercel and get a response.
             const response = await fetch(endpoint, options);
-      
             // Get the response data from server as JSON.
             const result = await response.json();
-            console.log("Done");
+
             // Set the state array for users to the data returned from calling the API (users from the database).
             let localCostTally = 0;
-  
+
             // Set the first year and month of data to the first year and month in the database.
             let firstYear = result.data.sites[0].time_stamp[0]+result.data.sites[0].time_stamp[1]+result.data.sites[0].time_stamp[2]+result.data.sites[0].time_stamp[3];
             let firstMonth = result.data.sites[0].time_stamp[5]+result.data.sites[0].time_stamp[6];
 
             // Set a local instance of the month selected by the user.
             let localMonth = this.state.selectedMonth;
-            
+
             // Set a numerical representation of the chosen month for evaluation.
             let localMonthNum = 0;
             for(let i = 0; i < this.state.months.length; i++){
@@ -245,52 +242,87 @@ class BillValidation extends React.Component {
 
             // Formula for finding the index which represents the first day of the user's chosen month.
             let indexStartpoint = ((365 * 48) * yearDifference) + (monthDifference * (31*48));
+            console.log(indexStartpoint);
 
             // Tell the page that the invoice is being calculated.
             this.setState({currentlyCalculating: true});
 
-            // Check if the user's month is February (2).
+            let monthStartIndexArr = [];
+            let monthArr = [];
+            let lastChecked = "";
+
+            // Here we establish where in the returned rows of data, each new month starts in regards to index
+            for (let i = 0; i < result.data.sites.length; i++){
+                let localMonth = new Date(result.data.sites[i].time_stamp).getMonth();
+                if(localMonth != lastChecked){
+                    lastChecked = localMonth;
+                    monthArr.push(lastChecked);
+                    monthStartIndexArr.push(i);
+                }                
+            }
+
+            // return the actual month values not index
+            console.log(monthStartIndexArr);
+            console.log(monthArr);
+
+            // If February
             if(localMonthNum === 2){
+                let startingIndex = 0;
+                for(let x = 0; x < monthArr.length; x++){
+                    if(localMonthNum === monthArr[x] + 1){
+                        startingIndex = monthStartIndexArr[x];
+                    }
+                }
 
-                // Only count 28 days (48 rows of data per day) of energy spending.
-                for(let i = indexStartpoint; i < (indexStartpoint/1 + (28*48)); i++){
-                    
-                    // Add the energy spent at each half hour time interval to the tally. 
+                for(let i = startingIndex; i < startingIndex + (28*48); i++){
                     if(i < result.data.sites.length){
                         localCostTally = localCostTally + result.data.sites[i].energy_cost/1;
                     }                
                 }
-      
-                // Pass the total calculated invoice to the page state.
-                this.setState({calculatedInvoiceTotal: localCostTally});
-            }
 
-            // Check if the user's month is April (4), June (6), September (9), or November (11) - months with 30 days.
-            else if(localMonthNum === 4 || localMonthNum === 6 || localMonthNum === 9 || localMonthNum === 11){
-                
-                // Only count 30 days (48 rows of data per day) of energy spending.
-                for(let i = indexStartpoint; i < (indexStartpoint/1 + (30*48)); i++){
+            // If April, June, September, or November.    
+            }else if(localMonthNum === 4 || localMonthNum === 6 || localMonthNum === 9 || localMonthNum === 11){
+                let startingIndex = 0;
+                for(let x = 0; x < monthArr.length; x++){
+                    if(localMonthNum === monthArr[x] + 1){
+                        startingIndex = monthStartIndexArr[x];
+                    }
+                }
 
-                    // We ensure that no out of bounds indexes are being accessed.
+                for(let i = startingIndex; i < startingIndex+(30*48); i++){
                     if(i < result.data.sites.length){
                         localCostTally = localCostTally + result.data.sites[i].energy_cost/1;
                     }                
                 }
-                this.setState({calculatedInvoiceTotal: localCostTally});
-            }
+            // If any other month.
+            }else{
+                let startingIndex = 0;
+                for(let x = 0; x < monthArr.length; x++){
+                    if(localMonthNum === monthArr[x] + 1){
+                        startingIndex = monthStartIndexArr[x];
+                    }
+                }
 
-            // Check if the user has selected a month with 31 days.
-            else{
-                for(let i = indexStartpoint; i < (indexStartpoint/1 + (31*48)); i++){
+                for(let i = startingIndex; i < startingIndex+(31*48); i++){
+                    // Account for incomplete data put into the database.
                     if(i < result.data.sites.length){
                         localCostTally = localCostTally + result.data.sites[i].energy_cost/1;
                     }
                 }
-                this.setState({calculatedInvoiceTotal: localCostTally});
+
             }
+            
+  
+            // Pass the total calculated invoice to the page state.
+            this.setState({calculatedInvoiceTotal: localCostTally});
+
+            console.log("FLAG7");
 
             // Tell the page that the invoice has stopped calculating
             this.setState({currentlyCalculating: false});
+
+            console.log("FLAG8");
+
             
           } catch (e) {
             // No action
@@ -444,18 +476,18 @@ class BillValidation extends React.Component {
                             </select>
                             
                             <select id="monthStuff" onChange={this.updateValue} aria-label="select which month to validate dropdown">
-                                <option monthValue="january">JANUARY</option>
-                                <option monthValue="february">FEBRUARY</option>
-                                <option monthValue="march">MARCH</option>
-                                <option monthValue="april">APRIL</option>
-                                <option monthValue="may">MAY</option>
-                                <option monthValue="june">JUNE</option>
-                                <option monthValue="july">JULY</option>
-                                <option monthValue="august">AUGUST</option>
-                                <option monthValue="septmeber">SEPTEMBER</option>
-                                <option monthValue="october">OCTOBER</option>
-                                <option monthValue="november">NOVEMBER</option>
-                                <option monthValue="december">DECEMBER</option>
+                                <option monthvalue="january">JANUARY</option>
+                                <option monthvalue="february">FEBRUARY</option>
+                                <option monthvalue="march">MARCH</option>
+                                <option monthvalue="april">APRIL</option>
+                                <option monthvalue="may">MAY</option>
+                                <option monthvalue="june">JUNE</option>
+                                <option monthvalue="july">JULY</option>
+                                <option monthvalue="august">AUGUST</option>
+                                <option monthvalue="septmeber">SEPTEMBER</option>
+                                <option monthvalue="october">OCTOBER</option>
+                                <option monthvalue="november">NOVEMBER</option>
+                                <option monthvalue="december">DECEMBER</option>
                             </select><br/><br/>
 
                             {/*Initially we will check only for 31 days*/}
@@ -465,7 +497,7 @@ class BillValidation extends React.Component {
                             {/*Error messages for errors */}
                             <div aria-label="invoice amount error section">
                                 {!this.state.invoiceIsNum &&(
-                                    <p classname="errorText">ERROR, you can only submit numbers!</p>
+                                    <p className="errorText">ERROR, you can only submit numbers!</p>
                                 )}
                                 {this.state.invoiceIsNum === true &&(
                                     <div>

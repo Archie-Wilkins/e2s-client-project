@@ -25,10 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/billValidation": [
+    "/esm/billValidation": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/billValidation.js"
+      "static/chunks/pages/esm/billValidation.js"
     ]
   },
   "ampFirstPages": []
