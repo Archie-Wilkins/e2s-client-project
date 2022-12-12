@@ -552,9 +552,9 @@ class EsmDashboard extends React.Component {
       result = JSON.parse(stringResult);
 
       //once average data has been fetched change text in html
-      document.getElementById("avgExpense").innerText = "£" + result.energy_avg_week_cost;
-      document.getElementById("avgEnergy").innerText = result.energy_avg_week_demand + "Kw";
-      document.getElementById("avgCarbon").innerText = result.carbon_avg_week_emitted + "Kg";
+      document.getElementById("avgExpense").innerText = "£" + result.energy_avg_week_cost.toFixed(2);
+      document.getElementById("avgEnergy").innerText = result.energy_avg_week_demand.toFixed(2) + "Kw";
+      document.getElementById("avgCarbon").innerText = result.carbon_avg_week_emitted.toFixed(2) + "Kg";
 
     }
 
