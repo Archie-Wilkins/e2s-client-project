@@ -10,13 +10,13 @@ describe('admin dashboard', () => {
         render(<Dashboard/>)
     })
 
+    // Invalidated by hot fix
+    // it('renders an admin nav bar', () => {
+    //     const navOnboarding = screen.getByText("Onboarding")
+    //     expect(navOnboarding).toBeInTheDocument()
+    // })
 
-    it('renders an admin nav bar', () => {
-        const navOnboarding = screen.getByText("Onboarding")
-        expect(navOnboarding).toBeInTheDocument()
-    })
-
-    it('renders an admin nav bar', () => {
+    it('renders a title', () => {
         const title = screen.getByText("ADMIN DASHBOARD")
         expect(title).toBeInTheDocument()
     })

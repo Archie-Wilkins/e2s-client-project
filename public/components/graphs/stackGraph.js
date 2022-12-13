@@ -1,11 +1,14 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import { AreaChart, Area, Label, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-
+import { curveCardinal } from 'd3-shape';
 
 class StackGraph extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      cardinal: curveCardinal.tension(0.2),
+    }
   }
 
   render() {
@@ -35,7 +38,7 @@ class StackGraph extends React.Component {
             </YAxis>
             <Tooltip />
             <Area type="monotone" dataKey={this.props.area1} stackId="1" stroke="#82ca9d" fill="#82ca9d" />
-            <Area type="monotone" dataKey={this.props.area2} stackId="1" stroke="#ffc658" fill="#ffc658" />
+            <Area type={this.state.cardinal} dataKey={this.props.area2} stackId="2" stroke="#ffc658" fill="#ffc658" />
           </AreaChart>
         </ResponsiveContainer>
       </div>

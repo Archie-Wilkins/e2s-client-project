@@ -22,11 +22,11 @@ describe('mainlayoutshell', () => {
 
         expect(pageTitle).toBeInTheDocument()
     })
-    it('renders a side bar with specified role links', () => {
+    it('renders center content', () => {
 
         const ShellWithContent = () => (
             <div>
-                <MainLayoutShell isAdmin={true} pageName={"Test"}>
+                <MainLayoutShell isDirector={true} pageName={"Test"}>
                     <h1>Help</h1>
                 </MainLayoutShell>
             </div>
@@ -34,9 +34,9 @@ describe('mainlayoutshell', () => {
         render(<ShellWithContent/>);
 
 
-        const onboarding = screen.getByText("Onboarding")
+        const help = screen.getByText("Help")
 
-        expect(onboarding).toBeInTheDocument()
+        expect(help).toBeInTheDocument()
     })
 })
 

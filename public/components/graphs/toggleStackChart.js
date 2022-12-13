@@ -15,22 +15,18 @@ class ToggleTimeChart extends React.Component {
   }
 
   displayGraph = (graphNumber) => {
-    console.log("Yes" + graphNumber);
     switch (graphNumber) {
       case 1:
-        console.log("Yes" + "displayWeeklyGraph");
         this.setState({
           currentGraph: this.displayWeeklyGraph(),
         });
         return this.displayWeeklyGraph();
       case 2:
-        console.log("Yes" + "displayMonthlyGraph");
         this.setState({
           currentGraph: this.displayMonthlyGraph(),
         });
         break;
       case 3:
-        console.log("Yes" + "displayYearlyGraph");
         this.setState({
           currentGraph: this.displayYearlyGraph(),
         });
@@ -43,40 +39,37 @@ class ToggleTimeChart extends React.Component {
   };
 
   displayWeeklyGraph = () => {
-    console.log("1");
     return (
       <StackGraph
         dataSet1={this.props.dataSet1}
-        xAxis={"Date"}
+        xAxis={this.props.xAxis}
         yAxis={this.props.yAxis}
-        area1={"energyUsage"}
-        area2={"energyIn"}
+        area1={this.props.area1}
+        area2={this.props.area2}
       />
     );
   };
 
   displayMonthlyGraph = () => {
-    console.log("2");
     return (
       <StackGraph
         dataSet1={this.props.dataSet2}
-        xAxis={"Date"}
+        xAxis={this.props.xAxis}
         yAxis={this.props.yAxis}
-        area1={"energyUsage"}
-        area2={"energyIn"}
+        area1={this.props.area1}
+        area2={this.props.area2}
       />
     );
   };
 
   displayYearlyGraph = () => {
-    console.log("3");
     return (
       <StackGraph
         dataSet1={this.props.dataSet3}
-        xAxis={"Date"}
+        xAxis={this.props.xAxis}
         yAxis={this.props.yAxis}
-        area1={"energyUsage"}
-        area2={"energyIn"}
+        area1={this.props.area1}
+        area2={this.props.area2}
       />
     );
   };
