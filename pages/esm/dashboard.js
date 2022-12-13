@@ -53,7 +53,7 @@ class EsmDashboard extends React.Component {
   returnSiteInsightsApi = async (userId) => {
     try {
       // API endpoint where we send form data.
-      const endpoint = "../api/returnHistoricalSiteDataFromUserId";
+      const endpoint = "/api/site/returnHistoricalSiteDataFromUserId";
 
       const data = {
         userID: userId,
@@ -424,7 +424,7 @@ class EsmDashboard extends React.Component {
       }
       let JSONdata = JSON.stringify(data);
       //API will get site data for the timeframe submitted (this week)
-      let endpoint = '/api/getSiteWeekData';
+      let endpoint = '/api/site/getSiteWeekData';
       let options = {
         method: 'POST',
         headers: {'Content-Type': 'application/json',},
@@ -487,7 +487,7 @@ class EsmDashboard extends React.Component {
         dateEnd: formatDate(previousWeekEnd)
       }
       JSONdata = JSON.stringify(data);
-      endpoint = '/api/getSiteWeekData';
+      endpoint = '/api/site/getSiteWeekData';
       options = {
         method: 'POST',
         headers: {'Content-Type': 'application/json',},
@@ -539,7 +539,7 @@ class EsmDashboard extends React.Component {
       //API request to get site weekly averages
       data = {siteID: siteID}
       JSONdata = JSON.stringify(data);
-      endpoint = '/api/getSiteHistoricalData';
+      endpoint = '/api/site/getSiteHistoricalData';
       options = {
         method: 'POST',
         headers: {'Content-Type': 'application/json',},
