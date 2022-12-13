@@ -9,6 +9,7 @@ import ForecastingInfoBox from "../../public/components/dataDisplayBox/forecasti
 import React from "react";
 import BottomFooter from "../../public/components/layouts/bottomFooter.js";
 import Cookies from "js-cookie";
+import { PieChart, Pie } from "recharts";
 
 
 
@@ -20,10 +21,219 @@ class EsmDashboard extends React.Component {
       pageName: "Dashboard",
       data: [],
       dataUpdated: false,
-      siteID: ""
+      siteID: "",
+      siteDataArray: [],
+      dataStartDate: "",
+      monthsOnRecord: [],
+      previousMonth: "",
+      currentMonth: "",
+      electricityUsed: 0,
+      heatUsed: 0,
+      energyExported: 0,
+      netEnergy: 0,
+      totalSpent: 0,
+      redZoneUsage: 0,
+      amberZoneUsage: 0,
+      greenZoneUsage: 0,
+      carbonEmittedPreviousMonth: 0,
+      carbonEmittedCurrentMonth: 0,
+      moneySpentPreviousMonth: 0,
+      moneySpentCurrentMonth: 0,
+      carbonEmitted: 0,
+      zonesArray: [],
+      allTimeDataSelected: "true",
+      months: ["January", "February", "March", "April", "May", "June", "July",
+               "August", "September", "October", "November", "December"],
+      distributionNetwork: "EPN",
+      viewRedZones: "false",         
     };
   }
 
+
+  returnSiteInsightsApi = async (userId) => {
+    try {
+      // API endpoint where we send form data.
+      const endpoint = "/api/site/returnHistoricalSiteDataFromUserId";
+
+      const data = {
+        userID: userId,
+      }
+
+      const JSONdata = JSON.stringify(data);
+
+      // Form the request for sending data to the server.
+      const options = {
+        // The method is POST because we are sending data.
+        method: "POST",
+        // Tell the server we're sending JSON.
+        headers: {
+          "Content-Type": "application/json",
+        },
+      
+        body: JSONdata,
+      }
+
+      // Send the form data to our forms API on Vercel and get a response.
+      const response = await fetch(endpoint, options);
+
+      // Get the response data from server as JSON.
+      const result = await response.json();
+      console.log(result.data.sites);
+      this.setState({siteDataArray: result.data.sites});
+      const localDate = new Date(result.data.sites[0].time_stamp);
+      console.log(localDate);
+      console.log(result.data.sites.length);
+      console.log(localDate.getFullYear());
+      console.log(localDate.getMonth().toString());
+
+      console.log(this.state.months[parseInt(localDate.getMonth())]);
+      this.setState({dataStartDate: localDate.getFullYear() + " " + this.state.months[parseInt(localDate.getMonth())]});
+      const historicalDataRows = result.data.sites.length;
+
+      this.setState({monthsOnRecord: Math.ceil((historicalDataRows / (31*48)))});
+
+      let localPreviousMonth = new Date(result.data.sites[historicalDataRows - (1 + 32*48)].time_stamp).getMonth();
+      let localCurrentMonth = new Date(result.data.sites[historicalDataRows - 1].time_stamp).getMonth();
+      
+      this.setState({previousMonth: this.state.months[localPreviousMonth]});
+      this.setState({currentMonth: this.state.months[localCurrentMonth]});
+
+      let electrictyTally = 0;
+      let heatTally = 0;
+      let energyExportTally = 0;
+      let cumulativeSpending = 0;
+      let redZonePeriodTally = 0.0;
+      let amberZonePeriodTally = 0.0;
+      let greenZonePeriodTally = 0.0;
+
+      let dayTracker = 1;
+      let timeSlotsChecked = 0;
+
+      let previousMonthCarbon = 0;
+      let currentMonthCarbon = 0;
+
+      let previousMonthSpending = 0;
+      let currentMonthSpending = 0;
+
+      if(this.state.allTimeDataSelected === "true"){
+        for(let i = 0; i < historicalDataRows; i++){
+          electrictyTally = electrictyTally + result.data.sites[i].energy_demand;
+          heatTally = heatTally + result.data.sites[i].heat_demand;
+          energyExportTally = energyExportTally + result.data.sites[i].energy_exported;
+          cumulativeSpending = cumulativeSpending + result.data.sites[i].energy_cost;
+  
+          try{
+            if(this.state.distributionNetwork === "EPN"){
+  
+              // Check if the day is Monday through Friday.
+              if(dayTracker < 6){
+  
+                  // If it is, create a substring from the date handed in the csv.
+                  let dateTime = new Date(result.data.sites[i].time_stamp);
+  
+                  // Evaluate which time period the time falls between.
+                  if(dateTime.getHours() >= 16 && dateTime.getHours() <= 19){
+                      // Increment counters to track how many periods of time were using which tariff of cost.
+                      redZonePeriodTally = redZonePeriodTally + result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
+                  }
+                  if((dateTime.getHours() >= 7 && dateTime.getHours() < 16) || (dateTime.getHours() > 19 && dateTime.getHours() <= 23)){
+                    amberZonePeriodTally = amberZonePeriodTally + result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
+                  }if(dateTime.getHours() > 23 || dateTime.getHours() < 7 || dateTime.getHours() === 0){
+                    greenZonePeriodTally = greenZonePeriodTally +result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
+                  }
+              }
+  
+              else if(dayTracker === 6 || dayTracker === 7){
+  
+                  // If it is Saturday or Sunday, there price will only ever be green zone. 
+                  greenZonePeriodTally = greenZonePeriodTally + result.data.sites[i].energy_demand-result.data.sites[i].energy_exported;
+              }
+  
+  
+              // If 48 time slots have been checked, an entire day of data has been passed.
+              if(timeSlotsChecked == 48){
+                  
+                  // Check if it is Sunday (Monday - 1, Tuesday - 2, ..., Sunday - 7).
+                  if(dayTracker < 7){
+  
+                      // Move the day tracker forward a day.
+                      dayTracker = dayTracker + 1;
+                  }
+  
+                  if(dayTracker === 7){
+  
+                      // If the day is Sunday, reset it to Monday after all slots have been checked.
+                      dayTracker = 1;
+                  }
+  
+                  // Reset the number of slots checked for a day.
+                  timeSlotsChecked = 0;
+              }
+  
+              else if(timeSlotsChecked < 48){
+                  // Increment the number of slots checked for the day.
+                  timeSlotsChecked = timeSlotsChecked + 1;
+              }
+              
+            }
+          }catch(e){
+            console.log("error");
+          }
+  
+          if(i >= historicalDataRows - (62*48) && i < historicalDataRows - (31*48)){
+            previousMonthCarbon = previousMonthCarbon + (0.193 * result.data.sites[i].energy_demand) + (0.183 * result.data.sites[i].heat_demand);
+            previousMonthSpending = previousMonthSpending + result.data.sites[i].energy_cost;
+          }else if(i > historicalDataRows - (31*48) && i < historicalDataRows){
+            currentMonthCarbon = currentMonthCarbon + 0.193 * result.data.sites[i].energy_demand + 0.183 * result.data.sites[i].heat_demand;
+            currentMonthSpending = currentMonthSpending + result.data.sites[i].energy_cost;;
+          }
+  
+        }
+      }
+      
+      console.log(electrictyTally);
+      this.setState({electricityUsed: electrictyTally});
+      this.setState({heatUsed: heatTally});
+      this.setState({energyExported: energyExportTally});
+      this.setState({netEnergy: electrictyTally - energyExportTally});
+      this.setState({totalSpent: cumulativeSpending});
+
+
+      this.setState({redZoneUsage: redZonePeriodTally});
+      this.setState({amberZoneUsage: amberZonePeriodTally});
+      this.setState({greenZoneUsage: greenZonePeriodTally});
+
+      this.setState({carbonEmittedPreviousMonth: previousMonthCarbon});
+      this.setState({carbonEmittedCurrentMonth: currentMonthCarbon});
+
+      this.setState({moneySpentPreviousMonth: previousMonthSpending});
+      this.setState({moneySpentCurrentMonth: currentMonthSpending});
+
+      // kg
+      let carbonSum = 0.193 * electrictyTally;
+      let carbonSum2 = 0.183 * heatTally;
+      carbonSum = carbonSum + carbonSum2;
+      this.setState({carbonEmitted: carbonSum});
+
+      redZonePeriodTally = redZonePeriodTally;
+      amberZonePeriodTally = amberZonePeriodTally;
+      greenZonePeriodTally =  greenZonePeriodTally;
+
+      const redZ = parseFloat(redZonePeriodTally).toFixed(2);
+      const ambZ = parseFloat(amberZonePeriodTally).toFixed(2);
+      const greZ = parseFloat(greenZonePeriodTally).toFixed(2);
+
+      let localZonesArray = [
+        {"name": "redzone", "value": parseFloat(redZ), fill: "#FF0000"},
+        {"name": "amberzone", "value": parseFloat(ambZ), fill: "#FFA500"},
+        {"name": "greenzone", "value": parseFloat(greZ), fill: "#00FF00"},
+      ];
+
+      this.setState({zonesArray: localZonesArray});
+    } catch (e) {
+      // No action
+    }
+  }
 
   async componentDidMount() {
     //will check user is allowed on this page first
@@ -45,6 +255,9 @@ class EsmDashboard extends React.Component {
         Cookies.remove("user");
         window.location = "/login";
       }
+
+      await this.returnSiteInsightsApi(userCookie.user);
+
       //catch errors
     } catch (e) {
       // No cookie found
@@ -77,9 +290,10 @@ class EsmDashboard extends React.Component {
     //fetch site data between 2021-01-09 - 2021-01-16, this is hard coded because we arent currently recieving live data
     data = {
       siteID: this.state.siteID,
-      dateStart: "2018-01-25",
-      dateEnd: "2018-02-01"
+      dateStart: "2020-09-13",
+      dateEnd: "2020-10-24"
     }
+
     JSONdata = JSON.stringify(data);
     //API will get site data for the timeframe submitted (this week)
     endpoint = '/api/site/getSiteDataTimeRangeDaily';
@@ -94,16 +308,20 @@ class EsmDashboard extends React.Component {
     //so we stringify it, remove [], then parse back to JSON
 
     //formats the data to be inserted into graph
-
-    data = [
-      { date: result[0].date.split("T")[0], demand: result[0].energy_demand },
-      { date: result[1].date.split("T")[0], demand: result[1].energy_demand },
-      { date: result[2].date.split("T")[0], demand: result[2].energy_demand },
-      { date: result[3].date.split("T")[0], demand: result[3].energy_demand },
-      { date: result[4].date.split("T")[0], demand: result[4].energy_demand },
-      { date: result[5].date.split("T")[0], demand: result[5].energy_demand },
-      { date: result[6].date.split("T")[0], demand: result[6].energy_demand },
-    ]
+    try{
+      data = [
+        { date: result[0].date.split("T")[0], demand: result[0].energy_demand },
+        { date: result[1].date.split("T")[0], demand: result[1].energy_demand },
+        { date: result[2].date.split("T")[0], demand: result[2].energy_demand },
+        { date: result[3].date.split("T")[0], demand: result[3].energy_demand },
+        { date: result[4].date.split("T")[0], demand: result[4].energy_demand },
+        { date: result[5].date.split("T")[0], demand: result[5].energy_demand },
+        { date: result[6].date.split("T")[0], demand: result[6].energy_demand },
+      ]
+    }catch{
+      console.log("Please update starting date and ending date.")
+    }
+    
 
     //sets State to refresh page with new data
     this.state.data = data;
@@ -124,9 +342,8 @@ class EsmDashboard extends React.Component {
     result = await response.json();
 
     //sets information boxes to have site details
-    document.getElementById("siteName").innerText = result[0].site_name;
-    document.getElementById("county").innerText = result[0].county;
 
+    this.setState({pageName: result[0].site_name + " - " + result[0].county});
 
     //API request to get reports for the site
     endpoint = '/api/report/getReportListData';
@@ -207,7 +424,7 @@ class EsmDashboard extends React.Component {
       }
       let JSONdata = JSON.stringify(data);
       //API will get site data for the timeframe submitted (this week)
-      let endpoint = '/api/getSiteWeekData';
+      let endpoint = '/api/site/getSiteWeekData';
       let options = {
         method: 'POST',
         headers: {'Content-Type': 'application/json',},
@@ -270,7 +487,7 @@ class EsmDashboard extends React.Component {
         dateEnd: formatDate(previousWeekEnd)
       }
       JSONdata = JSON.stringify(data);
-      endpoint = '/api/getSiteWeekData';
+      endpoint = '/api/site/getSiteWeekData';
       options = {
         method: 'POST',
         headers: {'Content-Type': 'application/json',},
@@ -322,7 +539,7 @@ class EsmDashboard extends React.Component {
       //API request to get site weekly averages
       data = {siteID: siteID}
       JSONdata = JSON.stringify(data);
-      endpoint = '/api/getSiteHistoricalData';
+      endpoint = '/api/site/getSiteHistoricalData';
       options = {
         method: 'POST',
         headers: {'Content-Type': 'application/json',},
@@ -336,9 +553,9 @@ class EsmDashboard extends React.Component {
       result = JSON.parse(stringResult);
 
       //once average data has been fetched change text in html
-      document.getElementById("avgExpense").innerText = "£" + result.energy_avg_week_cost;
-      document.getElementById("avgEnergy").innerText = result.energy_avg_week_demand + "Kw";
-      document.getElementById("avgCarbon").innerText = result.carbon_avg_week_emitted + "Kg";
+      document.getElementById("avgExpense").innerText = "£" + result.energy_avg_week_cost.toFixed(2);
+      document.getElementById("avgEnergy").innerText = result.energy_avg_week_demand.toFixed(2) + "Kw";
+      document.getElementById("avgCarbon").innerText = result.carbon_avg_week_emitted.toFixed(2) + "Kg";
 
     }
 
@@ -363,6 +580,13 @@ class EsmDashboard extends React.Component {
     document.getElementById("page").style.display = "block";
   }
 
+  switchPanel = async () => {
+    if(this.state.viewRedZones === "true"){
+      this.setState({viewRedZones: "false"});
+    }else if(this.state.viewRedZones === "false"){
+      this.setState({viewRedZones: "true"});
+    }
+  }
 
   render() {
     //will return loading data... while react/nextjs fetches data in "componentDidMount()"
@@ -432,40 +656,138 @@ class EsmDashboard extends React.Component {
 
         <div id="page">
           <div className="esmDashboardGridContainer" id="gridContainer">
-            <div className="esmDashboardGraphPanel" aria-label="graph panel">
-              <h3 className="esmPanelHeader"  aria-label="Energy demand">Energy Demand</h3>
-              <div className="esmGraphCard">
-                <LineGraph
-                    toggle1={"Week"}
-                    toggle2={"Month"}
-                    toggle3={"Year"}
-                    dataSet={this.state.data}
-                    xAxis={"Date"}
-                    yAxis={"kW"}
-                    xAxisDataKey={"date"}
-                    yAxisDataKey={"demand"}
-                    aria-label="This week energy graph"
-                />
-              </div>
+            <div>
+              {this.state.viewRedZones === "false" &&(
+                <div className="esmDashboardGraphPanel" aria-label="graph panel">
+                  <button onClick={this.switchPanel}>Switch</button>
+                  <h3 className="esmPanelHeader"  aria-label="Energy demand">Energy Demand</h3>
+                  <div className="esmGraphCard">
+                    <LineGraph
+                        toggle1={"Week"}
+                        toggle2={"Month"}
+                        toggle3={"Year"}
+                        dataSet={this.state.data}
+                        xAxis={"Date"}
+                        yAxis={"kW"}
+                        xAxisDataKey={"date"}
+                        yAxisDataKey={"demand"}
+                        aria-label="This week energy graph"
+                    />
+                  </div>
+                </div>
+              )}
+              {this.state.viewRedZones === "true" &&(
+                  <div className="esmDashboardGraphPanel" aria-label="graph panel">
+                    <button onClick={this.switchPanel}>Switch</button>
+                    <h3 className="esmPanelHeader"  aria-label="Energy demand">Zone Pricing Breakdown</h3>
+                    <div>
+                        <PieChart title="Energy Usage by Distribution Network Price Chart" width={400} height={200}>
+                          <Pie data={this.state.zonesArray} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#fff" label>
+                          </Pie>  
+                        </PieChart>
+                    </div>
+                  </div>
+              )}
             </div>
             <div className="esmDashboardPanel">
               <h3 className="esmPanelHeader" aria-label="insights card">Insights</h3>
               <div className="esmPanelListContainer">
                 <div className="esmInsightCard">
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                      <p><b>Carbon Emissions</b></p> 
+                      <p>Your site generated {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)}Kg of
+                        carbon in {this.state.currentMonth} compared to {parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)}Kg
+                        in {this.state.previousMonth}.</p>
+                        {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) < parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2) &&(
+                          <div>
+                            <p className="postiveFeedbackText">That is {parseFloat(this.state.carbonEmittedPreviousMonth - this.state.carbonEmittedCurrentMonth).toFixed(2)} Kg 
+                               less and reflects a {parseFloat(1-parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)/parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)).toFixed(4) * 100}% 
+                               reduction. Go you!</p>
+                               {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) < (this.state.carbonEmitted / this.state.monthsOnRecord)&&(
+                                <div>
+                                  <p>You are also below your average monthly emission of {parseFloat(this.state.carbonEmitted / this.state.monthsOnRecord).toFixed(2)} Kg!</p>
+                                </div>
+                               )}
+                              {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) >= (this.state.carbonEmitted / this.state.monthsOnRecord)&&(
+                                <div>
+                              <p>Average monthly emissions: {parseFloat(this.state.carbonEmitted / this.state.monthsOnRecord).toFixed(2)}Kg</p>
+                                </div>  
+                              )}   
+
+                          </div>
+                        )}
+                        {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) > parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2) &&(
+                          <div>
+                            <p className="postiveFeedbackText">That is {parseFloat(this.state.carbonEmittedCurrentMonth - this.state.carbonEmittedPreviousMonth).toFixed(2)} Kg 
+                               more, reflecting a {parseFloat(1-parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)/parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)).toFixed(2) * 100}%
+                               increase in carbon emissions. Consider your operating hours and equipment. Check the <Link href="/insights">insights </Link> page for more detail.</p>
+                               <p>Average monthly emissions: {parseFloat(this.state.carbonEmitted / this.state.monthsOnRecord).toFixed(2)} Kg</p>
+                          </div>
+                        )}
+                        {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) === parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2) &&(
+                          <div>
+                            <p className="postiveFeedbackText">There has been no change in your carbon emissions.</p>
+                            <p>Average monthly emissions: {parseFloat(this.state.carbonEmitted / this.state.monthsOnRecord).toFixed(2)} Kg</p>
+                          </div>
+                        )}
                 </div>
                 <div className="esmInsightCard">
-                  Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old
+                <p><b>Your Spending</b></p> 
+                      <p>You spent £{parseFloat(this.state.moneySpentCurrentMonth).toFixed(2)} in {this.state.currentMonth} compared to £{parseFloat(this.state.moneySpentPreviousMonth).toFixed(2)} in {this.state.previousMonth}.</p>
+                        {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) < parseFloat(this.state.moneySpentPreviousMonth).toFixed(2) &&(
+                          <div>
+                          <p className="postiveFeedbackText">That is £{parseFloat(this.state.moneySpentPreviousMonth - this.state.moneySpentCurrentMonth).toFixed(2)}  less and reflects a {parseFloat(1 - parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) / parseFloat(this.state.moneySpentPreviousMonth).toFixed(2)).toFixed(3) * 100}%  reduction. Go you!</p>
+                               {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) < (this.state.totalSpent / this.state.monthsOnRecord)&&(
+                                <div>
+                                  <p>You are also below your average monthly spending of £{parseFloat(this.state.totalSpent / this.state.monthsOnRecord).toFixed(2)}</p>
+                                </div>
+                               )}
+                              {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) >= (this.state.totalSpent / this.state.monthsOnRecord)&&(
+                                <div>
+                                  <p>Average monthly spending: £{parseFloat(this.state.totalSpent / this.state.monthsOnRecord).toFixed(2)}</p>
+                                </div>  
+                              )}   
+
+                          </div>
+                        )}
+                        {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) > parseFloat(this.state.moneySpentPreviousMonth).toFixed(2) &&(
+                          <div>
+                          <p className="negativeFeedbackText">That is £{parseFloat(this.state.moneySpentCurrentMonth - this.state.moneySpentPreviousMonth).toFixed(2)}  more, reflecting a {parseFloat((1 - (this.state.moneySpentPreviousMonth) / (this.state.moneySpentCurrentMonth)) * 100).toFixed(2)}%
+                               increase in spending. Consider your operating hours and equipment. Check the <Link href="/insights">insights </Link> page for more detail.</p>
+                               <p>Average monthly spending: £{parseFloat(this.state.totalSpent / this.state.monthsOnRecord).toFixed(2)}</p>
+                          </div>
+                        )}
+                        {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) === parseFloat(this.state.moneySpentPreviousMonth).toFixed(2) &&(
+                          <div>
+                            <p className="neutralFeedbackText">There has been no change in your spending.</p>
+                            <p>Average monthly spending: £{parseFloat(this.state.totalSpent / this.state.monthsOnRecord).toFixed(2)}</p>
+                          </div>
+                        )}
                 </div>
                 <div className="esmInsightCard">
-                  Latin words, consectetur, from a Lorem Ipsum passage, and going through
+                <p><b>All Time Energy Demand</b></p> 
+                      {parseFloat(this.state.electricityUsed).toFixed(0)}KwH
                 </div>
                 <div className="esmInsightCard">
-                  Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero
+                <p><b>Heat Demand</b></p> 
+                      {parseFloat(this.state.heatUsed).toFixed(0)}KwH
                 </div>
                 <div className="esmInsightCard">
-                  Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero
+                <p><b>All Time Energy Exported</b></p> 
+                      {parseFloat(this.state.energyExported).toFixed(0)}KwH
                 </div>
+                <div className="esmInsightCard">
+                <p><b>Net Energy Use</b></p> 
+                      {parseFloat(this.state.netEnergy).toFixed(0)}KwH
+                </div>
+                <div className="esmInsightCard">
+                <p><b>Spending</b></p> 
+                    £{parseFloat(this.state.totalSpent).toFixed(2)}
+                </div>
+                <div className="esmInsightCard">
+                <p><b>Carbon Emissions</b></p> 
+                    {parseFloat(this.state.carbonEmitted).toFixed(2)}Kg
+                </div>
+                <hr/>
               </div>
             </div>
             <div className="esmDashboardPanel esmSpecificGrid" aria-label="weekly reports card">
@@ -475,14 +797,48 @@ class EsmDashboard extends React.Component {
               </div>
             </div>
             <div className="esmBottomPanel" aria-label="site information card">
-              <div className="esmBottomPanelInfo" aria-label="site name">
-                <div>Site:</div>
-                <p id="siteName"></p>
-              </div>
-              <div className="esmBottomPanelInfo" aria-label="site county">
-                <div>County:</div>
-                <p id="county"></p>
-              </div>
+              {/*<div className="esmBottomPanelInfo">*/}
+              <div className="esmPanelListContainer">
+                        <div>
+                          <div className="esmInsightCard">
+                            <p>You spent <b>{parseFloat((this.state.redZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}%</b> of your energy usage during red zone periods.</p>
+                          </div>
+                          <div className="esmInsightCard">  
+                            <p>You spent <b>{parseFloat((this.state.amberZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}%</b> of your energy usage during amber zone periods.</p>
+                          </div>
+                          <div className="esmInsightCard">  
+                            <p>You spent <b>{parseFloat((this.state.greenZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}%</b> of your energy usage during green zone periods.</p>
+                          </div>
+                        </div>
+                       
+              {this.state.redZoneUsage > this.state.greenZoneUsage &&(
+                          <div>
+                            {this.state.redZoneUsage > this.state.amberZoneUsage &&(
+                              <p> Most of your energy use was during <b>red-zone</b> periods.  Consider changing your energy usage times
+                              and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
+                              money.</p>
+                            )}
+                            {this.state.amberZoneUsage > this.state.redZoneUsage &&(
+                              <p> Most of your energy use was during <b>amber-zone</b> periods.  Consider changing your energy usage times
+                              and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
+                              money.</p>
+                            )}
+                          </div>  
+              )}
+              {this.state.greenZoneUsage > this.state.redZoneUsage &&(
+                          <div>
+                            {this.state.greenZoneUsage > this.state.amberZoneUsage &&(
+                              <p> Well done! Most of your energy has been during <b>green-zone</b> periods. Find out <Link href="/zonePricingInformation"> 
+                              more </Link> about zone pricing to see how you could save money.</p>
+                            )}
+                            {this.state.amberZoneUsage > this.state.greenZoneUsage &&(
+                              <p> Most of your energy use was during <b>amber-zone</b> periods.  Consider changing your energy usage times
+                              and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
+                              money.</p>
+                            )}
+                          </div>  
+              )}
+              </div> 
             </div>
           </div>
         </div>
