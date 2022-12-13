@@ -18,7 +18,7 @@ import { FaUserCog } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa";
 
 
-class NavBar extends React.Component {
+class DirectorNavBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -150,34 +150,12 @@ class NavBar extends React.Component {
 
                     <hr className="navbarLineBreak"></hr>
 
-                    <Link className="navbarLink d-flex align-items-center " href="/esm/dashboard" aria-label="go to dashboard link">
+                    <Link className="navbarLink d-flex align-items-center " href="/director/dashboard" aria-label="go to dashboard link">
                         <FaTachometerAlt />
                         <p>Dashboard</p>
                     </Link>
 
-                    <Link className=" navbarLink d-flex align-items-center" href="/esm/forecasting" aria-label="go to site forecasting link">
-                        <FaCloud />
-                        <p>Forecastings</p>
-                    </Link>
-
-                    <Link className=" navbarLink d-flex align-items-center" href="/esm/analysis" aria-label="go to analysis page link">
-                        <FaChartLine />
-                        <p>Analysis</p>
-                    </Link>
-                    <Link className=" navbarLink d-flex align-items-center" href="/esm/billValidation" aria-label="go to bill validaiton page link">
-                        <FaDollarSign />
-                        <p>Validate Bills</p>
-                    </Link>
-
-                    <hr className="navbarLineBreak"></hr>
-
-                    <Link className=" navbarLink d-flex align-items-center" href="/esm/csvUpload" aria-label="go to csv upload link">
-
-                        <FaUpload />
-                        <p>CSV Upload</p>
-                    </Link>
-
-                    <Link className=" navbarLink d-flex align-items-center" href="/esm/account" aria-label="go to account page link">
+                    <Link className=" navbarLink d-flex align-items-center" href="/director/account" aria-label="go to account page link">
                         <FaUserCog />
                         <p>Account</p>
                     </Link>
@@ -213,4 +191,4 @@ class NavBar extends React.Component {
 }
 
 
-export default NavBar
+export default DirectorNavBar

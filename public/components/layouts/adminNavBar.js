@@ -8,6 +8,7 @@ import { FaHandshake } from "react-icons/fa";
 import { FaTachometerAlt } from "react-icons/fa";
 import { FaHouseUser } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa";
+import { FaUserCog } from "react-icons/fa";
 
 
 class adminNavBar extends React.Component {
@@ -73,19 +74,9 @@ class adminNavBar extends React.Component {
                         <p>Dashboard</p>
                     </Link>
 
-                    <Link className=" navbarLink d-flex align-items-center" href="/admin/onboarding" aria-label="go to onboarding page link">
-                        <FaHandshake />
-                        <p>Onboarding</p>
-                    </Link>
-
-                    <Link className=" navbarLink d-flex align-items-center" href="/admin/organisations" aria-label="go to organisations page link">
-                        <FaHouseUser />
-                        <p>Organizations</p>
-                    </Link>
-
-                    <Link className=" navbarLink d-flex align-items-center" href="/admin/users" aria-label="view users page link">
-                        <FaUsers />
-                        <p>Users</p>
+                    <Link className=" navbarLink d-flex align-items-center" href="/admin/account" aria-label="go to account page link">
+                        <FaUserCog />
+                        <p>Account</p>
                     </Link>
 
                     <hr className="navbarLineBreak align-items-center"></hr>
