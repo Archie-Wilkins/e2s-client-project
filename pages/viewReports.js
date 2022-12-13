@@ -43,7 +43,7 @@ class ViewReportsPage extends React.Component {
 
 
             //API request to get site details
-            endpoint = '/api/reports/getReportListData';
+            endpoint = '/api/report/getReportListData';
             options = {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json',},
