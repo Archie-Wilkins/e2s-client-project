@@ -46,7 +46,12 @@ export default async function handler(req, res) {
     
                 let testArr = [];
                 testArr.push(localHandledArray2);
-                site.insertHistoricalTest(testArr);
+
+                try{
+                    site.insertHistoricalTest(testArr);
+                }catch(e){
+                    console.log("Error");
+                }
                 handledArray.push(localHandledArray2);
             }
             return res.status(200).json({ data: { message: "great success" } });
