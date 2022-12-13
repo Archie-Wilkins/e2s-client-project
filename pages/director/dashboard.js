@@ -78,15 +78,9 @@ class EsmDashboard extends React.Component {
 
       // Get the response data from server as JSON.
       const result = await response.json();
-      console.log(result.data.sites);
       this.setState({siteDataArray: result.data.sites});
       const localDate = new Date(result.data.sites[0].time_stamp);
-      console.log(localDate);
-      console.log(result.data.sites.length);
-      console.log(localDate.getFullYear());
-      console.log(localDate.getMonth().toString());
 
-      console.log(this.state.months[parseInt(localDate.getMonth())]);
       this.setState({dataStartDate: localDate.getFullYear() + " " + this.state.months[parseInt(localDate.getMonth())]});
       const historicalDataRows = result.data.sites.length;
 
