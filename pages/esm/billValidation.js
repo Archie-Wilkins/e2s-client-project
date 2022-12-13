@@ -92,8 +92,9 @@ class BillValidation extends React.Component {
             this.setState({pageLoaded: true});
 
             // API endpoint where we send form data.
-            const endpoint = "/api/returnAllHistoricalSiteDataApi";
-      
+            //const endpoint = "/api/returnAllHistoricalSiteDataApi";
+            const endpoint = "/api/site/getAllHistoricalSiteData";
+
             // Form the request for sending data to the server.
             const options = {
               // The method is POST because we are sending data.
@@ -189,7 +190,7 @@ class BillValidation extends React.Component {
         try {
             // API endpoint where we send form data.
             //const endpoint = "/api/returnAllHistoricalSiteDataApi";
-            const endpoint = "/../../api/sites/returnHistoricalSiteDataFromUserId";
+            const endpoint = "/api/site/returnHistoricalSiteDataFromUserId";
 
             const data= {
                 userID: this.state.loggedInUserID,
