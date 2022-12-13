@@ -3,6 +3,7 @@ import * as fs from "fs";
 import { parse } from "csv-parse";
 import Papa from "papaparse";
 import Link from "next/link";
+import MainLayoutShell from "../layouts/mainLayoutShell";
 class CsvUploadComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -11,6 +12,9 @@ class CsvUploadComponent extends React.Component {
       csvFileName: "",
       csvUploaded: false,
       csvFileBody: null,
+      pageName: "CSV Upload Page",
+      isAdmin: false,
+      isDirector: false,
     };
   }
 
@@ -93,6 +97,7 @@ class CsvUploadComponent extends React.Component {
   };
 
   pushAllSitesToDatabaseApi = async (event) => {
+
     try {
       // API endpoint where we send form data.
       const endpoint = "/api/site/uploadAllHistoricalSiteDataApi";
@@ -140,47 +145,83 @@ class CsvUploadComponent extends React.Component {
     }
 };
 
+   // Funtion used to validate user priveleges from the login page and remove cookies. 
+    // It is ran before the page loads.
+    async componentDidMount() {
+      // Attempt to parse a user cookie
+      try {
+      // Initialise the user cookie
+      let userCookieEncypted = Cookies.get().user;
+
+      //import CryptoJS
+      var CryptoJS = require("crypto-js");
+
+      //decrypt the cookie
+      var bytes = CryptoJS.AES.decrypt(userCookieEncypted, 'team4');
+
+      //store decrypted cookie in userCookie
+      var userCookie = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+      // If the user has the incorrect credentials for the page, remove them
+      if (userCookie.role === 4 || userCookie.role === 1) {
+          Cookies.remove("user");
+          window.location = "/login";
+      }
+
+      // Pass the user id of the logged in user to the page to be used in API calls
+      this.setState({loggedInUserID: userCookie.user});
+      //catch erros
+      } catch (e) {
+      // No action
+      }
+
+  };
+
   render() {
     return (
       <div aria-label="upload csv page">
-        <div className="m-5 p-5 bg-light rounded d-flex flex-column align-items-center justify-content-around ">
-          <h1>Upload CSV</h1>
+        <MainLayoutShell isDirector={this.state.isDirector}
+            pageName={this.state.pageName}
+            isAdmin={this.state.isAdmin}>
+          <div>
+            <h1>Upload CSV</h1>
 
-          {!this.state.csvUploaded && (
-            <div className="d-flex flex-column align-items-center justify-content-around ">
-              <input
-                type="file"
-                id="csvFile"
-                onChange={this.handleOnChange}
-                name="file"
-                accept=".csv"
-                aria-label="select csv file button"
-              />
+            {!this.state.csvUploaded && (
+              <div>
+                <input
+                  type="file"
+                  id="csvFile"
+                  onChange={this.handleOnChange}
+                  name="file"
+                  accept=".csv"
+                  aria-label="select csv file button"
+                />
 
-              <button
-                type="button"
-                className="btn btn-primary mt-4"
-                onClick={this.handleScreen}
-                aria-label="submit csv file button"
-              >
-                Submit
-              </button>
+                <button
+                  type="button"
+                  className="btn btn-primary mt-4"
+                  onClick={this.handleScreen}
+                  aria-label="submit csv file button"
+                >
+                  Submit
+                </button>
 
-              <p>
-                Your data must be in the format given in the CSV file below, or
-                else it won't format:
-              </p>
-              <Link href={"../resources/Data_Example.csv"} aria-label="download template file link">
-                <p>Download Template</p>
-              </Link>
-            </div>
-          )}
-          {this.state.csvUploaded === true && (
-            <div aria-label="uploaded file summary page">
-              <button onClick={this.returnHome} aria-label="go back button">Back</button>
-            </div>
-          )}
-        </div>
+                <p>
+                  Your data must be in the format given in the CSV file below, or
+                  else it won't format:
+                </p>
+                <Link href={"../../resources/Data_Example.csv"} aria-label="download template file link">
+                  <p>Download Template</p>
+                </Link>
+              </div>
+            )}
+            {this.state.csvUploaded === true && (
+              <div aria-label="uploaded file summary page">
+                <button onClick={this.returnHome} aria-label="go back button">Back</button>
+              </div>
+            )}
+          </div>
+        </MainLayoutShell>
       </div>
     );
   }
