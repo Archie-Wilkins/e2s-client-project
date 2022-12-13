@@ -1,168 +1,59 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import Link from "next/link";
 import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
-import React, { useLayoutEffect } from "react";
+// import EnergyCostForecastGraph from "../../public/components/graphs/toggleTimeChart";
+// import StackGraph from "../../public/components/graphs/stackGraph";
+import LineGraph from "../../public/components/graphs/lineGraph";
+import ToggleStackChart from "../../public/components/graphs/toggleStackChart.js";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import ForecastingInfoBox from "../../public/components/dataDisplayBox/forecastingInfoBox.js";
+import React from "react";
+import BottomFooter from "../../public/components/layouts/bottomFooter.js";
 import Cookies from "js-cookie";
-import { PieChart, Pie, Slice } from "recharts";
+import { PieChart, Pie } from "recharts";
 
-// This is the dashboard component for admins
-class Dashboard extends React.Component {
+
+
+class EsmDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
-      sampleData: [
-        {"name": "red", "value": 100},
-        {"name": "amber", "value": 200},
-        {"name": "green", "value": 300},
-      ],
-
-      // Array to store all sites registered to the site
+      isDirector: false,
+      pageName: "Dashboard",
+      data: [],
+      dataUpdated: false,
+      siteID: "",
       siteDataArray: [],
-
-      // The page name rendered in the top nav-bar
-      pageName: "Director Dashboard",
-
-      // Variable to define the user on the page as an Admin for any dynamic components or permissions
-      isAdmin: false,
-
-      // Variable to define the user on the page as not a Director for any dynamic components or permissions
-      isDirector: true,
-
-      userName: "",
-
-      userSite: "",
-
-      insightOneData: "",
-      insightTwoData: "",
-      insightThreeData: "",
-      insightFourData: "",
-      insightFiveData: "",
-      insightSixData: "",
-
-      months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-
-      // String used to record the first given date in uploaded CSV data.
       dataStartDate: "",
-
-      // DATA BY ALL TIME
-      // Variable for all time electricty used in uploaded CSV data.
-      electrictyUsed: 0,
-      
-      // Variable for all time heat used in uploaded CSV data.
+      monthsOnRecord: [],
+      previousMonth: "",
+      currentMonth: "",
+      electricityUsed: 0,
       heatUsed: 0,
-      
-      // Variable for all time energy exported in uploaded CSV data.
       energyExported: 0,
-      
-      // Variable for all time net energy used in uploaded CSV data (calculated by comparing site demand versus export).
       netEnergy: 0,
-      
-      // Variable for all time spending in uploaded CSV data.
       totalSpent: 0,
-
-      // Variable to track energy usage of asset one over all uploaded time.   
-      chpOneGeneration: 0,
-
-      // Variable to track energy usage of asset two over all uploaded time.
-      chpTwoGeneration: 0,
-      
-      // Variable for the number of days of data in uploaded CSV data.
-      daysTracked: 0,
-
-      // DATA BY DAY 
-      // Variable for electricty used in the last day in uploaded CSV data.   
-      electrictyUsedDay: 0,
-      
-      // Variable for heat used in the last day in uploaded CSV data.
-      heatUsedDay: 0,
-      
-      // Variable for energy exported in the last day in uploaded CSV data.
-      energyExportedDay: 0,
-      
-      // Variable for net energy use in the last day in uploaded CSV data.
-      netEnergyDay: 0,
-      
-      // Variable for spending in the last day in uploaded CSV data.
-      totalSpentDay: 0,
-
-      // Variable to track energy usage of asset two over the last day.
-      asset1UsageDay: 0,
-
-      // Variable to track energy usage of asset two over the last day.
-      asset2UsageDay: 0,
-
-      // Boolean to assess whether the User has submitted a valid CSV file.
-      isValidCsv: false,
-      
-      // Boolean to assess whether or not to return an error to the User when they try to upload their CSV.
-      errorReturn: false,
-
-      // Mock data to test cases wherein data for specified dates has already been uploaded.
-      dates:{
-        // The first selection reflects dates which will not have been uploaded yet by users for the purpose of testing.
-        val: ["31/12/2020 23:32", "01/01/2020 00:02"],
-
-        // The second selection reflects dates which will have been uploaded yet by users for the purpose of testing.
-        val2: ["31/12/2020 23:30"],
-      },
-
-      // Variable to track which energy zone the energy site resides in.
-      distributionNetwork: "EPN",
-
-      // Variable to track the amount of energy usage time spent in red-zone periods.
       redZoneUsage: 0,
-
-      // Variable to track the amount of energy usage time spent in red-zone periods.
       amberZoneUsage: 0,
-
-      // Variable to track the amount of energy usage time spent in red-zone periods.
       greenZoneUsage: 0,
-
-      // Variable to count how many rows of data are being accessed.
-      numberOfDataRows:0,
-
-      zonesArray: [],
-
-      carbonEmitted: 0,
-
       carbonEmittedPreviousMonth: 0,
-
       carbonEmittedCurrentMonth: 0,
-
       moneySpentPreviousMonth: 0,
-
       moneySpentCurrentMonth: 0,
-
-      previousMonth: null,
-
-      currentMonth: null,
-
+      carbonEmitted: 0,
+      zonesArray: [],
       allTimeDataSelected: "true",
-
-      lastMonthSelected: "false",
-
-      lastWeekSeleted: "false",
-
-      lastDaySelected: "false",
-
-      selectedTimeframe: "All Time",
-
-      monthsOnRecord: 0,
-
-      firstSelectedMonth: "February",
-
-      secondSelectedMonth: "March",
-      
+      months: ["January", "February", "March", "April", "May", "June", "July",
+               "August", "September", "October", "November", "December"],
+      distributionNetwork: "EPN",
+      viewRedZones: "false",         
     };
   }
+
 
   returnSiteInsightsApi = async (userId) => {
     try {
       // API endpoint where we send form data.
-      const endpoint = "/../../api/site/getAllHistoricalSiteData";
-
-      const currentUserId = userId;
+      const endpoint = "/api/site/returnHistoricalSiteDataFromUserId";
 
       const data = {
         userID: userId,
@@ -187,9 +78,16 @@ class Dashboard extends React.Component {
 
       // Get the response data from server as JSON.
       const result = await response.json();
+      console.log(result.data.sites);
       this.setState({siteDataArray: result.data.sites});
       const localDate = new Date(result.data.sites[0].time_stamp);
-      this.setState({dataStartDate: localDate.getFullYear() + " " + this.state.months[localDate.getMonth()]});
+      console.log(localDate);
+      console.log(result.data.sites.length);
+      console.log(localDate.getFullYear());
+      console.log(localDate.getMonth().toString());
+
+      console.log(this.state.months[parseInt(localDate.getMonth())]);
+      this.setState({dataStartDate: localDate.getFullYear() + " " + this.state.months[parseInt(localDate.getMonth())]});
       const historicalDataRows = result.data.sites.length;
 
       this.setState({monthsOnRecord: Math.ceil((historicalDataRows / (31*48)))});
@@ -219,7 +117,6 @@ class Dashboard extends React.Component {
 
       if(this.state.allTimeDataSelected === "true"){
         for(let i = 0; i < historicalDataRows; i++){
-
           electrictyTally = electrictyTally + result.data.sites[i].energy_demand;
           heatTally = heatTally + result.data.sites[i].heat_demand;
           energyExportTally = energyExportTally + result.data.sites[i].energy_exported;
@@ -294,8 +191,8 @@ class Dashboard extends React.Component {
         }
       }
       
-
-      this.setState({electrictyUsed: electrictyTally});
+      console.log(electrictyTally);
+      this.setState({electricityUsed: electrictyTally});
       this.setState({heatUsed: heatTally});
       this.setState({energyExported: energyExportTally});
       this.setState({netEnergy: electrictyTally - energyExportTally});
@@ -338,94 +235,9 @@ class Dashboard extends React.Component {
     }
   }
 
-  returnUserDetailsApi = async (userId) => {
-    try {
-      // API endpoint where we send form data.
-      const endpoint = "../../api/user/getUserDetails";
-
-      const currentUserId = userId;
-
-      const data = {
-        userID: userId,
-      }
-
-      const JSONdata = JSON.stringify(data);
-
-      // Form the request for sending data to the server.
-      const options = {
-        // The method is POST because we are sending data.
-        method: "POST",
-        // Tell the server we're sending JSON.
-        headers: {
-          "Content-Type": "application/json",
-        },
-      
-        body: JSONdata,
-      }
-
-      // Send the form data to our forms API on Vercel and get a response.
-      const response = await fetch(endpoint, options);
-
-      // Get the response data from server as JSON.
-      const result = await response.json();
-
-      // Set the state array for users to the data returned from calling the API (users from the database).
-      this.setState({ userName: result[0].first_name + " " + result[0].last_name });
-
-    } catch (e) {
-      // No action
-    }
-  }
-
-  returnSiteDetailsApi = async (userId) => {
-    try {
-
-      // API endpoint where we send form data.
-      const endpoint = "../../api/user/getUserSite";
-
-      const data = {
-        userID: userId,
-      }
-
-      const JSONdata = JSON.stringify(data);
-
-      // Form the request for sending data to the server.
-      const options = {
-        // The method is POST because we are sending data.
-        method: "POST",
-        // Tell the server we're sending JSON.
-        headers: {
-          "Content-Type": "application/json",
-        },
-      
-        body: JSONdata,
-      }
-
-      // Send the form data to our forms API on Vercel and get a response.
-      const response = await fetch(endpoint, options);
-
-      // Get the response data from server as JSON.
-      const result = await response.json();
-
-      console.log(result.data);
-
-      // Set the state array for users to the data returned from calling the API (users from the database).
-      this.setState({ userSite: result.data.site });
-
-    } catch (e) {
-      // No action
-    }
-  }
-
-  updateChosenMonths = async () => {
-    this.setState({selectedTimeframe: document.getElementById("chosenScale").value});
-  }
-
-
-  // Funtion used to validate user priveleges from the login page and remove cookies. It is also used to initialise data on the page.
   async componentDidMount() {
     //will check user is allowed on this page first
-    // Attempt to parse a user cookie
+    //attempt to get user cookie
     try {
       //Get the user cookie
       let userCookieEncypted = Cookies.get().user;
@@ -438,15 +250,13 @@ class Dashboard extends React.Component {
       //store decrypted cookie in userCookie
       var userCookie = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
-  // If the user has the incorrect credentials for the page, remove them
+      // If the user has the incorrect credentials for the page, remove them
       if (userCookie.role != 2) {
         Cookies.remove("user");
         window.location = "/login";
       }
 
-      await this.returnUserDetailsApi(userCookie.user);
-      await this.returnSiteDetailsApi(userCookie.user);
-      await this.returnSiteInsightsApi();
+      await this.returnSiteInsightsApi(userCookie.user);
 
       //catch errors
     } catch (e) {
@@ -455,107 +265,435 @@ class Dashboard extends React.Component {
       window.location = "/login";
     }
 
-  };
+    //fetch site historical data via userID
+    let data = {
+      userID: userCookie.user.toString()
+    }
+    //sets options for API
+    let JSONdata = JSON.stringify(data);
+    let endpoint = '/api/user/getUserSite';
+    let options = {method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSONdata,}
+    //fetches API to get user siteID
+    let response = await fetch(endpoint, options)
+    let result = await response.json();
 
-  // Return the contents of the Admin Dashboard page.
+    //if no site has been returned
+    if(result.data.message === "no site"){
+      alert("server error, no site found related to user")
+      return;
+    }
+
+    //save siteID to state
+    this.state.siteID = result.data.site;
+
+
+    //fetch site data between 2021-01-09 - 2021-01-16, this is hard coded because we arent currently recieving live data
+    data = {
+      siteID: this.state.siteID,
+      dateStart: "2020-09-13",
+      dateEnd: "2020-10-24"
+    }
+
+    JSONdata = JSON.stringify(data);
+    //API will get site data for the timeframe submitted (this week)
+    endpoint = '/api/site/getSiteDataTimeRangeDaily';
+    options = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json',},
+      body: JSONdata,
+    }
+    response = await fetch(endpoint, options)
+    result = await response.json();
+    //DB returns JSON wrapped in [] which javascript doesn't like
+    //so we stringify it, remove [], then parse back to JSON
+
+    //formats the data to be inserted into graph
+    try{
+      data = [
+        { date: result[0].date.split("T")[0], demand: result[0].energy_demand },
+        { date: result[1].date.split("T")[0], demand: result[1].energy_demand },
+        { date: result[2].date.split("T")[0], demand: result[2].energy_demand },
+        { date: result[3].date.split("T")[0], demand: result[3].energy_demand },
+        { date: result[4].date.split("T")[0], demand: result[4].energy_demand },
+        { date: result[5].date.split("T")[0], demand: result[5].energy_demand },
+        { date: result[6].date.split("T")[0], demand: result[6].energy_demand },
+      ]
+    }catch{
+      console.log("Please update starting date and ending date.")
+    }
+    
+
+    //sets State to refresh page with new data
+    this.state.data = data;
+    this.setState({ data: data });
+    //updates value to make the page render the graph
+    this.state.dataUpdated = true;
+
+    //creates data object with siteID to be sent off to retrieve site details
+    data = {siteID: this.state.siteID}
+    JSONdata = JSON.stringify(data);
+    endpoint = '/api/site/getSiteDetails';
+    options = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json',},
+      body: JSONdata,
+    }
+    response = await fetch(endpoint, options)
+    result = await response.json();
+
+    //sets information boxes to have site details
+
+    this.setState({pageName: result[0].site_name + " - " + result[0].county});
+
+    //API request to get reports for the site
+    endpoint = '/api/report/getReportListData';
+    options = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json',},
+      body: JSONdata,
+    }
+    response = await fetch(endpoint, options)
+    result = await response.json();
+
+
+    //initialise variables
+    let Monday;
+    let listHtml = "";
+    let currentSite = "";
+    let id = 0;
+
+    //filter JSON to only contain curren site (via site_id)
+    var site_filter = result.filter( element => element.site_id === parseInt(this.state.siteID));
+    //loops through list of site data
+    for (var record in await site_filter) {
+
+      //splits the time_stamp into date and time
+      let [date, time] = site_filter[record].time_stamp.split("T");
+      //converts string "date" into Date object
+      let days = new Date(date);
+
+      //if day is a monday
+      if (days.getDay() === 1) {
+        //store monday's date
+        Monday = date;
+      }
+
+      //if day is a sunday
+      if (days.getDay() === 0) {
+        //end week and add new HTML record
+        //increment id for new record
+        id++;
+        if (days.getDay() + new Date(Monday).getDay() === 1) {
+          //listHtml gets a new row added to it
+          listHtml = listHtml + '<div class="esmReportCard">' +
+              '<p class="esmReportText">' + Monday + ' - ' + date + '</p>' +
+              '<div id="data'+ id +'" style="display: none">' + Monday + '|' + date + "|" + this.state.siteID + '</div>' +
+              '<button class="esmRecordDownloadBtn" id="btn'+ id +'">compare</button></div>'
+
+          //data relating to record is hidden in this <div> above
+        }
+      }
+    }
+
+    //get reportsList html
+    const list = document.getElementById("reportsList");
+
+    //set innerHTML to list
+    list.innerHTML = listHtml
+
+    //function for buttons
+    async function clickDetect(id) {
+      //when button clicked hide dashboard and show card
+      document.getElementById("compareCard").style.display = "flex";
+      document.getElementById("page").style.display = "none";
+
+      //get data from record
+      const weekData = document.getElementById("data" + id).innerText;
+
+      //split record data into start of week and end of week
+      const [weekStart, weekEnd, siteID] = weekData.split("|");
+
+      //set title of comparison
+      document.getElementById("compareTitle").innerText = "Week " + weekStart + " compared to " + weekEnd;
+
+      //creates object to convert to json
+      let data = {
+        siteID: siteID,
+        dateStart: weekStart,
+        dateEnd: weekEnd
+      }
+      let JSONdata = JSON.stringify(data);
+      //API will get site data for the timeframe submitted (this week)
+      let endpoint = '/api/site/getSiteWeekData';
+      let options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json',},
+        body: JSONdata,
+      }
+      let response = await fetch(endpoint, options)
+      let result = await response.json();
+
+      //DB returns JSON wrapped in [] which javascript doesn't like
+      //so we stringify it, remove [], then parse back to JSON
+      let stringResult = JSON.stringify(result);
+      stringResult = stringResult.replace("[", "");
+      stringResult = stringResult.replace("]", "");
+      result = JSON.parse(stringResult);
+
+      //energy this week
+      const thisEnergyUsage = result.energy_week_demand;
+
+      //carbon this week
+      const thisCarbonEmission = result.carbon_week_emitted;
+
+      //expenditure this week
+      const thisExpenditure = result.energy_week_cost;
+
+      //once average data has been fetched change text in html
+      document.getElementById("thisExpense").innerText = "£" + result.energy_week_cost;
+      document.getElementById("thisEnergy").innerText = result.energy_week_demand + "Kw";
+      document.getElementById("thisCarbon").innerText = result.carbon_week_emitted + "Kg";
+
+
+      //got all current week data, begins to fetch previous week data
+
+      //calculates the previous week's beginning
+      const previousWeekStart = Date.parse(weekStart) - (7 * 24 * 60 * 60 * 1000);
+
+      //calculates the previous week's end
+      const previousWeekEnd = Date.parse(weekEnd) - (7 * 24 * 60 * 60 * 1000);
+
+      //get previous week date and format it
+      //format date function from: https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
+      function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + (d.getDate()),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+          month = '0' + month;
+        if (day.length < 2)
+          day = '0' + day;
+
+        return [year, month, day].join('-');
+      }
+
+
+      //make api get previous siteweek data (uses function for correct format)
+      data = {
+        siteID: siteID,
+        dateStart: formatDate(previousWeekStart),
+        dateEnd: formatDate(previousWeekEnd)
+      }
+      JSONdata = JSON.stringify(data);
+      endpoint = '/api/site/getSiteWeekData';
+      options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json',},
+        body: JSONdata,
+      }
+      response = await fetch(endpoint, options)
+      result = await response.json();
+
+      //result is JSON response of API
+      //JSON holds previous weeks site data
+
+      //once average data has been fetched change text in html
+      document.getElementById("prevExpense").innerText = "£" + result[0].energy_week_cost;
+      document.getElementById("prevEnergy").innerText = result[0].energy_week_demand + "Kw";
+      document.getElementById("prevCarbon").innerText = result[0].carbon_week_emitted + "Kg";
+
+      //calculate changes between this weke and previous week
+      const thisEnergyChange = thisEnergyUsage - result[0].energy_week_demand;
+      const thisCarbonEmissionChange = thisCarbonEmission - result[0].carbon_week_emitted;
+      const thisExpenditureChange = thisExpenditure - result[0].energy_week_cost;
+
+      //formats the text based on whether site has used/spent/emitted more or less of each metric
+      //for energy usage change
+      if (thisEnergyChange < 0){
+        document.getElementById("energyChange").innerText = -thisEnergyChange + "Kw";
+        document.getElementById("energyText").innerText = "less than previous week";
+      } else {
+        document.getElementById("energyChange").innerText = thisEnergyChange + "Kw";
+        document.getElementById("energyText").innerText = "more than previous week";
+      }
+      //for carbon emission change
+      if (thisCarbonEmissionChange < 0){
+        document.getElementById("carbonChange").innerText = -thisCarbonEmissionChange + "Kg";
+        document.getElementById("carbonText").innerText = "less than previous week";
+      } else {
+        document.getElementById("carbonChange").innerText = thisCarbonEmissionChange + "Kg";
+        document.getElementById("carbonText").innerText = "more than previous week";
+      }
+      //for expenditure change
+      if (thisExpenditureChange < 0){
+        document.getElementById("spentChange").innerText = "£" + -thisExpenditureChange;
+        document.getElementById("spentText").innerText = "less than previous week";
+      } else {
+        document.getElementById("spentChange").innerText = "£" + thisExpenditureChange;
+        document.getElementById("spentText").innerText = "more than previous week";
+      }
+
+
+      //API request to get site weekly averages
+      data = {siteID: siteID}
+      JSONdata = JSON.stringify(data);
+      endpoint = '/api/site/getSiteHistoricalData';
+      options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json',},
+        body: JSONdata,
+      }
+      response = await fetch(endpoint, options)
+      result = await response.json();
+      stringResult = JSON.stringify(result);
+      stringResult = stringResult.replace("[", "");
+      stringResult = stringResult.replace("]", "");
+      result = JSON.parse(stringResult);
+
+      //once average data has been fetched change text in html
+      document.getElementById("avgExpense").innerText = "£" + result.energy_avg_week_cost.toFixed(2);
+      document.getElementById("avgEnergy").innerText = result.energy_avg_week_demand.toFixed(2) + "Kw";
+      document.getElementById("avgCarbon").innerText = result.carbon_avg_week_emitted.toFixed(2) + "Kg";
+
+    }
+
+
+    //loops up to id/record count
+    for (let i = 1; i < id+1; i++){
+      try{
+        //fetches button and add's onClick function to them
+        let btn = document.getElementById("btn"+i);
+        btn.addEventListener('click', function (){
+          clickDetect(i);
+        });
+      } catch (e) {}
+    }
+
+
+  }
+
+  //close button on compare card
+  closeCompare = async () => {
+    document.getElementById("compareCard").style.display = "none";
+    document.getElementById("page").style.display = "block";
+  }
+
+  switchPanel = async () => {
+    if(this.state.viewRedZones === "true"){
+      this.setState({viewRedZones: "false"});
+    }else if(this.state.viewRedZones === "false"){
+      this.setState({viewRedZones: "true"});
+    }
+  }
+
   render() {
+    //will return loading data... while react/nextjs fetches data in "componentDidMount()"
+    if(!this.state.dataUpdated){
+      return(<div>loading data...</div>);
+    }
+
     return (
-      // On laoding the main div, call the function to validate user priveleges and initialise data to be rendered
-      <div aria-label="admin dashboard content">
-        {/*Utilise a navbar with values based on the role of the current user*/}
+      <div className="esmDashboardBackground">
         <MainLayout
-          isAdmin={this.state.isAdmin}
-          isDirector={this.state.isDirector}
-          pageName={this.state.pageName}
-        >
-          <div className={"director-content-container"} aria-label="director dashboard body">
-            <div className="graphBox">
-              <h1 className="dashboard-header">Director Dashboard</h1>
-              <hr className={"h1-underline"} />
-              <p className={"dashboard-sub-header"}>Welcome to your dashboard {this.state.userName}.</p>
-              
+            isDirector={this.state.isDirector}
+            pageName={this.state.pageName}
+            id="gridContainer"
+        />
+        <div className="esmSiteCardHolder" id="compareCard" aria-label="report card">
+          <div className="esmCompareWeeks">
+              <div className="esmCompareBanner">
+                <p aria-label="report card title" id="compareTitle"></p>
+                <div aria-label="close report card button" className="esmBannerExit" onClick={this.closeCompare}>X</div>
+              </div>
+            <p/>
+            <table aria-label="comparison table">
+              <thead>
+              <tr className="reportsListHeader">
+                <th className="esmTableHeader">ThisWeek</th>
+                <th className="esmTableHeader">PrevWeek</th>
+                <th className="esmTableHeader">SiteAvgWeek</th>
+              </tr>
+              </thead>
+              <tbody id="list">
+                <tr className="esmTableRow">
+                  <td className="esmTableData" aria-label="energy used this selected week" id="thisEnergy"></td>
+                  <td className="esmTableData" aria-label="energy used previous week" id="prevEnergy"></td>
+                  <td className="esmTableData" aria-label="average energy used weekly" id="avgEnergy"></td>
+                </tr>
+                <tr className="esmTableRow">
+                  <td className="esmTableData" aria-label="carbon emitted this selected week" id="thisCarbon"></td>
+                  <td className="esmTableData" aria-label="carbon emitted previous week" id="prevCarbon"></td>
+                  <td className="esmTableData" aria-label="average energy used weekly" id="avgCarbon"></td>
+                </tr>
+                <tr className="esmTableRow">
+                  <td className="esmTableData" aria-label="expenditure this selected week" id="thisExpense"></td>
+                  <td className="esmTableData" aria-label="expenditure previous week" id="prevExpense"></td>
+                  <td className="esmTableData" aria-label="average weekly expenditure" id="avgExpense"></td>
+                </tr>
+              </tbody>
+            </table>
+            <div className="esmCompareContainer">
+              <div className="esmCompareInfo" aria-label="energy comparison">
+                <div className="esmCompareTitle">You have used</div>
+                <div className="esmCompareText" id="energyChange">42134</div>
+                <div className="esmCompareTitle" id="energyText">more than last week</div>
+              </div>
+              <div className="esmCompareInfo" aria-label="carbon comparison">
+                <div className="esmCompareTitle">You have emitted</div>
+                <div className="esmCompareText" id="carbonChange">42134</div>
+                <div className="esmCompareTitle" id="carbonText">more than last week</div>
+              </div>
+              <div className="esmCompareInfo" aria-label="expenditure comparison">
+                <div className="esmCompareTitle">You have spent</div>
+                <div className="esmCompareText" id="spentChange">42134</div>
+                <div className="esmCompareTitle" id="spentText">more than last week</div>
+              </div>
             </div>
-            <div className={"directorContent"} aria-label="director dashboard section container">
-              <h2>{this.state.userSite}</h2>
-              <hr/>
+          </div>
+        </div>
 
-              <div>
-                <div>
-                  <h3 className="graphBox">Insights</h3>
-                  <div className="flexContainer">
+        <div id="page">
+          <div className="esmDashboardGridContainer" id="gridContainer">
+            <div>
+              {this.state.viewRedZones === "false" &&(
+                <div className="esmDashboardGraphPanel" aria-label="graph panel">
+                  <button onClick={this.switchPanel}>Switch</button>
+                  <h3 className="esmPanelHeader"  aria-label="Energy demand">Energy Demand</h3>
+                  <div className="esmGraphCard">
+                    <LineGraph
+                        toggle1={"Week"}
+                        toggle2={"Month"}
+                        toggle3={"Year"}
+                        dataSet={this.state.data}
+                        xAxis={"Date"}
+                        yAxis={"kW"}
+                        xAxisDataKey={"date"}
+                        yAxisDataKey={"demand"}
+                        aria-label="This week energy graph"
+                    />
+                  </div>
+                </div>
+              )}
+              {this.state.viewRedZones === "true" &&(
+                  <div className="esmDashboardGraphPanel" aria-label="graph panel">
+                    <button onClick={this.switchPanel}>Switch</button>
+                    <h3 className="esmPanelHeader"  aria-label="Energy demand">Zone Pricing Breakdown</h3>
                     <div>
-                      <p>Your earliest data: {this.state.dataStartDate}</p>
-                      <p title="Eastern Power Networks">Energy Distribution Network: {this.state.distributionNetwork}</p>
+                        <PieChart title="Energy Usage by Distribution Network Price Chart" width={400} height={200}>
+                          <Pie data={this.state.zonesArray} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#fff" label>
+                          </Pie>  
+                        </PieChart>
                     </div>
-
-                    <div className="flexBox w-100">
-                      <h3>All Time Data</h3>
-                      {/* <select id="chosenScale" onChange={this.updateChosenMonths}>
-                        <option monthValue="All Time">All Time</option>
-                        <option monthValue="Last Month">Last Month</option>
-                      </select> */}
-                    </div>
-
-                    <div className="flexBox w-50 h-100">
-                      <b>Zonal Energy Usage Breakdown</b>
-                      <PieChart title="Energy Usage by Distribution Network Price Chart" width={400} height={200}>
-                        <Pie data={this.state.zonesArray} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#fff" label>
-                        </Pie>  
-                      </PieChart>
-                      <div>
-                        <p>You spent <b>{parseFloat((this.state.redZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}%</b> of your energy usage during red zone periods.</p>
-                        <p>You spent <b>{parseFloat((this.state.amberZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}%</b> of your energy usage during amber zone periods.</p>
-                        <p>You spent <b>{parseFloat((this.state.greenZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}%</b> of your energy usage during green zone periods.</p>
-                      </div>
-                      {this.state.redZoneUsage > this.state.greenZoneUsage &&(
-                        <div>
-                          {this.state.redZoneUsage > this.state.amberZoneUsage &&(
-                            <p> Most of your energy use was during <b>red-zone</b> periods.  Consider changing your energy usage times
-                            and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
-                            money.</p>
-                          )}
-                          {this.state.amberZoneUsage > this.state.redZoneUsage &&(
-                            <p> Most of your energy use was during <b>amber-zone</b> periods.  Consider changing your energy usage times
-                            and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
-                            money.</p>
-                          )}
-                        </div>  
-                      )}
-                      {this.state.greenZoneUsage > this.state.redZoneUsage &&(
-                        <div>
-                          {this.state.greenZoneUsage > this.state.amberZoneUsage &&(
-                            <p> Well done! Most of your energy has been during <b>green-zone</b> periods. Find out <Link href="/zonePricingInformation"> 
-                            more </Link> about zone pricing to see how you could save money.</p>
-                          )}
-                          {this.state.amberZoneUsage > this.state.greenZoneUsage &&(
-                            <p> Most of your energy use was during <b>amber-zone</b> periods.  Consider changing your energy usage times
-                            and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
-                            money.</p>
-                          )}
-                        </div>  
-                      )}
-                    </div>
-
-
-                    <div className="flexBox h-50 "><p><b>Energy Demand</b></p> 
-                      {parseFloat(this.state.electrictyUsed).toFixed(0)}KwH
-                    </div>
-                    <div className="flexBox h-50"><p><b>Heat Demand</b></p> 
-                      {parseFloat(this.state.heatUsed).toFixed(0)}KwH
-                    </div>
-                    <div className="flexBox"><p><b>Energy Exported</b></p> 
-                      {parseFloat(this.state.energyExported).toFixed(0)}KwH
-                    </div>
-                    <div className="flexBox"><p><b>Net Energy Use</b></p> 
-                      {parseFloat(this.state.netEnergy).toFixed(0)}KwH
-                    </div>
-                    <div className="flexBox"><p><b>Spending</b></p> 
-                    £{parseFloat(this.state.totalSpent).toFixed(2)}
-                    </div>
-                    <div className="flexBox"><p><b>Carbon Emissions</b></p> 
-                      {parseFloat(this.state.carbonEmitted).toFixed(2)}Kg
-                    </div>
-                    <div className="flexBox w-100"><p><b>Carbon Emissions</b></p> 
+                  </div>
+              )}
+            </div>
+            <div className="esmDashboardPanel">
+              <h3 className="esmPanelHeader" aria-label="insights card">Insights</h3>
+              <div className="esmPanelListContainer">
+                <div className="esmInsightCard">
+                      <p><b>Carbon Emissions</b></p> 
                       <p>Your site generated {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)}Kg of
                         carbon in {this.state.currentMonth} compared to {parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)}Kg
                         in {this.state.previousMonth}.</p>
@@ -580,7 +718,7 @@ class Dashboard extends React.Component {
                         {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2) > parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2) &&(
                           <div>
                             <p className="postiveFeedbackText">That is {parseFloat(this.state.carbonEmittedCurrentMonth - this.state.carbonEmittedPreviousMonth).toFixed(2)} Kg 
-                               more, reflecting a {parseFloat(1-parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)/parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)).toFixed(4) * 100}%
+                               more, reflecting a {parseFloat(1-parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)/parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)).toFixed(2) * 100}%
                                increase in carbon emissions. Consider your operating hours and equipment. Check the <Link href="/insights">insights </Link> page for more detail.</p>
                                <p>Average monthly emissions: {parseFloat(this.state.carbonEmitted / this.state.monthsOnRecord).toFixed(2)} Kg</p>
                           </div>
@@ -591,13 +729,13 @@ class Dashboard extends React.Component {
                             <p>Average monthly emissions: {parseFloat(this.state.carbonEmitted / this.state.monthsOnRecord).toFixed(2)} Kg</p>
                           </div>
                         )}
-                    </div>
-
-                    <div className="flexBox w-100"><p><b>Your Spending</b></p> 
+                </div>
+                <div className="esmInsightCard">
+                <p><b>Your Spending</b></p> 
                       <p>You spent £{parseFloat(this.state.moneySpentCurrentMonth).toFixed(2)} in {this.state.currentMonth} compared to £{parseFloat(this.state.moneySpentPreviousMonth).toFixed(2)} in {this.state.previousMonth}.</p>
                         {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) < parseFloat(this.state.moneySpentPreviousMonth).toFixed(2) &&(
                           <div>
-                          <p className="postiveFeedbackText">That is £{parseFloat(this.state.moneySpentPreviousMonth - this.state.moneySpentCurrentMonth).toFixed(2)}  less and reflects a {parseFloat(1 - parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) / parseFloat(this.state.moneySpentPreviousMonth).toFixed(2)).toFixed(4) * 100}%  reduction. Go you!</p>
+                          <p className="postiveFeedbackText">That is £{parseFloat(this.state.moneySpentPreviousMonth - this.state.moneySpentCurrentMonth).toFixed(2)}  less and reflects a {parseFloat(1 - parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) / parseFloat(this.state.moneySpentPreviousMonth).toFixed(2)).toFixed(3) * 100}%  reduction. Go you!</p>
                                {parseFloat(this.state.moneySpentCurrentMonth).toFixed(2) < (this.state.totalSpent / this.state.monthsOnRecord)&&(
                                 <div>
                                   <p>You are also below your average monthly spending of £{parseFloat(this.state.totalSpent / this.state.monthsOnRecord).toFixed(2)}</p>
@@ -624,24 +762,91 @@ class Dashboard extends React.Component {
                             <p>Average monthly spending: £{parseFloat(this.state.totalSpent / this.state.monthsOnRecord).toFixed(2)}</p>
                           </div>
                         )}
-                    </div>
-                  </div>
                 </div>
+                <div className="esmInsightCard">
+                <p><b>All Time Energy Demand</b></p> 
+                      {parseFloat(this.state.electricityUsed).toFixed(0)}KwH
+                </div>
+                <div className="esmInsightCard">
+                <p><b>Heat Demand</b></p> 
+                      {parseFloat(this.state.heatUsed).toFixed(0)}KwH
+                </div>
+                <div className="esmInsightCard">
+                <p><b>All Time Energy Exported</b></p> 
+                      {parseFloat(this.state.energyExported).toFixed(0)}KwH
+                </div>
+                <div className="esmInsightCard">
+                <p><b>Net Energy Use</b></p> 
+                      {parseFloat(this.state.netEnergy).toFixed(0)}KwH
+                </div>
+                <div className="esmInsightCard">
+                <p><b>Spending</b></p> 
+                    £{parseFloat(this.state.totalSpent).toFixed(2)}
+                </div>
+                <div className="esmInsightCard">
+                <p><b>Carbon Emissions</b></p> 
+                    {parseFloat(this.state.carbonEmitted).toFixed(2)}Kg
+                </div>
+                <hr/>
               </div>
             </div>
+            <div className="esmDashboardPanel esmSpecificGrid" aria-label="weekly reports card">
+              <h3 className="esmPanelHeader">Reports</h3>
+              <div className="esmPanelListContainer" id="reportsList">
+              {/*  reports are inputted here*/}
+              </div>
+            </div>
+            <div className="esmBottomPanel" aria-label="site information card">
+              {/*<div className="esmBottomPanelInfo">*/}
+              <div className="esmPanelListContainer">
+                        <div>
+                          <div className="esmInsightCard">
+                            <p>You spent <b>{parseFloat((this.state.redZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}%</b> of your energy usage during red zone periods.</p>
+                          </div>
+                          <div className="esmInsightCard">  
+                            <p>You spent <b>{parseFloat((this.state.amberZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}%</b> of your energy usage during amber zone periods.</p>
+                          </div>
+                          <div className="esmInsightCard">  
+                            <p>You spent <b>{parseFloat((this.state.greenZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}%</b> of your energy usage during green zone periods.</p>
+                          </div>
+                        </div>
+                       
+              {this.state.redZoneUsage > this.state.greenZoneUsage &&(
+                          <div>
+                            {this.state.redZoneUsage > this.state.amberZoneUsage &&(
+                              <p> Most of your energy use was during <b>red-zone</b> periods.  Consider changing your energy usage times
+                              and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
+                              money.</p>
+                            )}
+                            {this.state.amberZoneUsage > this.state.redZoneUsage &&(
+                              <p> Most of your energy use was during <b>amber-zone</b> periods.  Consider changing your energy usage times
+                              and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
+                              money.</p>
+                            )}
+                          </div>  
+              )}
+              {this.state.greenZoneUsage > this.state.redZoneUsage &&(
+                          <div>
+                            {this.state.greenZoneUsage > this.state.amberZoneUsage &&(
+                              <p> Well done! Most of your energy has been during <b>green-zone</b> periods. Find out <Link href="/zonePricingInformation"> 
+                              more </Link> about zone pricing to see how you could save money.</p>
+                            )}
+                            {this.state.amberZoneUsage > this.state.greenZoneUsage &&(
+                              <p> Most of your energy use was during <b>amber-zone</b> periods.  Consider changing your energy usage times
+                              and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
+                              money.</p>
+                            )}
+                          </div>  
+              )}
+              </div> 
+            </div>
           </div>
-        </MainLayout>
+        </div>
       </div>
     );
   }
 }
 
-export default Dashboard;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////TOMORROW
-/////                  ///////////////////                   /////////////////                      ///////TODAY   *
-////      ///////////////////////////////  ///////////////   ////////////////    ///////////////////////// *TOMORROW
-///                   ///////////////////////////////    //////////////////                     /////////TOMORROW *
-//       /////////////////////////////////////       ////////  ///////////////////////////    //////////TODAY *    *
-//                   ///////////////////                      /////////                       /////////   * TOMORROW
-//////////////////////////////////////////////////////////////////////////////////////////////////////DAY    TOMORROW
+
+export default EsmDashboard;
