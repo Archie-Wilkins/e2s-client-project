@@ -188,7 +188,7 @@ class BillValidation extends React.Component {
         try {
             // API endpoint where we send form data.
             //const endpoint = "/api/returnAllHistoricalSiteDataApi";
-            const endpoint = "/api/returnHistoricalSiteDataFromUserId";
+            const endpoint = "/../../api/sites/returnHistoricalSiteDataFromUserId";
 
             const data= {
                 userID: this.state.loggedInUserID,
@@ -515,7 +515,7 @@ class BillValidation extends React.Component {
                                 {this.state.dateIsValid === "false" &&(
                                     <div>
                                         <p>ERROR: for {this.state.selectedYear} you only have data until {this.state.months[this.state.historicalLastMonth-1]}.</p>
-                                        <Link href="/csvUpload"><p>Upload new data</p></Link>
+                                            <Link href="/csv/csvUpload"><p>Upload new data</p></Link>
                                     </div>    
                                 )}
                                 {this.state.dateIsValid === "true" &&(

@@ -160,7 +160,7 @@ class Dashboard extends React.Component {
   returnSiteInsightsApi = async (userId) => {
     try {
       // API endpoint where we send form data.
-      const endpoint = "../api/getAllHistoricalSiteData";
+      const endpoint = "/../../api/site/getAllHistoricalSiteData";
 
       const currentUserId = userId;
 
@@ -341,7 +341,7 @@ class Dashboard extends React.Component {
   returnUserDetailsApi = async (userId) => {
     try {
       // API endpoint where we send form data.
-      const endpoint = "../api/getUserDetails";
+      const endpoint = "../../api/user/getUserDetails";
 
       const currentUserId = userId;
 
@@ -381,7 +381,7 @@ class Dashboard extends React.Component {
     try {
 
       // API endpoint where we send form data.
-      const endpoint = "../api/getUserSite";
+      const endpoint = "../../api/user/getUserSite";
 
       const data = {
         userID: userId,
@@ -555,7 +555,7 @@ class Dashboard extends React.Component {
                     <div className="flexBox"><p><b>Carbon Emissions</b></p> 
                       {parseFloat(this.state.carbonEmitted).toFixed(2)}Kg
                     </div>
-                    <div className="flexBox w-100"><p><b>Carbon Emissions</b></p> 
+                    <div><p><b>Carbon Emissions</b></p> 
                       <p>Your site generated {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)}Kg of
                         carbon in {this.state.currentMonth} compared to {parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)}Kg
                         in {this.state.previousMonth}.</p>
