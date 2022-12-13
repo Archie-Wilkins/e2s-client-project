@@ -77,6 +77,7 @@ class Dashboard extends React.Component {
     //will check user is allowed on this page first
     // Attempt to parse a user cookie
     try {
+
       //Get the user cookie
       let userCookieEncypted = Cookies.get().user;
 
@@ -87,6 +88,7 @@ class Dashboard extends React.Component {
       var bytes = CryptoJS.AES.decrypt(userCookieEncypted, 'team4');
       //store decrypted cookie in userCookie
       var userCookie = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      // Initialise the user cookie
 
       // If the user has the incorrect credentials for the page, remove them
       if (userCookie.role === 4) {

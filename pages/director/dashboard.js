@@ -815,12 +815,12 @@ class EsmDashboard extends React.Component {
                           <div>
                             {this.state.redZoneUsage > this.state.amberZoneUsage &&(
                               <p> Most of your energy use was during <b>red-zone</b> periods.  Consider changing your energy usage times
-                              and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
+                              and find out <Link href="./zonePricingInformation"> more </Link> about zone pricing to see how you could save
                               money.</p>
                             )}
                             {this.state.amberZoneUsage > this.state.redZoneUsage &&(
                               <p> Most of your energy use was during <b>amber-zone</b> periods.  Consider changing your energy usage times
-                              and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
+                              and find out <Link href="./zonePricingInformation"> more </Link> about zone pricing to see how you could save
                               money.</p>
                             )}
                           </div>  
@@ -828,12 +828,12 @@ class EsmDashboard extends React.Component {
               {this.state.greenZoneUsage > this.state.redZoneUsage &&(
                           <div>
                             {this.state.greenZoneUsage > this.state.amberZoneUsage &&(
-                              <p> Well done! Most of your energy has been during <b>green-zone</b> periods. Find out <Link href="/zonePricingInformation"> 
+                              <p> Well done! Most of your energy has been during <b>green-zone</b> periods. Find out <Link href="./zonePricingInformation"> 
                               more </Link> about zone pricing to see how you could save money.</p>
                             )}
                             {this.state.amberZoneUsage > this.state.greenZoneUsage &&(
                               <p> Most of your energy use was during <b>amber-zone</b> periods.  Consider changing your energy usage times
-                              and find out <Link href="/zonePricingInformation"> more </Link> about zone pricing to see how you could save
+                              and find out <Link href="./zonePricingInformation"> more </Link> about zone pricing to see how you could save
                               money.</p>
                             )}
                           </div>  
