@@ -21,7 +21,7 @@ class Dashboard extends React.Component {
       siteDataArray: [],
 
       // The page name rendered in the top nav-bar
-      pageName: "Director Hub",
+      pageName: "Director Dashboard",
 
       // Variable to define the user on the page as an Admin for any dynamic components or permissions
       isAdmin: false,
