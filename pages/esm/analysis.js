@@ -131,7 +131,7 @@ class Analysis extends React.Component {
       let item = yearlyData[i];
       let dateVal = new Date(item['date']);
       let year = dateVal.getFullYear();
-      let month = dateVal.getMonth();
+      let month = dateVal.getMonth() + 1;
       let yearMonth = month + "/" + year;
       yearlyData[i]['date'] = yearMonth;
     }
