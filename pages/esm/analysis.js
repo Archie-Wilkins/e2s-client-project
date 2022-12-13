@@ -1,5 +1,3 @@
-
-
 import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
 import EnergyCostForecastGraph from "../../public/components/graphs/toggleTimeChart";
 
@@ -9,6 +7,7 @@ import ForecastingInfoBox from "../../public/components/dataDisplayBox/forecasti
 import React from "react";
 import BottomFooter from "../../public/components/layouts/bottomFooter.js";
 import { getSitePastWeekData, getSiteDataEveryWeek, getSiteDataEveryDay, getSiteDataEvery6Hours, getSiteDataEveryMonth } from "../../public/services/HistoricalSiteData.js";
+import { getDayName } from "../../public/services/DateConverter";
 
 
 class Analysis extends React.Component {
@@ -16,6 +15,8 @@ class Analysis extends React.Component {
     super(props);
     this.state = {
       pageName: "Analysis",
+
+      dataUpdated: false,
 
       graphDataWeekly: null,
       graphDataMonthly: null,
@@ -56,13 +57,13 @@ class Analysis extends React.Component {
   async componentDidMount() {
 
     console.log("Week")
-    let weeklyData2 = await getSiteDataEvery6Hours("3", "2018-12-22", "2018-12-31")
+    let weeklyData = await getSiteDataEvery6Hours("3", "2018-12-22", "2018-12-30")
 
     console.log("Month")
-    let monthlyData2 = await getSiteDataEveryDay("3", "2018-12-01", "2018-12-31")
+    let monthlyData = await getSiteDataEveryDay("3", "2018-12-01", "2018-12-31")
 
     console.log("Year")
-    let yearlyData2 = await getSiteDataEveryMonth("3", "2018-01-01", "2018-12-31")
+    let yearlyData = await getSiteDataEveryMonth("3", "2018-01-01", "2018-12-31")
 
     let siteInsightsWeekAverage = await getSiteDataEveryWeek("3");
 
@@ -75,21 +76,45 @@ class Analysis extends React.Component {
     console.log(siteInsightsPastWeekAverage);
     let val = siteInsightsWeekAverage[0]
     console.log(val["energy_avg_week_cost"])
-    //Come back to inorder to convert timestamp into nicer format
-    // for (let i = 0; i <= weeklyData2.length; i++) {
-    // let item = weeklyData2[i];
-    // var date = new Date(item['date']);
-    // let formattedDate = date.getTime();
-    // item['date'] = formattedDate;
-    // }
-    // console
-    console.log(weeklyData2);
 
-    console.log("SetState")
+    // Setting date axis for weekly data 
+    for (let i = 0; i < weeklyData.length; i++) {
+      let item = weeklyData[i];
+      let dateVal = new Date(item['date']);
+      let dayName = getDayName(dateVal)
+      let localTime = dateVal.getHours();
+      let localDate = dayName + " " + localTime + ":00";
+      weeklyData[i]['date'] = localDate;
+    }
+
+    // Setting date axis for monthly data 
+    for (let i = 0; i < monthlyData.length; i++) {
+      let item = monthlyData[i];
+      let dateVal = new Date(item['date']);
+      let month = dateVal.getMonth();
+      let dayDate = dateVal.getDate();
+      let monthDay = month + "/" + dayDate;
+      console.log(monthDay)
+      // let localDate = dayName + " " + localTime + ":00";
+      monthlyData[i]['date'] = monthDay;
+    }
+
+    // Setting date axis for yearly data 
+    for (let i = 0; i < yearlyData.length; i++) {
+      let item = yearlyData[i];
+      let dateVal = new Date(item['date']);
+      let year = dateVal.getFullYear();
+      let month = dateVal.getMonth();
+      let yearMonth = month + "/" + year;
+      console.log(yearMonth)
+      // let localDate = dayName + " " + localTime + ":00";
+      yearlyData[i]['date'] = yearMonth;
+    }
+
     this.setState({
-      graphDataWeekly: weeklyData2,
-      graphDataMonthly: monthlyData2,
-      graphDataYearly: yearlyData2,
+      graphDataWeekly: weeklyData,
+      graphDataMonthly: monthlyData,
+      graphDataYearly: yearlyData,
       // Energy Cost
       energyCostThisWeek: siteInsightsWeekAverage["energy_avg_week_cost"],
       energyCostLastWeek: 250,
@@ -120,9 +145,19 @@ class Analysis extends React.Component {
       c02EmissionsThisYear: 435,
       c02EmissionsLastYear: 250,
     });
+
+    this.setState({ dataUpdated: true });
+
   }
 
   render() {
+    if (!this.state.dataUpdated) {
+      return (
+
+        <div className="vh-100 w-100 d-flex justify-content-center align-items-center">
+          <h1>loading...</h1>
+        </div>);
+    }
     return (
       <div>
         <MainLayout pageName={this.state.pageName}>

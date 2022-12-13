@@ -13,7 +13,6 @@ export default async function handler(req, res) {
     try {
         //queries database to get site data for all entries across the given time range
         let queryResult = await site.getSiteDataDayRangeDaily(body.siteID, body.dateStart, body.dateEnd);
-        console.log(queryResult);
         //if no data found
         if (queryResult.toString() === "") {
             //returns 'no data'
