@@ -15,3 +15,4 @@ node_modules
 .next/server/pages-manifest.json
 .next/trace
 .next/trace
+next.config.js
