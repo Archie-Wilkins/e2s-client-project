@@ -17,7 +17,7 @@ class EsmDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDirector: false,
+      isDirector: true,
       pageName: "Dashboard",
       data: [],
       dataUpdated: false,
