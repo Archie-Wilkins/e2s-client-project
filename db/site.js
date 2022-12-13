@@ -3,7 +3,7 @@ var db = require('./DatabaseCore.js');
 
 export const all = async () => {
     return new Promise((resolve, reject) =>  {
-        db.query('SELECT * from sites_historic', (err, results) => {
+        db.query('SELECT * from sites', (err, results) => {
             if(err) {
                 return reject(err);
             }
@@ -225,7 +225,7 @@ export const getSiteReportListData = async () => {
         db.query('SELECT sites.site_id, sites.site_name, sites.county, organisations.name, sites_historic.time_stamp FROM ((sites' +
             ' INNER JOIN organisations ON sites.org_id = organisations.org_id)' +
             ' INNER JOIN sites_historic ON sites.site_id = sites_historic.site_id)' +
-            ' GROUP BY DATE(time_stamp), site_name;', (err, results) => {
+            ' GROUP BY DATE(time_stamp), site_name LIMIT 0, 600;', (err, results) => {
             if(err) {
                 return reject(err);
             }
