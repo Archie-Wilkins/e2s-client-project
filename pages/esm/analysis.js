@@ -56,26 +56,20 @@ class Analysis extends React.Component {
 
   async componentDidMount() {
 
-    console.log("Week")
-    let weeklyData = await getSiteDataEvery6Hours("3", "2018-12-22", "2018-12-30")
+    let weeklyData = await getSiteDataEvery6Hours("1", "2022-02-28", "2022-03-07")
 
-    console.log("Month")
-    let monthlyData = await getSiteDataEveryDay("3", "2018-12-01", "2018-12-31")
+    let monthlyData = await getSiteDataEveryDay("1", "2022-02-07", "2022-03-07")
 
-    console.log("Year")
-    let yearlyData = await getSiteDataEveryMonth("3", "2018-01-01", "2018-12-31")
+    let yearlyData = await getSiteDataEveryMonth("1", "2021-03-07", "2022-03-07")
 
-    let siteInsightsWeekAverage = await getSiteDataEveryWeek("3");
+    let siteInsightsWeekAverage = await getSiteDataEveryWeek("1");
 
-    let siteInsightsPastWeekAverage = await getSitePastWeekData("3");
+    let siteInsightsPastWeekAverage = await getSitePastWeekData("1");
 
-    console.log("siteInsights");
     console.log(siteInsightsWeekAverage);
 
-    console.log("pastWeek");
     console.log(siteInsightsPastWeekAverage);
     let val = siteInsightsWeekAverage[0]
-    console.log(val["energy_avg_week_cost"])
 
     // Setting date axis for weekly data 
     for (let i = 0; i < weeklyData.length; i++) {
@@ -87,6 +81,8 @@ class Analysis extends React.Component {
       weeklyData[i]['date'] = localDate;
     }
 
+    console.log(weeklyData);
+
     // Setting date axis for monthly data 
     for (let i = 0; i < monthlyData.length; i++) {
       let item = monthlyData[i];
@@ -94,8 +90,6 @@ class Analysis extends React.Component {
       let month = dateVal.getMonth();
       let dayDate = dateVal.getDate();
       let monthDay = month + "/" + dayDate;
-      console.log(monthDay)
-      // let localDate = dayName + " " + localTime + ":00";
       monthlyData[i]['date'] = monthDay;
     }
 
@@ -106,8 +100,6 @@ class Analysis extends React.Component {
       let year = dateVal.getFullYear();
       let month = dateVal.getMonth();
       let yearMonth = month + "/" + year;
-      console.log(yearMonth)
-      // let localDate = dayName + " " + localTime + ":00";
       yearlyData[i]['date'] = yearMonth;
     }
 

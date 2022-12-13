@@ -42,7 +42,7 @@ class ToggleTimeChart extends React.Component {
     return (
       <StackGraph
         dataSet1={this.props.dataSet1}
-        xAxis={"Date"}
+        xAxis={this.props.xAxis}
         yAxis={this.props.yAxis}
         area1={this.props.area1}
         area2={this.props.area2}
@@ -54,7 +54,7 @@ class ToggleTimeChart extends React.Component {
     return (
       <StackGraph
         dataSet1={this.props.dataSet2}
-        xAxis={"Date"}
+        xAxis={this.props.xAxis}
         yAxis={this.props.yAxis}
         area1={this.props.area1}
         area2={this.props.area2}
@@ -66,7 +66,7 @@ class ToggleTimeChart extends React.Component {
     return (
       <StackGraph
         dataSet1={this.props.dataSet3}
-        xAxis={"Date"}
+        xAxis={this.props.xAxis}
         yAxis={this.props.yAxis}
         area1={this.props.area1}
         area2={this.props.area2}
