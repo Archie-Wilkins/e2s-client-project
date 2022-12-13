@@ -13,6 +13,18 @@ export const all = async () => {
     });
 }
 
+export const allSites = async () => {
+    return new Promise((resolve, reject) =>  {
+        db.query('SELECT * from sites', (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+
+    });
+}
+
 export const allHistoric = async () => {
     return new Promise((resolve, reject) =>  {
         db.query('SELECT * from sites_historic', (err, results) => {
@@ -200,6 +212,7 @@ export const getSiteReportListData = async () => {
 
 export default {
     all,
+    allSites,
     allHistoric,
     getSiteIDFromUserID,
     getSiteDetails,

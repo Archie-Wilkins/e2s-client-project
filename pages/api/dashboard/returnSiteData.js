@@ -4,7 +4,7 @@ export default async function handler(req, res) {
 
     try {
         //gets user ID that matches email entered
-        let siteData = await site.all();
+        let siteData = await site.allSites();
         for(let i = 0; i < siteData.length; i++){
             if(siteData[i].site_name == null){
                 siteData[i].site_name = "none";
