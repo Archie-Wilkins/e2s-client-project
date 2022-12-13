@@ -659,8 +659,7 @@ class EsmDashboard extends React.Component {
             <div>
               {this.state.viewRedZones === "false" &&(
                 <div className="esmDashboardGraphPanel" aria-label="graph panel">
-                  <button onClick={this.switchPanel}>Switch</button>
-                  <h3 className="esmPanelHeader"  aria-label="Energy demand">Energy Demand</h3>
+                  <h3 className="esmPanelHeader"  aria-label="Energy demand">Energy Demand <button className="switchChartButton" onClick={this.switchPanel}>Switch</button></h3>
                   <div className="esmGraphCard">
                     <LineGraph
                         toggle1={"Week"}
@@ -678,14 +677,41 @@ class EsmDashboard extends React.Component {
               )}
               {this.state.viewRedZones === "true" &&(
                   <div className="esmDashboardGraphPanel" aria-label="graph panel">
-                    <button onClick={this.switchPanel}>Switch</button>
-                    <h3 className="esmPanelHeader"  aria-label="Energy demand">Zone Pricing Breakdown</h3>
+                    <h3 className="esmPanelHeader"  aria-label="Energy demand">Zone Pricing Breakdown <button className="switchChartButton" onClick={this.switchPanel}>Switch</button></h3>
                     <div>
-                        <PieChart title="Energy Usage by Distribution Network Price Chart" width={400} height={200}>
+                        <PieChart className="pieChartContainer" title="Energy Usage by Distribution Network Price Chart" width={400} height={200}>
                           <Pie data={this.state.zonesArray} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#fff" label>
                           </Pie>  
                         </PieChart>
                     </div>
+                    <p className="pieChartTag">Find out more about red zone usage <Link href="./zonePricingInformation">here</Link>.</p>
+                    {this.state.redZoneUsage > this.state.greenZoneUsage &&(
+                          <div>
+                            {this.state.redZoneUsage > this.state.amberZoneUsage &&(
+                              <p> Most of your energy use was during <b>red-zone</b> periods.  Consider changing your energy usage times
+                              and find out <Link href="./zonePricingInformation"> more </Link> about zone pricing to see how you could save
+                              money.</p>
+                            )}
+                            {this.state.amberZoneUsage > this.state.redZoneUsage &&(
+                              <p> Most of your energy use was during <b>amber-zone</b> periods.  Consider changing your energy usage times
+                              and find out <Link href="./zonePricingInformation"> more </Link> about zone pricing to see how you could save
+                              money.</p>
+                            )}
+                          </div>  
+                     )}
+                    {this.state.greenZoneUsage > this.state.redZoneUsage &&(
+                          <div>
+                            {this.state.greenZoneUsage > this.state.amberZoneUsage &&(
+                              <p> Well done! Most of your energy has been during <b>green-zone</b> periods. Find out <Link href="./zonePricingInformation"> 
+                              more </Link> about zone pricing to see how you could save money.</p>
+                            )}
+                            {this.state.amberZoneUsage > this.state.greenZoneUsage &&(
+                              <p> Most of your energy use was during <b>amber-zone</b> periods.  Consider changing your energy usage times
+                              and find out <Link href="./zonePricingInformation"> more </Link> about zone pricing to see how you could save
+                              money.</p>
+                            )}
+                          </div>  
+                      )}
                   </div>
               )}
             </div>
@@ -810,34 +836,6 @@ class EsmDashboard extends React.Component {
                             <p>You spent <b>{parseFloat((this.state.greenZoneUsage/(this.state.amberZoneUsage + this.state.redZoneUsage + this.state.greenZoneUsage))*100).toFixed(1)}%</b> of your energy usage during green zone periods.</p>
                           </div>
                         </div>
-                       
-              {this.state.redZoneUsage > this.state.greenZoneUsage &&(
-                          <div>
-                            {this.state.redZoneUsage > this.state.amberZoneUsage &&(
-                              <p> Most of your energy use was during <b>red-zone</b> periods.  Consider changing your energy usage times
-                              and find out <Link href="./zonePricingInformation"> more </Link> about zone pricing to see how you could save
-                              money.</p>
-                            )}
-                            {this.state.amberZoneUsage > this.state.redZoneUsage &&(
-                              <p> Most of your energy use was during <b>amber-zone</b> periods.  Consider changing your energy usage times
-                              and find out <Link href="./zonePricingInformation"> more </Link> about zone pricing to see how you could save
-                              money.</p>
-                            )}
-                          </div>  
-              )}
-              {this.state.greenZoneUsage > this.state.redZoneUsage &&(
-                          <div>
-                            {this.state.greenZoneUsage > this.state.amberZoneUsage &&(
-                              <p> Well done! Most of your energy has been during <b>green-zone</b> periods. Find out <Link href="./zonePricingInformation"> 
-                              more </Link> about zone pricing to see how you could save money.</p>
-                            )}
-                            {this.state.amberZoneUsage > this.state.greenZoneUsage &&(
-                              <p> Most of your energy use was during <b>amber-zone</b> periods.  Consider changing your energy usage times
-                              and find out <Link href="./zonePricingInformation"> more </Link> about zone pricing to see how you could save
-                              money.</p>
-                            )}
-                          </div>  
-              )}
               </div> 
             </div>
           </div>
