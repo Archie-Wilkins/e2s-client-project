@@ -16,3 +16,4 @@ node_modules
 .next/trace
 .next/trace
 next.config.js
+next.config.js

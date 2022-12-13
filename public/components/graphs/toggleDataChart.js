@@ -103,7 +103,7 @@ class ToggleDataChart extends React.Component {
                   className="selectableLabel px-4"
                   htmlFor={this.state.randomKey + "radio1"}
                 >
-                  Weekly
+                  {this.props.toggle1}
                 </label>
               </li>
               <li className="whiteBackground mx-1 d-flex justify-content-center">
@@ -121,7 +121,7 @@ class ToggleDataChart extends React.Component {
                   className="selectableLabel px-4"
                   htmlFor={this.state.randomKey + "radio2"}
                 >
-                  Monthly
+                  {this.props.toggle2}
                 </label>
               </li>
               <li className="whiteBackground d-flex justify-content-center">
@@ -139,7 +139,7 @@ class ToggleDataChart extends React.Component {
                   className="selectableLabel px-4"
                   htmlFor={this.state.randomKey + "radio3"}
                 >
-                  Yearly
+                  {this.props.toggle3}
                 </label>
               </li>
             </ul>
