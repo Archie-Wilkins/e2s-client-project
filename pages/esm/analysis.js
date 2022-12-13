@@ -32,15 +32,25 @@ class Analysis extends React.Component {
       energyCostThisYear: 435,
       energyCostLastYear: 250,
 
-      // Energy Usage
-      energyUsageThisWeek: 435,
-      energyUsageLastWeek: 256,
+      // Energy Imported
+      energyImportedThisWeek: 425,
+      energyImportedLastWeek: 442,
 
       energyUsageThisMonth: 435,
       energyUsageLastMonth: 250,
 
       energyUsageThisYear: 435,
       energyUsageLastYear: 250,
+
+      // Energy Demand
+      energyDemandThisWeek: 435,
+      energyDemandLastWeek: 256,
+
+      energyDemandThisMonth: 435,
+      energyDemandLastMonth: 250,
+
+      energyDemandThisYear: 435,
+      energyDemandLastYear: 250,
 
       // C02 Emissions
       c02EmissionsThisWeek: 435,
@@ -66,10 +76,9 @@ class Analysis extends React.Component {
 
     let siteInsightsPastWeekAverage = await getSitePastWeekData("1");
 
-    console.log(siteInsightsWeekAverage);
 
-    console.log(siteInsightsPastWeekAverage);
-    let val = siteInsightsWeekAverage[0]
+    let thisWeek = siteInsightsWeekAverage[0]
+    let pastWeek = siteInsightsPastWeekAverage[0]
 
     // Setting date axis for weekly data 
     for (let i = 0; i < weeklyData.length; i++) {
@@ -108,34 +117,44 @@ class Analysis extends React.Component {
       graphDataMonthly: monthlyData,
       graphDataYearly: yearlyData,
       // Energy Cost
-      energyCostThisWeek: siteInsightsWeekAverage["energy_avg_week_cost"],
-      energyCostLastWeek: 250,
+      energyCostThisWeek: parseFloat(thisWeek["energy_avg_week_cost"]).toFixed(2),
+      energyCostLastWeek: parseFloat(pastWeek["energy_avg_week_cost"]).toFixed(2),
 
-      energyCostThisMonth: 435,
-      energyCostLastMonth: 250,
+      energyCostThisMonth: 1004,
+      energyCostLastMonth: 945,
 
-      energyCostThisYear: 435,
-      energyCostLastYear: 250,
+      energyCostThisYear: 100304,
+      energyCostLastYear: 584025,
 
-      // Energy Usage
-      energyUsageThisWeek: 435,
-      energyUsageLastWeek: 256,
+      // Energy Imported
+      energyImportedThisWeek: parseFloat(thisWeek["energy_avg_week_imported"]).toFixed(2),
+      energyImportedLastWeek: parseFloat(pastWeek["energy_avg_week_imported"]).toFixed(2),
 
-      energyUsageThisMonth: 435,
-      energyUsageLastMonth: 250,
+      energyImportedThisMonth: 10430,
+      energyImportedLastMonth: 51392,
 
-      energyUsageThisYear: 435,
-      energyUsageLastYear: 250,
+      energyImportedThisYear: 3959234,
+      energyImportedLastYear: 2495393,
+
+      // Energy Demand
+      energyDemandThisWeek: parseFloat(thisWeek["energy_avg_week_imported"]).toFixed(2),
+      energyDemandLastWeek: parseFloat(pastWeek["energy_avg_week_imported"]).toFixed(2),
+
+      energyDemandThisMonth: 5935,
+      energyDemandLastMonth: 2404,
+
+      energyDemandThisYear: 40200,
+      energyDemandLastYear: 24592,
 
       // C02 Emissions
-      c02EmissionsThisWeek: 435,
-      c02EmissionsLastWeek: 250,
+      c02EmissionsThisWeek: parseFloat(thisWeek["carbon_avg_week_emitted"]).toFixed(2),
+      c02EmissionsLastWeek: parseFloat(pastWeek["carbon_avg_week_emitted"]).toFixed(2),
 
-      c02EmissionsThisMonth: 435,
-      c02EmissionsLastMonth: 250,
+      c02EmissionsThisMonth: 4355,
+      c02EmissionsLastMonth: 6059,
 
-      c02EmissionsThisYear: 435,
-      c02EmissionsLastYear: 250,
+      c02EmissionsThisYear: 25456,
+      c02EmissionsLastYear: 21049,
     });
 
     this.setState({ dataUpdated: true });
@@ -164,7 +183,7 @@ class Analysis extends React.Component {
             <div className="row d-flex justify-content-around w-75 mb-2">
               <div className="col p-0">
                 <ForecastingInfoBox
-                  title={"Past Week"}
+                  title={"This Week vs Past Week"}
                   unitGoesBefore={true}
                   unit="£"
                   forecastedData={this.state.energyCostThisWeek}
@@ -174,7 +193,7 @@ class Analysis extends React.Component {
 
               <div className="col p-0 mx-2">
                 <ForecastingInfoBox
-                  title={"Past Month"}
+                  title={"This Month vs Past Month"}
                   unitGoesBefore={true}
                   unit="£"
                   forecastedData={this.state.energyCostThisMonth}
@@ -184,7 +203,7 @@ class Analysis extends React.Component {
 
               <div className="col p-0">
                 <ForecastingInfoBox
-                  title={"Past Year"}
+                  title={"This Year vs Past Year"}
                   unitGoesBefore={true}
                   unit="£"
                   forecastedData={this.state.energyCostThisYear}
@@ -214,18 +233,22 @@ class Analysis extends React.Component {
           <div className="container d-flex flex-column align-items-center w-100">
             <div className="row mt-5 w-75">
               <div className="col rounded text-center">
-                <h2>Energy Usage</h2>
+                <h2>Energy Demand and Importing</h2>
               </div>
             </div>
 
+            {/* Energy Demand */}
+            <div className="w-75 text-center">
+              <h5>Energy Demand</h5>
+            </div>
             <div className="row d-flex justify-content-around w-75 mb-2" >
               <div className="col p-0">
                 <ForecastingInfoBox
                   title={"Past Week"}
                   unitGoesBefore={false}
                   unit="Kw/h"
-                  forecastedData={this.state.energyUsageThisWeek}
-                  currentData={this.state.energyUsageLastWeek}
+                  forecastedData={this.state.energyDemandThisWeek}
+                  currentData={this.state.energyDemandLastWeek}
                 />
               </div>
 
@@ -234,8 +257,8 @@ class Analysis extends React.Component {
                   title={"Past Month"}
                   unitGoesBefore={false}
                   unit="Kw/h"
-                  forecastedData={this.state.energyUsageThisMonth}
-                  currentData={this.state.energyUsageLastMonth}
+                  forecastedData={this.state.energyDemandThisMonth}
+                  currentData={this.state.energyDemandLastMonth}
                 />
               </div>
 
@@ -244,8 +267,45 @@ class Analysis extends React.Component {
                   title={"Past Year"}
                   unitGoesBefore={false}
                   unit="Kw/h"
-                  forecastedData={this.state.energyUsageThisYear}
-                  currentData={this.state.energyUsageLastYear}
+                  forecastedData={this.state.energyDemandThisYear}
+                  currentData={this.state.energyDemandLastYear}
+                />
+              </div>
+
+            </div>
+
+            {/* Energy Imported */}
+            <div className="w-75 text-center mt-2">
+              <h5>Energy Imported</h5>
+            </div>
+            <div className="row d-flex justify-content-around w-75 mb-2" >
+              <div className="col p-0">
+                <ForecastingInfoBox
+                  title={"Past Week"}
+                  unitGoesBefore={false}
+                  unit="Kw/h"
+                  forecastedData={this.state.energyImportedThisWeek}
+                  currentData={this.state.energyImportedLastWeek}
+                />
+              </div>
+
+              <div className="col p-0 mx-2">
+                <ForecastingInfoBox
+                  title={"Past Month"}
+                  unitGoesBefore={false}
+                  unit="Kw/h"
+                  forecastedData={this.state.energyImportedThisMonth}
+                  currentData={this.state.energyImportedLastMonth}
+                />
+              </div>
+
+              <div className="col p-0">
+                <ForecastingInfoBox
+                  title={"Past Year"}
+                  unitGoesBefore={false}
+                  unit="Kw/h"
+                  forecastedData={this.state.energyImportedThisYear}
+                  currentData={this.state.energyImportedLastYear}
                 />
               </div>
 
