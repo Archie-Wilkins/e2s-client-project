@@ -2,7 +2,7 @@ import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
 import EnergyCostForecastGraph from "../../public/components/graphs/toggleTimeChart";
 
 import ToggleStackChart from "../../public/components/graphs/toggleStackChart.js";
-
+import Cookies from "js-cookie";
 import ForecastingInfoBox from "../../public/components/dataDisplayBox/forecastingInfoBox.js";
 import React from "react";
 import BottomFooter from "../../public/components/layouts/bottomFooter.js";
@@ -65,6 +65,30 @@ class Analysis extends React.Component {
   }
 
   async componentDidMount() {
+
+    try {
+      //Get the user cookie
+      let userCookieEncypted = Cookies.get().user;
+
+      //import CryptoJS
+      var CryptoJS = require("crypto-js");
+
+      //decrypt the cookie
+      var bytes = CryptoJS.AES.decrypt(userCookieEncypted, 'team4');
+      //store decrypted cookie in userCookie
+      var userCookie = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+      // If the user has the incorrect credentials for the page, remove them
+      if (userCookie.role != 3) {
+        Cookies.remove("user");
+        window.location = "/login";
+      }
+      //catch errors
+    } catch (e) {
+      // No cookie found
+      //return to login
+      window.location = "/login";
+    }
 
     let weeklyData = await getSiteDataEvery6Hours("1", "2022-02-28", "2022-03-07")
 

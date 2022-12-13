@@ -86,6 +86,7 @@ class BillValidation extends React.Component {
         // Try to access the database API.
         try {
 
+
             // Set pageLoaded variable to true so that the page content updates to allow the user to 
             // input their data.
             this.setState({pageLoaded: true});
@@ -425,18 +426,28 @@ class BillValidation extends React.Component {
     async componentDidMount() {
         // Attempt to parse a user cookie
         try {
-        // Initialise the user cookie
-        let userCookie = JSON.parse(Cookies.get().user);
+            //Get the user cookie
+            let userCookieEncypted = Cookies.get().user;
 
-        // If the user has the incorrect credentials for the page, remove them
-        if (userCookie.role === 4 || userCookie.role === 1) {
-            Cookies.remove("user");
-            window.location = "/login";
-        }
+            //import CryptoJS
+            var CryptoJS = require("crypto-js");
 
-        // Pass the user id of the logged in user to the page to be used in API calls
-        this.setState({loggedInUserID: userCookie.user});
-        //catch erros
+            //decrypt the cookie
+            var bytes = CryptoJS.AES.decrypt(userCookieEncypted, 'team4');
+            //store decrypted cookie in userCookie
+            var userCookie = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+            // If the user has the incorrect credentials for the page, remove them
+
+            // If the user has the incorrect credentials for the page, remove them
+            if (userCookie.role === 4 || userCookie.role === 1) {
+                Cookies.remove("user");
+                window.location = "/login";
+            }
+
+            // Pass the user id of the logged in user to the page to be used in API calls
+            this.setState({loggedInUserID: userCookie.user});
+            //catch errors
         } catch (e) {
         // No action
         }
