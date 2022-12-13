@@ -2,7 +2,7 @@ const axios = require('axios');
 const sinon = require('sinon');
 const {assert} = require('chai');
 
-import { getSitePastWeekData, getSiteDataEveryWeek, getSiteDataEveryDay, getSiteDataEvery6Hours, getSiteDataEveryMonth } from "../../../public/services/HistoricalSiteData.js";
+import { getSiteDataEveryWeek } from "../../../public/services/HistoricalSiteData.js";
 
 // Sample test for api services
 // Throughout the project we've had issues with code testing our api functions that are being called for
@@ -85,7 +85,7 @@ describe('getSiteDataEveryWeek', () => {
         // Checking the axios.post was called with the correct arguments
         sinon.assert.calledWith(
             axios.post,
-            '/api/getSiteHistoricalData',
+            '/../../api/site/getSiteHistoricalData',
             {
                 siteID,
                 dateStart: startDate,
