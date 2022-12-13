@@ -11,7 +11,7 @@ class BillValidation extends React.Component {
     this.state = {
 
             // Passing whether or not a user is an admin to the page.
-            isAdmin: true,
+            isAdmin: false,
 
             // Passing whether or not a user is a director to the page.
             isDirector: false,

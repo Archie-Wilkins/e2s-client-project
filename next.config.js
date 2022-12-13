@@ -10,7 +10,7 @@ module.exports = {
     webpack5: true,
     DB_HOST: 'localhost',
     DB_USER: 'root',
-    DB_PASSWORD: '',
+    DB_PASSWORD: 'comsc',
     DB_DATABASE: 'e2s_db'
   }
   
