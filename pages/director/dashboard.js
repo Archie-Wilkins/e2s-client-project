@@ -555,7 +555,7 @@ class Dashboard extends React.Component {
                     <div className="flexBox"><p><b>Carbon Emissions</b></p> 
                       {parseFloat(this.state.carbonEmitted).toFixed(2)}Kg
                     </div>
-                    <div className="flexBox w-100"><p><b>Carbon Emissions</b></p> 
+                    <div><p><b>Carbon Emissions</b></p> 
                       <p>Your site generated {parseFloat(this.state.carbonEmittedCurrentMonth).toFixed(2)}Kg of
                         carbon in {this.state.currentMonth} compared to {parseFloat(this.state.carbonEmittedPreviousMonth).toFixed(2)}Kg
                         in {this.state.previousMonth}.</p>
