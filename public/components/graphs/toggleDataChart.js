@@ -20,22 +20,18 @@ class ToggleDataChart extends React.Component {
   }
 
   displayGraph = (graphNumber) => {
-    console.log("Yes" + graphNumber);
     switch (graphNumber) {
       case 1:
-        console.log("Yes" + "displayWeeklyGraph");
         this.setState({
           currentGraph: this.displayWeeklyGraph(),
         });
         return this.displayWeeklyGraph();
       case 2:
-        console.log("Yes" + "displayMonthlyGraph");
         this.setState({
           currentGraph: this.displayMonthlyGraph(),
         });
         break;
       case 3:
-        console.log("Yes" + "displayYearlyGraph");
         this.setState({
           currentGraph: this.displayYearlyGraph(),
         });
@@ -94,7 +90,7 @@ class ToggleDataChart extends React.Component {
             <ul className="d-flex blueBackground p-1 rounded noListStyle">
               <li className="whiteBackground d-flex justify-content-center">
                 <input
-                  value="Weekly"
+                  value={this.props.toggle1}
                   type="radio"
                   name={this.state.randomKey + "timeRange"}
                   className="invisibleInput"
@@ -112,7 +108,7 @@ class ToggleDataChart extends React.Component {
               </li>
               <li className="whiteBackground mx-1 d-flex justify-content-center">
                 <input
-                  value="Monthly"
+                  value={this.props.toggle2}
                   type="radio"
                   name={this.state.randomKey + "timeRange"}
                   className="invisibleInput"
@@ -130,7 +126,7 @@ class ToggleDataChart extends React.Component {
               </li>
               <li className="whiteBackground d-flex justify-content-center">
                 <input
-                  value="Yearly"
+                  value={this.props.toggle3}
                   type="radio"
                   name={this.state.randomKey + "timeRange"}
                   className="invisibleInput"
