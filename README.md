@@ -1,11 +1,13 @@
 # Empowering Energy Solutions
 
-This is a product intended for the business "Empowering Energy Solutions".
+This is a product intended for the business "Empowering Energy Solutions" (E2S).
 
 ## Description
-This software is meant to mainly be utilized by Energy site managers and Directors to view and monitor their sites energy performance, carbon emissions and expenditure for energy, heating and gas.
+This software is meant to mainly be utilized by Energy site managers, energy site Directors, and third party vendors and researchers to view and monitor site energy performance, carbon emissions and expenditure for energy, heating and gas.
 
-It will provide insights, metrics, visual representation of performance for each index.
+It will provide insights, metrics, visual representation of performance for each index based on analysis.
+
+It is currently closed-source.
 
 ## Installation
 First you will need to initialise a git repo, then:
@@ -29,6 +31,9 @@ Then you can run `npm run dev` in the terminal to run the project in dev mode.
 Or for a more production like expierence you can `npm run build ` followed by `npm start`
 
 If it appears that any dependencies or libraries are missing run the command `npm install` to install all the libraries in the package.json files.
+
+## Problems Running?
+Try installing the following dependency: `npm install next`.
 
 ## Testing and Deploy
 
