@@ -2,6 +2,7 @@ import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
 import ToggleDataChart from "../../public/components/graphs/toggleDataChart.js";
 import ForecastingInfoBox from "../../public/components/dataDisplayBox/forecastingInfoBox.js";
 import React from "react";
+import Cookies from "js-cookie";
 
 class Forecasting extends React.Component {
   constructor(props) {
@@ -42,6 +43,36 @@ class Forecasting extends React.Component {
       PredictedC02Emissions: 1104,
     };
   }
+  // Funtion used to validate user priveleges from the login page and remove cookies. It is also used to initialise data on the page.
+  async componentDidMount() {
+    //will check user is allowed on this page first
+    // Attempt to parse a user cookie
+    try {
+      //Get the user cookie
+      let userCookieEncypted = Cookies.get().user;
+
+      //import CryptoJS
+      var CryptoJS = require("crypto-js");
+
+      //decrypt the cookie
+      var bytes = CryptoJS.AES.decrypt(userCookieEncypted, 'team4');
+      //store decrypted cookie in userCookie
+      var userCookie = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+      // If the user has the incorrect credentials for the page, remove them
+      if (userCookie.role === 4) {
+        Cookies.remove("user");
+        window.location = "/login";
+      }
+
+      //catch errors
+    } catch (e) {
+      // No cookie found
+      //return to login
+      window.location = "/login";
+    }
+
+  };
 
   render() {
     return (
