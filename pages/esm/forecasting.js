@@ -2,6 +2,7 @@ import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
 import ToggleDataChart from "../../public/components/graphs/toggleDataChart.js";
 import ForecastingInfoBox from "../../public/components/dataDisplayBox/forecastingInfoBox.js";
 import React from "react";
+import Cookies from "js-cookie";
 
 class Forecasting extends React.Component {
   constructor(props) {
@@ -17,19 +18,19 @@ class Forecasting extends React.Component {
       isDirector: false,
 
       yearlyData: [
-        { date: "Dec", cost: 400, c02: 153, energyUsage: 150 },
-        { date: "Jan", cost: 415, c02: 145, energyUsage: 150 },
-        { date: "Feb", cost: 460, c02: 131, energyUsage: 150 },
-        { date: "Mar", cost: 501, c02: 115, energyUsage: 150 },
-        { date: "Apr", cost: 446, c02: 165, energyUsage: 150 },
-        { date: "May", cost: 608, c02: 135, energyUsage: 150 },
-        { date: "Jun", cost: 608, c02: 138, energyUsage: 150 },
-        { date: "Jul", cost: 620, c02: 165, energyUsage: 150 },
-        { date: "Aug", cost: 630, c02: 175, energyUsage: 150 },
-        { date: "Sep", cost: 640, c02: 185, energyUsage: 150 },
-        { date: "Oct", cost: 645, c02: 175, energyUsage: 150 },
-        { date: "Nov", cost: 633, c02: 165, energyUsage: 150 },
-        { date: "Dec", cost: 640, c02: 165, energyUsage: 150 },
+        { date: "Dec", cost: 400, c02: 153, energyUsage: 143 },
+        { date: "Jan", cost: 415, c02: 145, energyUsage: 200 },
+        { date: "Feb", cost: 460, c02: 131, energyUsage: 180 },
+        { date: "Mar", cost: 501, c02: 115, energyUsage: 300 },
+        { date: "Apr", cost: 446, c02: 165, energyUsage: 330 },
+        { date: "May", cost: 608, c02: 135, energyUsage: 210 },
+        { date: "Jun", cost: 608, c02: 138, energyUsage: 170 },
+        { date: "Jul", cost: 620, c02: 165, energyUsage: 200 },
+        { date: "Aug", cost: 630, c02: 175, energyUsage: 156 },
+        { date: "Sep", cost: 640, c02: 185, energyUsage: 260 },
+        { date: "Oct", cost: 645, c02: 175, energyUsage: 253 },
+        { date: "Nov", cost: 633, c02: 165, energyUsage: 252 },
+        { date: "Dec", cost: 640, c02: 165, energyUsage: 270 },
       ],
 
       CurrentEnergyCost: 43569,
@@ -42,6 +43,36 @@ class Forecasting extends React.Component {
       PredictedC02Emissions: 1104,
     };
   }
+  // Funtion used to validate user priveleges from the login page and remove cookies. It is also used to initialise data on the page.
+  async componentDidMount() {
+    //will check user is allowed on this page first
+    // Attempt to parse a user cookie
+    try {
+      //Get the user cookie
+      let userCookieEncypted = Cookies.get().user;
+
+      //import CryptoJS
+      var CryptoJS = require("crypto-js");
+
+      //decrypt the cookie
+      var bytes = CryptoJS.AES.decrypt(userCookieEncypted, 'team4');
+      //store decrypted cookie in userCookie
+      var userCookie = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+      // If the user has the incorrect credentials for the page, remove them
+      if (userCookie.role === 4) {
+        Cookies.remove("user");
+        window.location = "/login";
+      }
+
+      //catch errors
+    } catch (e) {
+      // No cookie found
+      //return to login
+      window.location = "/login";
+    }
+
+  };
 
   render() {
     return (

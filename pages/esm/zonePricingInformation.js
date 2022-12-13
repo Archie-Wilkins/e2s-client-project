@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Link from "next/link";
-import MainLayout from "../public/components/layouts/mainLayoutShell.js";
+import MainLayout from "../../public/components/layouts/mainLayoutShell.js";
 import React, { useLayoutEffect } from "react";
 import Cookies from "js-cookie";
 import { PieChart, Pie, Slice } from "recharts";
@@ -77,8 +77,16 @@ class Dashboard extends React.Component {
     //will check user is allowed on this page first
     // Attempt to parse a user cookie
     try {
-      // Initialise the user cookie
-      let userCookie = JSON.parse(Cookies.get().user);
+      //Get the user cookie
+      let userCookieEncypted = Cookies.get().user;
+
+      //import CryptoJS
+      var CryptoJS = require("crypto-js");
+
+      //decrypt the cookie
+      var bytes = CryptoJS.AES.decrypt(userCookieEncypted, 'team4');
+      //store decrypted cookie in userCookie
+      var userCookie = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
       // If the user has the incorrect credentials for the page, remove them
       if (userCookie.role === 4) {

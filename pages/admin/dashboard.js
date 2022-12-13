@@ -132,6 +132,7 @@ class Dashboard extends React.Component {
 
       // Set the state array for users to the data returned from calling the API (users from the database).
       this.setState({ siteDataArray: result.data.sites });
+      console.log(result.data.sites);
 
       // Set the state of the variable tracking whether data is ready to be rendered to true
       this.setState({ displayDBData: true });

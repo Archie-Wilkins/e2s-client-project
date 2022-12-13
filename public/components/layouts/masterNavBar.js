@@ -3,6 +3,7 @@ import Link from "next/link"
 import React from 'react';
 import AdminNavBar from "./adminNavBar";
 import NavBar from "./navBar";
+import DirectorNavBar from "./directorNavBar";
 class MasterNavBar extends React.Component {
     constructor(props) {
         super(props);
@@ -11,6 +12,9 @@ class MasterNavBar extends React.Component {
     displayNavBar = () => {
         if (this.props.isAdmin) {
             return <AdminNavBar />
+        }
+        if (this.props.isDirector){
+            return <DirectorNavBar />
         }
         else {
 

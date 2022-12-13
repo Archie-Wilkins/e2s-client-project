@@ -6,10 +6,10 @@ const util = require('util')
 const mysql = require('mysql')
 const pool = mysql.createPool({
     connectionLimit: 600,
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'e2s_db'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
 })
 
 // Ping database to check for common exception errors.

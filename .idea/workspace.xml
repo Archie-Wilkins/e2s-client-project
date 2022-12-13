@@ -5,31 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eac8a33f-a9b7-4f97-b503-5736d9be951d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/build-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/.next/build-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/client-development/0.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/client-development/0.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/client-development/1.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/client-development/1.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/client-development/index.pack.old" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/client-development/index.pack.old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/0.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/0.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/1.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/1.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/2.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/2.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/index.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/index.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/index.pack.old" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/index.pack.old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/server/middleware-build-manifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/middleware-build-manifest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/server/pages-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/pages-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/server/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/server/webpack-runtime.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/webpack-runtime.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/static/chunks/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/chunks/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/chunks/webpack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/static/development/_buildManifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/development/_buildManifest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__tests__/frontEnd/components/publicTopNav.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/frontEnd/components/publicTopNav.test.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__tests__/frontEnd/pages/weeklyEmail.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/frontEnd/pages/weeklyEmail.test.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/csvUpload.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/esm/account.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/esm/account.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/insights.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/requestData.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/weeklyEmail.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/email/weeklyEmail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/components/layouts/publicTopNav.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/components/layouts/publicTopNav.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/csv/csvUpload.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/esm/csvUpload.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/esm/csvUpload.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,25 +38,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Git.Branch.Popup.ShowAllRemotes": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/c2064724/IdeaProjects/e2s-team-4/styling",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "C:/Users/archi/OneDrive/Documents/Uni Year 3/Commercial Frameworks/e2s-team-4-v2/node_modules/jest",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Git.Branch.Popup.ShowAllRemotes&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/c2064724/IdeaProjects/e2s-team-4/public/components/layouts&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;C:/Users/archi/OneDrive/Documents/Uni Year 3/Commercial Frameworks/e2s-team-4-v2/node_modules/jest&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\public\components\layouts" />
+      <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\pages\admin" />
       <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\styling" />
       <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\__tests__" />
       <recent name="C:\Users\c2064724\IdeaProjects\e2s-team-4\pages\api" />
@@ -92,7 +71,97 @@
       <recent name="C:\Users\archi\OneDrive\Documents\Uni Year 3\Commercial Frameworks\e2s-team-4-v2\pages\api\onboarding" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.publicTopNavBar">
+  <component name="RunManager" selected="Jest.getSiteDataEveryWeek.checks getSiteDataEveryWeek calls the correct API end point with the correct arguments (1)">
+    <configuration default="true" type="DjangoTestsConfigurationType">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="PyBehaveRunConfigurationType" factoryName="Behave">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="ADDITIONAL_ARGS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Python.FlaskServer">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <method v="2" />
+    </configuration>
     <configuration name="Account" type="JavaScriptTestRunnerJest">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -113,6 +182,73 @@
       <test-file value="$PROJECT_DIR$/__tests__/forgotPassword.test.jsx" />
       <method v="2" />
     </configuration>
+    <configuration name="getSiteDataEveryWeek (1)" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/__tests__/Service/HistoricalSiteData/getSitePastWeekData.jsx" />
+      <test-names>
+        <test-name value="getSiteDataEveryWeek" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="getSiteDataEveryWeek" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/__tests__/Service/HistoricalSiteData/getSiteDataEveryWeek.jsx" />
+      <test-names>
+        <test-name value="getSiteDataEveryWeek" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="getSiteDataEveryWeek.checks getSiteDataEveryWeek calls the correct API end point with the correct arguments (1)" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/__tests__/Service/HistoricalSiteData/getSitePastWeekData.jsx" />
+      <test-names>
+        <test-name value="getSiteDataEveryWeek" />
+        <test-name value="checks getSiteDataEveryWeek calls the correct API end point with the correct arguments" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="getSiteDataEveryWeek.checks getSiteDataEveryWeek calls the correct API end point with the correct arguments" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/__tests__/Service/HistoricalSiteData/getSiteDataEveryWeek.jsx" />
+      <test-names>
+        <test-name value="getSiteDataEveryWeek" />
+        <test-name value="checks getSiteDataEveryWeek calls the correct API end point with the correct arguments" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="getSiteDataTimeRangeDaily" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/__tests__/API/getSiteDataTimeRangeDaily.test.js" />
+      <test-names>
+        <test-name value="getSiteDataTimeRangeDaily" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <configuration name="login" type="JavaScriptTestRunnerJest">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -121,33 +257,6 @@
       <envs />
       <scope-kind value="TEST_FILE" />
       <test-file value="$PROJECT_DIR$/__tests__/login.test.jsx" />
-      <method v="2" />
-    </configuration>
-    <configuration name="publicTopNavBar" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/__tests__/frontEnd/components/publicTopNav.test.jsx" />
-      <test-names>
-        <test-name value="publicTopNavBar" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="publicTopNavBar.hasLogo" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/__tests__/frontEnd/components/publicTopNav.test.jsx" />
-      <test-names>
-        <test-name value="publicTopNavBar" />
-        <test-name value="hasLogo" />
-      </test-names>
       <method v="2" />
     </configuration>
     <configuration name="weeklyEmail" type="JavaScriptTestRunnerJest">
@@ -165,13 +274,19 @@
       <item itemvalue="Jest.weeklyEmail" />
       <item itemvalue="Jest.Account" />
       <item itemvalue="Jest.forgor password" />
-      <item itemvalue="Jest.publicTopNavBar" />
-      <item itemvalue="Jest.publicTopNavBar.hasLogo" />
+      <item itemvalue="Jest.getSiteDataEveryWeek" />
+      <item itemvalue="Jest.getSiteDataEveryWeek (1)" />
+      <item itemvalue="Jest.getSiteDataEveryWeek.checks getSiteDataEveryWeek calls the correct API end point with the correct arguments" />
+      <item itemvalue="Jest.getSiteDataEveryWeek.checks getSiteDataEveryWeek calls the correct API end point with the correct arguments (1)" />
+      <item itemvalue="Jest.getSiteDataTimeRangeDaily" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Jest.publicTopNavBar" />
-        <item itemvalue="Jest.publicTopNavBar.hasLogo" />
+        <item itemvalue="Jest.getSiteDataEveryWeek.checks getSiteDataEveryWeek calls the correct API end point with the correct arguments (1)" />
+        <item itemvalue="Jest.getSiteDataEveryWeek (1)" />
+        <item itemvalue="Jest.getSiteDataEveryWeek.checks getSiteDataEveryWeek calls the correct API end point with the correct arguments" />
+        <item itemvalue="Jest.getSiteDataEveryWeek" />
+        <item itemvalue="Jest.getSiteDataTimeRangeDaily" />
       </list>
     </recent_temporary>
   </component>

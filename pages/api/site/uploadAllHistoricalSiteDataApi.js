@@ -13,52 +13,47 @@ export default async function handler(req, res) {
 
         let handledArray = [];
 
-        for (let i = 0; i < siteData.length; i++) {
-
-            let datetime = siteData[i][0];
-            let [date, time] = datetime.toString().split(" ");
-            let [day, month, year] = date.split('/');
-            let newDate = year + "-" + month + "-" + day + " " + time + ":00";
-
-            let sumVal = siteData[i][2] + siteData[i][3];
-            let sumVal2 = siteData[i][8] * 0.193;
-            let sumVal3 = -1 * siteData[i][12];
-
-            let localHandledArray = [
-                parseFloat(i).toFixed(0), parseFloat(i).toFixed(0), parseFloat(siteData[i][8]).toFixed(2), parseFloat(siteData[i][10]).toFixed(2),
-                parseFloat(siteData[i][9]).toFixed(2), parseFloat(sumVal).toFixed(2),
-                parseFloat(siteData[i][11]).toFixed(2), parseFloat(sumVal3).toFixed(3),
-                parseFloat(siteData[i][6]).toFixed(1), parseFloat(siteData[i][7]).toFixed(1),
-                parseFloat(sumVal2).toFixed(1), newDate
-            ];
-
-            let localHandledArray2 = [
-                parseFloat(i), parseFloat(i), parseFloat(siteData[i][8]), parseFloat(siteData[i][10]),
-                parseFloat(siteData[i][9]), parseFloat(sumVal),
-                parseFloat(siteData[i][11]), parseFloat(sumVal3),
-                parseFloat(siteData[i][6]), parseFloat(siteData[i][7]),
-                parseFloat(sumVal2), newDate
-            ];
-
-            /*console.log("3: " + siteData[0][8]);
-            console.log("4: "+ siteData[0][10]);
-            console.log("5: "+ siteData[0][9]);
-            console.log("6: "+ siteData[0][2]);
-            console.log("7: "+ siteData[0][3]);
-            console.log("8: "+ siteData[0][11]);
-            console.log("9: "+ (-1*(siteData[0][12])));
-            console.log("10: "+ siteData[0][7]);
-            console.log("11: "+ (siteData[0][8]*0.193));
-            console.log("12: "+ newDate);*/
-            let testArr = [];
-            testArr.push(localHandledArray2);
-            site.insertHistoricalTest(testArr);
-            handledArray.push(localHandledArray2);
-        }
-
+       
         //console.log("Handled: " + handledArray);
         try {
             //site.insertHistoricalTest(handledArray);
+            for (let i = 0; i < siteData.length; i++) {
+
+                let datetime = siteData[i][0];
+                let [date, time] = datetime.toString().split(" ");
+                let [day, month, year] = date.split('/');
+                let newDate = year + "-" + month + "-" + day + " " + time + ":00";
+    
+                let sumVal = siteData[i][2] + siteData[i][3];
+                let sumVal2 = siteData[i][8] * 0.193;
+                let sumVal3 = -1 * siteData[i][12];
+    
+                let localHandledArray = [
+                    parseFloat(i).toFixed(0), parseFloat(i).toFixed(0), parseFloat(siteData[i][8]).toFixed(2), parseFloat(siteData[i][10]).toFixed(2),
+                    parseFloat(siteData[i][9]).toFixed(2), parseFloat(sumVal).toFixed(2),
+                    parseFloat(siteData[i][11]).toFixed(2), parseFloat(sumVal3).toFixed(3),
+                    parseFloat(siteData[i][6]).toFixed(1), parseFloat(siteData[i][7]).toFixed(1),
+                    parseFloat(sumVal2).toFixed(1), newDate
+                ];
+    
+                let localHandledArray2 = [
+                    parseFloat(i), parseFloat(i), parseFloat(siteData[i][8]), parseFloat(siteData[i][10]),
+                    parseFloat(siteData[i][9]), parseFloat(sumVal),
+                    parseFloat(siteData[i][11]), parseFloat(sumVal3),
+                    parseFloat(siteData[i][6]), parseFloat(siteData[i][7]),
+                    parseFloat(sumVal2), newDate
+                ];
+    
+                let testArr = [];
+                testArr.push(localHandledArray2);
+
+                try{
+                    site.insertHistoricalTest(testArr);
+                }catch(e){
+                    console.log("Error");
+                }
+                handledArray.push(localHandledArray2);
+            }
             return res.status(200).json({ data: { message: "great success" } });
         } catch (e) {
             console.log("no insert");
