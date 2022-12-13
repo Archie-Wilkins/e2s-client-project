@@ -87,6 +87,7 @@ class CsvUploadComponent extends React.Component {
 
     this.setState({ csvData: tableArray });
     this.setState({ csvFileName: localStorage.getItem("userArrName") });
+    alert("CSV uploaded!");
 
   };
 
