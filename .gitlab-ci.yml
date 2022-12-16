@@ -24,7 +24,15 @@ cache:
     - node_modules
 
 stages:
+    - run_build
     - run_tests
+
+build_pass:
+    stage: run_build
+    script:
+    - npm build
+    - npm test
+
 
 tests_pass:
     stage: run_tests
