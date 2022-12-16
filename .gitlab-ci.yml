@@ -31,7 +31,7 @@ build_pass:
     stage: run_build
     script:
     - npm install
-    - npm build
+    - npm run build
 
 tests_pass:
     stage: run_tests
