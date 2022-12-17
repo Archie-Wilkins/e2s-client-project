@@ -7,8 +7,8 @@ import {assert} from "chai";
 describe("getSiteDataTimeRangeDaily", () => {
 
 
-
-    it('should return a successful response from Notehub', async () => {
+    // Code based on https://www.paigeniedringhaus.com/blog/how-to-unit-test-next-js-api-routes-with-typescript
+    it('should return a successful response from getSiteDataTimeRangeDaily', async () => {
         let response = null;
         await axios.post(`/../../api/site/getSiteDataTimeRangeDaily`, {
             siteID: 1,
