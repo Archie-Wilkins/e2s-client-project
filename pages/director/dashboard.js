@@ -11,7 +11,7 @@ import BottomFooter from "../../public/components/layouts/bottomFooter.js";
 import Cookies from "js-cookie";
 import { PieChart, Pie } from "recharts";
 
-
+// Tutorial used: https://recharts.org/en-US/api/PieChart
 
 class EsmDashboard extends React.Component {
   constructor(props) {
