@@ -4,6 +4,9 @@ import { parse } from "csv-parse";
 import Papa from "papaparse";
 import Link from "next/link";
 import MainLayoutShell from "../../public/components/layouts/mainLayoutShell";
+
+// Tutorial used: https://levelup.gitconnected.com/use-papa-parse-to-parse-a-csv-file-in-a-react-application-da570e0c346a
+
 class CsvUploadComponent extends React.Component {
     constructor(props) {
         super(props);
