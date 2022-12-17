@@ -2,6 +2,8 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import {Router} from "next/router";
 
+// Tutorial used: https://getbootstrap.com/docs/4.0/components/carousel/
+
 class CarouselComponent extends React.Component {
     constructor(props) {
         super(props);
