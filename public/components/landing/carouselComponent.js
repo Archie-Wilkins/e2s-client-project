@@ -44,6 +44,7 @@ class CarouselComponent extends React.Component {
         this.setState({activeSlide: 3});
     }
 
+    // Images sourced from: https://www.pexels.com/search/juice/
     render() {
         return <div id="carouselExampleDark" className="carousel carousel-dark slide" data-bs-ride="carousel" aria-label="carousel content">
         
