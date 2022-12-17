@@ -5,6 +5,8 @@ import React, { useLayoutEffect } from "react";
 import Cookies from "js-cookie";
 import { AreaChart, Area, Label, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
+// Source used: https://stackoverflow.com/questions/35844783/how-do-i-iterate-through-table-rows-and-cells-in-reactjs
+
 // This is the dashboard component for admins
 class Dashboard extends React.Component {
   constructor(props) {
